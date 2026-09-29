@@ -4,8 +4,8 @@ Relaciona propiedad con vida del objeto. El integrador administra un alumno con 
 
 ## Orden de estudio
 
-1. [New y delete](01_New_y_Delete/README.md)
-2. [Unique ptr](02_Unique_Ptr/README.md)
+1. [New y delete](01_New_y_Delete/main.cpp)
+2. [Unique ptr](02_Unique_Ptr/main.cpp)
 
 Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
 

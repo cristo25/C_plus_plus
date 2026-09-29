@@ -4,9 +4,9 @@ Distingue árbol binario de ABB y después estudia sus recorridos. El integrador
 
 ## Orden de estudio
 
-1. [Árbol binario](01_Arbol_Binario/README.md)
-2. [Binario de búsqueda](02_Binario_de_Busqueda/README.md)
-3. [Recorridos](03_Recorridos/README.md)
+1. [Árbol binario](01_Arbol_Binario/main.cpp)
+2. [Binario de búsqueda](02_Binario_de_Busqueda/main.cpp)
+3. [Recorridos](03_Recorridos/main.cpp)
 
 Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
 

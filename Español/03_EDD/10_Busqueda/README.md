@@ -4,8 +4,8 @@ Busca primero sin orden y después con orden. El integrador compara resultados d
 
 ## Orden de estudio
 
-1. [Lineal](01_Lineal/README.md)
-2. [Binaria](02_Binaria/README.md)
+1. [Lineal](01_Lineal/main.cpp)
+2. [Binaria](02_Binaria/main.cpp)
 
 Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
 

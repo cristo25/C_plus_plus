@@ -4,12 +4,12 @@ Study algorithms using the same input and compare time, memory and stability. St
 
 ## Study order
 
-1. [Bubble sort](01_Bubble_Sort/README.md)
-2. [Selection sort](02_Selection_Sort/README.md)
-3. [Insertion sort](03_Insertion_Sort/README.md)
-4. [Merge sort](04_Merge_Sort/README.md)
-5. [Quick sort](05_Quick_Sort/README.md)
-6. [Sorting with the standard library](06_STD_Sort/README.md)
+1. [Bubble sort](01_Bubble_Sort/main.cpp)
+2. [Selection sort](02_Selection_Sort/main.cpp)
+3. [Insertion sort](03_Insertion_Sort/main.cpp)
+4. [Merge sort](04_Merge_Sort/main.cpp)
+5. [Quick sort](05_Quick_Sort/main.cpp)
+6. [Sorting with the standard library](06_STD_Sort/main.cpp)
 
 After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
 

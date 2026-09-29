@@ -4,8 +4,8 @@ Estudia CRUD en memoria y después persistencia. El integrador combina ambas ope
 
 ## Orden de estudio
 
-1. [DAO en memoria](01_DAO_en_Memoria/README.md)
-2. [DAO en archivo](02_DAO_en_Archivo/README.md)
+1. [DAO en memoria](01_DAO_en_Memoria/main.cpp)
+2. [DAO en archivo](02_DAO_en_Archivo/main.cpp)
 
 Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
 

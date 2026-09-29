@@ -6,6 +6,7 @@ namespace curso {
     using namespace std;
 
     class ListaDoble {
+        // Cada vagón conoce al de delante y al de detrás: podemos viajar en ambos sentidos.
         struct Nodo {
             int dato;
             Nodo* anterior;
@@ -26,6 +27,7 @@ namespace curso {
             }
         }
         void agregar(int dato) {
+            // Conservar fin permite anexar en O(1), sin recorrer toda la lista.
             Nodo* nuevo = new Nodo{dato, fin, nullptr};
             if (fin) {
                 fin->siguiente = nuevo;
@@ -42,6 +44,8 @@ namespace curso {
             if (!actual) {
                 return false;
             }
+            // Al eliminar, hay que reparar ambos vecinos y actualizar inicio o fin si son
+            // extremos.
             if (actual->anterior) {
                 actual->anterior->siguiente = actual->siguiente;
             } else {
@@ -64,6 +68,7 @@ namespace curso {
         }
         vector<int> inversos() const {
             vector<int> resultado;
+            // El recorrido inverso empieza por fin y sigue los enlaces al anterior.
             for (Nodo* actual = fin; actual; actual = actual->anterior) {
                 resultado.push_back(actual->dato);
             }

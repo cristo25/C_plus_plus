@@ -7,6 +7,8 @@ namespace curso {
     using namespace std;
 
     inline constexpr int LIMITE_DE_EJEMPLO = 7;
+    // Una consulta lee const vector<int>&; un ordenamiento necesita vector<int>& para
+    // modificarlo.
     size_t contarMayores(const vector<int>& datos, int limite);
 } // namespace curso
 #endif

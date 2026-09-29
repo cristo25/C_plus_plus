@@ -28,6 +28,7 @@ namespace course {
         }
 
     public:
+        // Linear O(n) lookup. Return an observer that vector modifications may invalidate.
         const Book* findById(int id) const {
             for (const auto& book : books) {
                 if (book.id == id) {
@@ -36,6 +37,7 @@ namespace course {
             }
             return nullptr;
         }
+        // Create, read, update and delete form CRUD; the DAO centralizes these operations.
         bool create(const Book& book) {
             if (books.size() >= static_cast<size_t>(MAX_BOOKS)) {
                 return false;
@@ -75,6 +77,8 @@ namespace course {
         bool save(ostream& output) const {
             output << books.size() << '\n';
             for (const auto& book : books) {
+                // quoted preserves spaces and quotation marks so the complete title can be
+                // restored.
                 output << book.id << ' ' << quoted(book.title) << '\n';
             }
             return static_cast<bool>(output);
@@ -110,6 +114,7 @@ namespace course {
                     return false;
                 }
             }
+            // Replace the catalog only after validating the entire snapshot.
             books = move(replacement.books);
             return true;
         }

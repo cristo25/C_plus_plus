@@ -1,3 +1,12 @@
+// Queues
+//
+// Compare arrival order and priority order. The integration example produces 2 9 4 with FIFO and
+// 9 4 2 with priority.
+//
+// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
+//
+// Run: ./program.exe
+
 #include <iostream>
 #include <queue>
 
@@ -11,6 +20,7 @@ int main() {
         priority.push(value);
     }
     cout << "FIFO: ";
+    // FIFO preserves arrival order; the priority queue then selects the largest available value.
     while (!arrival.empty()) {
         cout << arrival.front() << ' ';
         arrival.pop();

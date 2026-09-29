@@ -4,8 +4,8 @@ Compara el mecanismo con vector y la interfaz de `stack`. El integrador verifica
 
 ## Orden de estudio
 
-1. [Con vector](01_Con_Vector/README.md)
-2. [Con stack](02_Con_Stack/README.md)
+1. [Con vector](01_Con_Vector/main.cpp)
+2. [Con stack](02_Con_Stack/main.cpp)
 
 Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
 

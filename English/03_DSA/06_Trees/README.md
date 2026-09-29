@@ -4,9 +4,9 @@ Distinguish binary trees from binary search trees, then study traversal orders. 
 
 ## Study order
 
-1. [Binary trees: roots, children and leaves](01_Binary_Tree/README.md)
-2. [Binary search trees (BST)](02_Binary_Search_Tree/README.md)
-3. [Tree traversals](03_Traversals/README.md)
+1. [Binary trees: roots, children and leaves](01_Binary_Tree/main.cpp)
+2. [Binary search trees (BST)](02_Binary_Search_Tree/main.cpp)
+3. [Tree traversals](03_Traversals/main.cpp)
 
 After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
 

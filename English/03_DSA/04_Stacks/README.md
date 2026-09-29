@@ -4,8 +4,8 @@ Compare a vector implementation with the stack adapter. The integration example 
 
 ## Study order
 
-1. [A stack using vector](01_With_Vector/README.md)
-2. [The stack adapter](02_With_Stack/README.md)
+1. [A stack using vector](01_With_Vector/main.cpp)
+2. [The stack adapter](02_With_Stack/main.cpp)
 
 After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
 

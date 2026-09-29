@@ -18,6 +18,7 @@ namespace curso {
                     cambio = true;
                 }
             }
+            // Una pasada sin intercambios confirma que ya está ordenado: terminamos antes.
             if (!cambio) {
                 break;
             }
@@ -44,6 +45,7 @@ namespace curso {
                 datos[j] = datos[j - 1];
                 --j;
             }
+            // Tras desplazar los mayores, la carta actual entra en el hueco correcto.
             datos[j] = actual;
         }
     }
@@ -58,6 +60,7 @@ namespace curso {
         mezclarRango(datos, auxiliar, mitad, fin);
         size_t izquierda = inicio, derecha = mitad, destino = inicio;
         while (izquierda < mitad && derecha < fin) {
+            // Ante empates tomamos la izquierda primero: merge sort mantiene el orden original.
             if (datos[izquierda] <= datos[derecha]) {
                 auxiliar[destino++] = datos[izquierda++];
             } else {
@@ -92,6 +95,7 @@ namespace curso {
                 ++corte;
             }
         }
+        // El pivote llega a su sitio definitivo; las llamadas recursivas lo excluyen.
         swap(datos[corte], datos[fin - 1]);
         partirRango(datos, inicio, corte);
         partirRango(datos, corte + 1, fin);

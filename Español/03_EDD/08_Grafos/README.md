@@ -4,10 +4,10 @@ Estudia representación, recorridos y costos mínimos. BFS y DFS no usan los pes
 
 ## Orden de estudio
 
-1. [Representación](01_Representacion/README.md)
-2. [BFS](02_BFS/README.md)
-3. [DFS](03_DFS/README.md)
-4. [Dijkstra](04_Dijkstra/README.md)
+1. [Representación](01_Representacion/main.cpp)
+2. [BFS](02_BFS/main.cpp)
+3. [DFS](03_DFS/main.cpp)
+4. [Dijkstra](04_Dijkstra/main.cpp)
 
 Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
 

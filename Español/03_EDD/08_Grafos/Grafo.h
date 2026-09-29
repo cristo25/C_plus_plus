@@ -17,6 +17,7 @@ namespace curso {
     };
 
     class Grafo {
+        // Cada vértice tiene una lista de carreteras salientes: representación por adyacencia.
         vector<vector<Arista>> adyacencia;
 
     public:
@@ -37,6 +38,7 @@ namespace curso {
         }
     };
 
+    // BFS procesa una cola por niveles; marcar al encolar evita trabajo repetido en ciclos.
     inline vector<size_t> bfs(const Grafo& grafo, size_t inicio) {
         vector<bool> visitado(grafo.cantidad(), false);
         queue<size_t> pendientes;
@@ -57,6 +59,7 @@ namespace curso {
         return orden;
     }
 
+    // DFS baja por una rama y vuelve al agotarla; visitado impide regresar en círculos.
     inline void visitarDFS(const Grafo& grafo, size_t actual, vector<bool>& visitado,
                            vector<size_t>& orden) {
         visitado.at(actual) = true;
@@ -94,6 +97,8 @@ namespace curso {
                     continue;
                 }
                 long long candidata = distancia + arista.peso;
+                // Relajar una arista significa reemplazar una distancia por un camino más barato
+                // descubierto.
                 if (candidata < distancias.at(arista.destino)) {
                     distancias.at(arista.destino) = candidata;
                     cola.push({candidata, arista.destino});

@@ -1,3 +1,20 @@
+// Persisting a DAO in a file
+//
+// save serializes a snapshot and load validates it before replacing memory contents. quoted
+// preserves spaces and quotes. Each snapshot begins with its book count. The example appends
+// snapshots and reads the latest complete one. It reports damaged snapshots without silently
+// discarding them.
+//
+// Analogy: The librarian photographs the catalog at closing time and restores its latest
+// photograph when reopening.
+//
+// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
+//
+// Run: ./program.exe
+//
+// Practice: Save a title containing quotes. Duplicate an ID in a copy of the file and verify
+// rejection.
+
 #include "../BookDAO.h"
 #include <fstream>
 #include <iostream>
@@ -12,6 +29,7 @@ int main() {
         return 1;
     }
     // ponytail: append-only journal; compact if the file grows too large.
+    // Append a snapshot; reading restores complete snapshots in order.
     ofstream output("books_demo.txt", ios::app);
     if (!output || !dao.save(output)) {
         cerr << "Could not save the catalog.\n";
@@ -40,6 +58,7 @@ int main() {
         return 1;
     }
 
+    // Rejecting a load preserves the restored catalog instead of leaving partial data.
     istringstream corrupt("1\n1 without_quotes\n");
     if (restored.load(corrupt)) {
         return 1;

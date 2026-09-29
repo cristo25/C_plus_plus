@@ -6,6 +6,8 @@ namespace course {
     using namespace std;
 
     class DoublyLinkedList {
+        // Each carriage knows its neighbors in both directions: we can travel forward and
+        // backward.
         struct Node {
             int value;
             Node* previous;
@@ -26,6 +28,7 @@ namespace course {
             }
         }
         void append(int value) {
+            // Keeping a tail pointer allows O(1) appending without traversing the entire list.
             Node* newNode = new Node{value, tail, nullptr};
             if (tail) {
                 tail->next = newNode;
@@ -42,6 +45,8 @@ namespace course {
             if (!current) {
                 return false;
             }
+            // Removal must repair both neighbors and update head or tail when removing an
+            // endpoint.
             if (current->previous) {
                 current->previous->next = current->next;
             } else {
@@ -64,6 +69,7 @@ namespace course {
         }
         vector<int> reversed() const {
             vector<int> result;
+            // Reverse traversal starts at the tail and follows previous links.
             for (Node* current = tail; current; current = current->previous) {
                 result.push_back(current->value);
             }

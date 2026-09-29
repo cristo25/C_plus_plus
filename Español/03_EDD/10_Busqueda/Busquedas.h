@@ -13,6 +13,7 @@ namespace curso {
                 return i;
             }
         }
+        // No encontrado no es índice cero: optional representa la ausencia explícitamente.
         return nullopt;
     }
 
@@ -21,12 +22,16 @@ namespace curso {
         size_t inicio = 0, fin = datos.size(); // Rango [inicio, fin).
         while (inicio < fin) {
             size_t mitad = inicio + (fin - inicio) / 2;
+            // Si la mitad es menor, descartamos su lado izquierdo; de lo contrario conservamos
+            // el candidato.
             if (datos[mitad] < buscado) {
                 inicio = mitad + 1;
             } else {
                 fin = mitad;
             }
         }
+        // Al terminar, verificamos la coincidencia: el límite también puede caer al final del
+        // vector.
         if (inicio < datos.size() && datos[inicio] == buscado) {
             return inicio;
         }

@@ -30,6 +30,7 @@ namespace course {
         void append(int value) {
             Node* newNode = new Node{value, nullptr};
             if (!tail) {
+                // With one node, the next link points back to that same node.
                 newNode->next = newNode;
             } else {
                 newNode->next = tail->next;
@@ -45,6 +46,7 @@ namespace course {
             Node* current = tail->next;
             do {
                 if (current->value == value) {
+                    // This identifies the only node; removing it leaves an empty list.
                     if (current == previous) {
                         tail = nullptr;
                     } else {
@@ -58,6 +60,7 @@ namespace course {
                 }
                 previous = current;
                 current = current->next;
+            // Stop after returning to the first node; the ring has no ending nullptr.
             } while (current != tail->next);
             return false;
         }

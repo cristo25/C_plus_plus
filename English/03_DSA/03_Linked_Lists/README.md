@@ -4,9 +4,9 @@ All three implementations store integers to focus on links and ownership. Manual
 
 ## Study order
 
-1. [Singly linked list](01_Singly_Linked/README.md)
-2. [Doubly linked list](02_Doubly_Linked/README.md)
-3. [Circular linked list](03_Circular/README.md)
+1. [Singly linked list](01_Singly_Linked/main.cpp)
+2. [Doubly linked list](02_Doubly_Linked/main.cpp)
+3. [Circular linked list](03_Circular/main.cpp)
 
 After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
 

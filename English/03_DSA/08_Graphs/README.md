@@ -4,10 +4,10 @@ Study representation, traversal and minimum costs. BFS and DFS ignore weights; D
 
 ## Study order
 
-1. [Representing graphs](01_Representation/README.md)
-2. [BFS: breadth-first search](02_BFS/README.md)
-3. [DFS: depth-first search](03_DFS/README.md)
-4. [Dijkstra: minimum-cost paths](04_Dijkstra/README.md)
+1. [Representing graphs](01_Representation/main.cpp)
+2. [BFS: breadth-first search](02_BFS/main.cpp)
+3. [DFS: depth-first search](03_DFS/main.cpp)
+4. [Dijkstra: minimum-cost paths](04_Dijkstra/main.cpp)
 
 After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
 

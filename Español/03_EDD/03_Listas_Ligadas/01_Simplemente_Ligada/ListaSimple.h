@@ -6,6 +6,8 @@ namespace curso {
     using namespace std;
 
     class ListaSimple {
+        // Cada tarjeta guarda un valor y la dirección de la siguiente; nullptr termina la
+        // cadena.
         struct Nodo {
             int dato;
             Nodo* siguiente;
@@ -18,6 +20,8 @@ namespace curso {
         ListaSimple& operator=(const ListaSimple&) = delete;
         ~ListaSimple() {
             while (inicio) {
+                // Guardamos el siguiente enlace antes de destruir el nodo; después de delete no
+                // se puede leer.
                 Nodo* siguiente = inicio->siguiente;
                 delete inicio;
                 inicio = siguiente;
@@ -47,8 +51,11 @@ namespace curso {
                 return false;
             }
             if (anterior) {
+                // El nodo anterior salta al siguiente del eliminado: reparamos la cadena antes
+                // de liberar memoria.
                 anterior->siguiente = actual->siguiente;
             } else {
+                // Si se elimina el primero, la entrada de la lista debe apuntar al segundo.
                 inicio = actual->siguiente;
             }
             delete actual;

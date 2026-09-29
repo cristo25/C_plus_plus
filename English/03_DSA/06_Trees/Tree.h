@@ -23,6 +23,7 @@ namespace course {
         };
         unique_ptr<Node> root;
 
+        // A reference to unique_ptr lets us create or replace a branch's owner.
         static bool insertAt(unique_ptr<Node>& node, int value) {
             if (!node) {
                 node = make_unique<Node>(value);
@@ -43,6 +44,7 @@ namespace course {
             if (value > node->value) {
                 return removeAt(node->right, value);
             }
+            // Zero or one child: move the remaining branch into the removed node's place.
             if (!node->left) {
                 auto replacement = move(node->right);
                 node = move(replacement);
@@ -50,6 +52,8 @@ namespace course {
                 auto replacement = move(node->left);
                 node = move(replacement);
             } else {
+                // With two children, the smallest value on the right replaces the value while
+                // preserving BST order.
                 const Node* successor = node->right.get();
                 while (successor->left) {
                     successor = successor->left.get();
@@ -59,6 +63,8 @@ namespace course {
             }
             return true;
         }
+        // The position of push_back relative to both calls defines preorder, inorder or
+        // postorder.
         static void traverse(const Node* node, Traversal order, vector<int>& output) {
             if (!node) {
                 return;

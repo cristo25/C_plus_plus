@@ -23,6 +23,7 @@ namespace curso {
         };
         unique_ptr<Nodo> raiz;
 
+        // La referencia al unique_ptr permite crear o sustituir el dueño de una rama.
         static bool insertarEn(unique_ptr<Nodo>& nodo, int dato) {
             if (!nodo) {
                 nodo = make_unique<Nodo>(dato);
@@ -43,6 +44,7 @@ namespace curso {
             if (dato > nodo->dato) {
                 return eliminarEn(nodo->derecho, dato);
             }
+            // Cero o un hijo: movemos la rama restante al lugar del nodo eliminado.
             if (!nodo->izquierdo) {
                 auto reemplazo = move(nodo->derecho);
                 nodo = move(reemplazo);
@@ -50,6 +52,8 @@ namespace curso {
                 auto reemplazo = move(nodo->izquierdo);
                 nodo = move(reemplazo);
             } else {
+                // Con dos hijos, el menor de la rama derecha sustituye el dato sin romper el
+                // orden del ABB.
                 const Nodo* sucesor = nodo->derecho.get();
                 while (sucesor->izquierdo) {
                     sucesor = sucesor->izquierdo.get();
@@ -59,6 +63,8 @@ namespace curso {
             }
             return true;
         }
+        // La posición de push_back respecto de ambas llamadas define preorden, inorden o
+        // postorden.
         static void recorrer(const Nodo* nodo, Recorrido orden, vector<int>& salida) {
             if (!nodo) {
                 return;

@@ -13,6 +13,7 @@ namespace course {
                 return i;
             }
         }
+        // Not found is not index zero: optional represents absence explicitly.
         return nullopt;
     }
 
@@ -21,12 +22,15 @@ namespace course {
         size_t startIndex = 0, endIndex = data.size(); // Range [startIndex, endIndex).
         while (startIndex < endIndex) {
             size_t middle = startIndex + (endIndex - startIndex) / 2;
+            // If the middle value is smaller, discard its left side; otherwise keep the
+            // candidate.
             if (data[middle] < target) {
                 startIndex = middle + 1;
             } else {
                 endIndex = middle;
             }
         }
+        // At the end, check for a match: the boundary can also fall at the end of the vector.
         if (startIndex < data.size() && data[startIndex] == target) {
             return startIndex;
         }

@@ -6,6 +6,7 @@ namespace course {
     using namespace std;
 
     class SinglyLinkedList {
+        // Each card stores a value and the next card's address; nullptr ends the chain.
         struct Node {
             int value;
             Node* next;
@@ -18,6 +19,8 @@ namespace course {
         SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
         ~SinglyLinkedList() {
             while (head) {
+                // Save the next link before destroying the node; after delete its contents
+                // cannot be read.
                 Node* next = head->next;
                 delete head;
                 head = next;
@@ -47,8 +50,11 @@ namespace course {
                 return false;
             }
             if (previous) {
+                // The previous node skips to the removed node's successor: repair the chain
+                // before freeing memory.
                 previous->next = current->next;
             } else {
+                // When removing the first node, the list's entry must point to the second.
                 head = current->next;
             }
             delete current;

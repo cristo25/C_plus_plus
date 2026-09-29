@@ -4,8 +4,8 @@ Search first without ordering, then after sorting. The integration example compa
 
 ## Study order
 
-1. [Linear search](01_Linear_Search/README.md)
-2. [Binary search](02_Binary_Search/README.md)
+1. [Linear search](01_Linear_Search/main.cpp)
+2. [Binary search](02_Binary_Search/main.cpp)
 
 After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
 

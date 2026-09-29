@@ -4,9 +4,9 @@ Study size, traversal, modification and stored objects. The integration example 
 
 ## Study order
 
-1. [Creating and traversing a vector](01_Create_and_Traverse/README.md)
-2. [Inserting and erasing in vectors](02_Insert_and_Erase/README.md)
-3. [Vectors of objects](03_Vector_of_Objects/README.md)
+1. [Creating and traversing a vector](01_Create_and_Traverse/main.cpp)
+2. [Inserting and erasing in vectors](02_Insert_and_Erase/main.cpp)
+3. [Vectors of objects](03_Vector_of_Objects/main.cpp)
 
 After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
 

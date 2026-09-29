@@ -4,12 +4,12 @@ Estudia cada algoritmo con la misma entrada y compara trabajo, memoria y estabil
 
 ## Orden de estudio
 
-1. [Burbuja](01_Burbuja/README.md)
-2. [Selección](02_Seleccion/README.md)
-3. [Inserción](03_Insercion/README.md)
-4. [Merge sort](04_Merge_Sort/README.md)
-5. [Quick sort](05_Quick_Sort/README.md)
-6. [Biblioteca estándar](06_STD_Sort/README.md)
+1. [Burbuja](01_Burbuja/main.cpp)
+2. [Selección](02_Seleccion/main.cpp)
+3. [Inserción](03_Insercion/main.cpp)
+4. [Merge sort](04_Merge_Sort/main.cpp)
+5. [Quick sort](05_Quick_Sort/main.cpp)
+6. [Biblioteca estándar](06_STD_Sort/main.cpp)
 
 Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
 

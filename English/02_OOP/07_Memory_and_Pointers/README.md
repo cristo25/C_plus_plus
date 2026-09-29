@@ -4,8 +4,8 @@ Connect ownership to object lifetime. The integration example owns a student thr
 
 ## Study order
 
-1. [Manual dynamic memory](01_New_and_Delete/README.md)
-2. [Ownership with unique_ptr](02_Unique_Ptr/README.md)
+1. [Manual dynamic memory](01_New_and_Delete/main.cpp)
+2. [Ownership with unique_ptr](02_Unique_Ptr/main.cpp)
 
 After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
 

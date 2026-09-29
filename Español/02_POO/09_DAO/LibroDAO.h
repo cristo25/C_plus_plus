@@ -28,6 +28,8 @@ namespace curso {
         }
 
     public:
+        // Consulta lineal O(n). Devuelve un observador que puede invalidarse al modificar el
+        // vector.
         const Libro* buscar(int id) const {
             for (const auto& libro : libros) {
                 if (libro.id == id) {
@@ -36,6 +38,8 @@ namespace curso {
             }
             return nullptr;
         }
+        // Crear, consultar, actualizar y eliminar forman CRUD; el DAO concentra esas
+        // operaciones.
         bool crear(const Libro& libro) {
             if (libros.size() >= static_cast<size_t>(MAX_LIBROS)) {
                 return false;
@@ -75,6 +79,8 @@ namespace curso {
         bool guardar(ostream& salida) const {
             salida << libros.size() << '\n';
             for (const auto& libro : libros) {
+                // quoted conserva espacios y comillas del título para poder recuperar el texto
+                // completo.
                 salida << libro.id << ' ' << quoted(libro.titulo) << '\n';
             }
             return static_cast<bool>(salida);
@@ -110,6 +116,7 @@ namespace curso {
                     return false;
                 }
             }
+            // Solo sustituimos el catálogo después de validar toda la instantánea.
             libros = move(nuevo.libros);
             return true;
         }

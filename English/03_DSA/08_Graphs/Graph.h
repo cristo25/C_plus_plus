@@ -17,6 +17,7 @@ namespace course {
     };
 
     class Graph {
+        // Each vertex has a list of outgoing roads: an adjacency-list representation.
         vector<vector<Edge>> adjacency;
 
     public:
@@ -37,6 +38,7 @@ namespace course {
         }
     };
 
+    // BFS processes a queue in layers; marking on enqueue avoids repeated work in cycles.
     inline vector<size_t> bfs(const Graph& graph, size_t startIndex) {
         vector<bool> visited(graph.count(), false);
         queue<size_t> pending;
@@ -57,6 +59,7 @@ namespace course {
         return order;
     }
 
+    // DFS follows a branch and returns when it is exhausted; visited flags prevent looping.
     inline void visitDFS(const Graph& graph, size_t current, vector<bool>& visited,
                          vector<size_t>& order) {
         visited.at(current) = true;
@@ -94,6 +97,8 @@ namespace course {
                     continue;
                 }
                 long long candidate = distance + edge.weight;
+                // Relaxing an edge means replacing a distance with a newly discovered cheaper
+                // path.
                 if (candidate < distances.at(edge.destination)) {
                     distances.at(edge.destination) = candidate;
                     queuePending.push({candidate, edge.destination});

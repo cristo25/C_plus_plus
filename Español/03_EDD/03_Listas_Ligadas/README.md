@@ -4,9 +4,9 @@ Las tres implementaciones guardan enteros para concentrarnos en los enlaces y la
 
 ## Orden de estudio
 
-1. [Simplemente ligada](01_Simplemente_Ligada/README.md)
-2. [Doblemente ligada](02_Doblemente_Ligada/README.md)
-3. [Circular](03_Circular/README.md)
+1. [Simplemente ligada](01_Simplemente_Ligada/main.cpp)
+2. [Doblemente ligada](02_Doblemente_Ligada/main.cpp)
+3. [Circular](03_Circular/main.cpp)
 
 Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
 

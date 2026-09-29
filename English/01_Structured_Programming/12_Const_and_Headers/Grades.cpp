@@ -6,12 +6,14 @@ using namespace std;
 namespace course {
     double calculateAverage(const array<int, 3>& grades) {
         int sum = 0;
+        // Validate each grade before adding it; the const reference cannot modify the array.
         for (const int grade : grades) {
             if (grade < MIN_GRADE || grade > MAX_GRADE) {
                 throw invalid_argument("Grades must be between 0 and 10");
             }
             sum += grade;
         }
+        // Conversion before division avoids truncating the average to an integer.
         return static_cast<double>(sum) / grades.size();
     }
 

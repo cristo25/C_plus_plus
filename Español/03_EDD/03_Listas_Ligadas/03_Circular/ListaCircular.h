@@ -30,6 +30,7 @@ namespace curso {
         void agregar(int dato) {
             Nodo* nuevo = new Nodo{dato, nullptr};
             if (!fin) {
+                // Con un único nodo, el siguiente enlace apunta al propio nodo.
                 nuevo->siguiente = nuevo;
             } else {
                 nuevo->siguiente = fin->siguiente;
@@ -45,6 +46,7 @@ namespace curso {
             Nodo* actual = fin->siguiente;
             do {
                 if (actual->dato == dato) {
+                    // Este caso detecta el único nodo; al quitarlo, la lista pasa a estar vacía.
                     if (actual == anterior) {
                         fin = nullptr;
                     } else {
@@ -58,6 +60,8 @@ namespace curso {
                 }
                 anterior = actual;
                 actual = actual->siguiente;
+            // Detenemos la vuelta al regresar al inicio; no habrá un nullptr al final del
+            // anillo.
             } while (actual != fin->siguiente);
             return false;
         }

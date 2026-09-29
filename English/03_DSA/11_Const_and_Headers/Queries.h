@@ -7,6 +7,7 @@ namespace course {
     using namespace std;
 
     inline constexpr int EXAMPLE_LIMIT = 7;
+    // A query reads const vector<int>&; sorting requires vector<int>& to modify it.
     size_t countAbove(const vector<int>& data, int limit);
 } // namespace course
 #endif

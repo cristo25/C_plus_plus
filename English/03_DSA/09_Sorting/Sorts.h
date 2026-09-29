@@ -18,6 +18,7 @@ namespace course {
                     changed = true;
                 }
             }
+            // A pass without swaps proves the data is sorted: stop early.
             if (!changed) {
                 break;
             }
@@ -44,6 +45,7 @@ namespace course {
                 data[j] = data[j - 1];
                 --j;
             }
+            // After shifting larger values, the current card enters the correct gap.
             data[j] = current;
         }
     }
@@ -59,6 +61,7 @@ namespace course {
         mergeRange(data, buffer, middle, endIndex);
         size_t leftIndex = startIndex, rightIndex = middle, destination = startIndex;
         while (leftIndex < middle && rightIndex < endIndex) {
+            // On ties take the left value first: merge sort preserves the original order.
             if (data[leftIndex] <= data[rightIndex]) {
                 buffer[destination++] = data[leftIndex++];
             } else {
@@ -93,6 +96,7 @@ namespace course {
                 ++split;
             }
         }
+        // The pivot reaches its final position; recursive calls exclude it.
         swap(data[split], data[endIndex - 1]);
         partitionRange(data, startIndex, split);
         partitionRange(data, split + 1, endIndex);

@@ -1,3 +1,19 @@
+// Lista simplemente ligada
+//
+// Cada nodo guarda un dato y la dirección del siguiente. El último apunta a nullptr. No hay
+// acceso directo por índice: recorrer y buscar cuestan O(n). El header implementa inserción al
+// final, eliminación de la primera coincidencia y liberación de todos los nodos.
+//
+// Analogía: Una búsqueda del tesoro: cada tarjeta contiene un dato y la pista hacia la
+// siguiente. La última dice «fin».
+//
+// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
+//
+// Ejecutar: ./programa.exe
+//
+// Practica: Dibuja los enlaces antes y después de eliminar el primer nodo. Agrega un método
+// contiene.
+
 #include "ListaSimple.h"
 #include <iostream>
 #include <vector>
@@ -10,6 +26,7 @@ int main() {
     if (!(lista.valores().empty() && !lista.eliminar(99))) {
         return 1;
     }
+    // Los nodos formarán la cadena 10 -> 20 -> 30; los enlaces se implementan en el header.
     lista.agregar(10);
     lista.agregar(20);
     lista.agregar(30);
