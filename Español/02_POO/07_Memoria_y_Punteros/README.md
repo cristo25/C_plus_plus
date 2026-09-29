@@ -1,0 +1,17 @@
+# Memoria y punteros en POO
+
+Relaciona propiedad con vida del objeto. El integrador administra un alumno con `unique_ptr` y lo consulta mediante un puntero que no es propietario.
+
+## Orden de estudio
+
+1. [New y delete](01_New_y_Delete/README.md)
+2. [Unique ptr](02_Unique_Ptr/README.md)
+
+Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
+
+```powershell
+g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
+./programa.exe
+```
+
+Cada subcarpeta tiene su propio programa. Compila un ejemplo a la vez: todos tienen su propia función `main`.

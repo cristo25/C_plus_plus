@@ -1,0 +1,75 @@
+#ifndef CURSO_LISTA_DOBLE_H
+#define CURSO_LISTA_DOBLE_H
+#include <vector>
+
+namespace curso {
+    using namespace std;
+
+    class ListaDoble {
+        struct Nodo {
+            int dato;
+            Nodo* anterior;
+            Nodo* siguiente;
+        };
+        Nodo* inicio = nullptr;
+        Nodo* fin = nullptr;
+
+    public:
+        ListaDoble() = default;
+        ListaDoble(const ListaDoble&) = delete;
+        ListaDoble& operator=(const ListaDoble&) = delete;
+        ~ListaDoble() {
+            while (inicio) {
+                Nodo* siguiente = inicio->siguiente;
+                delete inicio;
+                inicio = siguiente;
+            }
+        }
+        void agregar(int dato) {
+            Nodo* nuevo = new Nodo{dato, fin, nullptr};
+            if (fin) {
+                fin->siguiente = nuevo;
+            } else {
+                inicio = nuevo;
+            }
+            fin = nuevo;
+        }
+        bool eliminar(int dato) {
+            Nodo* actual = inicio;
+            while (actual && actual->dato != dato) {
+                actual = actual->siguiente;
+            }
+            if (!actual) {
+                return false;
+            }
+            if (actual->anterior) {
+                actual->anterior->siguiente = actual->siguiente;
+            } else {
+                inicio = actual->siguiente;
+            }
+            if (actual->siguiente) {
+                actual->siguiente->anterior = actual->anterior;
+            } else {
+                fin = actual->anterior;
+            }
+            delete actual;
+            return true;
+        }
+        vector<int> valores() const {
+            vector<int> resultado;
+            for (Nodo* actual = inicio; actual; actual = actual->siguiente) {
+                resultado.push_back(actual->dato);
+            }
+            return resultado;
+        }
+        vector<int> inversos() const {
+            vector<int> resultado;
+            for (Nodo* actual = fin; actual; actual = actual->anterior) {
+                resultado.push_back(actual->dato);
+            }
+            return resultado;
+        }
+    };
+} // namespace curso
+
+#endif
