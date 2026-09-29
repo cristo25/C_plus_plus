@@ -15,3 +15,5 @@ g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
 ```
 
 Every subfolder has its own program. Compile one example at a time: each has its own `main` function.
+
+To combine these concepts, follow the [route through arrays, views and classes with nodes](../../03_DSA/13_Combining_Concepts/README.md). It explains which pointers remain valid as a vector grows and which are invalidated.

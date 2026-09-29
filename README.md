@@ -19,9 +19,13 @@ Learn C++/
     └── 04_Integrated_Project/
 ```
 
-Cada idioma tiene una guía general y 73 programas con explicaciones, analogías, instrucciones de ejecución y ejercicios en los comentarios de sus archivos `.cpp` y `.h`. Las guías adicionales de POO y EDD comparan temas y variantes. Los programas por subtema y sus integradores conservan el orden numerado. Los tres bloques enseñan headers; DAO se estudia en POO. El proyecto final queda para después.
+Cada idioma tiene una guía general y 83 programas con explicaciones, analogías, instrucciones de ejecución y ejercicios en los comentarios de sus archivos `.cpp` y `.h`. Las guías adicionales de POO y EDD comparan temas y variantes. Los programas por subtema y sus integradores conservan el orden numerado. Los tres bloques enseñan headers; DAO se estudia en POO. El proyecto final queda para después.
 
-Each language has one general guide and 73 programs with explanations, analogies, run instructions and exercises in `.cpp` and `.h` comments. Additional OOP and DSA guides compare topics and variants. Numbered subtopic programs and their integration examples preserve the learning sequence. All three blocks teach headers; OOP introduces DAO. The final project remains reserved for later.
+Each language has one general guide and 83 programs with explanations, analogies, run instructions and exercises in `.cpp` and `.h` comments. Additional OOP and DSA guides compare topics and variants. Numbered subtopic programs and their integration examples preserve the learning sequence. All three blocks teach headers; OOP introduces DAO. The final project remains reserved for later.
+
+Una ruta adicional combina arreglos, punteros, referencias, clases, structs y nodos, desde ejemplos sencillos hasta un integrador: [Español](Español/03_EDD/13_Combinacion_de_Conceptos/README.md) · [English](English/03_DSA/13_Combining_Concepts/README.md).
+
+An additional route combines arrays, pointers, references, classes, structs and nodes, from simple examples to an integration program.
 
 ## Buenas prácticas / Good practices
 

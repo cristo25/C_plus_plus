@@ -18,5 +18,6 @@ The [general guide](../README.md#data-structures-and-algorithms) introduces this
 10. [Searching](10_Searching/README.md)
 11. [Const and headers](11_Const_and_Headers/README.md)
 12. [Integration: processing tasks and querying routes](12_Integration/main.cpp)
+13. [Combining concepts](13_Combining_Concepts/README.md)
 
-Follow the numbers. Complete subfolder lessons before running their topic integration program, then finish the block integration exercise. Read, predict, run and modify each example.
+Follow the numbers. Complete subfolder lessons before running their topic integration program. After the block integration exercise, follow the combining concepts route to practice connecting structures with OOP, references and pointers. Read, predict, run and modify each example.

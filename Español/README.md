@@ -1,6 +1,6 @@
 # Aprende C++ paso a paso
 
-Esta es la guía general del curso: programación estructurada, programación orientada a objetos (POO) y estructuras de datos y algoritmos (EDD). Cada tema combina una explicación, una analogía cuando ayuda y un bloque de código. Hay **73 programas independientes**.
+Esta es la guía general del curso: programación estructurada, programación orientada a objetos (POO) y estructuras de datos y algoritmos (EDD). Cada tema combina una explicación, una analogía cuando ayuda y un bloque de código. Hay **83 programas independientes**.
 
 Las explicaciones particulares, instrucciones de compilación y ejercicios están como **comentarios dentro de los archivos `.cpp` y `.h`**. En POO y EDD se conservan guías para comparar conceptos y variantes; no necesitas un README para cada programa.
 
@@ -23,13 +23,16 @@ g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
 
 Cada ejemplo tiene su propio `main`. Compila un programa a la vez. En Linux o macOS puedes usar `programa` en lugar de `programa.exe`. Los bloques de esta guía corresponden al archivo enlazado; ejecuta ese archivo desde su carpeta. Los programas que escriben archivos los crean en el directorio de ejecución.
 
-Hay tres ejemplos que también compilan su implementación:
+Estos ejemplos compilan más de un archivo de implementación:
 
 | Carpeta | Archivos que debes compilar juntos |
 | --- | --- |
 | `01_Programacion_Estructurada/12_Const_y_Headers` | `main.cpp Calificaciones.cpp` |
 | `02_POO/08_Headers` | `main.cpp Producto.cpp` |
 | `03_EDD/11_Const_y_Headers` | `main.cpp Consultas.cpp` |
+| `03_EDD/13_Combinacion_de_Conceptos` | `main.cpp ../../02_POO/08_Headers/Producto.cpp` |
+
+Los pasos de combinación que usan `Producto` también enlazan `Producto.cpp`. Desde una subcarpeta del tema, su ruta empieza con `../../../02_POO/`; el comando completo aparece al inicio de cada `main.cpp`.
 
 Por ejemplo, dentro de `02_POO/08_Headers`:
 
@@ -221,9 +224,61 @@ Divide un problema en tareas pequeñas. El integrador calcula un subtotal por va
 
 Analogía: Una máquina recibe ingredientes por una entrada y entrega un producto por la salida.
 
-**Referencias y paso de parámetros.** `int&` es un alias del dato original. `const string&` permite consultar una cadena sin copiarla ni modificarla. Una referencia válida se inicializa al declararse.
+**Valor, referencia y referencia const.** Imagina una caja con el número 4. Un parámetro `int` recibe otra caja con una copia: modificarla no cambia la original. Un parámetro `int&` pone otra etiqueta sobre la caja original: modificarlo cambia el dato del llamador. `const string&` presta una etiqueta de lectura y evita copiar la cadena.
 
-Analogía: Una referencia es una segunda etiqueta en la misma caja; no es otra caja.
+El `&` en `int& alias = caja;` declara una referencia; en `&caja` obtiene una dirección. En una llamada como `cambiarOriginal(caja)` no se escribe `&`: el tipo del parámetro decide si se copia o se usa la referencia. La referencia necesita un objeto válido y no se puede volver a enlazar; `alias = otro` asigna el valor de `otro` a la caja original. Una referencia `const` limita ese acceso, pero otro acceso no constante todavía puede cambiar el objeto.
+
+Ejemplo completo: [main.cpp](01_Programacion_Estructurada/06_Funciones/02_Referencias/main.cpp).
+
+```cpp
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Por valor: la función recibe otra caja con una copia del número.
+void cambiarCopia(int copia) {
+    copia = 99;
+    cout << "Dentro de la copia: " << copia << "\n";
+}
+
+// Por referencia: este nombre es otra etiqueta para la caja original.
+void cambiarOriginal(int& caja) {
+    ++caja;
+}
+
+// const impide modificar la cadena a través de este parámetro; no se copia.
+size_t longitud(const string& texto) {
+    return texto.size();
+}
+
+int main() {
+    int caja = 4;
+    cambiarCopia(caja);
+    cout << "Original tras paso por valor: " << caja << "\n";
+
+    // En la llamada no escribimos &: la declaración del parámetro decide el paso.
+    cambiarOriginal(caja);
+    cout << "Original tras referencia: " << caja << "\n";
+
+    int& alias = caja;
+    int otro = 8;
+    // Asignar al alias cambia caja. No lo vuelve a enlazar con otro.
+    alias = otro;
+    ++alias;
+    cout << "Caja mediante alias: " << caja << "; otro: " << otro << "\n";
+
+    const int& soloLectura = caja;
+    // La vista const no congela caja: el nombre original todavía puede modificarla.
+    caja = 12;
+    cout << "Consulta const observa: " << soloLectura << "\n";
+
+    const string texto = "C++";
+    cout << "Longitud sin copiar: " << longitud(texto) << "\n";
+}
+```
+
+Después compara estas llamadas con las funciones del integrador del tema.
 
 Ejemplo completo: [main.cpp](01_Programacion_Estructurada/06_Funciones/main.cpp).
 
@@ -317,9 +372,40 @@ int main() {
 
 ### 9. Punteros: dirección y contenido
 
-`&dato` obtiene una dirección; `int*` guarda una dirección de un entero y `*puntero` accede al contenido. `nullptr` representa la ausencia de un destino. El dato debe seguir vivo mientras lo usas mediante un puntero. Todavía no necesitas `new`.
+Piensa en un cuarto con cajas. Cada variable es una caja de un tipo de dato; su dirección indica dónde localizarla. Un puntero es otra variable, como una tarjeta que guarda esa dirección. La tarjeta y la caja son objetos distintos. Una referencia es otra etiqueta de la caja; un puntero es una tarjeta independiente que puede cambiar de destino.
 
-Analogía: La variable es una casa; el puntero es un papel con su dirección. `&` anota la dirección y `*` visita la casa. Una dirección no garantiza que la casa siga existiendo.
+```cpp
+int caja = 10;
+int* direccion = &caja;
+int** tarjetaDeTarjeta = &direccion;
+```
+
+```text
+tarjetaDeTarjeta: [dirección de direccion]
+                           |
+                           v
+direccion:       [dirección de caja]
+                           |
+                           v
+caja:            [10]
+```
+
+`&caja` pregunta dónde está la caja. `direccion` lee la dirección guardada en la tarjeta. `*direccion` sigue una dirección y llega al entero. `&direccion` obtiene la dirección de la propia tarjeta. `*tarjetaDeTarjeta` llega al puntero `direccion`; `**tarjetaDeTarjeta` llega al entero `caja`. No son dos cajas de enteros: hay dos variables que guardan direcciones y un entero.
+
+**Copiar, escribir y redirigir.** `int* otra = direccion` copia una tarjeta, no el entero. Las dos tarjetas apuntan a la misma caja. `*otra = 25` modifica esa caja y ambos punteros observan el cambio. `otra = &otraCaja` redirige solo `otra`; no mueve la caja ni redirige `direccion`. `otra = nullptr` deja esa tarjeta sin destino; no destruye ninguna caja.
+
+**Pasar datos a funciones.** Decide primero qué necesita cambiar la función:
+
+| Parámetro | Qué recibe | Qué puede cambiar | Llamada típica |
+| --- | --- | --- | --- |
+| `int dato` | Otra caja con una copia | Su copia local | `funcion(caja)` |
+| `int& dato` | Otra etiqueta de la caja | El entero original | `funcion(caja)` |
+| `const int& dato` | Una etiqueta de lectura | No cambia el entero por ese acceso | `funcion(caja)` |
+| `int* dato` | Una copia de la tarjeta | El entero de destino; redirigir la copia no cambia la tarjeta del llamador | `funcion(direccion)` o `funcion(&caja)` |
+| `int*& dato` | Una etiqueta de la tarjeta del llamador | La tarjeta original y, si tiene destino válido, su entero | `funcion(direccion)` |
+| `int** dato` | Una tarjeta que apunta a otra tarjeta | El puntero original con `*dato`; su entero con `**dato`, si ambos destinos son válidos | `funcion(&direccion)` |
+
+El ejemplo imprime si cada llamada conserva o cambia la dirección original. Primero modifica el entero mediante `int*`; después redirige una copia local; luego cambia la tarjeta original mediante `int*&` y mediante `int**`. La referencia al nuevo destino necesita que ese entero siga vivo después de la llamada.
 
 Ejemplo completo: [main.cpp](01_Programacion_Estructurada/09_Punteros_Basicos/main.cpp).
 
@@ -328,18 +414,81 @@ Ejemplo completo: [main.cpp](01_Programacion_Estructurada/09_Punteros_Basicos/ma
 
 using namespace std;
 
-int main() {
-    int caja = 10;
-    int* direccion = &caja; // No es propietario: caja administra su propia vida.
-    *direccion = 25;
-
-    int* sinDestino = nullptr;
-    if (sinDestino != nullptr) {
-        cout << *sinDestino << "\n";
+// Se copia la tarjeta con la dirección; el entero al que apunta sigue siendo el original.
+void sumarDesdeDireccion(int* direccion) {
+    if (direccion != nullptr) {
+        ++*direccion;
     }
-    cout << "Contenido: " << *direccion << "\n";
+}
+
+void redirigirCopia(int* direccion, int& otro) {
+    // Solo redirigimos la copia local de la tarjeta. El puntero del llamador no cambia.
+    direccion = &otro;
+    cout << "Destino de la copia local: " << *direccion << "\n";
+}
+
+void redirigirReferencia(int*& direccion, int& otro) {
+    // int*& es un alias de la tarjeta del llamador: podemos cambiar su destino.
+    direccion = &otro;
+}
+
+void redirigirDoble(int** direccion, int& otro) {
+    // int** guarda la dirección de una tarjeta. *direccion es esa tarjeta, no el entero.
+    if (direccion != nullptr) {
+        *direccion = &otro;
+    }
+}
+
+int main() {
+    cout << boolalpha;
+    int caja = 10;
+    int otraCaja = 20;
+
+    // &caja obtiene su dirección; int* declara una tarjeta para un entero.
+    int* direccion = &caja;
+    int* alias = direccion;
+    *direccion = 25;
+    cout << "Dos tarjetas, una caja: " << *alias << "\n";
+
+    sumarDesdeDireccion(direccion);
+    sumarDesdeDireccion(nullptr);
+    cout << "Caja tras int*: " << caja << "\n";
+
+    redirigirCopia(direccion, otraCaja);
+    cout << "La tarjeta original sigue en caja: " << (direccion == &caja) << "\n";
+
+    redirigirReferencia(direccion, otraCaja);
+    cout << "Referencia redirigió la tarjeta: " << (direccion == &otraCaja) << "\n";
+
+    // &direccion señala la variable puntero. ** de esa dirección alcanzaría el entero.
+    redirigirDoble(&direccion, caja);
+    cout << "Doble puntero la devolvió a caja: " << (direccion == &caja) << "\n";
+
+    const int* soloLectura = &caja;
+    // El dato no se puede cambiar por soloLectura; la tarjeta sí puede cambiar de destino.
+    soloLectura = &otraCaja;
+    cout << "Lectura por const int*: " << *soloLectura << "\n";
+
+    int* const direccionFija = &caja;
+    // La tarjeta no puede redirigirse; el contenido de su destino sí puede modificarse.
+    *direccionFija = 30;
+    cout << "Escritura por int* const: " << caja << "\n";
+
+    // nullptr no libera caja ni anula otras tarjetas. Cada observador es independiente.
+    direccion = nullptr;
+    alias = nullptr;
 }
 ```
+
+**Dónde va `const`.** En `const int* p`, la tarjeta puede redirigirse, pero no permite escribir en el entero. En `int* const p`, la tarjeta tiene un destino fijo y permite escribir en el entero. En `const int* const p`, ambos accesos quedan limitados. Esto no congela un objeto modificable por otros accesos: limita lo que puede hacerse a través de ese nombre.
+
+**Cuándo deja de servir una dirección.** Una tarjeta no mantiene viva su caja. Un puntero a una variable local deja de ser válido cuando termina el bloque de esa variable; no retornes esa dirección. Un puntero a un objeto destruido está colgando aunque no valga `nullptr`. Comparar con `nullptr` solo detecta la ausencia de destino, no comprueba que un objeto siga vivo. Tampoco limpiar una tarjeta limpia las demás copias de su dirección.
+
+`new` crea un objeto de duración dinámica y `delete` destruye uno creado de esa forma; no uses `delete` con una variable local ni con un elemento de un arreglo propietario. Más adelante `unique_ptr` administrará esa destrucción automáticamente. `get()` presta una dirección, sin transferir la responsabilidad.
+
+**Arreglos y direcciones.** Un arreglo guarda elementos contiguos del mismo tipo. Si `int* p = numeros.data();`, `p + 1` apunta al siguiente entero, no al siguiente byte. La aritmética solo es válida dentro del mismo arreglo y hasta la posición inmediatamente posterior a su último elemento; esa posición posterior no se desreferencia. Un `vector` puede realocar al crecer e invalidar referencias y punteros a sus elementos. Un arreglo de punteros contiene tarjetas: no debe confundirse con un puntero al primer elemento de un arreglo.
+
+En POO, `puntero->metodo()` es equivalente a `(*puntero).metodo()` para estos punteros ordinarios. La [ruta de combinación de conceptos](03_EDD/13_Combinacion_de_Conceptos/README.md) lleva la misma analogía a arreglos y vectores de punteros, matrices, nodos y clases que administran listas.
 
 ### 10. Leer y escribir archivos
 
@@ -1487,6 +1636,122 @@ int main() {
     cout << "Costo minimo de entrega 0 -> 1: " << dijkstra(rutas, 0).at(1) << "\n";
 }
 ```
+
+### 13. Combinar conceptos de forma gradual
+
+Aprender cada herramienta por separado ayuda a reconocerla; combinarla exige decidir qué problema resuelve. Imagina un inventario: primero guardamos productos, después agrupamos existencias, luego prestamos direcciones para seleccionar productos y al final construimos clases que administran nodos. Cada paso incorpora una necesidad y conserva lo aprendido.
+
+| Paso | Programa | Decisión que aprendemos |
+| --- | --- | --- |
+| 1 | [Arreglo de clases](03_EDD/13_Combinacion_de_Conceptos/01_Arreglo_de_Clases/main.cpp) | Guardar objetos completos |
+| 2 | [Arreglo de structs con clases](03_EDD/13_Combinacion_de_Conceptos/02_Arreglo_de_Structs_con_Clases/main.cpp) | Reunir un objeto y sus existencias |
+| 3 | [Arreglo de punteros](03_EDD/13_Combinacion_de_Conceptos/03_Arreglo_de_Punteros/main.cpp) | Separar una tarjeta de su destino |
+| 4 | [Vector de punteros](03_EDD/13_Combinacion_de_Conceptos/04_Vector_de_Punteros/main.cpp) | Crear una vista que crece sin copiar productos |
+| 5 | [Matriz de punteros](03_EDD/13_Combinacion_de_Conceptos/05_Matriz_de_Punteros/main.cpp) | Organizar vistas por filas y casillas |
+| 6 | [Arreglo de nodos enlazados](03_EDD/13_Combinacion_de_Conceptos/06_Arreglo_de_Nodos/main.cpp) | Separar ubicación física y orden lógico |
+| 7 | [Vector de unique_ptr](03_EDD/13_Combinacion_de_Conceptos/07_Vector_de_Unique_Ptr/main.cpp) | Dar un propietario a cada objeto dinámico |
+| 8 | [Clase con nodos struct](03_EDD/13_Combinacion_de_Conceptos/08_Clase_con_Nodos/main.cpp) | Encapsular una cadena y sus operaciones |
+| 9 | [Vector de clases con nodos](03_EDD/13_Combinacion_de_Conceptos/09_Vector_de_Clases_con_Nodos/main.cpp) | Reunir listas y distinguir qué se mueve |
+
+La [guía del tema](03_EDD/13_Combinacion_de_Conceptos/README.md) explica por qué cambia la representación en cada paso. Cada programa tiene sus operaciones comentadas; [Estante.h](03_EDD/13_Combinacion_de_Conceptos/Estante.h) reúne la clase usada por los dos últimos pasos y el integrador. Reutilizamos `Producto.h` y `Producto.cpp` de POO.
+
+Este integrador guarda un `vector<Estante>`; cada estante posee nodos `struct`, y cada nodo contiene un `Producto`. Un `vector<const Nodo*>` presta una vista que ordenamos por precio; un arreglo de arreglos de punteros muestra casillas que pueden repetir destinos. El total se calcula desde los propietarios para evitar contar esas repeticiones como productos extra.
+
+Ejemplo completo: [main.cpp](03_EDD/13_Combinacion_de_Conceptos/main.cpp).
+
+```cpp
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+#include <vector>
+#include "Estante.h"
+
+using namespace std;
+using namespace curso;
+
+// Referencia a una tarjeta: cambiamos la selección del llamador. El destino es de lectura.
+void seleccionar(const Estante::Nodo*& seleccion, const Estante::Nodo* nuevoDestino) {
+    seleccion = nuevoDestino;
+}
+
+long long valorTotal(const vector<Estante>& estantes) {
+    long long valorTotal = 0;
+    for (const Estante& estante : estantes) {
+        const long long subtotal = estante.valorTotal();
+        if (valorTotal > numeric_limits<long long>::max() - subtotal) {
+            throw overflow_error("El inventario supera el rango de long long");
+        }
+        valorTotal += subtotal;
+    }
+    return valorTotal;
+}
+
+int main() {
+    // Primero construimos los propietarios: vector -> estantes -> nodos -> productos.
+    vector<Estante> estantes;
+    estantes.emplace_back("Papeleria");
+    estantes.at(0).agregar(Producto("Cuaderno", 300));
+    estantes.at(0).agregar(Producto("Lapiz", 100));
+    estantes.emplace_back("Libros");
+    estantes.at(1).agregar(Producto("Libro", 500));
+
+    // Después prestamos direcciones. Las listas contienen objetos; la vista solo contiene tarjetas.
+    vector<const Estante::Nodo*> vista;
+    for (const Estante& estante : estantes) {
+        const Estante::Nodo* actual = estante.primero();
+        while (actual != nullptr) {
+            vista.push_back(actual);
+            actual = actual->siguienteNodo();
+        }
+    }
+
+    // Ordenar la vista mueve tarjetas, sin cambiar los enlaces ni mover los productos.
+    sort(vista.begin(), vista.end(), [](const Estante::Nodo* izquierdo, const Estante::Nodo* derecho) {
+        return izquierdo->consultarProducto().consultarPrecio() < derecho->consultarProducto().consultarPrecio();
+    });
+    for (const Estante::Nodo* actual : vista) {
+        cout << actual->consultarProducto().consultarNombre() << ": "
+             << actual->consultarProducto().consultarPrecio() << "\n";
+    }
+
+    const Estante::Nodo* seleccion = nullptr;
+    seleccionar(seleccion, vista.at(0));
+    // La matriz muestra dos productos únicos en tres casillas: seleccion aparece dos veces.
+    const array<array<const Estante::Nodo*, 2>, 2> casillas{
+        array<const Estante::Nodo*, 2>{seleccion, nullptr},
+        array<const Estante::Nodo*, 2>{vista.at(1), seleccion}
+    };
+    size_t ocupadas = 0;
+    for (const auto& fila : casillas) {
+        for (const Estante::Nodo* actual : fila) {
+            if (actual != nullptr) {
+                ++ocupadas;
+            }
+        }
+    }
+
+    // Comprobación del integrador: el inventario y sus enlaces conservaron sus datos y orden.
+    const long long antes = valorTotal(estantes);
+    if (vista.size() != 3 || antes != 900 || ocupadas != 3 ||
+        seleccion->consultarProducto().consultarPrecio() != 100 ||
+        estantes.at(0).primero()->consultarProducto().consultarPrecio() != 100 ||
+        estantes.at(0).primero()->siguienteNodo()->consultarProducto().consultarPrecio() != 300) {
+        cerr << "El integrador produjo un resultado inesperado\n";
+        return 1;
+    }
+    cout << "Inventario en centavos: " << antes << "\n";
+    cout << "Casillas ocupadas (pueden repetir producto): " << ocupadas << "\n";
+
+    // Retiramos la selección y la vista. No borran nodos porque no son propietarios.
+    seleccion = nullptr;
+    vista.clear();
+    // Al salir, la matriz se destruye antes que los estantes; ningún observador sobrevive a sus nodos.
+}
+```
+
+Los productos suman 900 centavos. La vista se ordena como lápiz, cuaderno y libro; los enlaces del inventario conservan su orden. Antes de diseñar otra combinación, dibuja quién contiene el dato, quién es su propietario y quién solo tiene una dirección. Luego decide si cada función recibe una copia, una referencia, una vista de lectura o una referencia a un puntero.
 
 ## Cómo se conectan las tres áreas
 

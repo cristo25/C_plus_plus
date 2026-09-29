@@ -18,5 +18,6 @@ La [guía general](../README.md#estructuras-de-datos-y-algoritmos) presenta todo
 10. [Búsqueda](10_Busqueda/README.md)
 11. [Const y headers](11_Const_y_Headers/README.md)
 12. [Integrador](12_Integrador/main.cpp)
+13. [Combinación de conceptos](13_Combinacion_de_Conceptos/README.md)
 
-Sigue los números. Si un tema contiene subcarpetas, termina sus ejemplos antes del `main.cpp` integrador de ese tema. Finalmente realiza el integrador del bloque. Los programas son didácticos, pequeños y con comprobaciones: lee, predice el resultado, ejecuta y modifica.
+Sigue los números. Si un tema contiene subcarpetas, termina sus ejemplos antes del `main.cpp` integrador de ese tema. Después del integrador del bloque, sigue la ruta de combinación para practicar cómo conectar las estructuras con POO, referencias y punteros. Lee, predice el resultado, ejecuta y modifica.

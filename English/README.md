@@ -1,6 +1,6 @@
 # Learn C++ step by step
 
-This is the course's general guide: structured programming, object-oriented programming (OOP), and data structures and algorithms (DSA). Each topic combines an explanation, an analogy when useful, and a code example. There are **73 independent programs**.
+This is the course's general guide: structured programming, object-oriented programming (OOP), and data structures and algorithms (DSA). Each topic combines an explanation, an analogy when useful, and a code example. There are **83 independent programs**.
 
 Program-specific explanations, compilation commands and exercises are **comments inside `.cpp` and `.h` files**. OOP and DSA retain guides for comparing concepts and variants; individual programs do not need separate READMEs.
 
@@ -23,13 +23,16 @@ g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
 
 Each example has its own `main`. Compile one program at a time. On Linux or macOS, use `program` instead of `program.exe`. Code blocks in this guide correspond to the linked file; run that file from its folder. Examples create demonstration data in their working directory.
 
-Three examples also compile a separate implementation:
+These examples compile more than one implementation file:
 
 | Folder | Files to compile together |
 | --- | --- |
 | `01_Structured_Programming/12_Const_and_Headers` | `main.cpp Grades.cpp` |
 | `02_OOP/08_Headers` | `main.cpp Product.cpp` |
 | `03_DSA/11_Const_and_Headers` | `main.cpp Queries.cpp` |
+| `03_DSA/13_Combining_Concepts` | `main.cpp ../../02_OOP/08_Headers/Product.cpp` |
+
+Combination steps using `Product` also link `Product.cpp`. From a topic subfolder, its path starts with `../../../02_OOP/`; each `main.cpp` gives its complete command at the beginning.
 
 For example, inside `02_OOP/08_Headers`:
 
@@ -222,9 +225,61 @@ Split a problem into small tasks. The integration example calculates a subtotal 
 
 Analogy: A machine receives ingredients through its input and delivers a product through its output.
 
-**References and parameter passing.** `int&` is an alias for the original value. `const string&` lets you inspect a string without copying or modifying it. Initialize a reference when declaring it.
+**Value, reference and const reference.** Imagine a box holding the number 4. An `int` parameter receives another box containing a copy: changing it does not affect the original. An `int&` parameter puts another label on the original box: changing it affects the caller's data. `const string&` lends a read-only label and avoids copying the string.
 
-Analogy: A reference is a second label on the same box, rather than a second box.
+The `&` in `int& alias = box;` declares a reference; in `&box` it obtains an address. A call such as `changeOriginal(box)` does not use `&`: the parameter type decides whether to copy or use a reference. A reference needs a valid object and cannot be rebound; `alias = other` assigns the value of `other` to the original box. A `const` reference limits that access, but another non-const access can still change the object.
+
+Complete example: [main.cpp](01_Structured_Programming/06_Functions/02_References/main.cpp).
+
+```cpp
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// By value: the function receives a separate box containing a copy.
+void changeCopy(int copy) {
+    copy = 99;
+    cout << "Inside the copy: " << copy << "\n";
+}
+
+// By reference: this name is another label attached to the original box.
+void changeOriginal(int& box) {
+    ++box;
+}
+
+// const prevents modifying the string through this parameter; no copy is made.
+size_t length(const string& text) {
+    return text.size();
+}
+
+int main() {
+    int box = 4;
+    changeCopy(box);
+    cout << "Original after passing by value: " << box << "\n";
+
+    // No & at the call: the parameter declaration determines how it is passed.
+    changeOriginal(box);
+    cout << "Original after passing by reference: " << box << "\n";
+
+    int& alias = box;
+    int other = 8;
+    // Assigning to the alias changes box. It does not rebind the alias to other.
+    alias = other;
+    ++alias;
+    cout << "Box through alias: " << box << "; other: " << other << "\n";
+
+    const int& readonly = box;
+    // The const view does not freeze box: the original name can still modify it.
+    box = 12;
+    cout << "Const view observes: " << readonly << "\n";
+
+    const string text = "C++";
+    cout << "Length without copying: " << length(text) << "\n";
+}
+```
+
+Then compare these calls with the functions in this topic's integration example.
 
 Complete example: [main.cpp](01_Structured_Programming/06_Functions/main.cpp).
 
@@ -318,9 +373,40 @@ int main() {
 
 ### 9. Pointers: addresses and contents
 
-`&value` obtains an address, `int*` holds the address of an integer, and `*pointer` accesses its contents. `nullptr` means no target. The target must stay alive while you access it through the pointer. You do not need `new` yet.
+Think of a room full of boxes. Each variable is a box of a data type; its address tells us where to locate it. A pointer is another variable, like a card holding that address. The card and the box are distinct objects. A reference is another label on the box; a pointer is an independent card that can change destination.
 
-Analogy: The variable is a house and the pointer is a note containing its address. `&` writes down the address; `*` visits the house. An address does not guarantee the house still exists.
+```cpp
+int box = 10;
+int* address = &box;
+int** cardOfCard = &address;
+```
+
+```text
+cardOfCard: [address of address]
+                        |
+                        v
+address:    [address of box]
+                        |
+                        v
+box:        [10]
+```
+
+`&box` asks where the box is. `address` reads the address stored on the card. `*address` follows one address and reaches the integer. `&address` obtains the card's own address. `*cardOfCard` reaches the pointer `address`; `**cardOfCard` reaches the integer `box`. These are not two integer boxes: there are two variables storing addresses and one integer.
+
+**Copying, writing and redirecting.** `int* other = address` copies a card, rather than the integer. Both cards point to the same box. `*other = 25` changes that box and both pointers observe the change. `other = &anotherBox` redirects only `other`; it does not move the box or redirect `address`. `other = nullptr` leaves that card without a target; it does not destroy any box.
+
+**Passing data to functions.** First decide what the function needs to change:
+
+| Parameter | What it receives | What it can change | Typical call |
+| --- | --- | --- | --- |
+| `int value` | Another box containing a copy | Its local copy | `function(box)` |
+| `int& value` | Another label on the box | The original integer | `function(box)` |
+| `const int& value` | A read-only label | Cannot change the integer through that access | `function(box)` |
+| `int* value` | A copy of the card | The target integer; redirecting the copy does not change the caller's card | `function(address)` or `function(&box)` |
+| `int*& value` | A label on the caller's card | The original card and, with a valid target, its integer | `function(address)` |
+| `int** value` | A card pointing to another card | The original pointer through `*value`; its integer through `**value`, when both targets are valid | `function(&address)` |
+
+The example prints whether each call preserves or changes the original address. First it modifies the integer through `int*`; then it redirects a local copy; then it changes the original card through `int*&` and through `int**`. The reference to the new target requires that integer to remain alive after the call.
 
 Complete example: [main.cpp](01_Structured_Programming/09_Basic_Pointers/main.cpp).
 
@@ -329,18 +415,81 @@ Complete example: [main.cpp](01_Structured_Programming/09_Basic_Pointers/main.cp
 
 using namespace std;
 
-int main() {
-    int box = 10;
-    int* address = &box; // Non-owning: box manages its own lifetime.
-    *address = 25;
-
-    int* withoutTarget = nullptr;
-    if (withoutTarget != nullptr) {
-        cout << *withoutTarget << "\n";
+// The address card is copied; the integer it points to is still the original.
+void addViaPointer(int* address) {
+    if (address != nullptr) {
+        ++*address;
     }
-    cout << "Contents: " << *address << "\n";
+}
+
+void redirectCopy(int* address, int& other) {
+    // Only the local copy of the card is redirected. The caller's pointer does not change.
+    address = &other;
+    cout << "Local copy's destination: " << *address << "\n";
+}
+
+void redirectReference(int*& address, int& other) {
+    // int*& aliases the caller's card: we can change its destination.
+    address = &other;
+}
+
+void redirectDouble(int** address, int& other) {
+    // int** holds a card's address. *address is that card, not the integer.
+    if (address != nullptr) {
+        *address = &other;
+    }
+}
+
+int main() {
+    cout << boolalpha;
+    int box = 10;
+    int anotherBox = 20;
+
+    // &box obtains its address; int* declares a card pointing to an integer.
+    int* address = &box;
+    int* alias = address;
+    *address = 25;
+    cout << "Two cards, one box: " << *alias << "\n";
+
+    addViaPointer(address);
+    addViaPointer(nullptr);
+    cout << "Box after int*: " << box << "\n";
+
+    redirectCopy(address, anotherBox);
+    cout << "Original card still points to box: " << (address == &box) << "\n";
+
+    redirectReference(address, anotherBox);
+    cout << "Reference redirected the card: " << (address == &anotherBox) << "\n";
+
+    // &address points to the pointer variable. Dereferencing it twice would reach the integer.
+    redirectDouble(&address, box);
+    cout << "Double pointer returned it to box: " << (address == &box) << "\n";
+
+    const int* readonly = &box;
+    // The value cannot be changed through readonly; the card can change destination.
+    readonly = &anotherBox;
+    cout << "Reading through const int*: " << *readonly << "\n";
+
+    int* const fixedAddress = &box;
+    // The card cannot be redirected; the value at its destination can be modified.
+    *fixedAddress = 30;
+    cout << "Writing through int* const: " << box << "\n";
+
+    // nullptr does not destroy box or clear other cards. Each observer is independent.
+    address = nullptr;
+    alias = nullptr;
 }
 ```
+
+**Where `const` goes.** In `const int* p`, the card can be redirected, but it cannot write to the integer. In `int* const p`, the card has a fixed target and can write to the integer. In `const int* const p`, both kinds of access are limited. This does not freeze an object modifiable through other access paths: it limits what can be done through that name.
+
+**When an address stops being usable.** A card does not keep its box alive. A pointer to a local variable becomes invalid when that variable's scope ends; do not return that address. A pointer to a destroyed object dangles even if it is not `nullptr`. Comparing with `nullptr` only detects the absence of a target, not whether an object is alive. Clearing a card also does not clear other copies of its address.
+
+`new` creates an object with dynamic storage duration and `delete` destroys one created that way; do not use `delete` with a local variable or an element of an owning array. Later, `unique_ptr` will manage that destruction automatically. `get()` lends an address without transferring responsibility.
+
+**Arrays and addresses.** An array holds contiguous elements of one type. If `int* p = numbers.data();`, `p + 1` points to the next integer, not the next byte. Pointer arithmetic is only valid within the same array and up to the position just past its final element; that past-the-end position must not be dereferenced. A `vector` can reallocate as it grows and invalidate pointers and references to its elements. An array of pointers holds cards: distinguish it from a pointer to an array's first element.
+
+In OOP, `pointer->method()` means `(*pointer).method()` for these ordinary pointers. The [combining concepts route](03_DSA/13_Combining_Concepts/README.md) extends the same analogy to arrays and vectors of pointers, matrices, nodes and classes managing lists.
 
 ### 10. Reading and writing files
 
@@ -1488,6 +1637,122 @@ int main() {
     cout << "Minimum delivery cost 0 -> 1: " << dijkstra(routes, 0).at(1) << "\n";
 }
 ```
+
+### 13. Combining concepts gradually
+
+Learning each tool separately helps us recognize it; combining tools means deciding which problem each one solves. Imagine an inventory: first store products, then group stock counts, then lend addresses to select products, and finally build classes managing nodes. Each step adds a need and keeps what we have learned.
+
+| Step | Program | Decision we learn |
+| --- | --- | --- |
+| 1 | [Array of classes](03_DSA/13_Combining_Concepts/01_Array_of_Classes/main.cpp) | Store complete objects |
+| 2 | [Array of structs with classes](03_DSA/13_Combining_Concepts/02_Array_of_Structs_with_Classes/main.cpp) | Group an object with its stock count |
+| 3 | [Array of pointers](03_DSA/13_Combining_Concepts/03_Array_of_Pointers/main.cpp) | Separate a card from its target |
+| 4 | [Vector of pointers](03_DSA/13_Combining_Concepts/04_Vector_of_Pointers/main.cpp) | Grow a view without copying products |
+| 5 | [Matrix of pointers](03_DSA/13_Combining_Concepts/05_Matrix_of_Pointers/main.cpp) | Organize views by rows and slots |
+| 6 | [Array of linked nodes](03_DSA/13_Combining_Concepts/06_Array_of_Linked_Nodes/main.cpp) | Separate physical location from logical order |
+| 7 | [Vector of unique_ptr](03_DSA/13_Combining_Concepts/07_Vector_of_Unique_Ptr/main.cpp) | Give each dynamic object an owner |
+| 8 | [Class with struct nodes](03_DSA/13_Combining_Concepts/08_Class_with_Nodes/main.cpp) | Encapsulate a chain and its operations |
+| 9 | [Vector of classes with nodes](03_DSA/13_Combining_Concepts/09_Vector_of_Classes_with_Nodes/main.cpp) | Group lists and distinguish what moves |
+
+The [topic guide](03_DSA/13_Combining_Concepts/README.md) explains why the representation changes at each step. Each program comments its operations; [Shelf.h](03_DSA/13_Combining_Concepts/Shelf.h) provides the class used by the last two steps and the integration example. We reuse `Product.h` and `Product.cpp` from OOP.
+
+This integration example stores a `vector<Shelf>`; each shelf owns `struct` nodes, and each node contains a `Product`. A `vector<const Node*>` lends a view that we sort by price; an array of arrays of pointers displays slots that can repeat targets. The total is calculated from owners so repetitions are not counted as extra products.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/main.cpp).
+
+```cpp
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <limits>
+#include <stdexcept>
+#include <vector>
+#include "Shelf.h"
+
+using namespace std;
+using namespace course;
+
+// Reference to a card: change the caller's selection. The target is read-only.
+void selectProduct(const Shelf::Node*& selection, const Shelf::Node* replacement) {
+    selection = replacement;
+}
+
+long long total(const vector<Shelf>& shelves) {
+    long long total = 0;
+    for (const Shelf& shelf : shelves) {
+        const long long subtotal = shelf.total();
+        if (total > numeric_limits<long long>::max() - subtotal) {
+            throw overflow_error("The inventory exceeds the long long range");
+        }
+        total += subtotal;
+    }
+    return total;
+}
+
+int main() {
+    // First construct the owners: vector -> shelves -> nodes -> products.
+    vector<Shelf> shelves;
+    shelves.emplace_back("Stationery");
+    shelves.at(0).add(Product("Notebook", 300));
+    shelves.at(0).add(Product("Pencil", 100));
+    shelves.emplace_back("Books");
+    shelves.at(1).add(Product("Book", 500));
+
+    // Then borrow addresses. Lists contain objects; the view contains only cards.
+    vector<const Shelf::Node*> view;
+    for (const Shelf& shelf : shelves) {
+        const Shelf::Node* cursor = shelf.first();
+        while (cursor != nullptr) {
+            view.push_back(cursor);
+            cursor = cursor->nextNode();
+        }
+    }
+
+    // Sorting the view moves cards without changing links or moving products.
+    sort(view.begin(), view.end(), [](const Shelf::Node* left, const Shelf::Node* right) {
+        return left->getProduct().getPrice() < right->getProduct().getPrice();
+    });
+    for (const Shelf::Node* cursor : view) {
+        cout << cursor->getProduct().getName() << ": "
+             << cursor->getProduct().getPrice() << "\n";
+    }
+
+    const Shelf::Node* selection = nullptr;
+    selectProduct(selection, view.at(0));
+    // The matrix displays two unique products in three slots: selection appears twice.
+    const array<array<const Shelf::Node*, 2>, 2> slots{
+        array<const Shelf::Node*, 2>{selection, nullptr},
+        array<const Shelf::Node*, 2>{view.at(1), selection}
+    };
+    size_t occupied = 0;
+    for (const auto& row : slots) {
+        for (const Shelf::Node* cursor : row) {
+            if (cursor != nullptr) {
+                ++occupied;
+            }
+        }
+    }
+
+    // Integration check: the inventory and its links kept their data and order.
+    const long long before = total(shelves);
+    if (view.size() != 3 || before != 900 || occupied != 3 ||
+        selection->getProduct().getPrice() != 100 ||
+        shelves.at(0).first()->getProduct().getPrice() != 100 ||
+        shelves.at(0).first()->nextNode()->getProduct().getPrice() != 300) {
+        cerr << "The integration example produced an unexpected result\n";
+        return 1;
+    }
+    cout << "Inventory in cents: " << before << "\n";
+    cout << "Occupied slots (may repeat products): " << occupied << "\n";
+
+    // Clear the selection and view. They do not delete nodes because they are not owners.
+    selection = nullptr;
+    view.clear();
+    // At scope exit, the matrix is destroyed before the shelves; no observer outlives its nodes.
+}
+```
+
+The products total 900 cents. The view is ordered as pencil, notebook and book; inventory links keep their order. Before designing another combination, draw who contains the data, who owns it and who only holds an address. Then decide whether each function receives a copy, a reference, a read-only view or a reference to a pointer.
 
 ## How the three areas connect
 

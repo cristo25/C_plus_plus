@@ -15,3 +15,6 @@ g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
 ```
 
 Cada subcarpeta tiene su propio programa. Compila un ejemplo a la vez: todos tienen su propia función `main`.
+
+
+Para combinar estos conceptos, sigue la [ruta de arreglos, vistas y clases con nodos](../../03_EDD/13_Combinacion_de_Conceptos/README.md). Allí se explica qué punteros siguen siendo válidos al crecer un vector y cuáles se invalidan.

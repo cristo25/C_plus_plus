@@ -1,33 +1,58 @@
-// References and parameter passing
+// Value, reference and const reference
 //
-// int& is an alias for the original value. const string& lets you inspect a string without
-// copying or modifying it. Initialize a reference when declaring it.
+// A variable is a box. Passing by value supplies a second box; passing by
+// reference supplies another label for the same box. A reference is initialized
+// and stays bound to the same object: assigning a value changes that object.
+// const T& is a label that permits reading, but not writing through that access.
+// The object must remain alive while the reference is used.
 //
-// Analogy: A reference is a second label on the same box, rather than a second box.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
+// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
 // Run: ./program.exe
 //
-// Practice: Change the parameter to int number and observe why the check fails.
+// Practice: Predict each output. Replace int& with int and observe what stops changing.
 
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-// A reference is another name for the same variable: ++ changes the original counter.
-void increment(int& number) {
-    ++number;
+// By value: the function receives a separate box containing a copy.
+void changeCopy(int copy) {
+    copy = 99;
+    cout << "Inside the copy: " << copy << "\n";
 }
-// const string& reads the text without copying or modifying it.
+
+// By reference: this name is another label attached to the original box.
+void changeOriginal(int& box) {
+    ++box;
+}
+
+// const prevents modifying the string through this parameter; no copy is made.
 size_t length(const string& text) {
     return text.size();
 }
 
 int main() {
-    int counter = 4;
-    increment(counter);
+    int box = 4;
+    changeCopy(box);
+    cout << "Original after passing by value: " << box << "\n";
 
-    cout << counter << "\n";
+    // No & at the call: the parameter declaration determines how it is passed.
+    changeOriginal(box);
+    cout << "Original after passing by reference: " << box << "\n";
+
+    int& alias = box;
+    int other = 8;
+    // Assigning to the alias changes box. It does not rebind the alias to other.
+    alias = other;
+    ++alias;
+    cout << "Box through alias: " << box << "; other: " << other << "\n";
+
+    const int& readonly = box;
+    // The const view does not freeze box: the original name can still modify it.
+    box = 12;
+    cout << "Const view observes: " << readonly << "\n";
+
+    const string text = "C++";
+    cout << "Length without copying: " << length(text) << "\n";
 }
