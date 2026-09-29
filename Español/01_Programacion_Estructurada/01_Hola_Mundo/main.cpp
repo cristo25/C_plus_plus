@@ -6,10 +6,6 @@
 // Analogía: El programa es una receta. main indica dónde comienza el cocinero y cada instrucción
 // es un paso.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
 // Practica: Cambia el saludo por tu nombre. Agrega una segunda línea.
 
 #include <iostream>
