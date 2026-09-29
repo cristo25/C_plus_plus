@@ -1,6 +1,6 @@
 # Learn C++ step by step
 
-This is the course's general guide: structured programming, object-oriented programming (OOP), and data structures and algorithms (DSA). Each topic combines an explanation, an analogy when useful, and a code example. There are **83 independent programs**.
+This is the course's general guide: structured programming, object-oriented programming (OOP), and data structures and algorithms (DSA). Each topic combines an explanation, an analogy when useful, and a code example. There are **84 independent programs**.
 
 Program-specific explanations, compilation commands and exercises are **comments inside `.cpp` and `.h` files**. OOP and DSA retain guides for comparing concepts and variants; individual programs do not need separate READMEs.
 
@@ -9,6 +9,7 @@ Program-specific explanations, compilation commands and exercises are **comments
 1. [Structured programming](#structured-programming): data, decisions, loops and functions.
 2. [Object-oriented programming](#object-oriented-programming): state, behavior and ownership.
 3. [Data structures and algorithms](#data-structures-and-algorithms): data organization, traversals and costs.
+4. [Integrated project](04_Integrated_Project/README.md): a console application with catalog, deliveries and routes.
 
 Follow the folder numbers. Read the comments in `main.cpp` and predict its output. In divided topics, finish the subfolders before the `main.cpp` beside them. Read any course header it includes to see the implementation. Run the example and try the exercise in its comments.
 
@@ -1762,6 +1763,8 @@ An array is a drawer with fixed compartments; a vector can grow. A class may rep
 
 ## Final project
 
-The [fourth folder](04_Integrated_Project/README.md) reserves the structure for an application combining OOP, DSA, DAO and headers. Its implementation remains for later.
+The [fourth folder](04_Integrated_Project/README.md) contains a console library with a persistent catalog, binary search, doubly linked history, undo stack, delivery queue, graph, BFS and Dijkstra. It separates models, data, services, interface and the runnable check into headers and implementation files. Its guide explains the flow in sections with code snippets.
+
+Start with `--demo` to explore the menu with three sample books; use `--self-test` to run the check. The project guide provides complete compilation commands.
 
 The [Spanish version](../Español/README.md) follows the same order with matching translated examples.

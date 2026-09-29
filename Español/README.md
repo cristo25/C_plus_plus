@@ -1,6 +1,6 @@
 # Aprende C++ paso a paso
 
-Esta es la guía general del curso: programación estructurada, programación orientada a objetos (POO) y estructuras de datos y algoritmos (EDD). Cada tema combina una explicación, una analogía cuando ayuda y un bloque de código. Hay **83 programas independientes**.
+Esta es la guía general del curso: programación estructurada, programación orientada a objetos (POO) y estructuras de datos y algoritmos (EDD). Cada tema combina una explicación, una analogía cuando ayuda y un bloque de código. Hay **84 programas independientes**.
 
 Las explicaciones particulares, instrucciones de compilación y ejercicios están como **comentarios dentro de los archivos `.cpp` y `.h`**. En POO y EDD se conservan guías para comparar conceptos y variantes; no necesitas un README para cada programa.
 
@@ -9,6 +9,7 @@ Las explicaciones particulares, instrucciones de compilación y ejercicios está
 1. [Programación estructurada](#programación-estructurada): datos, decisiones, ciclos y funciones.
 2. [Programación orientada a objetos](#programación-orientada-a-objetos): estado, comportamiento y propiedad.
 3. [Estructuras de datos y algoritmos](#estructuras-de-datos-y-algoritmos): organización de datos, recorridos y costos.
+4. [Proyecto integrador](04_Proyecto_Integrador/README.md): aplicación de consola con catálogo, entregas y rutas.
 
 Sigue los números de las carpetas. Lee los comentarios de `main.cpp` y predice su salida. En los temas divididos, termina las subcarpetas antes del `main.cpp` que está junto a ellas. Si usa un header del curso, léelo también para ver la implementación. Ejecuta el ejemplo y prueba el ejercicio que aparece en sus comentarios.
 
@@ -1761,6 +1762,8 @@ Un arreglo es un cajón con secciones fijas; un vector puede crecer. Una clase p
 
 ## Proyecto final
 
-La [cuarta carpeta](04_Proyecto_Integrador/README.md) conserva la estructura para aplicar POO, EDD, DAO y headers en una aplicación. Su desarrollo queda para después.
+La [cuarta carpeta](04_Proyecto_Integrador/README.md) contiene una biblioteca de consola con catálogo persistente, búsqueda binaria, lista doble de historial, pila de deshacer, cola de entregas, grafo, BFS y Dijkstra. Separa modelos, datos, servicios, interfaz y comprobación en headers y archivos de implementación. Su guía explica el flujo por secciones con fragmentos de código.
+
+Empieza con `--demo` para recorrer el menú con tres libros de ejemplo; usa `--self-test` para ejecutar la comprobación. Los comandos completos de compilación están en la guía del proyecto.
 
 La [versión inglesa](../English/README.md) sigue el mismo orden y contiene los mismos ejemplos traducidos.

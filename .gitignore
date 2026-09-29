@@ -20,3 +20,11 @@ libros_demo.txt
 notes_demo.txt
 report_demo.txt
 books_demo.txt
+
+# Datos del proyecto integrador / Integrated project data
+Español/04_Proyecto_Integrador/datos/*.txt
+Español/04_Proyecto_Integrador/datos/*.tmp
+Español/04_Proyecto_Integrador/datos/*.bak
+English/04_Integrated_Project/data/*.txt
+English/04_Integrated_Project/data/*.tmp
+English/04_Integrated_Project/data/*.bak

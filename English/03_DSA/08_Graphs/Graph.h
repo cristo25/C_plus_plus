@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <functional>
 #include <limits>
+#include <optional>
 #include <queue>
 #include <stdexcept>
 #include <utility>
@@ -80,32 +81,46 @@ namespace course {
 
     inline constexpr long long INFINITY_DISTANCE = numeric_limits<long long>::max();
 
-    inline vector<long long> dijkstra(const Graph& graph, size_t startIndex) {
-        using Pending = pair<long long, size_t>; // Distance, vertex.
+    // Distances tell us the arrival cost; predecessors let us reconstruct the route.
+    struct ShortestPaths {
+        vector<long long> distances;
+        vector<optional<size_t>> predecessors;
+    };
+
+    inline ShortestPaths shortestPaths(const Graph& graph, size_t source) {
+        using Pending = pair<long long, size_t>;
         priority_queue<Pending, vector<Pending>, greater<Pending>> queuePending;
-        vector<long long> distances(graph.count(), INFINITY_DISTANCE);
-        distances.at(startIndex) = 0;
-        queuePending.push({0, startIndex});
+        ShortestPaths result{
+            vector<long long>(graph.count(), INFINITY_DISTANCE),
+            vector<optional<size_t>>(graph.count())
+        };
+        result.distances.at(source) = 0;
+        queuePending.push({0, source});
         while (!queuePending.empty()) {
             auto [distance, current] = queuePending.top();
             queuePending.pop();
-            if (distance != distances.at(current)) {
-                continue; // Discard outdated entries.
+            if (distance != result.distances.at(current)) {
+                continue;
             }
             for (const auto& edge : graph.neighbors(current)) {
                 if (distance > INFINITY_DISTANCE - edge.weight) {
                     continue;
                 }
-                long long candidate = distance + edge.weight;
-                // Relaxing an edge means replacing a distance with a newly discovered cheaper
-                // path.
-                if (candidate < distances.at(edge.destination)) {
-                    distances.at(edge.destination) = candidate;
+                const long long candidate = distance + edge.weight;
+                // Relaxation: improve the cost and remember the vertex we arrived from.
+                if (candidate < result.distances.at(edge.destination)) {
+                    result.distances.at(edge.destination) = candidate;
+                    result.predecessors.at(edge.destination) = current;
                     queuePending.push({candidate, edge.destination});
                 }
             }
         }
-        return distances;
+        return result;
+    }
+
+    // Earlier examples retain their distances-only API.
+    inline vector<long long> dijkstra(const Graph& graph, size_t source) {
+        return shortestPaths(graph, source).distances;
     }
 } // namespace course
 

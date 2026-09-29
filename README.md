@@ -19,9 +19,9 @@ Learn C++/
     └── 04_Integrated_Project/
 ```
 
-Cada idioma tiene una guía general y 83 programas con explicaciones, analogías, instrucciones de ejecución y ejercicios en los comentarios de sus archivos `.cpp` y `.h`. Las guías adicionales de POO y EDD comparan temas y variantes. Los programas por subtema y sus integradores conservan el orden numerado. Los tres bloques enseñan headers; DAO se estudia en POO. El proyecto final queda para después.
+Cada idioma tiene una guía general y 84 programas con explicaciones, analogías, instrucciones de ejecución y ejercicios en los comentarios de sus archivos `.cpp` y `.h`. Las guías adicionales de POO y EDD comparan temas y variantes. Los programas por subtema y sus integradores conservan el orden numerado. Los tres bloques enseñan headers; DAO se estudia en POO. El proyecto final es una aplicación de biblioteca y rutas de campus, con catálogo persistente y guía por secciones.
 
-Each language has one general guide and 83 programs with explanations, analogies, run instructions and exercises in `.cpp` and `.h` comments. Additional OOP and DSA guides compare topics and variants. Numbered subtopic programs and their integration examples preserve the learning sequence. All three blocks teach headers; OOP introduces DAO. The final project remains reserved for later.
+Each language has one general guide and 84 programs with explanations, analogies, run instructions and exercises in `.cpp` and `.h` comments. Additional OOP and DSA guides compare topics and variants. Numbered subtopic programs and their integration examples preserve the learning sequence. All three blocks teach headers; OOP introduces DAO. The final project is a campus library and routes application with a persistent catalog and a guide organized by sections.
 
 Una ruta adicional combina arreglos, punteros, referencias, clases, structs y nodos, desde ejemplos sencillos hasta un integrador: [Español](Español/03_EDD/13_Combinacion_de_Conceptos/README.md) · [English](English/03_DSA/13_Combining_Concepts/README.md).
 
@@ -36,3 +36,5 @@ Consulta la [guía de buenas prácticas](Español/BUENAS_PRACTICAS.md) para apre
 Necesitas un compilador de C++17, como `g++`. Cada ejemplo se compila desde su propia carpeta; sus comentarios iniciales indican el comando y los archivos `.cpp` adicionales cuando corresponda.
 
 Use a C++17 compiler such as `g++`. Compile each example from its own folder; its opening comments provide the command and any additional `.cpp` files required.
+
+Proyecto integrador / Integrated project: [Español](Español/04_Proyecto_Integrador/README.md) · [English](English/04_Integrated_Project/README.md).

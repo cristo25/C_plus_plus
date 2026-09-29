@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <functional>
 #include <limits>
+#include <optional>
 #include <queue>
 #include <stdexcept>
 #include <utility>
@@ -80,32 +81,46 @@ namespace curso {
 
     inline constexpr long long INFINITO = numeric_limits<long long>::max();
 
-    inline vector<long long> dijkstra(const Grafo& grafo, size_t inicio) {
-        using Pendiente = pair<long long, size_t>; // Distancia, vertice.
+    // Las distancias dicen cuánto cuesta llegar; los anteriores permiten reconstruir la ruta.
+    struct CaminosMinimos {
+        vector<long long> distancias;
+        vector<optional<size_t>> anteriores;
+    };
+
+    inline CaminosMinimos caminosMinimos(const Grafo& grafo, size_t origen) {
+        using Pendiente = pair<long long, size_t>;
         priority_queue<Pendiente, vector<Pendiente>, greater<Pendiente>> cola;
-        vector<long long> distancias(grafo.cantidad(), INFINITO);
-        distancias.at(inicio) = 0;
-        cola.push({0, inicio});
+        CaminosMinimos resultado{
+            vector<long long>(grafo.cantidad(), INFINITO),
+            vector<optional<size_t>>(grafo.cantidad())
+        };
+        resultado.distancias.at(origen) = 0;
+        cola.push({0, origen});
         while (!cola.empty()) {
             auto [distancia, actual] = cola.top();
             cola.pop();
-            if (distancia != distancias.at(actual)) {
-                continue; // Descarta entradas antiguas.
+            if (distancia != resultado.distancias.at(actual)) {
+                continue;
             }
             for (const auto& arista : grafo.vecinos(actual)) {
                 if (distancia > INFINITO - arista.peso) {
                     continue;
                 }
-                long long candidata = distancia + arista.peso;
-                // Relajar una arista significa reemplazar una distancia por un camino más barato
-                // descubierto.
-                if (candidata < distancias.at(arista.destino)) {
-                    distancias.at(arista.destino) = candidata;
-                    cola.push({candidata, arista.destino});
+                const long long candidato = distancia + arista.peso;
+                // Relajamos: mejora el costo y guardamos desde qué vértice llegamos.
+                if (candidato < resultado.distancias.at(arista.destino)) {
+                    resultado.distancias.at(arista.destino) = candidato;
+                    resultado.anteriores.at(arista.destino) = actual;
+                    cola.push({candidato, arista.destino});
                 }
             }
         }
-        return distancias;
+        return resultado;
+    }
+
+    // Los ejemplos anteriores conservan la misma API de solo distancias.
+    inline vector<long long> dijkstra(const Grafo& grafo, size_t origen) {
+        return caminosMinimos(grafo, origen).distancias;
     }
 } // namespace curso
 
