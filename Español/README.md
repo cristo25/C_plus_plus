@@ -1494,12 +1494,6 @@ Primero aprendes a leer datos, decidir y dividir el trabajo en funciones. POO ag
 
 Un arreglo es un cajón con secciones fijas; un vector puede crecer. Una clase puede representar cada ficha guardada en ese cajón. Un DAO puede administrar esas fichas y un grafo modelar las rutas que relacionan sus ubicaciones. Los integradores de cada bloque practican estas conexiones.
 
-## Buenas prácticas
-
-Los ejemplos usan `using namespace std;`, bloques con llaves y una instrucción por línea. `const` identifica datos y consultas que no cambian el estado. Los headers agrupan sus declaraciones dentro de `namespace curso`. Las lecciones individuales no usan `assert`; los integradores de algoritmos y DAO lo utilizan para comprobar resultados. Los errores de entrada se validan con condiciones normales.
-
-Para entender memoria manual se muestran `new/delete` en ejercicios concretos; en aplicaciones habituales prefiere objetos por valor, contenedores estándar y `unique_ptr`. Las listas impiden copias que duplicarían la propiedad de los nodos. El ABB no está balanceado, DFS es recursivo y el DAO de archivo guarda instantáneas por anexado: son límites didácticos que se describen junto a su código. Consulta la [revisión de buenas prácticas](BUENAS_PRACTICAS.md).
-
 ## Proyecto final
 
 La [cuarta carpeta](04_Proyecto_Integrador/README.md) conserva la estructura para aplicar POO, EDD, DAO y headers en una aplicación. Su desarrollo queda para después.

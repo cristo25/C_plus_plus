@@ -1495,12 +1495,6 @@ Start by reading data, making decisions and dividing work into functions. OOP gr
 
 An array is a drawer with fixed compartments; a vector can grow. A class may represent each record in that drawer. A DAO may manage the records, while a graph models routes between their locations. The block integration examples practice these connections.
 
-## Good practices
-
-Examples use `using namespace std;`, braces and one statement per line. `const` identifies data and queries that do not change state. Headers group declarations inside `namespace course`. Individual lessons do not use `assert`; algorithm and DAO integration examples use it to check results. Ordinary conditions validate input errors.
-
-Manual `new/delete` appears in focused ownership exercises; prefer values, standard containers and `unique_ptr` for regular applications. Linked lists prevent copying that would duplicate node ownership. The BST is unbalanced, DFS is recursive, and the file DAO appends snapshots: these educational limits are explained alongside the code. See the [good-practices review](GOOD_PRACTICES.md).
-
 ## Final project
 
 The [fourth folder](04_Integrated_Project/README.md) reserves the structure for an application combining OOP, DSA, DAO and headers. Its implementation remains for later.
