@@ -1,8 +1,11 @@
 // Quick sort
 //
-// Choose a pivot, partition values and recursively sort the partitions. Usually O(n log n), but
-// this last-element pivot can take O(n²) for sorted or equal inputs. The recursive stack can
-// reach O(n). Not stable. Read quickSort in ../Sorts.h.
+// Choose a pivot, partition values and recursively sort the partitions. When partitions are
+// reasonably even, each level processes the n values and the level count grows like repeated
+// halving (O(n log n); n counts values). If the pivot leaves nearly everything on one side,
+// repeated long traversals can make work grow like n multiplied by n (O(n²)); choosing the last
+// value as pivot causes this for sorted or equal inputs. Up to one pending call per value can also
+// accumulate (O(n) memory for calls). Not stable. Read quickSort in ../Sorts.h.
 //
 // Analogy: A pivot splits a line: smaller values move left and the rest move right; repeat
 // within each group.

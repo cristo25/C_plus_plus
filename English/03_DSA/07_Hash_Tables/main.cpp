@@ -1,8 +1,10 @@
 // Hash tables with unordered_map
 //
-// unordered_map associates unique keys with values through hashing. Search and insertion cost
-// O(1) on average and O(n) in the worst case. The library manages collisions and does not
-// guarantee iteration order. operator[] can insert; use find for lookup alone.
+// unordered_map associates unique keys with values through hashing. The hash function directs a
+// lookup toward a group of entries. On average, lookup or insertion takes an amount of work that
+// does not grow with the total entry count (O(1)). If many keys land in the same group, an
+// operation may inspect all n entries (O(n) in the worst case). The library manages collisions and
+// does not guarantee iteration order. operator[] can insert; use find for lookup alone.
 //
 // Analogy: A receptionist turns a key into a locker number and distinguishes records when
 // several keys collide.

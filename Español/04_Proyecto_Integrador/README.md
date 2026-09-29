@@ -147,7 +147,7 @@ return vista.at(*posicion);
 
 La condición indispensable es que los IDs estén ordenados. `optional<size_t>` distingue la ausencia de un índice válido, incluido el cero. El puntero devuelto observa un libro del DAO; deja de poder usarse después de agregar, eliminar, renombrar o deshacer un cambio, porque sustituimos el catálogo completo. La consola lo usa inmediatamente; las entregas copian el libro antes de cualquier modificación posterior.
 
-La búsqueda binaria cuesta O(log n), pero preparar la vista en cada consulta cuesta O(n log n). Esta implementación enseña la conexión entre ordenamiento, vista y búsqueda; no presenta la consulta completa como O(log n).
+Una vez que los IDs están ordenados, cada comparación permite descartar la mitad de los candidatos. Duplicar la cantidad de libros añade aproximadamente una comparación a esa búsqueda (O(log n), donde n es la cantidad de libros y log n describe ese crecimiento por mitades). Sin embargo, aquí primero hay que reunir y ordenar las direcciones de todos los libros. Ese trabajo previo también cuenta: preparar la vista requiere un número de comparaciones cuyo límite crece como la cantidad de libros multiplicada por los niveles de división por mitades (O(n log n)). Por eso la consulta completa cuesta más que buscar dentro de una vista ya preparada.
 
 ## 8. Structs y cola de entregas
 
@@ -265,18 +265,20 @@ El resultado correcto termina con código 0; un fallo indica el caso y devuelve 
 
 ## 13. Costos y cómo seguir estudiando
 
-| Operación | Costo aproximado |
-| --- | --- |
-| Preparar la vista ordenada | O(n log n) |
-| Búsqueda binaria, con IDs ya preparados | O(log n) |
-| Copiar una instantánea para deshacer | O(n) más los textos |
-| Anexar un índice al historial | O(1) |
-| Consultar todo el historial | O(h) más la copia de textos |
-| Consultar pendientes | O(p) más la copia de solicitudes |
-| BFS | O(V + E) |
-| Dijkstra con entradas repetidas en la cola | O((V + E) log(V + E)) |
-| Reconstruir el camino | O(V) como máximo |
+Aquí contamos trabajo y memoria por separado. Las letras solo abrevian cantidades: n es el número de libros, h el de mensajes del historial, p el de solicitudes pendientes, V el de edificios y E el de conexiones. La notación entre paréntesis resume cómo crece el trabajo; no indica segundos ni bytes exactos.
 
-La carga del DAO verifica duplicados mediante consultas lineales, por lo que puede costar O(n²). El proyecto prioriza leer y conectar sus piezas; cada costo corresponde a una decisión que puedes cambiar con una necesidad concreta.
+| Operación | Qué trabajo realiza al crecer los datos |
+| --- | --- |
+| Preparar la vista ordenada | Reúne las direcciones y las ordena. El límite de comparaciones combina la cantidad de libros con los niveles de una división por mitades (O(n log n)). |
+| Buscar con los IDs ya ordenados | Descarta la mitad de los candidatos en cada paso; duplicar los libros añade aproximadamente una comparación (O(log n)). |
+| Copiar para deshacer | Copia una ficha por libro, además de todos los caracteres de sus títulos (O(n) para las fichas; textos más largos también requieren más trabajo y memoria). |
+| Anexar un índice al historial | Ajusta unos pocos enlaces, sin recorrer los mensajes anteriores (O(1)). |
+| Consultar el historial | Visita sus h mensajes y copia sus textos (O(h) visitas, más el trabajo de copiar caracteres). |
+| Consultar pendientes | Visita sus p solicitudes y copia sus datos (O(p) visitas, más las copias de títulos). |
+| BFS | Visita los edificios alcanzables y revisa sus conexiones; si todos son alcanzables, procesa todo el mapa (O(V + E)). |
+| Dijkstra | Revisa conexiones y mantiene una cola que permite elegir el candidato de menor costo. Más candidatos requieren más ajustes y pueden existir registros repetidos de un edificio. |
+| Reconstruir el camino | Sigue los edificios de la ruta desde el destino; como máximo pasa por todos los V edificios (O(V)). |
+
+Al cargar, el DAO compara cada libro nuevo con los que ya ha leído para detectar IDs repetidos. Con n libros, esas revisiones se acumulan: primero revisa pocos, después más, y el trabajo puede crecer como n multiplicado por n (O(n²)). El proyecto prioriza leer y conectar sus piezas; cada costo corresponde a una decisión que puedes cambiar con una necesidad concreta.
 
 Para practicar, cambia un peso y predice la ruta, añade una conexión al anexo, prueba IDs al principio y al final, o amplía la comprobación con otro error de entrada. Antes de agregar una estructura nueva, explica qué operación mejoraría. Un árbol o una tabla hash pueden servir para otro tipo de consulta, pero el programa ya utiliza cada estructura actual en una operación real.

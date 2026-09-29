@@ -1,8 +1,12 @@
 // Merge sort
 //
-// Divide por mitades, ordena cada mitad y las mezcla. Tiempo O(n log n); usa O(n) de memoria
-// auxiliar y O(log n) de llamadas. Es estable porque, ante empates, toma primero el elemento de
-// la izquierda. Lee su función en ../Ordenamientos.h.
+// Divide por mitades, ordena cada mitad y las mezcla. Dividir por mitades crea varios niveles de
+// trabajo; duplicar la cantidad de datos añade aproximadamente un nivel. En cada nivel, las mezclas
+// recorren en conjunto los n datos: el trabajo combina la cantidad de datos con la cantidad de
+// niveles (O(n log n); n cuenta datos y log n describe los niveles de división). Necesita un
+// arreglo auxiliar que crece con esos datos (O(n) de memoria) y guarda las llamadas pendientes del
+// camino de divisiones actual (O(log n) de memoria para las llamadas). Es estable porque, ante
+// empates, toma primero el elemento de la izquierda. Lee su función en ../Ordenamientos.h.
 //
 // Analogía: Divides hojas entre dos ayudantes y luego reúnes sus montones ordenados tomando la
 // menor hoja disponible.

@@ -1,8 +1,11 @@
 // BFS: breadth-first search
 //
-// BFS uses a queue and visits by levels. Mark vertices when enqueueing to prevent repeated
-// visits through cycles. Only vertices reachable from the start are visited. In unweighted
-// graphs, levels express minimum edge counts. Time O(V + E), auxiliary memory O(V).
+// BFS uses a queue and visits by levels. Mark vertices when enqueueing to prevent repeated visits
+// through cycles. Only vertices reachable from the start are visited. In unweighted graphs, levels
+// express minimum edge counts. Traversing neighbor lists visits reachable points and inspects their
+// connections. In the worst case, work grows with all graph points and connections (O(V + E), where
+// V counts vertices and E counts edges). Visited markers and points waiting to be processed need
+// space that grows with the point count (O(V) additional memory).
 //
 // Analogy: Explore a city in rings, starting with nearby neighbors and then their neighbors.
 //

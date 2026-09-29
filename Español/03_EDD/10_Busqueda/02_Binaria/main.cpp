@@ -1,8 +1,12 @@
 // Búsqueda binaria
 //
-// Requiere un vector ordenado de menor a mayor. Cada comparación descarta la mitad del rango;
-// tiempo O(log n), espacio auxiliar O(1). Ordenar primero tiene su propio costo: no es gratis.
-// Esta versión devuelve la primera coincidencia.
+// Requiere un vector ordenado de menor a mayor. Cada paso reduce la zona pendiente aproximadamente
+// a la mitad. Imagina reducir 16 candidatos a 8, después a 4, a 2 y a 1: son cuatro divisiones. Si
+// comenzamos con 32, solo agregamos una división a ese recorrido. Por eso el trabajo crece
+// lentamente al aumentar los datos (O(log n), donde n es la cantidad de elementos y log n describe
+// ese crecimiento por mitades). Esta versión usa unas pocas variables, sin copiar el vector (O(1)
+// de memoria adicional). Ordenar primero tiene su propio costo: no es gratis. Esta versión devuelve
+// la primera coincidencia.
 //
 // Analogía: Abres una guía ordenada por la mitad y decides qué mitad conserva el número que
 // buscas.

@@ -1,8 +1,10 @@
 // Linear search
 //
-// Inspect values from the start until finding a match. No sorting is required. Time O(n),
-// auxiliary memory O(1). optional holds a position or nullopt for absence. Check before using
-// *result; index 0 is valid. In applications you can use find instead.
+// Inspect values from the start until finding a match. No sorting is required. If the target is
+// last or absent, it may inspect all n elements (O(n), where n is the element count). It only needs
+// a few variables for the current position and result (O(1) additional memory). optional holds a
+// position or nullopt for absence. Check before using *result; index 0 is valid. In applications
+// you can use find instead.
 //
 // Analogy: Search a drawer for a key by checking every compartment.
 //

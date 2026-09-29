@@ -1,7 +1,10 @@
 // Cola de prioridad y heap
 //
-// priority_queue utiliza un heap (montículo). Por defecto coloca el mayor arriba; con
-// greater<int> coloca el menor. Consultar top cuesta O(1); insertar y retirar, O(log n). No
+// priority_queue utiliza un heap (montículo). Por defecto coloca el mayor arriba; con greater<int>
+// coloca el menor. Consultar top accede directamente al valor prioritario, sin recorrer los demás
+// (O(1)). Al insertar o retirar puede ser necesario ajustar un camino de niveles del montículo, una
+// estructura que organiza los datos como un árbol. Su cantidad de niveles crece lentamente:
+// duplicar la cantidad de elementos añade aproximadamente un nivel (O(log n), con n elementos). No
 // conserva el orden de llegada entre prioridades iguales.
 //
 // Analogía: En urgencias se atiende por prioridad; la gravedad decide el siguiente turno.

@@ -67,8 +67,9 @@ namespace proyecto {
     }
 
     void Biblioteca::confirmar(LibroDAO candidato, const string& mensaje) {
-        // Guardamos antes de sustituir el catálogo en memoria. Un fallo de E/S conserva el estado anterior.
-        // ponytail: instantáneas completas para deshacer, O(n) por cambio; usar comandos inversos para catálogos grandes.
+        // Guardamos antes de sustituir el catálogo en memoria. Un fallo de E/S conserva el estado
+        // anterior. ponytail: cada cambio copia todos los libros y sus títulos para poder
+        // deshacerlo; usar comandos inversos si esas copias ocupan demasiado espacio.
         deshacerCambios.push(dao);
         try {
             almacen.guardar(candidato);

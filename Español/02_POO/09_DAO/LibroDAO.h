@@ -28,8 +28,9 @@ namespace curso {
         }
 
     public:
-        // Consulta lineal O(n). Devuelve un observador que puede invalidarse al modificar el
-        // vector.
+        // Busca libro por libro y puede revisar todo el catálogo. Más libros pueden significar más
+        // comparaciones (O(n), con n libros). Devuelve un observador que puede invalidarse al
+        // modificar el vector.
         const Libro* buscar(int id) const {
             for (const auto& libro : libros) {
                 if (libro.id == id) {

@@ -1,8 +1,11 @@
 // Bubble sort
 //
-// Compare adjacent values and swap inverted pairs. Each pass moves the largest remaining value
-// to the end. Average and worst-case time O(n²), best case O(n) for sorted data with the change
-// flag. Additional memory O(1). Stable. Read bubbleSort in ../Sorts.h.
+// Compare adjacent values and swap inverted pairs. Each pass moves the largest remaining value to
+// the end. With n values, repeated passes compare many of the same neighbors: work can grow roughly
+// like n multiplied by n (O(n²), on average and in the worst case). If values are already sorted,
+// the change flag allows stopping after one pass over the n values (O(n)). It only needs a few
+// extra variables, without another input-sized array (O(1) additional memory). Stable. Read
+// bubbleSort in ../Sorts.h.
 //
 // Analogy: Large bubbles rise toward an end; each pass moves the largest number there.
 //

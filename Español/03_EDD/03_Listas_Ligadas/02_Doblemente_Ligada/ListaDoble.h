@@ -27,7 +27,8 @@ namespace curso {
             }
         }
         void agregar(int dato) {
-            // Conservar fin permite anexar en O(1), sin recorrer toda la lista.
+            // Conservar fin permite anexar ajustando unos pocos enlaces, sin recorrer los demás
+            // nodos (O(1): trabajo que no crece con la longitud de la lista).
             Nodo* nuevo = new Nodo{dato, fin, nullptr};
             if (fin) {
                 fin->siguiente = nuevo;

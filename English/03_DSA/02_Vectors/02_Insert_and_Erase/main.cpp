@@ -1,9 +1,10 @@
 // Inserting and erasing in vectors
 //
-// insert and erase take iterators. begin() points to the first element; end() is past the last
-// and must not be dereferenced. Middle insertion and erasure shift elements, costing O(n).
-// Reallocation invalidates all pointers, references and iterators; erasure invalidates them from
-// the erased position onward.
+// insert and erase take iterators. begin() points to the first element; end() is past the last and
+// must not be dereferenced. Inserting or erasing in the middle shifts the elements after that
+// position. More elements to move means more work; in the worst case nearly all of them may move
+// (O(n), where n is the vector element count). Reallocation invalidates all pointers, references
+// and iterators; erasure invalidates them from the erased position onward.
 //
 // Analogy: Making room in the middle of a drawer requires moving the items in the following
 // compartments.

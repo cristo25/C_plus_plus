@@ -1,8 +1,10 @@
 // Binary search trees (BST)
 //
 // This BST places smaller values on the left and larger ones on the right, rejecting duplicates.
-// Insertion, search and removal cost O(h), where h is height. Removing a node with two children
-// replaces it with the smallest value in its right subtree. An unbalanced BST may become a
+// Inserting, searching or removing follows a path through tree levels. The work depends on how many
+// levels that path contains: h denotes height, the number of levels on the longest path (O(h)). A
+// very stretched tree can require passing through almost every node. Removing a node with two
+// children replaces it with the smallest value in its right subtree. An unbalanced BST may become a
 // chain.
 //
 // Analogy: Each node in a number guide tells you whether to follow smaller or larger values.

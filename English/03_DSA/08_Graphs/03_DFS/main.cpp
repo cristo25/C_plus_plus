@@ -1,8 +1,11 @@
 // DFS: depth-first search
 //
 // DFS follows a branch as far as possible, then backtracks. Use recursion or an explicit stack.
-// Visited markers prevent cycles. Time O(V + E), auxiliary memory O(V). Order depends on
-// neighbor order; use an explicit stack for great depths.
+// Visited markers prevent cycles. Traversing neighbor lists visits reachable points and inspects
+// their connections. In the worst case, work grows with all graph points and connections (O(V + E),
+// where V counts vertices and E counts edges). Visited markers and points waiting to be processed
+// need space that grows with the point count (O(V) additional memory). Order depends on neighbor
+// order; use an explicit stack for great depths.
 //
 // Analogy: Explore a maze by following a hallway to its end, then returning to try the remaining
 // hallways.

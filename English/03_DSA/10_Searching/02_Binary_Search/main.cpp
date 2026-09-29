@@ -1,8 +1,12 @@
 // Binary search
 //
-// Requires ascending sorted data. Every comparison discards half of the range. Time O(log n),
-// auxiliary memory O(1). Sorting has a separate cost. This version returns the first match;
-// lower_bound is its standard alternative, while binary_search returns only existence.
+// Requires ascending sorted data. Each step roughly halves the remaining search range. Imagine
+// reducing 16 candidates to 8, then 4, 2 and 1: four divisions. Starting with 32 adds just one
+// division to that sequence. This is why work grows slowly as the data increases (O(log n), where n
+// is the element count and log n describes growth through halving). This version uses a few
+// variables without copying the vector (O(1) additional memory). Sorting has a separate cost. This
+// version returns the first match; lower_bound is its standard alternative, while binary_search
+// returns only existence.
 //
 // Analogy: Open a sorted guide at its middle and decide which half could contain the requested
 // number.

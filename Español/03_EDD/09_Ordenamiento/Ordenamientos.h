@@ -101,7 +101,8 @@ namespace curso {
         partirRango(datos, corte + 1, fin);
     }
     inline void quickSort(vector<int>& datos) {
-        // ponytail: ultimo elemento como pivote, peor caso O(n^2); sort para uso real.
+        // ponytail: usar el último dato como pivote puede provocar recorridos largos repetidos en
+        // datos ya ordenados; usar sort para una garantía de rendimiento más consistente.
         partirRango(datos, 0, datos.size());
     }
 } // namespace curso

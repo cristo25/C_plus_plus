@@ -1,8 +1,11 @@
 // Crear y recorrer un vector
 //
 // vector es un arreglo contiguo cuyo tamaño puede cambiar. size() es la cantidad de elementos;
-// capacity() es el espacio reservado. push_back cuesta O(1) amortizado, aunque una realocación
-// individual cuesta O(n).
+// capacity() es el espacio reservado. Al agregar al final con push_back, normalmente basta con
+// ocupar una casilla libre. Si se llena el espacio reservado, el vector necesita otro bloque y
+// trasladar sus elementos: esa inserción puede recorrer los n elementos existentes (O(n)). Al
+// repartir esas ampliaciones entre muchas inserciones, el trabajo por inserción queda acotado por
+// una cantidad constante; a eso se le llama costo amortizado (O(1) amortizado).
 //
 // Analogía: Es un cajón extensible: al llenarse, puede mudarse a un cajón mayor. Sus secciones
 // siguen numeradas desde cero.

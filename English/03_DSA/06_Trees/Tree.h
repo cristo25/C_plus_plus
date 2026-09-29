@@ -83,7 +83,8 @@ namespace course {
         }
 
     public:
-        // ponytail: unbalanced BST, O(n) worst case; use AVL if height matters.
+        // ponytail: without balancing, the tree can become a chain that requires inspecting every
+        // node; an AVL tree limits its height to prevent this.
         bool insert(int value) {
             return insertAt(root, value);
         }

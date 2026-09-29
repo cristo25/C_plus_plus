@@ -1,8 +1,11 @@
 // Burbuja
 //
 // Compara vecinos y los intercambia si están invertidos. Cada pasada coloca el mayor restante al
-// final. Tiempo O(n²) en promedio y peor caso; O(n) si ya está ordenado gracias al indicador de
-// cambios. Memoria adicional O(1). Es estable. Lee su función en ../Ordenamientos.h.
+// final. Con n datos, las pasadas comparan repetidamente muchos de los mismos vecinos: el trabajo
+// puede crecer aproximadamente como n multiplicado por n (O(n²), tanto en promedio como en el peor
+// caso). Si ya están ordenados, el indicador de cambios permite terminar tras una pasada por los n
+// datos (O(n)). Solo necesita unas pocas variables adicionales, sin crear otro arreglo del tamaño
+// de la entrada (O(1) de memoria adicional). Es estable. Lee su función en ../Ordenamientos.h.
 //
 // Analogía: Las burbujas grandes suben al extremo; cada pasada lleva el mayor número al final.
 //

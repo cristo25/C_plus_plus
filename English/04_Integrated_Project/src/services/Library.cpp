@@ -68,7 +68,8 @@ namespace project {
 
     void Library::commit(BookDAO candidate, const string& message) {
         // Save before replacing the in-memory catalog. An I/O failure preserves the previous state.
-        // ponytail: full undo snapshots cost O(n) per change; use inverse commands for large catalogs.
+        // ponytail: each change copies every book and title for undo; use inverse commands if those
+        // copies take too much space.
         undo.push(dao);
         try {
             store.save(candidate);

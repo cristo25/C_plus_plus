@@ -1144,7 +1144,7 @@ Choose structures based on their operations and costs. DSA is a field of study t
 
 ### 1. Complexity: time and space
 
-Big O describes how work grows with input size, rather than exact seconds. Index access is O(1), visiting n elements is O(n), and repeatedly halving a problem takes O(log n) steps. Also count additional memory.
+To compare programs, imagine increasing the amount of data. Reaching a slot directly by its index takes a fixed amount of work even when there are more slots (written O(1); it does not mean exactly one step). Inspecting every slot does increase the work: 20 visits are twice as many as 10 (O(n), where n is the number of elements). If we repeatedly halve what remains, going from 8 to 1 takes three divisions and from 16 to 1 takes four (O(log n); here log n describes growth through halving). These abbreviations are called Big O notation and describe how work can grow, without specifying exact seconds. We can also count the extra data the program needs to keep: that is auxiliary memory.
 
 Analogy: Finding a numbered compartment is direct. Inspecting every compartment takes longer as the cabinet grows. Halving a sorted guide discards many pages at once.
 
@@ -1174,11 +1174,11 @@ int main() {
 
 Study size, traversal, modification and stored objects. The integration example organizes tasks, completes one and removes it, leaving `Compile` and `Practice`.
 
-**Creating and traversing a vector.** `vector` is a contiguous array whose size can change. `size()` counts elements; `capacity()` counts reserved slots. `push_back` takes amortized O(1), although an individual reallocation costs O(n).
+**Creating and traversing a vector.** `vector` is a contiguous array whose size can change. `size()` counts elements; `capacity()` counts reserved slots. Appending with `push_back` normally uses a free slot. When reserved storage fills up, the vector needs another block and must relocate its elements: that insertion may visit all n existing elements (O(n)). Spreading these expansions over many insertions keeps the work per insertion bounded by a constant amount; this is called amortized cost (amortized O(1)).
 
 Analogy: A growing drawer can move to a larger drawer when full. Its compartments still start at index zero.
 
-**Inserting and erasing in vectors.** `insert` and `erase` take iterators. `begin()` points to the first element; `end()` is past the last and must not be dereferenced. Middle insertion and erasure shift elements, costing O(n). Reallocation invalidates all pointers, references and iterators; erasure invalidates them from the erased position onward.
+**Inserting and erasing in vectors.** `insert` and `erase` take iterators. `begin()` points to the first element; `end()` is past the last and must not be dereferenced. Inserting or erasing in the middle shifts the elements after that position. More elements to move means more work; in the worst case nearly all of them may move (O(n), where n is the vector element count). Reallocation invalidates all pointers, references and iterators; erasure invalidates them from the erased position onward.
 
 Analogy: Making room in the middle of a drawer requires moving the items in the following compartments.
 
@@ -1217,15 +1217,15 @@ int main() {
 
 All three implementations store integers to focus on links and ownership. Manual `new/delete` teaches the mechanism; standard containers manage storage for common applications. The integration example uses all three headers and removes 20 from each list. Compare traversals, then remove the first node, the last node and the only node.
 
-**Singly linked list.** Every node holds a value and the address of the next node. The last points to `nullptr`. There is no direct index access; traversing and searching cost O(n). The header appends values, removes the first matching value and releases all nodes. Appending here costs O(n).
+**Singly linked list.** Every node holds a value and the address of the next node. The last points to `nullptr`. Reaching another node means following links one by one. Traversing the list or searching for a value may require visiting all n nodes (O(n)); n is the number of nodes. The header appends values, removes the first matching value and releases all nodes. Appending here also follows links until it reaches the last node, so more nodes mean more work.
 
 Analogy: A treasure hunt: every card contains a value and a clue pointing to the next card; the last says end.
 
-**Doubly linked list.** Each node knows its previous and next node. Keeping a head and tail permits O(1) append and traversal in either direction. Searching still costs O(n); unlinking an already located node updates both links.
+**Doubly linked list.** Each node knows its previous and next node. Keeping a head and tail lets us append by adjusting a fixed number of links, without traversing the list (O(1)). We can also traverse in either direction. Searching for a value may require inspecting all n nodes (O(n)); unlinking an already located node adjusts its neighboring links.
 
 Analogy: Train cars have couplings at both ends, allowing travel in either direction.
 
-**Circular linked list.** The last node points to the first. Stop on returning to the start; waiting for `nullptr` would loop forever. Append costs O(1), while searching and removing by value cost O(n). This variant is singly linked and circular.
+**Circular linked list.** The last node points to the first. Stop on returning to the start; waiting for `nullptr` would loop forever. Keeping the last node lets us append by adjusting a few links without traversing the list (O(1)). Searching or removing by value may require inspecting all n nodes (O(n)); n is the node count. This variant is singly linked and circular.
 
 Analogy: A wheel of turns returns to the first person after serving the last.
 
@@ -1306,7 +1306,7 @@ Compare arrival order and priority order. The integration example produces `2 9 
 
 Analogy: A line at a food stall serves the first arrival first.
 
-**Priority queues and heaps.** `priority_queue` uses a heap. By default the largest value is at the top; `greater<int>` puts the smallest there. `top` costs O(1), insertion and removal O(log n). Equal priorities do not preserve arrival order.
+**Priority queues and heaps.** `priority_queue` uses a heap. By default the largest value is at the top; `greater<int>` puts the smallest there. `top` directly accesses the priority value without traversing other elements (O(1)). Inserting or removing may require adjusting a path through heap levels, which organize data like a tree. The number of levels grows slowly: doubling the element count adds about one level (O(log n), with n elements). Equal priorities do not preserve arrival order.
 
 Analogy: An emergency room serves patients by severity rather than arrival order.
 
@@ -1341,11 +1341,11 @@ Distinguish binary trees from binary search trees, then study traversal orders. 
 
 Analogy: An organization chart starts with one manager and branches into subordinates, at most two per manager here.
 
-**Binary search trees (BST).** This BST places smaller values on the left and larger ones on the right, rejecting duplicates. Insertion, search and removal cost O(h), where h is height. Removing a node with two children replaces it with the smallest value in its right subtree. An unbalanced BST may become a chain.
+**Binary search trees (BST).** This BST places smaller values on the left and larger ones on the right, rejecting duplicates. Inserting, searching or removing follows a path through tree levels. The work depends on how many levels that path contains: h denotes height, the number of levels on the longest path (O(h)). A very stretched tree can require passing through almost every node. Removing a node with two children replaces it with the smallest value in its right subtree. An unbalanced BST may become a chain.
 
 Analogy: Each node in a number guide tells you whether to follow smaller or larger values.
 
-**Tree traversals.** Preorder visits root, left, right. Inorder visits left, root, right. Postorder visits left, right, root. Inorder produces sorted values in a BST. Traversals take O(n), with an O(h) recursive stack plus the output vector.
+**Tree traversals.** Preorder visits root, left, right. Inorder visits left, root, right. Postorder visits left, right, root. Inorder produces sorted values in a BST. A traversal visits every node, so its work grows with the n nodes (O(n)). It also keeps calls waiting to return: there can be one for each level on the current path, up to the tree height h (O(h) memory for those calls). The output vector needs room for the n results.
 
 Analogy: Visit a house and record each room before its annexes, between its annexes, or after them.
 
@@ -1385,7 +1385,7 @@ int main() {
 
 ### 7. Hash tables with unordered_map
 
-`unordered_map` associates unique keys with values through hashing. Search and insertion cost O(1) on average and O(n) in the worst case. The library manages collisions and does not guarantee iteration order. `operator[]` can insert; use `find` for lookup alone.
+`unordered_map` associates unique keys with values through hashing. The hash function directs a lookup toward a group of entries. On average, lookup or insertion takes an amount of work that does not grow with the total entry count (O(1)). If many keys land in the same group, an operation may inspect all n entries (O(n) in the worst case). The library manages collisions and does not guarantee iteration order. `operator[]` can insert; use `find` for lookup alone.
 
 Analogy: A receptionist turns a key into a locker number and distinguishes records when several keys collide.
 
@@ -1414,19 +1414,19 @@ int main() {
 
 Study representation, traversal and minimum costs. BFS and DFS ignore weights; Dijkstra uses them. The integration example compares traversals and obtains minimum cost 4 from 0 to 3. Free functions in these headers are inline to avoid multiple definitions when linking.
 
-**Representing graphs.** A graph has vertices and edges. An adjacency list stores neighbors using O(V + E) space; an adjacency matrix uses O(V²). `Graph` stores directed edges with nonnegative weights. Add both directions for an undirected connection.
+**Representing graphs.** A graph represents connected points: points are called vertices and connections are edges. Imagine buildings joined by roads. An adjacency list stores a list for each building and an entry for each recorded connection. Memory grows with both the buildings and connections (O(V + E): V is the vertex count and E is the edge count). An adjacency matrix reserves a slot for every pair of buildings, even when they are unconnected: 5 buildings need 5 times 5, or 25 slots; 10 need 100 (O(V²): V² means V multiplied by V). These expressions describe memory growth, not an exact byte count. `Graph` stores directed edges with nonnegative weights. Add both directions for an undirected connection.
 
 Analogy: Cities are vertices, roads are edges, and the cost of traveling a road is its weight.
 
-**BFS: breadth-first search.** BFS uses a queue and visits by levels. Mark vertices when enqueueing to prevent repeated visits through cycles. Only vertices reachable from the start are visited. In unweighted graphs, levels express minimum edge counts. Time O(V + E), auxiliary memory O(V).
+**BFS: breadth-first search.** BFS uses a queue and visits by levels. Mark vertices when enqueueing to prevent repeated visits through cycles. Only vertices reachable from the start are visited. In unweighted graphs, levels express minimum edge counts. Traversing neighbor lists visits reachable points and inspects their connections. In the worst case, work grows with all graph points and connections (O(V + E), where V counts vertices and E counts edges). Visited markers and points waiting to be processed need space that grows with the point count (O(V) additional memory).
 
 Analogy: Explore a city in rings, starting with nearby neighbors and then their neighbors.
 
-**DFS: depth-first search.** DFS follows a branch as far as possible, then backtracks. Use recursion or an explicit stack. Visited markers prevent cycles. Time O(V + E), auxiliary memory O(V). Order depends on neighbor order; use an explicit stack for great depths.
+**DFS: depth-first search.** DFS follows a branch as far as possible, then backtracks. Use recursion or an explicit stack. Visited markers prevent cycles. Traversing neighbor lists visits reachable points and inspects their connections. In the worst case, work grows with all graph points and connections (O(V + E), where V counts vertices and E counts edges). Visited markers and points waiting to be processed need space that grows with the point count (O(V) additional memory). Order depends on neighbor order; use an explicit stack for great depths.
 
 Analogy: Explore a maze by following a hallway to its end, then returning to try the remaining hallways.
 
-**Dijkstra: minimum-cost paths.** Dijkstra finds minimum distances for nonnegative weights. Use a minimum-priority queue, improve distances and discard outdated entries. `INFINITY_DISTANCE` means unreachable. Repeated queue entries give this implementation O((V + E) log(E + 2)) time and O(V + E) space. It returns costs, not routes.
+**Dijkstra: minimum-cost paths.** Dijkstra finds minimum distances for nonnegative weights. Use a minimum-priority queue, improve distances and discard outdated entries. `INFINITY_DISTANCE` means unreachable. Besides inspecting connections, this version organizes candidates in a priority queue to select the cheapest one. More candidates mean more work maintaining that priority. A point can appear several times as better routes are found, so the queue also needs space for these pending records. Memory can grow with the graph vertices and edges (O(V + E), where V counts points and E counts connections). The dijkstra function returns costs; shortestPaths also records the predecessor of each destination so routes can be reconstructed.
 
 Analogy: A courier compares total route costs and always considers the cheapest available alternative first.
 
@@ -1457,27 +1457,27 @@ int main() {
 
 Study algorithms using the same input and compare time, memory and stability. Stability preserves the original order of elements with equal keys. The integration example checks five algorithms against `sort`, including empty input, duplicates, negatives and sorted values. Function pointers allow repeating the same check.
 
-**Bubble sort.** Compare adjacent values and swap inverted pairs. Each pass moves the largest remaining value to the end. Average and worst-case time O(n²), best case O(n) for sorted data with the change flag. Additional memory O(1). Stable. Read `bubbleSort` in `../Sorts.h`.
+**Bubble sort.** Compare adjacent values and swap inverted pairs. Each pass moves the largest remaining value to the end. With n values, repeated passes compare many of the same neighbors: work can grow roughly like n multiplied by n (O(n²), on average and in the worst case). If values are already sorted, the change flag allows stopping after one pass over the n values (O(n)). It only needs a few extra variables, without another input-sized array (O(1) additional memory). Stable. Read `bubbleSort` in `../Sorts.h`.
 
 Analogy: Large bubbles rise toward an end; each pass moves the largest number there.
 
-**Selection sort.** Find the smallest pending value and swap it into the next position. Time O(n²), including sorted inputs; additional memory O(1). This implementation is not stable. Read `selectionSort` in `../Sorts.h`.
+**Selection sort.** Find the smallest pending value and swap it into the next position. After choosing one value, it scans the remaining section again to choose the next. With n values, comparisons accumulate roughly like n multiplied by n, even for sorted input (O(n²)). It only uses a few extra variables, without another array of the same size (O(1) additional memory). This implementation is not stable. Read `selectionSort` in `../Sorts.h`.
 
 Analogy: Always take the smallest card from a pile and put it in the next free slot.
 
-**Insertion sort.** Maintain a sorted left section and insert each new value by shifting larger ones. Average and worst-case time O(n²); O(n) for sorted inputs. Additional memory O(1). Stable. Read `insertionSort` in `../Sorts.h`.
+**Insertion sort.** Maintain a sorted left section and insert each new value by shifting larger ones. Each new value may require shifting many earlier ones. With n values, this repeated work can grow like n multiplied by n (O(n²), on average and in the worst case). If values are already sorted, one pass through them is enough (O(n)). It uses a few extra variables, without another array of the same size (O(1) additional memory). Stable. Read `insertionSort` in `../Sorts.h`.
 
 Analogy: Sort a hand of cards by inserting each new card among the previous cards.
 
-**Merge sort.** Split into halves, sort each half and merge them. Time O(n log n); auxiliary memory O(n) plus O(log n) recursive calls. Stable because ties select the left item first. Read `mergeSort` in `../Sorts.h`.
+**Merge sort.** Split into halves, sort each half and merge them. Halving creates several levels of work; doubling the data adds about one level. At each level, merging visits all n values in total: the work combines the value count with the number of levels (O(n log n); n counts values and log n describes halving levels). It needs an auxiliary array that grows with the data (O(n) memory) and keeps pending calls along the current division path (O(log n) memory for calls). Stable because ties select the left item first. Read `mergeSort` in `../Sorts.h`.
 
 Analogy: Divide sheets between two helpers, then combine their sorted piles by choosing the smaller available sheet.
 
-**Quick sort.** Choose a pivot, partition values and recursively sort the partitions. Usually O(n log n), but this last-element pivot can take O(n²) for sorted or equal inputs. The recursive stack can reach O(n). Not stable. Read `quickSort` in `../Sorts.h`.
+**Quick sort.** Choose a pivot, partition values and recursively sort the partitions. When partitions are reasonably even, each level processes the n values and the level count grows like repeated halving (O(n log n); n counts values). If the pivot leaves nearly everything on one side, repeated long traversals can make work grow like n multiplied by n (O(n²)); choosing the last value as pivot causes this for sorted or equal inputs. Up to one pending call per value can also accumulate (O(n) memory for calls). Not stable. Read `quickSort` in `../Sorts.h`.
 
 Analogy: A pivot splits a line: smaller values move left and the rest move right; repeat within each group.
 
-**Sorting with the standard library.** `sort` provides O(n log n) worst-case comparisons without stability guarantees. `stable_sort` preserves equivalent elements' order. The comparator must express a strict order: use `<`, not `<=`. A lambda `[](...) { ... }` defines a small function at its use site.
+**Sorting with the standard library.** `sort` limits comparison growth even in the worst case. With n values, the bound grows like the value count multiplied by the number of levels in repeated halving (O(n log n)). This describes a work bound without requiring the internal algorithm to literally use those divisions. It does not guarantee stability. `stable_sort` preserves equivalent elements' order. The comparator must express a strict order: use `<`, not `<=`. A lambda `[](...) { ... }` defines a small function at its use site.
 
 Analogy: Give the drawer to a tested sorting tool and tell it how to compare its objects.
 
@@ -1517,11 +1517,11 @@ int main() {
 
 Search first without ordering, then after sorting. The integration example compares both searches on sorted values and shows the original index of 8 changing from 0 to 4.
 
-**Linear search.** Inspect values from the start until finding a match. No sorting is required. Time O(n), auxiliary memory O(1). `optional` holds a position or `nullopt` for absence. Check before using `*result`; index 0 is valid. In applications you can use `find` instead.
+**Linear search.** Inspect values from the start until finding a match. No sorting is required. If the target is last or absent, it may inspect all n elements (O(n), where n is the element count). It only needs a few variables for the current position and result (O(1) additional memory). `optional` holds a position or `nullopt` for absence. Check before using `*result`; index 0 is valid. In applications you can use `find` instead.
 
 Analogy: Search a drawer for a key by checking every compartment.
 
-**Binary search.** Requires ascending sorted data. Every comparison discards half of the range. Time O(log n), auxiliary memory O(1). Sorting has a separate cost. This version returns the first match; `lower_bound` is its standard alternative, while `binary_search` returns only existence.
+**Binary search.** Requires ascending sorted data. Each step roughly halves the remaining search range. Imagine reducing 16 candidates to 8, then 4, 2 and 1: four divisions. Starting with 32 adds just one division to that sequence. This is why work grows slowly as the data increases (O(log n), where n is the element count and log n describes growth through halving). This version uses a few variables without copying the vector (O(1) additional memory). Sorting has a separate cost. This version returns the first match; `lower_bound` is its standard alternative, while `binary_search` returns only existence.
 
 Analogy: Open a sorted guide at its middle and decide which half could contain the requested number.
 
@@ -1549,7 +1549,7 @@ int main() {
 
 ### 11. Const and headers in DSA
 
-A structure query can receive `const vector<int>&`, reading elements without copying or modifying the vector. The vector and result here are `const`. The header declares the operation and an `inline constexpr` constant, the implementation defines the algorithm with `count_if`, and main.cpp uses it. The query takes O(n) time and O(1) auxiliary space.
+A structure query can receive `const vector<int>&`, reading elements without copying or modifying the vector. The vector and result here are `const`. The header declares the operation and an `inline constexpr` constant, the implementation defines the algorithm with `count_if`, and main.cpp uses it. The query inspects each element once; twice as many elements means twice as many visits (O(n), where n is the element count). It only adds a counter and a few variables, without another collection of the same size (O(1) additional memory).
 
 Lists, trees and graphs already have headers containing classes and operations. This lesson separates a query's declaration from implementation. Compare its signature with a sorting function taking `vector<int>&` to distinguish reading from modification.
 

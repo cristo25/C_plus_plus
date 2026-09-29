@@ -28,7 +28,8 @@ namespace course {
             }
         }
         void append(int value) {
-            // Keeping a tail pointer allows O(1) appending without traversing the entire list.
+            // Keeping a tail pointer lets us append by adjusting a few links without traversing
+            // other nodes (O(1): work that does not grow with list length).
             Node* newNode = new Node{value, tail, nullptr};
             if (tail) {
                 tail->next = newNode;

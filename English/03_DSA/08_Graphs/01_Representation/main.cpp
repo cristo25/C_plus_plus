@@ -1,8 +1,13 @@
 // Representing graphs
 //
-// A graph has vertices and edges. An adjacency list stores neighbors using O(V + E) space; an
-// adjacency matrix uses O(V²). Graph stores directed edges with nonnegative weights. Add both
-// directions for an undirected connection.
+// A graph represents connected points: points are called vertices and connections are edges.
+// Imagine buildings joined by roads. An adjacency list stores a list for each building and an entry
+// for each recorded connection. Memory grows with both the buildings and connections (O(V + E): V
+// is the vertex count and E is the edge count). An adjacency matrix reserves a slot for every pair
+// of buildings, even when they are unconnected: 5 buildings need 5 times 5, or 25 slots; 10 need
+// 100 (O(V²): V² means V multiplied by V). These expressions describe memory growth, not an exact
+// byte count. Graph stores directed edges with nonnegative weights. Add both directions for an
+// undirected connection.
 //
 // Analogy: Cities are vertices, roads are edges, and the cost of traveling a road is its weight.
 //

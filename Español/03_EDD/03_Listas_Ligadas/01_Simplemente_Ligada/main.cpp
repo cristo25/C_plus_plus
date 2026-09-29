@@ -1,7 +1,8 @@
 // Lista simplemente ligada
 //
-// Cada nodo guarda un dato y la dirección del siguiente. El último apunta a nullptr. No hay
-// acceso directo por índice: recorrer y buscar cuestan O(n). El header implementa inserción al
+// Cada nodo guarda un dato y la dirección del siguiente. El último apunta a nullptr. Para llegar a
+// otro nodo seguimos los enlaces uno por uno. Recorrer la lista o buscar un valor puede exigir
+// visitar sus n nodos (O(n)); aquí n es la cantidad de nodos. El header implementa inserción al
 // final, eliminación de la primera coincidencia y liberación de todos los nodos.
 //
 // Analogía: Una búsqueda del tesoro: cada tarjeta contiene un dato y la pista hacia la

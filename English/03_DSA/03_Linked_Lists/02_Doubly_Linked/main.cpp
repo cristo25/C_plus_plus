@@ -1,8 +1,9 @@
 // Doubly linked list
 //
-// Each node knows its previous and next node. Keeping a head and tail permits O(1) append and
-// traversal in either direction. Searching still costs O(n); unlinking an already located node
-// updates both links.
+// Each node knows its previous and next node. Keeping a head and tail lets us append by adjusting a
+// fixed number of links, without traversing the list (O(1)). We can also traverse in either
+// direction. Searching for a value may require inspecting all n nodes (O(n)); unlinking an already
+// located node adjusts its neighboring links.
 //
 // Analogy: Train cars have couplings at both ends, allowing travel in either direction.
 //

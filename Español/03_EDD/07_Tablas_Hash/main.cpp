@@ -1,9 +1,11 @@
 // Tablas hash con unordered_map
 //
-// unordered_map asocia claves únicas con valores mediante una función hash. Buscar e insertar
-// cuestan O(1) en promedio y O(n) en el peor caso. La biblioteca administra las colisiones; el
-// orden de recorrido no está garantizado. operator[] puede insertar: usa find para solo
-// consultar.
+// unordered_map asocia claves únicas con valores mediante una función hash. La función hash orienta
+// la consulta hacia un grupo de entradas. En promedio, buscar o insertar necesita una cantidad de
+// pasos que no crece con el total de entradas (O(1)). Si muchas claves caen en el mismo grupo, una
+// operación puede tener que revisar las n entradas de la tabla (O(n) en el peor caso). La
+// biblioteca administra las colisiones; el orden de recorrido no está garantizado. operator[] puede
+// insertar: usa find para solo consultar.
 //
 // Analogía: Un recepcionista transforma una clave en el número de un casillero. Si varias claves
 // coinciden, debe distinguir sus fichas.

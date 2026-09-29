@@ -1,8 +1,9 @@
 // Circular linked list
 //
-// The last node points to the first. Stop on returning to the start; waiting for nullptr would
-// loop forever. Append costs O(1), while searching and removing by value cost O(n). This variant
-// is singly linked and circular.
+// The last node points to the first. Stop on returning to the start; waiting for nullptr would loop
+// forever. Keeping the last node lets us append by adjusting a few links without traversing the
+// list (O(1)). Searching or removing by value may require inspecting all n nodes (O(n)); n is the
+// node count. This variant is singly linked and circular.
 //
 // Analogy: A wheel of turns returns to the first person after serving the last.
 //

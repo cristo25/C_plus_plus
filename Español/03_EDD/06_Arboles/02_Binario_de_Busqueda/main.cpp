@@ -1,9 +1,11 @@
 // Árbol binario de búsqueda (ABB)
 //
 // En este ABB los menores van a la izquierda y los mayores a la derecha; rechazamos duplicados.
-// Inserción, consulta y eliminación cuestan O(h), donde h es la altura. Al borrar un nodo con
-// dos hijos, lo sustituimos por el menor del subárbol derecho. Un ABB sin balancear puede
-// degenerar en una cadena.
+// Para insertar, buscar o eliminar seguimos un camino entre niveles del árbol. El trabajo depende
+// de cuántos niveles tenga ese camino: llamamos h a la altura, es decir, la cantidad de niveles del
+// camino más largo (O(h)). Un árbol muy alargado puede obligarnos a pasar por casi todos sus nodos.
+// Al borrar un nodo con dos hijos, lo sustituimos por el menor del subárbol derecho. Un ABB sin
+// balancear puede degenerar en una cadena.
 //
 // Analogía: Una guía de números: cada nodo indica si seguir hacia los menores o hacia los
 // mayores.

@@ -1,8 +1,14 @@
 // Complejidad: tiempo y espacio
 //
-// Big O describe cómo crece el trabajo con el tamaño de la entrada, no los segundos exactos.
-// Acceder por índice es O(1); recorrer n elementos es O(n); reducir el problema a la mitad
-// repetidamente requiere O(log n) pasos. También cuenta la memoria adicional.
+// Para comparar programas, imagina que la cantidad de datos crece. Llegar directamente a una
+// casilla por su índice requiere una cantidad fija de pasos, aunque haya más casillas (se escribe
+// O(1); no significa exactamente un paso). Revisar todas las casillas sí aumenta el trabajo: con 20
+// visitas hacemos el doble que con 10 (O(n), donde n es la cantidad de elementos). Si reducimos lo
+// pendiente a la mitad, pasar de 8 a 1 requiere tres divisiones y de 16 a 1 requiere cuatro
+// (O(log n); aquí log n representa ese crecimiento por divisiones). Estas abreviaturas se llaman
+// notación O grande y describen cómo puede crecer el trabajo, sin indicar segundos exactos. También
+// podemos contar cuántos datos adicionales necesita guardar el programa: eso es la memoria
+// auxiliar.
 //
 // Analogía: Buscar un cajón por número es directo; revisar todas las secciones tarda más cuando
 // el mueble crece; partir una guía ordenada por la mitad descarta muchas páginas a la vez.
@@ -20,8 +26,9 @@ using namespace std;
 int pasosMitad(int n) {
     int pasos = 0;
     while (n > 1) {
-        // Cada vuelta divide el problema por dos: 1024 llega a 1 en diez pasos, crecimiento
-        // O(log n).
+        // Cada vuelta reduce lo pendiente a la mitad: 1024 llega a 1 en diez divisiones. Si
+        // empezamos con el doble, 2048, basta una división más (crecimiento O(log n), con n como
+        // cantidad inicial).
         n /= 2;
         ++pasos;
     }

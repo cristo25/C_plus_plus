@@ -1,8 +1,10 @@
 // Selection sort
 //
-// Find the smallest pending value and swap it into the next position. Time O(n²), including
-// sorted inputs; additional memory O(1). This implementation is not stable. Read selectionSort
-// in ../Sorts.h.
+// Find the smallest pending value and swap it into the next position. After choosing one value, it
+// scans the remaining section again to choose the next. With n values, comparisons accumulate
+// roughly like n multiplied by n, even for sorted input (O(n²)). It only uses a few extra
+// variables, without another array of the same size (O(1) additional memory). This implementation
+// is not stable. Read selectionSort in ../Sorts.h.
 //
 // Analogy: Always take the smallest card from a pile and put it in the next free slot.
 //

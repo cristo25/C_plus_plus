@@ -1,8 +1,10 @@
 // Creating and traversing a vector
 //
 // vector is a contiguous array whose size can change. size() counts elements; capacity() counts
-// reserved slots. push_back takes amortized O(1), although an individual reallocation costs
-// O(n).
+// reserved slots. Appending with push_back normally uses a free slot. When reserved storage fills
+// up, the vector needs another block and must relocate its elements: that insertion may visit all n
+// existing elements (O(n)). Spreading these expansions over many insertions keeps the work per
+// insertion bounded by a constant amount; this is called amortized cost (amortized O(1)).
 //
 // Analogy: A growing drawer can move to a larger drawer when full. Its compartments still start
 // at index zero.

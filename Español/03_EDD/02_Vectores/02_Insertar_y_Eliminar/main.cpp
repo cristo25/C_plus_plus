@@ -1,9 +1,10 @@
 // Insertar y eliminar en vectores
 //
-// insert y erase reciben iteradores. begin() apunta al primer elemento y end() representa el
-// límite posterior al último, que no se desreferencia. Insertar o borrar en medio desplaza
-// elementos: O(n). Una realocación invalida todos los punteros, referencias e iteradores; un
-// borrado invalida desde la posición eliminada.
+// insert y erase reciben iteradores. begin() apunta al primer elemento y end() representa el límite
+// posterior al último, que no se desreferencia. Insertar o borrar en medio obliga a desplazar los
+// elementos que quedan después. Cuantos más haya que mover, más trabajo; en el peor caso pueden ser
+// casi todos (O(n), donde n es la cantidad de elementos del vector). Una realocación invalida todos
+// los punteros, referencias e iteradores; un borrado invalida desde la posición eliminada.
 //
 // Analogía: Para abrir un hueco en medio del cajón debes mover las cosas de las secciones
 // siguientes.

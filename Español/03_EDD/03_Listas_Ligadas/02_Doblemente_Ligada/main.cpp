@@ -1,8 +1,9 @@
 // Lista doblemente ligada
 //
-// Cada nodo conoce al anterior y al siguiente. Guardar inicio y fin permite agregar al final en
-// O(1) y recorrer en ambos sentidos. Buscar un valor sigue siendo O(n); borrar un nodo ya
-// localizado requiere ajustar ambos enlaces.
+// Cada nodo conoce al anterior y al siguiente. Guardar inicio y fin permite agregar al final
+// ajustando una cantidad fija de enlaces, sin recorrer la lista (O(1)). También permite recorrerla
+// en ambos sentidos. Buscar un valor puede exigir revisar los n nodos (O(n)); borrar un nodo ya
+// localizado requiere ajustar sus enlaces vecinos.
 //
 // Analogía: Los vagones de un tren están enganchados por delante y por detrás; puedes caminar en
 // ambos sentidos.

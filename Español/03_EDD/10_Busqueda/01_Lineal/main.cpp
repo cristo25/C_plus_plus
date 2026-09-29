@@ -1,8 +1,10 @@
 // Búsqueda lineal
 //
-// Revisa desde el inicio hasta encontrar el valor. No necesita orden previo. Tiempo O(n);
-// espacio auxiliar O(1). optional contiene una posición o nullopt si no existe. Comprueba que
-// tiene valor antes de usar *resultado. La posición 0 también es un resultado válido.
+// Revisa desde el inicio hasta encontrar el valor. No necesita orden previo. Si el valor está al
+// final o no existe, puede revisar los n elementos (O(n), donde n es la cantidad de elementos).
+// Solo necesita unas pocas variables para llevar la posición actual y el resultado (O(1) de memoria
+// adicional). optional contiene una posición o nullopt si no existe. Comprueba que tiene valor
+// antes de usar *resultado. La posición 0 también es un resultado válido.
 //
 // Analogía: Buscas una llave revisando cada compartimento del cajón.
 //

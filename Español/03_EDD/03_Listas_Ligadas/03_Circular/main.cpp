@@ -1,8 +1,9 @@
 // Lista circular
 //
-// El último nodo apunta al primero. Debes detenerte al volver al inicio; esperar nullptr
-// causaría un ciclo infinito. La inserción al final cuesta O(1); buscar y eliminar por valor
-// cuestan O(n). Esta variante es simplemente ligada y circular.
+// El último nodo apunta al primero. Debes detenerte al volver al inicio; esperar nullptr causaría
+// un ciclo infinito. Como conservamos el último nodo, agregar al final requiere ajustar pocos
+// enlaces, sin recorrer la lista (O(1)). Para buscar o eliminar por valor podemos tener que revisar
+// los n nodos (O(n)); n es la cantidad de nodos. Esta variante es simplemente ligada y circular.
 //
 // Analogía: Una rueda de turnos: después de la última persona regresas a la primera.
 //

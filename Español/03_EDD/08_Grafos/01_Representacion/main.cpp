@@ -1,8 +1,13 @@
 // Representar grafos
 //
-// Un grafo contiene vértices y aristas. La lista de adyacencia guarda los vecinos de cada
-// vértice y ocupa O(V + E); una matriz de adyacencia ocupa O(V²). Grafo representa aristas
-// dirigidas con pesos no negativos. Para una conexión no dirigida agrega ambas direcciones.
+// Un grafo representa puntos conectados: los puntos se llaman vértices y las conexiones, aristas.
+// Imagina edificios unidos por caminos. Una lista de adyacencia guarda una lista por edificio y una
+// entrada por conexión registrada. La memoria crece con la cantidad de edificios y conexiones
+// (O(V + E): V es la cantidad de vértices y E la de aristas). Una matriz de adyacencia reserva una
+// casilla para cada pareja de edificios, aunque no estén conectados: con 5 edificios tiene 5 por 5,
+// es decir, 25 casillas; con 10 tiene 100 (O(V²): V² significa V multiplicado por V). Estas
+// expresiones describen cómo crece la memoria, no una cantidad exacta de bytes. Grafo representa
+// aristas dirigidas con pesos no negativos. Para una conexión no dirigida agrega ambas direcciones.
 //
 // Analogía: Las ciudades son vértices; las carreteras son aristas; el costo de recorrer una
 // carretera es su peso.

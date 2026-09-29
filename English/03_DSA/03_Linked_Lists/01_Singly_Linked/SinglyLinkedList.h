@@ -32,7 +32,8 @@ namespace course {
                 head = newNode;
                 return;
             }
-            // ponytail: appending costs O(n); keep a tail pointer if insertion cost matters.
+            // ponytail: appending traverses all nodes to reach the last; a tail pointer avoids that
+            // traversal.
             Node* current = head;
             while (current->next) {
                 current = current->next;

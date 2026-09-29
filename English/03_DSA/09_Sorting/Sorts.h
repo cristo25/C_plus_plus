@@ -102,7 +102,8 @@ namespace course {
         partitionRange(data, split + 1, endIndex);
     }
     inline void quickSort(vector<int>& data) {
-        // ponytail: last-element pivot, O(n^2) worst case; use sort in applications.
+        // ponytail: a last-element pivot can cause repeated long traversals on sorted data; use
+        // sort for a more consistent performance guarantee.
         partitionRange(data, 0, data.size());
     }
 } // namespace course

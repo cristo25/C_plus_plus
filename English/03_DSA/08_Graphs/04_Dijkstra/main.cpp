@@ -1,9 +1,13 @@
 // Dijkstra: minimum-cost paths
 //
-// Dijkstra finds minimum distances for nonnegative weights. Use a minimum-priority queue,
-// improve distances and discard outdated entries. INFINITY_DISTANCE means unreachable. Repeated
-// queue entries give this implementation O((V + E) log(E + 2)) time and O(V + E) space. It
-// returns costs, not routes.
+// Dijkstra finds minimum distances for nonnegative weights. Use a minimum-priority queue, improve
+// distances and discard outdated entries. INFINITY_DISTANCE means unreachable. Besides inspecting
+// connections, this version organizes candidates in a priority queue to select the cheapest one.
+// More candidates mean more work maintaining that priority. A point can appear several times as
+// better routes are found, so the queue also needs space for these pending records. Memory can grow
+// with the graph vertices and edges (O(V + E), where V counts points and E counts connections). The
+// dijkstra function returns costs; shortestPaths also records the predecessor of each destination
+// so routes can be reconstructed.
 //
 // Analogy: A courier compares total route costs and always considers the cheapest available
 // alternative first.

@@ -147,7 +147,7 @@ return view.at(*position);
 
 The essential condition is that IDs are sorted. `optional<size_t>` distinguishes absence from a valid index, including zero. The returned pointer observes a DAO book; it must not be used after adding, removing, renaming or undoing a change because we replace the entire catalog. The console uses it immediately; deliveries copy the book before any subsequent mutation.
 
-Binary search costs O(log n), but building the view for each query costs O(n log n). This implementation teaches the connection between sorting, views and searching; the entire query is not described as O(log n).
+Once IDs are sorted, each comparison discards half the candidates. Doubling the book count adds about one comparison to that search (O(log n), where n is the book count and log n describes growth through halving). However, this code first collects and sorts every book address. That preparation also counts: its comparison bound grows like the book count multiplied by the number of halving levels (O(n log n)). The entire query therefore takes more work than searching an already prepared view.
 
 ## 8. Structs and the delivery queue
 
@@ -265,18 +265,20 @@ A successful check returns exit code 0; failure identifies the case and returns 
 
 ## 13. Costs and further practice
 
-| Operation | Approximate cost |
-| --- | --- |
-| Prepare the sorted view | O(n log n) |
-| Binary search with IDs already prepared | O(log n) |
-| Copy an undo snapshot | O(n), plus text |
-| Append a history index | O(1) |
-| Inspect all history | O(h), plus text copying |
-| Inspect pending requests | O(p), plus request copying |
-| BFS | O(V + E) |
-| Dijkstra with duplicate queue entries | O((V + E) log(V + E)) |
-| Reconstruct the path | At most O(V) |
+Here we count work and memory separately. Letters simply abbreviate quantities: n is the book count, h the history-message count, p the pending-request count, V the building count and E the connection count. Parenthesized notation summarizes how work grows; it does not give exact seconds or bytes.
 
-DAO loading checks duplicates using linear lookups, so it can cost O(n²). The project prioritizes reading and connecting its pieces; each cost follows a decision that can be changed for a concrete need.
+| Operation | What work it performs as data grows |
+| --- | --- |
+| Prepare the sorted view | Collects and sorts addresses. The comparison bound combines the book count with the levels in repeated halving (O(n log n)). |
+| Search already sorted IDs | Discards half the candidates each step; doubling the books adds about one comparison (O(log n)). |
+| Copy for undo | Copies one record per book, plus all title characters (O(n) for records; longer titles also require more work and memory). |
+| Append a history index | Adjusts a few links without traversing earlier messages (O(1)). |
+| Inspect history | Visits its h messages and copies their text (O(h) visits, plus character copying). |
+| Inspect pending requests | Visits its p requests and copies their data (O(p) visits, plus title copying). |
+| BFS | Visits reachable buildings and inspects their connections; if all are reachable, it processes the entire map (O(V + E)). |
+| Dijkstra | Inspects connections and maintains a queue for selecting the cheapest candidate. More candidates need more adjustments, and a building may have repeated records. |
+| Reconstruct the path | Follows route buildings backward from the target; it visits at most all V buildings (O(V)). |
+
+While loading, the DAO compares each new book with those already read to detect duplicate IDs. With n books, these checks accumulate: first a few, then more, and the work can grow like n multiplied by n (O(n²)). The project prioritizes reading and connecting its pieces; each cost follows a decision that can be changed for a concrete need.
 
 For practice, change a weight and predict the route, connect the annex, try IDs at the beginning and end, or extend the check with another input error. Before adding a structure, explain which operation it would improve. A tree or hash table may serve another query pattern, but every current structure already supports an actual operation.

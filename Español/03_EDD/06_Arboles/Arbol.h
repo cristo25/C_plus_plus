@@ -83,7 +83,8 @@ namespace curso {
         }
 
     public:
-        // ponytail: ABB sin balanceo, O(n) en el peor caso; AVL si importa la altura.
+        // ponytail: sin balanceo, el árbol puede volverse una cadena y obligarnos a revisar todos
+        // los nodos; un árbol AVL limita su altura para evitarlo.
         bool insertar(int dato) {
             return insertarEn(raiz, dato);
         }

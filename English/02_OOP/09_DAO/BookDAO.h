@@ -28,7 +28,9 @@ namespace course {
         }
 
     public:
-        // Linear O(n) lookup. Return an observer that vector modifications may invalidate.
+        // Search book by book, potentially inspecting the whole catalog. More books may mean more
+        // comparisons (O(n), with n books). Return an observer that vector modifications may
+        // invalidate.
         const Book* findById(int id) const {
             for (const auto& book : books) {
                 if (book.id == id) {

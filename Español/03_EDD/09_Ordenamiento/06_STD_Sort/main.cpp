@@ -1,8 +1,11 @@
 // Ordenar con la biblioteca estándar
 //
-// sort ofrece O(n log n) comparaciones en el peor caso y no garantiza estabilidad. stable_sort
-// conserva el orden de elementos equivalentes. El comparador debe expresar un orden estricto:
-// usa <, no <=. Aprende los algoritmos manuales y usa la biblioteca para tareas habituales.
+// sort limita el crecimiento de las comparaciones incluso en el peor caso. Con n datos, el límite
+// crece como la cantidad de datos multiplicada por la cantidad de niveles que tendría dividirlos
+// repetidamente por mitades (O(n log n)). Esto describe el límite de trabajo, sin exigir que el
+// algoritmo interno use literalmente esas divisiones. No garantiza estabilidad. stable_sort
+// conserva el orden de elementos equivalentes. El comparador debe expresar un orden estricto: usa
+// <, no <=. Aprende los algoritmos manuales y usa la biblioteca para tareas habituales.
 //
 // Analogía: Encargas ordenar el cajón a una herramienta ya probada, indicándole cómo comparar
 // sus objetos.

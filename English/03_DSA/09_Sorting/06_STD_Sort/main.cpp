@@ -1,8 +1,11 @@
 // Sorting with the standard library
 //
-// sort provides O(n log n) worst-case comparisons without stability guarantees. stable_sort
-// preserves equivalent elements' order. The comparator must express a strict order: use <, not
-// <=. A lambda [](...) { ... } defines a small function at its use site.
+// sort limits comparison growth even in the worst case. With n values, the bound grows like the
+// value count multiplied by the number of levels in repeated halving (O(n log n)). This describes a
+// work bound without requiring the internal algorithm to literally use those divisions. It does not
+// guarantee stability. stable_sort preserves equivalent elements' order. The comparator must
+// express a strict order: use <, not <=. A lambda [](...) { ... } defines a small function at its
+// use site.
 //
 // Analogy: Give the drawer to a tested sorting tool and tell it how to compare its objects.
 //

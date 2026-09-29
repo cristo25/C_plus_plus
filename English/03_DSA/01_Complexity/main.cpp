@@ -1,8 +1,13 @@
 // Complexity: time and space
 //
-// Big O describes how work grows with input size, rather than exact seconds. Index access is
-// O(1), visiting n elements is O(n), and repeatedly halving a problem takes O(log n) steps. Also
-// count additional memory.
+// To compare programs, imagine increasing the amount of data. Reaching a slot directly by its index
+// takes a fixed amount of work even when there are more slots (written O(1); it does not mean
+// exactly one step). Inspecting every slot does increase the work: 20 visits are twice as many as
+// 10 (O(n), where n is the number of elements). If we repeatedly halve what remains, going from 8
+// to 1 takes three divisions and from 16 to 1 takes four (O(log n); here log n describes growth
+// through halving). These abbreviations are called Big O notation and describe how work can grow,
+// without specifying exact seconds. We can also count the extra data the program needs to keep:
+// that is auxiliary memory.
 //
 // Analogy: Finding a numbered compartment is direct. Inspecting every compartment takes longer
 // as the cabinet grows. Halving a sorted guide discards many pages at once.
@@ -20,7 +25,8 @@ using namespace std;
 int halvingSteps(int n) {
     int steps = 0;
     while (n > 1) {
-        // Each iteration halves the problem: 1024 reaches 1 in ten steps, O(log n) growth.
+        // Each iteration halves what remains: 1024 reaches 1 in ten divisions. Starting with twice
+        // as many, 2048, only adds one division (O(log n) growth, with n as the initial amount).
         n /= 2;
         ++steps;
     }

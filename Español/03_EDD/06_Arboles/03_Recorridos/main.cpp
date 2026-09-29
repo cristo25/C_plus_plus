@@ -1,8 +1,11 @@
 // Recorridos de un árbol
 //
 // Preorden visita raíz, izquierda, derecha. Inorden visita izquierda, raíz, derecha. Postorden
-// visita izquierda, derecha, raíz. En un ABB, inorden produce valores ordenados. Los recorridos
-// visitan todos los nodos: O(n), con O(h) de pila recursiva más el vector de salida.
+// visita izquierda, derecha, raíz. En un ABB, inorden produce valores ordenados. El recorrido
+// visita cada nodo, de modo que el trabajo crece con sus n nodos (O(n)). Además guarda las llamadas
+// que esperan regresar: puede haber una por cada nivel del camino actual, hasta la altura h del
+// árbol (O(h) de memoria para esas llamadas). El vector de salida necesita guardar los n
+// resultados.
 //
 // Analogía: Recorres una casa: puedes registrar el cuarto antes de visitar sus anexos, entre
 // ambos anexos o al terminar de visitarlos.

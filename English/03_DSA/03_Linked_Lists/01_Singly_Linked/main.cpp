@@ -1,8 +1,10 @@
 // Singly linked list
 //
-// Every node holds a value and the address of the next node. The last points to nullptr. There
-// is no direct index access; traversing and searching cost O(n). The header appends values,
-// removes the first matching value and releases all nodes. Appending here costs O(n).
+// Every node holds a value and the address of the next node. The last points to nullptr. Reaching
+// another node means following links one by one. Traversing the list or searching for a value may
+// require visiting all n nodes (O(n)); n is the number of nodes. The header appends values, removes
+// the first matching value and releases all nodes. Appending here also follows links until it
+// reaches the last node, so more nodes mean more work.
 //
 // Analogy: A treasure hunt: every card contains a value and a clue pointing to the next card;
 // the last says end.

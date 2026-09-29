@@ -33,7 +33,8 @@ namespace curso {
                 inicio = nuevo;
                 return;
             }
-            // ponytail: insertar al final cuesta O(n); guardar cola si importa el costo.
+            // ponytail: para agregar recorremos todos los nodos hasta el último; guardar un puntero
+            // al último evita ese recorrido.
             Nodo* actual = inicio;
             while (actual->siguiente) {
                 actual = actual->siguiente;

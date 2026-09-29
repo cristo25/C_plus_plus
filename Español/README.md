@@ -1143,7 +1143,7 @@ Elige estructuras según sus operaciones y costos. EDD es un área de estudio qu
 
 ### 1. Complejidad: tiempo y espacio
 
-Big O describe cómo crece el trabajo con el tamaño de la entrada, no los segundos exactos. Acceder por índice es O(1); recorrer n elementos es O(n); reducir el problema a la mitad repetidamente requiere O(log n) pasos. También cuenta la memoria adicional.
+Para comparar programas, imagina que la cantidad de datos crece. Llegar directamente a una casilla por su índice requiere una cantidad fija de pasos, aunque haya más casillas (se escribe O(1); no significa exactamente un paso). Revisar todas las casillas sí aumenta el trabajo: con 20 visitas hacemos el doble que con 10 (O(n), donde n es la cantidad de elementos). Si reducimos lo pendiente a la mitad, pasar de 8 a 1 requiere tres divisiones y de 16 a 1 requiere cuatro (O(log n); aquí log n representa ese crecimiento por divisiones). Estas abreviaturas se llaman notación O grande y describen cómo puede crecer el trabajo, sin indicar segundos exactos. También podemos contar cuántos datos adicionales necesita guardar el programa: eso es la memoria auxiliar.
 
 Analogía: Buscar un cajón por número es directo; revisar todas las secciones tarda más cuando el mueble crece; partir una guía ordenada por la mitad descarta muchas páginas a la vez.
 
@@ -1173,11 +1173,11 @@ int main() {
 
 Estudia tamaño, recorrido, modificación y objetos. El integrador organiza tareas, marca una y la elimina; quedan `Compilar` y `Practicar`.
 
-**Crear y recorrer un vector.** `vector` es un arreglo contiguo cuyo tamaño puede cambiar. `size()` es la cantidad de elementos; `capacity()` es el espacio reservado. `push_back` cuesta O(1) amortizado, aunque una realocación individual cuesta O(n).
+**Crear y recorrer un vector.** `vector` es un arreglo contiguo cuyo tamaño puede cambiar. `size()` es la cantidad de elementos; `capacity()` es el espacio reservado. Al agregar al final con `push_back`, normalmente basta con ocupar una casilla libre. Si se llena el espacio reservado, el vector necesita otro bloque y trasladar sus elementos: esa inserción puede recorrer los n elementos existentes (O(n)). Al repartir esas ampliaciones entre muchas inserciones, el trabajo por inserción queda acotado por una cantidad constante; a eso se le llama costo amortizado (O(1) amortizado).
 
 Analogía: Es un cajón extensible: al llenarse, puede mudarse a un cajón mayor. Sus secciones siguen numeradas desde cero.
 
-**Insertar y eliminar en vectores.** `insert` y `erase` reciben iteradores. `begin()` apunta al primer elemento y `end()` representa el límite posterior al último, que no se desreferencia. Insertar o borrar en medio desplaza elementos: O(n). Una realocación invalida todos los punteros, referencias e iteradores; un borrado invalida desde la posición eliminada.
+**Insertar y eliminar en vectores.** `insert` y `erase` reciben iteradores. `begin()` apunta al primer elemento y `end()` representa el límite posterior al último, que no se desreferencia. Insertar o borrar en medio obliga a desplazar los elementos que quedan después. Cuantos más haya que mover, más trabajo; en el peor caso pueden ser casi todos (O(n), donde n es la cantidad de elementos del vector). Una realocación invalida todos los punteros, referencias e iteradores; un borrado invalida desde la posición eliminada.
 
 Analogía: Para abrir un hueco en medio del cajón debes mover las cosas de las secciones siguientes.
 
@@ -1216,15 +1216,15 @@ int main() {
 
 Las tres implementaciones guardan enteros para concentrarnos en los enlaces y la propiedad de los nodos. Usa `new/delete` aquí para estudiar el mecanismo; los contenedores estándar ya resuelven su gestión en aplicaciones comunes. El integrador usa los tres headers y elimina el dato 20 de cada lista. Cambia los datos y compara los recorridos. Después prueba eliminar el inicio, el final y el único nodo.
 
-**Lista simplemente ligada.** Cada nodo guarda un dato y la dirección del siguiente. El último apunta a `nullptr`. No hay acceso directo por índice: recorrer y buscar cuestan O(n). El header implementa inserción al final, eliminación de la primera coincidencia y liberación de todos los nodos.
+**Lista simplemente ligada.** Cada nodo guarda un dato y la dirección del siguiente. El último apunta a `nullptr`. Para llegar a otro nodo seguimos los enlaces uno por uno. Recorrer la lista o buscar un valor puede exigir visitar sus n nodos (O(n)); aquí n es la cantidad de nodos. El header implementa inserción al final, eliminación de la primera coincidencia y liberación de todos los nodos.
 
 Analogía: Una búsqueda del tesoro: cada tarjeta contiene un dato y la pista hacia la siguiente. La última dice «fin».
 
-**Lista doblemente ligada.** Cada nodo conoce al anterior y al siguiente. Guardar inicio y fin permite agregar al final en O(1) y recorrer en ambos sentidos. Buscar un valor sigue siendo O(n); borrar un nodo ya localizado requiere ajustar ambos enlaces.
+**Lista doblemente ligada.** Cada nodo conoce al anterior y al siguiente. Guardar inicio y fin permite agregar al final ajustando una cantidad fija de enlaces, sin recorrer la lista (O(1)). También permite recorrerla en ambos sentidos. Buscar un valor puede exigir revisar los n nodos (O(n)); borrar un nodo ya localizado requiere ajustar sus enlaces vecinos.
 
 Analogía: Los vagones de un tren están enganchados por delante y por detrás; puedes caminar en ambos sentidos.
 
-**Lista circular.** El último nodo apunta al primero. Debes detenerte al volver al inicio; esperar `nullptr` causaría un ciclo infinito. La inserción al final cuesta O(1); buscar y eliminar por valor cuestan O(n). Esta variante es simplemente ligada y circular.
+**Lista circular.** El último nodo apunta al primero. Debes detenerte al volver al inicio; esperar `nullptr` causaría un ciclo infinito. Como conservamos el último nodo, agregar al final requiere ajustar pocos enlaces, sin recorrer la lista (O(1)). Para buscar o eliminar por valor podemos tener que revisar los n nodos (O(n)); n es la cantidad de nodos. Esta variante es simplemente ligada y circular.
 
 Analogía: Una rueda de turnos: después de la última persona regresas a la primera.
 
@@ -1305,7 +1305,7 @@ Compara orden de llegada y orden de prioridad. El integrador produce `2 9 4` con
 
 Analogía: La fila de las tortillas: se atiende primero a quien llegó primero.
 
-**Cola de prioridad y heap.** `priority_queue` utiliza un heap (montículo). Por defecto coloca el mayor arriba; con `greater<int>` coloca el menor. Consultar `top` cuesta O(1); insertar y retirar, O(log n). No conserva el orden de llegada entre prioridades iguales.
+**Cola de prioridad y heap.** `priority_queue` utiliza un heap (montículo). Por defecto coloca el mayor arriba; con `greater<int>` coloca el menor. Consultar `top` accede directamente al valor prioritario, sin recorrer los demás (O(1)). Al insertar o retirar puede ser necesario ajustar un camino de niveles del montículo, una estructura que organiza los datos como un árbol. Su cantidad de niveles crece lentamente: duplicar la cantidad de elementos añade aproximadamente un nivel (O(log n), con n elementos). No conserva el orden de llegada entre prioridades iguales.
 
 Analogía: En urgencias se atiende por prioridad; la gravedad decide el siguiente turno.
 
@@ -1340,11 +1340,11 @@ Distingue árbol binario de ABB y después estudia sus recorridos. El integrador
 
 Analogía: Un organigrama empieza en un responsable y se divide en ramas. En este ejemplo cada responsable tiene como máximo dos subordinados.
 
-**Árbol binario de búsqueda (ABB).** En este ABB los menores van a la izquierda y los mayores a la derecha; rechazamos duplicados. Inserción, consulta y eliminación cuestan O(h), donde h es la altura. Al borrar un nodo con dos hijos, lo sustituimos por el menor del subárbol derecho. Un ABB sin balancear puede degenerar en una cadena.
+**Árbol binario de búsqueda (ABB).** En este ABB los menores van a la izquierda y los mayores a la derecha; rechazamos duplicados. Para insertar, buscar o eliminar seguimos un camino entre niveles del árbol. El trabajo depende de cuántos niveles tenga ese camino: llamamos h a la altura, es decir, la cantidad de niveles del camino más largo (O(h)). Un árbol muy alargado puede obligarnos a pasar por casi todos sus nodos. Al borrar un nodo con dos hijos, lo sustituimos por el menor del subárbol derecho. Un ABB sin balancear puede degenerar en una cadena.
 
 Analogía: Una guía de números: cada nodo indica si seguir hacia los menores o hacia los mayores.
 
-**Recorridos de un árbol.** Preorden visita raíz, izquierda, derecha. Inorden visita izquierda, raíz, derecha. Postorden visita izquierda, derecha, raíz. En un ABB, inorden produce valores ordenados. Los recorridos visitan todos los nodos: O(n), con O(h) de pila recursiva más el vector de salida.
+**Recorridos de un árbol.** Preorden visita raíz, izquierda, derecha. Inorden visita izquierda, raíz, derecha. Postorden visita izquierda, derecha, raíz. En un ABB, inorden produce valores ordenados. El recorrido visita cada nodo, de modo que el trabajo crece con sus n nodos (O(n)). Además guarda las llamadas que esperan regresar: puede haber una por cada nivel del camino actual, hasta la altura h del árbol (O(h) de memoria para esas llamadas). El vector de salida necesita guardar los n resultados.
 
 Analogía: Recorres una casa: puedes registrar el cuarto antes de visitar sus anexos, entre ambos anexos o al terminar de visitarlos.
 
@@ -1384,7 +1384,7 @@ int main() {
 
 ### 7. Tablas hash con unordered_map
 
-`unordered_map` asocia claves únicas con valores mediante una función hash. Buscar e insertar cuestan O(1) en promedio y O(n) en el peor caso. La biblioteca administra las colisiones; el orden de recorrido no está garantizado. `operator[]` puede insertar: usa `find` para solo consultar.
+`unordered_map` asocia claves únicas con valores mediante una función hash. La función hash orienta la consulta hacia un grupo de entradas. En promedio, buscar o insertar necesita una cantidad de pasos que no crece con el total de entradas (O(1)). Si muchas claves caen en el mismo grupo, una operación puede tener que revisar las n entradas de la tabla (O(n) en el peor caso). La biblioteca administra las colisiones; el orden de recorrido no está garantizado. `operator[]` puede insertar: usa `find` para solo consultar.
 
 Analogía: Un recepcionista transforma una clave en el número de un casillero. Si varias claves coinciden, debe distinguir sus fichas.
 
@@ -1413,19 +1413,19 @@ int main() {
 
 Estudia representación, recorridos y costos mínimos. BFS y DFS no usan los pesos; Dijkstra sí. El integrador compara ambos recorridos y calcula costo mínimo 4 del vértice 0 al 3. Los headers contienen funciones `inline` para poder reutilizarlas sin definiciones duplicadas al enlazar.
 
-**Representar grafos.** Un grafo contiene vértices y aristas. La lista de adyacencia guarda los vecinos de cada vértice y ocupa O(V + E); una matriz de adyacencia ocupa O(V²). `Grafo` representa aristas dirigidas con pesos no negativos. Para una conexión no dirigida agrega ambas direcciones.
+**Representar grafos.** Un grafo representa puntos conectados: los puntos se llaman vértices y las conexiones, aristas. Imagina edificios unidos por caminos. Una lista de adyacencia guarda una lista por edificio y una entrada por conexión registrada. La memoria crece con la cantidad de edificios y conexiones (O(V + E): V es la cantidad de vértices y E la de aristas). Una matriz de adyacencia reserva una casilla para cada pareja de edificios, aunque no estén conectados: con 5 edificios tiene 5 por 5, es decir, 25 casillas; con 10 tiene 100 (O(V²): V² significa V multiplicado por V). Estas expresiones describen cómo crece la memoria, no una cantidad exacta de bytes. `Grafo` representa aristas dirigidas con pesos no negativos. Para una conexión no dirigida agrega ambas direcciones.
 
 Analogía: Las ciudades son vértices; las carreteras son aristas; el costo de recorrer una carretera es su peso.
 
-**BFS: búsqueda en anchura.** BFS usa una cola y visita por niveles. Marca cada vértice al encolarlo para no repetirlo cuando hay ciclos. Recorre solo los vértices alcanzables desde el inicio. En grafos sin pesos, los niveles describen distancias mínimas en número de aristas. Tiempo O(V + E), memoria auxiliar O(V).
+**BFS: búsqueda en anchura.** BFS usa una cola y visita por niveles. Marca cada vértice al encolarlo para no repetirlo cuando hay ciclos. Recorre solo los vértices alcanzables desde el inicio. En grafos sin pesos, los niveles describen distancias mínimas en número de aristas. Al recorrer las listas de vecinos, visitamos los puntos alcanzables y revisamos sus conexiones. En el peor caso el trabajo crece con todos los puntos y conexiones del grafo (O(V + E), donde V cuenta vértices y E cuenta aristas). Las marcas de visitado y los puntos pendientes de procesar necesitan espacio que crece con la cantidad de puntos (O(V) de memoria adicional).
 
 Analogía: Exploras una ciudad por anillos: primero los vecinos cercanos, después sus vecinos.
 
-**DFS: búsqueda en profundidad.** DFS sigue una rama hasta que no puede avanzar y luego regresa. Puede usar recursión o una pila explícita. Los visitados evitan ciclos. Tiempo O(V + E), memoria auxiliar O(V). El orden depende del orden de los vecinos.
+**DFS: búsqueda en profundidad.** DFS sigue una rama hasta que no puede avanzar y luego regresa. Puede usar recursión o una pila explícita. Los visitados evitan ciclos. Al recorrer las listas de vecinos, visitamos los puntos alcanzables y revisamos sus conexiones. En el peor caso el trabajo crece con todos los puntos y conexiones del grafo (O(V + E), donde V cuenta vértices y E cuenta aristas). Las marcas de visitado y los puntos pendientes de procesar necesitan espacio que crece con la cantidad de puntos (O(V) de memoria adicional). El orden depende del orden de los vecinos.
 
 Analogía: Exploras un laberinto siguiendo un pasillo hasta el fondo y retrocedes para probar los demás.
 
-**Dijkstra: caminos de menor costo.** Dijkstra obtiene distancias mínimas con pesos no negativos. Usa una cola de prioridad de menor costo, mejora distancias y descarta entradas obsoletas. `INFINITO` indica un vértice inalcanzable. Esta versión permite entradas repetidas en la cola: tiempo O((V + E) log(E + 2)) y memoria O(V + E). No devuelve las rutas, solo sus costos.
+**Dijkstra: caminos de menor costo.** Dijkstra obtiene distancias mínimas con pesos no negativos. Usa una cola de prioridad de menor costo, mejora distancias y descarta entradas obsoletas. `INFINITO` indica un vértice inalcanzable. Además de revisar conexiones, esta versión organiza los candidatos en una cola de prioridad para elegir el de menor costo. Al haber más candidatos, mantener esa prioridad requiere más ajustes. Un mismo punto puede aparecer varias veces si encontramos mejores caminos hacia él; por eso la cola también necesita espacio para esos registros pendientes. La memoria puede crecer con los vértices y las aristas del grafo (O(V + E), donde V cuenta puntos y E cuenta conexiones). La función dijkstra devuelve los costos; caminosMinimos también conserva desde qué punto llegamos a cada destino, para reconstruir las rutas.
 
 Analogía: Un repartidor compara el costo total de las rutas y siempre considera primero la alternativa más barata disponible.
 
@@ -1456,27 +1456,27 @@ int main() {
 
 Estudia cada algoritmo con la misma entrada y compara trabajo, memoria y estabilidad. Estable significa conservar el orden original de elementos con la misma clave. El integrador verifica cinco algoritmos contra `sort`, incluyendo vector vacío, repetidos, negativos y datos ya ordenados. Los punteros a funciones permiten repetir la misma comprobación.
 
-**Burbuja.** Compara vecinos y los intercambia si están invertidos. Cada pasada coloca el mayor restante al final. Tiempo O(n²) en promedio y peor caso; O(n) si ya está ordenado gracias al indicador de cambios. Memoria adicional O(1). Es estable. Lee su función en `../Ordenamientos.h`.
+**Burbuja.** Compara vecinos y los intercambia si están invertidos. Cada pasada coloca el mayor restante al final. Con n datos, las pasadas comparan repetidamente muchos de los mismos vecinos: el trabajo puede crecer aproximadamente como n multiplicado por n (O(n²), tanto en promedio como en el peor caso). Si ya están ordenados, el indicador de cambios permite terminar tras una pasada por los n datos (O(n)). Solo necesita unas pocas variables adicionales, sin crear otro arreglo del tamaño de la entrada (O(1) de memoria adicional). Es estable. Lee su función en `../Ordenamientos.h`.
 
 Analogía: Las burbujas grandes suben al extremo; cada pasada lleva el mayor número al final.
 
-**Selección.** Busca el menor de la zona pendiente y lo intercambia con su primera posición. Tiempo O(n²), incluso si ya estaba ordenado; memoria adicional O(1). No es estable en esta implementación. Lee su función en `../Ordenamientos.h`.
+**Selección.** Busca el menor de la zona pendiente y lo intercambia con su primera posición. Después de elegir un dato vuelve a revisar la zona pendiente para elegir el siguiente. Con n datos, las comparaciones se acumulan de forma parecida a n multiplicado por n, incluso si ya estaban ordenados (O(n²)). Solo usa unas pocas variables adicionales, sin otro arreglo del mismo tamaño (O(1) de memoria adicional). No es estable en esta implementación. Lee su función en `../Ordenamientos.h`.
 
 Analogía: De un montón de cartas tomas siempre la menor y la colocas en la siguiente posición libre.
 
-**Inserción.** Mantiene una zona izquierda ordenada e inserta cada dato nuevo desplazando los mayores. Tiempo O(n²) en promedio y peor caso, O(n) en datos ya ordenados; memoria adicional O(1). Es estable. Lee su función en `../Ordenamientos.h`.
+**Inserción.** Mantiene una zona izquierda ordenada e inserta cada dato nuevo desplazando los mayores. Cada dato nuevo puede obligarnos a desplazar muchos de los anteriores. Con n datos, ese trabajo repetido puede crecer como n multiplicado por n (O(n²), en promedio y en el peor caso). Si ya estaban ordenados, basta con avanzar por ellos una vez (O(n)). Usa unas pocas variables adicionales, sin otro arreglo del mismo tamaño (O(1) de memoria adicional). Es estable. Lee su función en `../Ordenamientos.h`.
 
 Analogía: Ordenas una mano de cartas colocando cada carta nueva en su lugar entre las anteriores.
 
-**Merge sort.** Divide por mitades, ordena cada mitad y las mezcla. Tiempo O(n log n); usa O(n) de memoria auxiliar y O(log n) de llamadas. Es estable porque, ante empates, toma primero el elemento de la izquierda. Lee su función en `../Ordenamientos.h`.
+**Merge sort.** Divide por mitades, ordena cada mitad y las mezcla. Dividir por mitades crea varios niveles de trabajo; duplicar la cantidad de datos añade aproximadamente un nivel. En cada nivel, las mezclas recorren en conjunto los n datos: el trabajo combina la cantidad de datos con la cantidad de niveles (O(n log n); n cuenta datos y log n describe los niveles de división). Necesita un arreglo auxiliar que crece con esos datos (O(n) de memoria) y guarda las llamadas pendientes del camino de divisiones actual (O(log n) de memoria para las llamadas). Es estable porque, ante empates, toma primero el elemento de la izquierda. Lee su función en `../Ordenamientos.h`.
 
 Analogía: Divides hojas entre dos ayudantes y luego reúnes sus montones ordenados tomando la menor hoja disponible.
 
-**Quick sort.** Elige un pivote, coloca los menores a un lado y ordena las particiones. Suele costar O(n log n), pero esta elección de pivote llega a O(n²) con entradas ordenadas o iguales. La pila recursiva puede crecer hasta O(n). No es estable. Lee su función en `../Ordenamientos.h`.
+**Quick sort.** Elige un pivote, coloca los menores a un lado y ordena las particiones. Cuando las particiones quedan repartidas de forma parecida, cada nivel procesa los n datos y la cantidad de niveles crece como las divisiones por mitades (O(n log n); n cuenta datos). Si el pivote deja casi todo en un solo lado, repetimos recorridos largos y el trabajo puede crecer como n multiplicado por n (O(n²)); elegir el último dato como pivote provoca ese caso con entradas ordenadas o iguales. También pueden acumularse hasta una llamada pendiente por dato (O(n) de memoria para las llamadas). No es estable. Lee su función en `../Ordenamientos.h`.
 
 Analogía: Un pivote divide una fila: los menores pasan a la izquierda y los demás a la derecha; repites en cada grupo.
 
-**Ordenar con la biblioteca estándar.** `sort` ofrece O(n log n) comparaciones en el peor caso y no garantiza estabilidad. `stable_sort` conserva el orden de elementos equivalentes. El comparador debe expresar un orden estricto: usa `<`, no `<=`. Aprende los algoritmos manuales y usa la biblioteca para tareas habituales.
+**Ordenar con la biblioteca estándar.** `sort` limita el crecimiento de las comparaciones incluso en el peor caso. Con n datos, el límite crece como la cantidad de datos multiplicada por la cantidad de niveles que tendría dividirlos repetidamente por mitades (O(n log n)). Esto describe el límite de trabajo, sin exigir que el algoritmo interno use literalmente esas divisiones. No garantiza estabilidad. `stable_sort` conserva el orden de elementos equivalentes. El comparador debe expresar un orden estricto: usa `<`, no `<=`. Aprende los algoritmos manuales y usa la biblioteca para tareas habituales.
 
 Analogía: Encargas ordenar el cajón a una herramienta ya probada, indicándole cómo comparar sus objetos.
 
@@ -1516,11 +1516,11 @@ int main() {
 
 Busca primero sin orden y después con orden. El integrador compara resultados de ambas búsquedas sobre datos ordenados y muestra cómo cambia el índice original: el 8 pasa de 0 a 4.
 
-**Búsqueda lineal.** Revisa desde el inicio hasta encontrar el valor. No necesita orden previo. Tiempo O(n); espacio auxiliar O(1). `optional` contiene una posición o `nullopt` si no existe. Comprueba que tiene valor antes de usar `*resultado`. La posición 0 también es un resultado válido.
+**Búsqueda lineal.** Revisa desde el inicio hasta encontrar el valor. No necesita orden previo. Si el valor está al final o no existe, puede revisar los n elementos (O(n), donde n es la cantidad de elementos). Solo necesita unas pocas variables para llevar la posición actual y el resultado (O(1) de memoria adicional). `optional` contiene una posición o `nullopt` si no existe. Comprueba que tiene valor antes de usar `*resultado`. La posición 0 también es un resultado válido.
 
 Analogía: Buscas una llave revisando cada compartimento del cajón.
 
-**Búsqueda binaria.** Requiere un vector ordenado de menor a mayor. Cada comparación descarta la mitad del rango; tiempo O(log n), espacio auxiliar O(1). Ordenar primero tiene su propio costo: no es gratis. Esta versión devuelve la primera coincidencia.
+**Búsqueda binaria.** Requiere un vector ordenado de menor a mayor. Cada paso reduce la zona pendiente aproximadamente a la mitad. Imagina reducir 16 candidatos a 8, después a 4, a 2 y a 1: son cuatro divisiones. Si comenzamos con 32, solo agregamos una división a ese recorrido. Por eso el trabajo crece lentamente al aumentar los datos (O(log n), donde n es la cantidad de elementos y log n describe ese crecimiento por mitades). Esta versión usa unas pocas variables, sin copiar el vector (O(1) de memoria adicional). Ordenar primero tiene su propio costo: no es gratis. Esta versión devuelve la primera coincidencia.
 
 Analogía: Abres una guía ordenada por la mitad y decides qué mitad conserva el número que buscas.
 
@@ -1548,7 +1548,7 @@ int main() {
 
 ### 11. Const y headers en EDD
 
-Una consulta de una estructura puede recibir `const vector<int>&`: usa sus elementos sin copiar ni cambiar el vector. El vector y el resultado del ejemplo son `const`. El header declara la operación y una constante `inline constexpr`; el `.cpp` define el algoritmo con `count_if` y `main.cpp` lo usa. La consulta cuesta O(n) y requiere O(1) de memoria auxiliar.
+Una consulta de una estructura puede recibir `const vector<int>&`: usa sus elementos sin copiar ni cambiar el vector. El vector y el resultado del ejemplo son `const`. El header declara la operación y una constante `inline constexpr`; el `.cpp` define el algoritmo con `count_if` y `main.cpp` lo usa. La consulta revisa cada elemento una vez; con el doble de elementos hace el doble de visitas (O(n), donde n es la cantidad de elementos). Solo agrega un contador y unas pocas variables, sin crear otra colección del mismo tamaño (O(1) de memoria adicional).
 
 Los ejemplos de listas, árboles y grafos ya tienen headers con clases y operaciones. Aquí se muestra la separación entre declaración e implementación para una consulta. Comparar esta firma con un ordenamiento que recibe `vector<int>&` ayuda a distinguir lectura y modificación.
 

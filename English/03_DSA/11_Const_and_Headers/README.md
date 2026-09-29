@@ -2,7 +2,7 @@
 
 ## What you will learn
 
-A structure query can receive `const vector<int>&`, reading elements without copying or modifying the vector. The vector and result here are `const`. The header declares the operation and an `inline constexpr` constant, the implementation defines the algorithm with `count_if`, and main.cpp uses it. The query takes O(n) time and O(1) auxiliary space.
+A structure query can receive `const vector<int>&`, reading elements without copying or modifying the vector. The vector and result here are `const`. The header declares the operation and an `inline constexpr` constant, the implementation defines the algorithm with `count_if`, and main.cpp uses it. The query inspects each element once; twice as many elements means twice as many visits (O(n), where n is the element count). It only adds a counter and a few variables, without another collection of the same size (O(1) additional memory).
 
 Lists, trees and graphs already have headers containing classes and operations. This lesson separates a query's declaration from implementation. Compare its signature with a sorting function taking `vector<int>&` to distinguish reading from modification.
 

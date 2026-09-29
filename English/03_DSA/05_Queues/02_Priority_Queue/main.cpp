@@ -1,8 +1,10 @@
 // Priority queues and heaps
 //
 // priority_queue uses a heap. By default the largest value is at the top; greater<int> puts the
-// smallest there. top costs O(1), insertion and removal O(log n). Equal priorities do not
-// preserve arrival order.
+// smallest there. top directly accesses the priority value without traversing other elements
+// (O(1)). Inserting or removing may require adjusting a path through heap levels, which organize
+// data like a tree. The number of levels grows slowly: doubling the element count adds about one
+// level (O(log n), with n elements). Equal priorities do not preserve arrival order.
 //
 // Analogy: An emergency room serves patients by severity rather than arrival order.
 //

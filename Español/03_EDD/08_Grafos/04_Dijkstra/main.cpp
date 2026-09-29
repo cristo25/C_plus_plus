@@ -1,9 +1,14 @@
 // Dijkstra: caminos de menor costo
 //
 // Dijkstra obtiene distancias mínimas con pesos no negativos. Usa una cola de prioridad de menor
-// costo, mejora distancias y descarta entradas obsoletas. INFINITO indica un vértice
-// inalcanzable. Esta versión permite entradas repetidas en la cola: tiempo O((V + E) log(E + 2))
-// y memoria O(V + E). No devuelve las rutas, solo sus costos.
+// costo, mejora distancias y descarta entradas obsoletas. INFINITO indica un vértice inalcanzable.
+// Además de revisar conexiones, esta versión organiza los candidatos en una cola de prioridad para
+// elegir el de menor costo. Al haber más candidatos, mantener esa prioridad requiere más ajustes.
+// Un mismo punto puede aparecer varias veces si encontramos mejores caminos hacia él; por eso la
+// cola también necesita espacio para esos registros pendientes. La memoria puede crecer con los
+// vértices y las aristas del grafo (O(V + E), donde V cuenta puntos y E cuenta conexiones). La
+// función dijkstra devuelve los costos; caminosMinimos también conserva desde qué punto llegamos a
+// cada destino, para reconstruir las rutas.
 //
 // Analogía: Un repartidor compara el costo total de las rutas y siempre considera primero la
 // alternativa más barata disponible.

@@ -1,8 +1,10 @@
 // Tree traversals
 //
 // Preorder visits root, left, right. Inorder visits left, root, right. Postorder visits left,
-// right, root. Inorder produces sorted values in a BST. Traversals take O(n), with an O(h)
-// recursive stack plus the output vector.
+// right, root. Inorder produces sorted values in a BST. A traversal visits every node, so its work
+// grows with the n nodes (O(n)). It also keeps calls waiting to return: there can be one for each
+// level on the current path, up to the tree height h (O(h) memory for those calls). The output
+// vector needs room for the n results.
 //
 // Analogy: Visit a house and record each room before its annexes, between its annexes, or after
 // them.
