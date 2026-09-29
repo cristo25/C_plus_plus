@@ -1,23 +1,21 @@
 // Integrador: propietarios, vistas, matrices y ordenamiento
 //
-// Este ejemplo reúne los nueve pasos en una operación: mostrar productos
-// ordenados sin reorganizar su inventario. El vector guarda clases Estante;
-// cada clase posee nodos struct que contienen Producto. Construimos una vista
-// de const Nodo*, la ordenamos por precio y tomamos direcciones para una matriz.
-// Los parámetros const& consultan los propietarios; const Nodo*& cambia una selección.
-// Nunca borramos nodos mientras existan vistas en uso. Las casillas repetidas
-// no representan existencias adicionales: el total se calcula desde los propietarios.
+// Vamos a combinar las capas para mostrar productos ordenados sin mover sus cajas originales.
+// Guardamos estantes en un vector; cada estante contiene nodos y cada nodo contiene un producto.
+// Reunimos direcciones de esos nodos en vista y ordenamos solo las tarjetas por precio. Después
+// elegimos tarjetas para una matriz de exposición. Una misma tarjeta puede aparecer varias veces:
+// contar casillas ocupadas no significa contar productos distintos. Calculamos el valor total desde
+// los estantes para no sumar dos veces un producto repetido en la vitrina.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../02_POO/08_Headers/Producto.cpp -o programa.exe
-// Ejecutar: ./programa.exe
-//
-// Practica: Ordena por nombre y demuestra que la lista original no cambió de orden.
 
+// Usamos sort para ordenar o cambiar el orden de los datos.
 #include <algorithm>
-#include <array>
 #include <iostream>
+// Consultamos con numeric_limits el mayor entero permitido antes de sumar.
 #include <limits>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 #include "Estante.h"
 
@@ -72,9 +70,9 @@ int main() {
     const Estante::Nodo* seleccion = nullptr;
     seleccionar(seleccion, vista.at(0));
     // La matriz muestra dos productos únicos en tres casillas: seleccion aparece dos veces.
-    const array<array<const Estante::Nodo*, 2>, 2> casillas{
-        array<const Estante::Nodo*, 2>{seleccion, nullptr},
-        array<const Estante::Nodo*, 2>{vista.at(1), seleccion}
+    const Estante::Nodo* const casillas[2][2]{
+        {seleccion, nullptr},
+        {vista.at(1), seleccion}
     };
     size_t ocupadas = 0;
     for (const auto& fila : casillas) {

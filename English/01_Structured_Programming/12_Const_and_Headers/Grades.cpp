@@ -1,20 +1,24 @@
 #include "Grades.h"
-#include <stdexcept>
 
 using namespace std;
 
 namespace course {
-    double calculateAverage(const array<int, 3>& grades) {
-        int sum = 0;
-        // Validate each grade before adding it; the const reference cannot modify the array.
-        for (const int grade : grades) {
+    bool calculateAverage(const int grades[], int count, double& result) {
+        if (count <= 0) {
+            return false;
+        }
+        long long sum = 0;
+        // Validate each grade before adding it; const prevents us from changing the grades through this parameter.
+        for (int index = 0; index < count; ++index) {
+            const int grade = grades[index];
             if (grade < MIN_GRADE || grade > MAX_GRADE) {
-                throw invalid_argument("Grades must be between 0 and 10");
+                return false;
             }
             sum += grade;
         }
-        // Conversion before division avoids truncating the average to an integer.
-        return static_cast<double>(sum) / grades.size();
+        // We convert before dividing so we keep the average's decimal places.
+        result = static_cast<double>(sum) / count;
+        return true;
     }
 
     bool hasPassed(double average) {

@@ -1,23 +1,18 @@
 // Priority queues and heaps
 //
-// priority_queue uses a heap. By default the largest value is at the top; greater<int> puts the
-// smallest there. top directly accesses the priority value without traversing other elements
-// (O(1)). Inserting or removing may require adjusting a path through heap levels, which organize
-// data like a tree. The number of levels grows slowly: doubling the element count adds about one
-// level (O(log n), with n elements). Equal priorities do not preserve arrival order.
+// We will serve by importance instead of arrival. priority_queue puts the highest-priority value at
+// the top: for integers this is normally the largest. To choose the smallest, such as a cost, we
+// use greater<int>, a comparison rule from <functional>. We can picture a hospital's urgent cases:
+// arriving first does not always mean being served first. With top we inspect the next value and
+// with pop we remove it; data must be present.
 //
-// Analogy: An emergency room serves patients by severity rather than arrival order.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Remove every value from both queues. Explain why a heap is not a fully sorted
-// vector.
 
+// We select the smallest value first in a priority queue using greater.
 #include <functional>
 #include <iostream>
+// We serve by arrival with queue or by importance with priority_queue.
 #include <queue>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

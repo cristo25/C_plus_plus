@@ -1,22 +1,14 @@
 // Tree traversals
 //
-// Preorder visits root, left, right. Inorder visits left, root, right. Postorder visits left,
-// right, root. Inorder produces sorted values in a BST. A traversal visits every node, so its work
-// grows with the n nodes (O(n)). It also keeps calls waiting to return: there can be one for each
-// level on the current path, up to the tree height h (O(h) memory for those calls). The output
-// vector needs room for the n results.
+// We will visit the same tree in three orders. In preorder we read the node before its branches; in
+// inorder we read left branch, node, then right branch; in postorder we leave the node until last.
+// In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms but
+// recording each name on entry, midway or on exit. In all three cases we visit all n nodes (O(n)).
 //
-// Analogy: Visit a house and record each room before its annexes, between its annexes, or after
-// them.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw the tree and reproduce each traversal with arrows before running it.
 
 #include "../Tree.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

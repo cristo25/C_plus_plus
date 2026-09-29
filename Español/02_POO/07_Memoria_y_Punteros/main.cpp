@@ -1,14 +1,16 @@
 // Memoria y punteros en POO
 //
-// Relaciona propiedad con vida del objeto. El integrador administra un alumno con unique_ptr y
-// lo consulta mediante un puntero que no es propietario.
+// Vamos a aplicar los punteros a un objeto Alumno. Creamos el alumno con make_unique y prestamos su
+// dirección con get. Con consulta->consultarNombre() seguimos esa dirección y llamamos a una
+// función del alumno; -> equivale a seguir el puntero y usar el punto. Cuando llamamos reset
+// liberamos el alumno. A partir de ese momento la dirección prestada deja de servir: debemos dejar
+// de usarla y ponerla en nullptr. El puntero prestado nunca es responsable de borrar el alumno.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
 
 #include <iostream>
+// Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;
@@ -30,7 +32,8 @@ int main() {
     const Alumno* consulta = propietario.get();
 
     cout << consulta->consultarNombre() << "\n";
-    // reset destruye el objeto. A partir de aquí el observador ya no se puede desreferenciar.
+    // reset destruye el objeto. A partir de aquí el observador ya no se puede seguir esa dirección
+    // para leer el dato.
     propietario.reset();
     consulta = nullptr;
 }

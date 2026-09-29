@@ -1,18 +1,37 @@
 # Trees
 
-Distinguish binary trees from binary search trees, then study traversal orders. The integration example inserts, searches, traverses and removes. Recursive examples use small trees; balancing and iterative traversal are extensions for great depths.
+We will connect this topic’s pieces before solving its integration task. Each link contains the program, comments and a practice task with requirements.
 
-## Study order
+## Binary trees: roots, children and leaves
 
-1. [Binary trees: roots, children and leaves](01_Binary_Tree/main.cpp)
-2. [Binary search trees (BST)](02_Binary_Search_Tree/main.cpp)
-3. [Tree traversals](03_Traversals/main.cpp)
+We will link nodes into branches. In a binary tree each node can have at most one left child and one right child. We call the first node the root and a node with no children a leaf. Here we are building the shape only: having two branches does not require sorted numbers. To count, we add the current node and both branches recursively. We use unique_ptr so each branch releases its nodes when finished.
 
-After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
+[Commented program](01_Binary_Tree/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-./program.exe
-```
+## Binary search trees (BST)
 
-Every subfolder has its own program. Compile one example at a time: each has its own `main` function.
+We will add a rule to the tree: smaller numbers go left and larger ones go right. When searching, we choose one branch and discard the other. We call this a binary search tree, or BST. Here we do not store duplicates. When removing a node with two children, we find a replacement that preserves the ordering. If the tree becomes a chain, we must traverse many nodes; calling it a tree does not guarantee fast searches.
+
+[Commented program](02_Binary_Search_Tree/main.cpp).
+
+## Tree traversals
+
+We will visit the same tree in three orders. In preorder we read the node before its branches; in inorder we read left branch, node, then right branch; in postorder we leave the node until last. In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms but recording each name on entry, midway or on exit. In all three cases we visit all n nodes (O(n)).
+
+[Commented program](03_Traversals/main.cpp).
+
+## Trees
+
+We will integrate tree operations: insertion, search, traversal and removal. We use Tree.h to follow the same links in every case. First we check an empty tree, add values, compare its traversals and finally remove all nodes. We can picture maintaining a tree of folders: each change must preserve access to branches that still exist.
+
+[Commented program](main.cpp).
+
+**Practice.** Write an integrated program managing numbers in a tree.
+
+- Add and search for numbers without duplicates.
+- Offer all three traversals.
+- Remove the root without losing other values.
+- Empty the tree and insert again.
+- Display a message when a number is missing.
+
+[Back to the general guide](../../README.md).

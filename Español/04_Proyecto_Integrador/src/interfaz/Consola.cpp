@@ -1,8 +1,13 @@
 #include "interfaz/Consola.h"
+// Recogemos errores mediante exception y leemos su mensaje con what().
 #include <exception>
+// Consultamos con numeric_limits el mayor entero permitido antes de sumar.
 #include <limits>
+// Guardamos un resultado que puede faltar: optional tiene un valor o está vacío.
 #include <optional>
+// Leemos o escribimos texto en memoria como si fuera un archivo.
 #include <sstream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 namespace proyecto {

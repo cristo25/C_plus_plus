@@ -1,23 +1,19 @@
 // Sorting with the standard library
 //
-// sort limits comparison growth even in the worst case. With n values, the bound grows like the
-// value count multiplied by the number of levels in repeated halving (O(n log n)). This describes a
-// work bound without requiring the internal algorithm to literally use those divisions. It does not
-// guarantee stability. stable_sort preserves equivalent elements' order. The comparator must
-// express a strict order: use <, not <=. A lambda [](...) { ... } defines a small function at its
-// use site.
+// We will compare our work with tools C++ already provides in <algorithm>. sort orders a range
+// between begin() and end(); end() marks the position after the last value. For student records we
+// provide a function deciding which comes first. The small function written with [] is called a
+// lambda: here it receives two students and compares their grades with <. stable_sort preserves the
+// earlier order of ties. After understanding manual movements, we can use this tool for a complete
+// task.
 //
-// Analogy: Give the drawer to a tested sorting tool and tell it how to compare its objects.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Sort by name, then by descending grade while preserving ties.
 
+// We use sort, stable_sort to sort or change data order.
 #include <algorithm>
 #include <iostream>
+// We store and work with text using string.
 #include <string>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

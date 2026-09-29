@@ -1,15 +1,17 @@
 // Decidir con if y else
 //
-// Una condición produce true o false. if, else if y else eligen una rama. Combina condiciones
-// con &&, || y !.
+// Vamos a decidir qué instrucciones ejecutar. Con if hacemos una pregunta, como si una persona
+// tiene al menos 18 años. Si la respuesta es true, es decir, verdadera, entramos en sus llaves; con
+// else atendemos el caso contrario. Podemos unir preguntas: && significa que ambas deben cumplirse,
+// || que basta una y ! invierte una respuesta. Podemos imaginar dos puertas: la condición decide
+// por cuál seguimos.
 //
-// Analogía: Es una bifurcación: tomas un camino distinto según la señal que encuentras.
+// Practica: Realiza un programa que decida el acceso a un evento.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega una autorización para menores acompañados y prueba el límite de 18 años.
+// - Guardar una edad y si hay un acompañante adulto.
+// - Permitir el acceso a mayores de edad o menores acompañados.
+// - Mostrar el motivo de la decisión.
+// - Probar edades de 17 y 18 años.
 
 #include <iostream>
 

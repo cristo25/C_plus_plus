@@ -1,17 +1,12 @@
 // Encapsulation and const
 //
-// private protects state. Public methods control valid changes. A const method queries without
-// changing the object. Integer cents avoid floating-point rounding; this example limits its
-// balance to 1,000,000 cents. You do not need a getter and setter for every attribute.
+// We will protect a savings-box balance. Instead of allowing any change from main, we keep it
+// inside the class and provide deposit and withdraw operations. Each function checks its rules
+// before changing the balance. We call this encapsulation: keeping data and its rules behind
+// controlled operations. Inside class, members are private unless we write public. With balance()
+// const we can read without changing the savings: const after a function promises to respect the
+// object's data.
 //
-// Analogy: A piggy bank does not let you reach directly inside: its operations control deposits
-// and withdrawals.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Try accessing balanceCents directly from main and withdrawing zero.
 
 #include <iostream>
 

@@ -1,22 +1,17 @@
 // Hash tables with unordered_map
 //
-// unordered_map associates unique keys with values through hashing. The hash function directs a
-// lookup toward a group of entries. On average, lookup or insertion takes an amount of work that
-// does not grow with the total entry count (O(1)). If many keys land in the same group, an
-// operation may inspect all n entries (O(n) in the worst case). The library manages collisions and
-// does not guarantee iteration order. operator[] can insert; use find for lookup alone.
+// We will search by a key, like finding a student card by registration number. unordered_map
+// connects a key to a value; here, a number to a name. Internally it uses a hash function, which
+// calculates the group where a key should be sought. With find we search without creating a card;
+// end() means it is missing. In a found card, first is the key and second the value. We do not
+// expect cards to appear in order. Usually we inspect few entries, but many keys landing together
+// may require many checks.
 //
-// Analogy: A receptionist turns a key into a locker number and distinguishes records when
-// several keys collide.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Insert the same key twice with emplace and inspect the boolean result.
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
+// We connect a key to a value for lookup, such as a student number and name.
 #include <unordered_map>
 
 using namespace std;

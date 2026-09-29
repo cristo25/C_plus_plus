@@ -1,11 +1,10 @@
 // Functions
 //
-// Split a problem into small tasks. The integration example calculates a subtotal by value and
-// applies a coupon by reference; the total is 50.
+// We will combine functions that calculate with functions that modify. First we obtain a subtotal
+// from price and quantity. Then we pass the total by reference to apply a coupon to that same
+// variable. We can picture a cash register: one task calculates and another updates the amount.
+// This lets us follow each step without putting everything inside main.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include <iostream>
 
@@ -15,7 +14,7 @@ using namespace std;
 int subtotal(int count, int price) {
     return count * price;
 }
-// int& aliases the original total: the discount changes the variable in main.
+// int& gives another label to the original total: the discount changes the variable in main.
 void applyCoupon(int& total) {
     if (total >= 50) {
         total -= 10;

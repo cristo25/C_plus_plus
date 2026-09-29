@@ -1,23 +1,14 @@
 // Complejidad: tiempo y espacio
 //
-// Para comparar programas, imagina que la cantidad de datos crece. Llegar directamente a una
-// casilla por su índice requiere una cantidad fija de pasos, aunque haya más casillas (se escribe
-// O(1); no significa exactamente un paso). Revisar todas las casillas sí aumenta el trabajo: con 20
-// visitas hacemos el doble que con 10 (O(n), donde n es la cantidad de elementos). Si reducimos lo
-// pendiente a la mitad, pasar de 8 a 1 requiere tres divisiones y de 16 a 1 requiere cuatro
-// (O(log n); aquí log n representa ese crecimiento por divisiones). Estas abreviaturas se llaman
-// notación O grande y describen cómo puede crecer el trabajo, sin indicar segundos exactos. También
-// podemos contar cuántos datos adicionales necesita guardar el programa: eso es la memoria
-// auxiliar.
+// Vamos a comparar cuánto trabajo hacemos cuando aumentan los datos. Llegar directamente a una
+// casilla requiere una cantidad fija de pasos, aunque haya más casillas (O(1); no significa
+// exactamente un paso). Revisar diez casillas implica diez visitas y revisar veinte implica veinte
+// (O(n), donde n es la cantidad de casillas). Si vamos dividiendo por la mitad, de 8 a 1 hacemos
+// tres divisiones y de 16 a 1 hacemos cuatro (O(log n), donde log n describe ese crecimiento por
+// mitades). Llamamos notación O grande a estas abreviaturas: describen crecimiento, no segundos
+// exactos. También podemos contar cuántos datos adicionales guardamos para hacer la tarea; a eso lo
+// llamamos memoria auxiliar.
 //
-// Analogía: Buscar un cajón por número es directo; revisar todas las secciones tarda más cuando
-// el mueble crece; partir una guía ordenada por la mitad descarta muchas páginas a la vez.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Compara n = 8, 16 y 32. Dibuja el crecimiento de n y del número de divisiones.
 
 #include <iostream>
 

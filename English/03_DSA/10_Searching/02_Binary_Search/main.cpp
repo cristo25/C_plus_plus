@@ -1,25 +1,15 @@
 // Binary search
 //
-// Requires ascending sorted data. Each step roughly halves the remaining search range. Imagine
-// reducing 16 candidates to 8, then 4, 2 and 1: four divisions. Starting with 32 adds just one
-// division to that sequence. This is why work grows slowly as the data increases (O(log n), where n
-// is the element count and log n describes growth through halving). This version uses a few
-// variables without copying the vector (O(1) additional memory). Sorting has a separate cost. This
-// version returns the first match; lower_bound is its standard alternative, while binary_search
-// returns only existence.
+// We will search an already sorted list. We look at the middle and decide which half could contain
+// the number. We can picture numbered pages: for a smaller page, we discard the right half.
+// Reducing 16 candidates to 8, 4, 2 and 1 takes four divisions; starting with 32 adds just one
+// (O(log n), where n counts candidates and log n describes the divisions). This version finds the
+// first match. We receive a position or an empty result and check which before reading it.
 //
-// Analogy: Open a sorted guide at its middle and decide which half could contain the requested
-// number.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw the ranges when searching for 8 and explain why the algorithm cannot directly
-// use 8, 1, 3.
 
 #include "../Searches.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

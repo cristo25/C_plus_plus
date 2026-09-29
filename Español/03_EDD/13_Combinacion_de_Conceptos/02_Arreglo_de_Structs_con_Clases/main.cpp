@@ -1,20 +1,16 @@
 // 2. Un struct contiene una clase; un arreglo contiene esos structs
 //
-// Queremos guardar existencias además del producto. Registro reúne un Producto
-// y una cantidad: el compartimento del cajón contiene una ficha completa con
-// esos dos datos. class y struct pueden contenerse entre sí; su diferencia
-// principal es el acceso por defecto. Usamos una clase para las reglas del
-// producto y un struct sencillo para agruparlo con su cantidad. Una función
-// recibe Registro& para modificar la ficha real del arreglo.
+// Vamos a añadir la cantidad disponible a cada producto. Con struct Registro juntamos un Producto y
+// un entero cantidad; después guardamos varias fichas Registro en un arreglo. Podemos imaginar un
+// compartimento que contiene el producto y una etiqueta con sus existencias. Con
+// registros[0].producto llegamos al objeto y con registros[0].cantidad al número. recibirUnidad
+// recibe Registro& para cambiar la ficha original: si quitamos &, cambiaríamos solo una copia.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_POO/08_Headers/Producto.cpp -o programa.exe
-// Ejecutar: ./programa.exe
-//
-// Practica: Cambia Registro& por Registro. Predice y explica qué cantidad se imprime.
 
-#include <array>
 #include <iostream>
+// Consultamos con numeric_limits el mayor entero permitido antes de sumar.
 #include <limits>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
 #include "../../../02_POO/08_Headers/Producto.h"
 
@@ -35,12 +31,12 @@ void recibirUnidad(Registro& registro) {
 }
 
 int main() {
-    array<Registro, 2> registros{
+    Registro registros[2]{
         Registro{Producto("Cuaderno", 300), 2},
         Registro{Producto("Lapiz", 100), 5}
     };
 
-    recibirUnidad(registros.at(0));
+    recibirUnidad(registros[0]);
     for (const Registro& registro : registros) {
         cout << registro.producto.consultarNombre() << ": " << registro.cantidad << "\n";
     }

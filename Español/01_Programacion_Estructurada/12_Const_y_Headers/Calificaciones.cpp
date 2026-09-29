@@ -1,21 +1,24 @@
 #include "Calificaciones.h"
-#include <stdexcept>
 
 using namespace std;
 
 namespace curso {
-    double calcularPromedio(const array<int, 3>& notas) {
-        int suma = 0;
-        // Cada nota se valida antes de sumarla; la referencia const no permite cambiar el
-        // arreglo.
-        for (const int nota : notas) {
+    bool calcularPromedio(const int notas[], int cantidad, double& resultado) {
+        if (cantidad <= 0) {
+            return false;
+        }
+        long long suma = 0;
+        // Cada nota se valida antes de sumarla; const nos impide cambiar las notas desde esta función.
+        for (int indice = 0; indice < cantidad; ++indice) {
+            const int nota = notas[indice];
             if (nota < NOTA_MINIMA || nota > NOTA_MAXIMA) {
-                throw invalid_argument("Las notas deben estar entre 0 y 10");
+                return false;
             }
             suma += nota;
         }
-        // La conversión antes de dividir evita truncar el promedio como un entero.
-        return static_cast<double>(suma) / notas.size();
+        // Convertimos antes de dividir para conservar los decimales del promedio.
+        resultado = static_cast<double>(suma) / cantidad;
+        return true;
     }
 
     bool estaAprobado(double promedio) {

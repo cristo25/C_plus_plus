@@ -1,18 +1,37 @@
 # Linked lists
 
-All three implementations store integers to focus on links and ownership. Manual `new/delete` teaches the mechanism; standard containers manage storage for common applications. The integration example uses all three headers and removes 20 from each list. Compare traversals, then remove the first node, the last node and the only node.
+We will connect this topic’s pieces before solving its integration task. Each link contains the program, comments and a practice task with requirements.
 
-## Study order
+## Singly linked list
 
-1. [Singly linked list](01_Singly_Linked/main.cpp)
-2. [Doubly linked list](02_Doubly_Linked/main.cpp)
-3. [Circular linked list](03_Circular/main.cpp)
+We will build a chain of boxes called nodes. Each node stores a value and a pointer to the next node, like a note showing where the next box is. The list stores the first address; the last points to nullptr. To search we follow the notes one at a time and may visit all n nodes (O(n)). When removing a node we join its previous neighbor to the next before releasing the box. We can see those steps inside SinglyLinkedList.h.
 
-After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
+[Commented program](01_Singly_Linked/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-./program.exe
-```
+## Doubly linked list
 
-Every subfolder has its own program. Compile one example at a time: each has its own `main` function.
+We will add a second arrow to each node: one to the next and another to the previous node. This lets us traverse in both directions. We also keep the first and last addresses so appending adjusts a few arrows without traversing the list (O(1)). When removing a node we repair both connections, like removing a train carriage linked at both ends. We can follow those pointer changes in DoublyLinkedList.h.
+
+[Commented program](02_Doubly_Linked/main.cpp).
+
+## Circular linked list
+
+We will close the chain into a circle: the last node points back to the first. We can picture players taking repeated turns. Since we do not reach nullptr after one lap, we stop when we return to the start. We keep the last node to append with a few changes (O(1)). Removing the only node leaves an empty list; removing any other node keeps the circle closed.
+
+[Commented program](03_Circular/main.cpp).
+
+## Linked lists
+
+We will compare all three lists using the same numbers. In the singly linked list we follow one arrow, in the doubly linked list we can go back, and in the circular list we return to the beginning. We insert 10, 20 and 30, remove 20 and check what remains. The main difference is how we link nodes and when traversal stops. We can draw the same three boxes and change only their arrows to understand it.
+
+[Commented program](main.cpp).
+
+**Practice.** Write an integrated program comparing three lists.
+
+- Insert the same five values into singly linked, doubly linked and circular lists.
+- Remove the same value from all three.
+- Display forward traversals and the doubly linked list in reverse.
+- Limit the circular list to one lap.
+- Try each list after emptying it.
+
+[Back to the general guide](../../README.md).

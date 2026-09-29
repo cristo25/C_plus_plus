@@ -1,19 +1,14 @@
 // 9. A vector contains classes managing nodes
 //
-// vector<Shelf> holds complete shelves. Each shelf owns a list; each struct
-// node stores a Product and owns the next node. Vector growth may move shelves:
-// a Shelf* pointing to an element becomes invalid. Managed nodes keep their
-// addresses because ownership is transferred. Shelf is not copied: copying
-// would require duplicating the chain. Its noexcept move lets the vector
-// relocate it. A reference to a relocated shelf would also be invalidated;
-// being a reference does not grant address stability.
+// We will store several shelves in a vector. Each shelf contains nodes and each node a product: we
+// follow those layers one at a time. Growing the vector can move a shelf, so we clear pointers to
+// the shelf itself before forcing that change. Its nodes were created separately and do not move
+// when their manager changes location. We can therefore keep a node query while the node still
+// exists. Emptying its shelf destroys the node, so we must stop using that query.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_OOP/08_Headers/Product.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Add another shelf after reserve and check the borrowed node through the vector.
 
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 #include "../Shelf.h"
 

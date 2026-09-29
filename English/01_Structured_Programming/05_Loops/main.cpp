@@ -1,11 +1,10 @@
 // Loops
 //
-// Compare when each loop checks its condition. The integration example accumulates jobs,
-// processes them and issues a notice: 6 deliveries and 1 notice.
+// We will use all three loops in one task. With for we collect amounts from several days; with
+// while we remove groups of ten until finished; with do while we show at least one notice. We can
+// picture a shop: we receive orders, deliver them and finally report completion. We choose each
+// loop according to when its condition needs checking.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include <iostream>
 

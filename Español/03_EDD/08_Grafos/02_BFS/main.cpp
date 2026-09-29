@@ -1,24 +1,16 @@
 // BFS: búsqueda en anchura
 //
-// BFS usa una cola y visita por niveles. Marca cada vértice al encolarlo para no repetirlo cuando
-// hay ciclos. Recorre solo los vértices alcanzables desde el inicio. En grafos sin pesos, los
-// niveles describen distancias mínimas en número de aristas. Al recorrer las listas de vecinos,
-// visitamos los puntos alcanzables y revisamos sus conexiones. En el peor caso el trabajo crece con
-// todos los puntos y conexiones del grafo (O(V + E), donde V cuenta vértices y E cuenta aristas).
-// Las marcas de visitado y los puntos pendientes de procesar necesitan espacio que crece con la
-// cantidad de puntos (O(V) de memoria adicional).
+// Vamos a explorar un mapa por capas. Primero visitamos el inicio, después sus vecinos y después
+// los vecinos de estos. Guardamos lo pendiente en una cola para respetar ese orden. A este
+// recorrido lo llamamos BFS, o búsqueda en anchura. Marcamos cada lugar al agregarlo para no
+// repetirlo, aunque haya caminos de regreso. Solo llegamos a lugares conectados con el inicio. Si
+// recorremos todo el mapa, revisamos sus lugares y caminos (O(V + E), con V lugares y E
+// conexiones).
 //
-// Analogía: Exploras una ciudad por anillos: primero los vecinos cercanos, después sus vecinos.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega una arista hacia 4. Explica cómo cambiaría el orden al cambiar el orden de
-// los vecinos.
 
 #include "../Grafo.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

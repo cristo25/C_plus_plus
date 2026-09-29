@@ -1,7 +1,10 @@
 #ifndef COURSE_TREE_H
 #define COURSE_TREE_H
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
+// We use move to transfer data or responsibility for releasing it.
 #include <utility>
+// We store a collection that can grow using vector.
 #include <vector>
 
 namespace course {

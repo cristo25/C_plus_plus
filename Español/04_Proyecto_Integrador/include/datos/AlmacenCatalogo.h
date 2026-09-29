@@ -1,6 +1,7 @@
 #ifndef PROYECTO_ALMACEN_CATALOGO_H
 #define PROYECTO_ALMACEN_CATALOGO_H
 
+// Manejamos rutas, carpetas y cambios de nombre de archivos.
 #include <filesystem>
 #include "../../../02_POO/09_DAO/LibroDAO.h"
 

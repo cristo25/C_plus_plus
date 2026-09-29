@@ -1,12 +1,22 @@
+// With inline we allow these definitions to be shared from the header across several files.
+
 #ifndef COURSE_GRAPH_H
 #define COURSE_GRAPH_H
+// We use size_t to count elements and represent nonnegative positions.
 #include <cstddef>
+// We select the smallest value first in a priority queue using greater.
 #include <functional>
+// We use numeric_limits to check the largest allowed integer before adding.
 #include <limits>
+// We store a result that may be missing: optional holds a value or is empty.
 #include <optional>
+// We serve by arrival with queue or by importance with priority_queue.
 #include <queue>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
+// We use pair to keep two values together.
 #include <utility>
+// We store a collection that can grow using vector.
 #include <vector>
 
 namespace course {

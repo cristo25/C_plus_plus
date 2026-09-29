@@ -1,21 +1,17 @@
 // Propiedad con unique_ptr
 //
-// unique_ptr tiene un propietario y libera el objeto automáticamente. make_unique lo construye.
-// move transfiere la propiedad; no copies un unique_ptr. Usa punteros crudos cuando solo
-// observes un objeto y su vida esté garantizada.
+// Vamos a dar a una sola herramienta la responsabilidad de liberar la caja. Con unique_ptr, de
+// <memory>, guardamos esa responsabilidad junto con la dirección. make_unique crea el dato; get nos
+// presta su dirección para consultarlo. Ese puntero prestado no debe liberarlo. Con move, de
+// <utility>, trasladamos la responsabilidad a nuevoPropietario y dejamos vacío al anterior. Al
+// terminar el nuevo propietario se libera el entero automáticamente. Esta ayuda evita que olvidemos
+// un delete.
 //
-// Analogía: Una llave única administra el casillero. Cuando entregas la llave, el dueño anterior
-// deja de tenerla.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Usa reset() y comprueba que el propietario queda vacío. No uses el observador
-// después.
 
 #include <iostream>
+// Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
+// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
 #include <utility>
 
 using namespace std;

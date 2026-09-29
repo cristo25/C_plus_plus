@@ -1,32 +1,19 @@
 # Const, headers y compilación de varios archivos
 
-## Qué aprenderás
+Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
 
-`Producto.h` declara la clase; `Producto.cpp` define sus métodos; `main.cpp` la utiliza. Las guardas `#ifndef` evitan incluir la misma declaración dos veces. Cada `.cpp` se compila y el enlazador reúne el resultado. Incluye el `.h`, nunca el `.cpp`.
+## Const, headers y compilación de varios archivos
 
-## Analogía
+Vamos a separar una clase para poder usarla desde varios programas. En Producto.h mostramos qué datos guarda y qué operaciones ofrece; en Producto.cpp escribimos cómo trabajan esas operaciones. Desde main creamos un Producto con nombre y precio. Guardamos el precio en centavos enteros para evitar pequeñas diferencias de los decimales. Con const protegemos el objeto y sus consultas. Para ejecutar necesitamos compilar main.cpp junto con Producto.cpp; incluir el .h solo anuncia las funciones, no añade sus pasos.
 
-El header es la carta del restaurante: explica qué puedes pedir. El `.cpp` es la cocina y `main` hace el pedido.
+[Programa comentado](main.cpp).
 
-## Ejecuta el ejemplo
+**Práctica.** Realiza un programa con una clase Producto separada en archivos.
 
-Abre una terminal **en esta carpeta**. Necesitas un compilador compatible con C++17.
+- Guardar nombre y precio privado en centavos.
+- Declarar la clase en Producto.h y sus funciones en Producto.cpp.
+- Consultar ambos datos mediante métodos const.
+- Crear dos productos desde main y mostrar sus datos.
+- Rechazar un precio negativo.
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp Producto.cpp -o programa.exe
-./programa.exe
-```
-
-Salida: `Cuaderno: 1250 centavos`. Compila **ambos** archivos `.cpp`; si omites `Producto.cpp`, faltarán las definiciones al enlazar.
-
-## Practica
-
-Agrega una consulta de precio con descuento. Declárala en el header y defínela en `Producto.cpp`.
-
-Los headers usan `namespace curso { using namespace std; ... }`; los `.cpp` importan `curso` para acceder a sus declaraciones. Así el header no agrega nombres estándar al namespace global del archivo que lo incluye.
-
-## Const aplicado a una clase
-
-`main.cpp` crea un `const Producto`: puedes consultar su nombre y precio, pero no modificarlo. Las consultas se declaran con `const` después de los paréntesis tanto en el `.h` como en el `.cpp`. Eso permite llamarlas desde un objeto constante. La consulta del nombre devuelve `const string&` para evitar una copia y proteger el texto original.
-
-Así se distinguen tres usos: `const` en datos que no cambian, `const T&` en parámetros o resultados de solo lectura, y métodos `const` que consultan el estado del objeto. Un método que cambia el precio no debería ser const.
+[Volvemos a la guía general](../../README.md).

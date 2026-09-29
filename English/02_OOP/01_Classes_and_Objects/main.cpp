@@ -1,19 +1,15 @@
 // Classes and objects
 //
-// A class defines data and operations. An object is a concrete instance. public makes members
-// accessible from outside; the next lesson protects state with private.
+// We will bring together data and actions that belong to the same thing. We can picture a class as
+// the blueprint for a Minecraft block: it describes the data and actions of each block created from
+// it. Each actual block would be an object. In this program we use Bicycle: we store color and
+// speed, and pedal increases the speed. We create red and blue separately; pedaling red does not
+// change blue. We call the stored data attributes and the functions inside the class methods. With
+// public we allow main to use them.
 //
-// Analogy: A class is a bicycle blueprint. Every bicycle built from it is an object with its own
-// color.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add a braking method and check that the two objects keep independent states.
-// The blue bicycle is also displayed, at speed 0, showing its independent state.
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

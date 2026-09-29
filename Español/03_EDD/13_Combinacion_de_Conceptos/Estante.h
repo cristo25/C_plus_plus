@@ -1,11 +1,26 @@
-// Header compartido por los pasos 8, 9 y el integrador; las funciones definidas en la clase son inline.
+// Con = delete impedimos copiar la clase para no dejar dos objetos intentando liberar los mismos
+// nodos.
+//
+// Con friend damos permiso a la clase indicada para cambiar los enlaces privados del nodo.
+//
+// Con noexcept indicamos que estas operaciones no van a comunicar errores mediante throw. En los
+// parámetros con && recibimos un objeto del que podemos trasladar los datos; con move transferimos
+// esa responsabilidad.
+
+// Compartimos esta clase entre los pasos 8, 9 y el integrador. Podemos definir sus funciones dentro
+// de la clase y usar el header desde varios archivos.
 #ifndef CURSO_ESTANTE_H
 #define CURSO_ESTANTE_H
 
+// Consultamos con numeric_limits el mayor entero permitido antes de sumar.
 #include <limits>
+// Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
+// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
 #include <utility>
 #include "../../02_POO/08_Headers/Producto.h"
 

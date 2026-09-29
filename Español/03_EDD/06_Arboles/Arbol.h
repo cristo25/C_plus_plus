@@ -1,7 +1,10 @@
 #ifndef CURSO_ARBOL_H
 #define CURSO_ARBOL_H
+// Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
+// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
 #include <utility>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 namespace curso {

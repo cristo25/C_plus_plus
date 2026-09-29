@@ -1,21 +1,15 @@
 // Lista circular
 //
-// El último nodo apunta al primero. Debes detenerte al volver al inicio; esperar nullptr causaría
-// un ciclo infinito. Como conservamos el último nodo, agregar al final requiere ajustar pocos
-// enlaces, sin recorrer la lista (O(1)). Para buscar o eliminar por valor podemos tener que revisar
-// los n nodos (O(n)); n es la cantidad de nodos. Esta variante es simplemente ligada y circular.
+// Vamos a cerrar la cadena formando un círculo: el último nodo vuelve al primero. Podemos imaginar
+// turnos de jugadores que se repiten. Como no encontramos nullptr al dar la vuelta, detenemos el
+// recorrido al regresar al inicio. Guardamos el último nodo para añadir otro con pocos cambios
+// (O(1)). Al quitar el único nodo dejamos la lista vacía; al quitar otro conservamos cerrado el
+// círculo.
 //
-// Analogía: Una rueda de turnos: después de la última persona regresas a la primera.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Dibuja el caso de un solo nodo: apunta a sí mismo. Explica por qué necesita un caso
-// especial al eliminarlo.
 
 #include "ListaCircular.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

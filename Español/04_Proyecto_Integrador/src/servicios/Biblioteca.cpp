@@ -1,8 +1,12 @@
 #include "servicios/Biblioteca.h"
 #include "../../../03_EDD/10_Busqueda/Busquedas.h"
+// Usamos sort para ordenar o cambiar el orden de los datos.
 #include <algorithm>
+// Consultamos con numeric_limits el mayor entero permitido antes de sumar.
 #include <limits>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
+// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
 #include <utility>
 
 namespace proyecto {
@@ -67,9 +71,10 @@ namespace proyecto {
     }
 
     void Biblioteca::confirmar(LibroDAO candidato, const string& mensaje) {
-        // Guardamos antes de sustituir el catálogo en memoria. Un fallo de E/S conserva el estado
-        // anterior. ponytail: cada cambio copia todos los libros y sus títulos para poder
-        // deshacerlo; usar comandos inversos si esas copias ocupan demasiado espacio.
+        // Guardamos antes de sustituir el catálogo en memoria. Si falla la lectura o escritura
+        // conservamos los datos anteriores. ponytail: cada cambio copia todos los libros y sus
+        // títulos para poder deshacerlo; usar comandos inversos si esas copias ocupan demasiado
+        // espacio.
         deshacerCambios.push(dao);
         try {
             almacen.guardar(candidato);
@@ -127,7 +132,8 @@ namespace proyecto {
         if (!red.rutaMinima(origen, destino)) {
             throw invalid_argument("No hay ruta entre esos edificios");
         }
-        // Copiamos el libro antes de cualquier modificación futura del catálogo. La solicitud es una instantánea.
+        // Copiamos el libro antes de cualquier modificación futura del catálogo. La solicitud es
+        // una copia completa.
         pendientes.push(Entrega{*libro, origen, destino});
         registrar("Entrega solicitada para libro: " + to_string(id));
     }

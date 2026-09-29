@@ -1,23 +1,15 @@
 // Binary search trees (BST)
 //
-// This BST places smaller values on the left and larger ones on the right, rejecting duplicates.
-// Inserting, searching or removing follows a path through tree levels. The work depends on how many
-// levels that path contains: h denotes height, the number of levels on the longest path (O(h)). A
-// very stretched tree can require passing through almost every node. Removing a node with two
-// children replaces it with the smallest value in its right subtree. An unbalanced BST may become a
-// chain.
+// We will add a rule to the tree: smaller numbers go left and larger ones go right. When searching,
+// we choose one branch and discard the other. We call this a binary search tree, or BST. Here we do
+// not store duplicates. When removing a node with two children, we find a replacement that
+// preserves the ordering. If the tree becomes a chain, we must traverse many nodes; calling it a
+// tree does not guarantee fast searches.
 //
-// Analogy: Each node in a number guide tells you whether to follow smaller or larger values.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Insert already sorted numbers and draw the tree. Compare its height with another
-// insertion order.
 
 #include "../Tree.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -25,7 +17,8 @@ using namespace course;
 
 int main() {
     Tree tree;
-    // Removing a root with two children uses its successor to preserve the BST rule.
+    // When removing a root with two children, we use the smallest value in its right branch to
+    // preserve ordering.
     if (!(!tree.contains(8) && !tree.remove(8))) {
         return 1;
     }

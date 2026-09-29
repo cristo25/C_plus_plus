@@ -1,22 +1,15 @@
 // Singly linked list
 //
-// Every node holds a value and the address of the next node. The last points to nullptr. Reaching
-// another node means following links one by one. Traversing the list or searching for a value may
-// require visiting all n nodes (O(n)); n is the number of nodes. The header appends values, removes
-// the first matching value and releases all nodes. Appending here also follows links until it
-// reaches the last node, so more nodes mean more work.
+// We will build a chain of boxes called nodes. Each node stores a value and a pointer to the next
+// node, like a note showing where the next box is. The list stores the first address; the last
+// points to nullptr. To search we follow the notes one at a time and may visit all n nodes (O(n)).
+// When removing a node we join its previous neighbor to the next before releasing the box. We can
+// see those steps inside SinglyLinkedList.h.
 //
-// Analogy: A treasure hunt: every card contains a value and a clue pointing to the next card;
-// the last says end.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw links before and after removing the first node. Add a contains method.
 
 #include "SinglyLinkedList.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

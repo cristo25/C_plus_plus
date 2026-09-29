@@ -1,11 +1,16 @@
 // Ciclos
 //
-// Compara cuándo se evalúa la condición. El integrador acumula pedidos, los entrega y emite un
-// aviso; produce 6 entregas y 1 aviso.
+// Vamos a usar los tres ciclos en una misma tarea. Con for reunimos cantidades de varios días; con
+// while retiramos grupos de diez hasta terminar; con do while mostramos al menos un aviso. Podemos
+// pensar en un negocio: primero recibimos pedidos, después los entregamos y al final avisamos.
+// Elegimos cada ciclo según cuándo necesitamos revisar su condición.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
+// Practica: Realiza un programa integrador que organice entregas.
 //
-// Ejecutar: ./programa.exe
+// - Sumar pedidos de tres días con for.
+// - Atender pedidos de uno en uno con while.
+// - Mostrar al menos un aviso final con do while.
+// - Contar y mostrar cuántos pedidos se atendieron.
 
 #include <iostream>
 

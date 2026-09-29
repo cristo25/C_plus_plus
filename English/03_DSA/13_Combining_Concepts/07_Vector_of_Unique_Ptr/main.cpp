@@ -1,20 +1,17 @@
 // 7. A vector of owners and an observer pointer
 //
-// vector<unique_ptr<Product>> holds cards responsible for destroying
-// their products. make_unique creates the managed object. get() lends its
-// address without transferring ownership. When the vector reallocates,
-// the owners move; their managed products keep their addresses. In contrast,
-// vector<Product> can move objects and leave their pointers dangling when
-// reallocating. Erasing a unique_ptr destroys its product: first we clear
-// its observer. If there were more observers, all would need to be cleared.
+// We will separate the location of cards from that of products. In vector<unique_ptr<Product>>,
+// each card is also responsible for releasing its product. When the vector needs more space it can
+// move the cards; separately created products keep their addresses. With get we lend an address,
+// not deletion responsibility. Removing the responsible card also destroys its product; before that
+// we stop using every borrowed pointer. This differs from vector<Product>, where growth can move
+// the products themselves.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_OOP/08_Headers/Product.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Add a second observer and explain when it must also be cleared.
 
 #include <iostream>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
+// We store a collection that can grow using vector.
 #include <vector>
 #include "../../../02_OOP/08_Headers/Product.h"
 
@@ -26,7 +23,7 @@ int main() {
     owners.push_back(make_unique<Product>("Notebook", 300));
     const Product* observer = owners.at(0).get();
 
-    // A larger capacity forces reallocation of the cards, not their managed products.
+    // We request more vector space: its cards move while their products remain in place.
     owners.reserve(owners.capacity() + 1);
     owners.push_back(make_unique<Product>("Pencil", 100));
     cout << boolalpha << "The product stays at the same address: " << (observer == owners.at(0).get()) << "\n";

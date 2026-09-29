@@ -1,19 +1,15 @@
 // The stack adapter
 //
-// stack exposes only stack operations: push, top, pop, size and empty. pop removes without
-// returning a value; query top first. An adapter restricts operations on its underlying
-// container.
+// We will use stack, the <stack> tool that directly provides stack operations. push adds at the
+// top, top reads the top, and pop removes it. We can picture an undo history: the last action we
+// performed is the first one we examine. Here we show which action would be undone; removing it
+// from history does not itself change a real document.
 //
-// Analogy: A box of plates with one opening at the top cannot expose the middle plate.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Simulate two actions and two undo operations, and protect a third undo attempt.
 
 #include <iostream>
+// We store a stack: with stack, the last item in comes out first.
 #include <stack>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

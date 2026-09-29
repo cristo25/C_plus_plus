@@ -1,19 +1,15 @@
-// Constructores, destructores y RAII
+// Constructores, destructores
 //
-// El constructor establece un estado inicial válido y el destructor corre al terminar la vida
-// del objeto. RAII vincula la vida de un recurso a la de un objeto; string, archivos y punteros
-// inteligentes ya lo hacen.
+// Vamos a observar cuándo empieza y termina un objeto. El constructor tiene el nombre de la clase y
+// prepara sus datos; en Sesion guarda el usuario y anuncia su entrada. El destructor lleva ~
+// delante del nombre y se ejecuta cuando termina la vida del objeto. Podemos imaginar que abrimos
+// una tienda y la cerramos al salir. En este ejemplo las llaves delimitan esa estancia: al llegar a
+// su cierre aparece el mensaje de salida. Más adelante usaremos la misma idea para liberar memoria
+// y cerrar archivos automáticamente.
 //
-// Analogía: Al abrir una tienda colocas el letrero; al cerrar recoges lo que administraba la
-// tienda.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Construye dos sesiones en el mismo bloque y observa el orden inverso de destrucción.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;
@@ -22,7 +18,8 @@ class Sesion {
     string usuario;
 
 public:
-    // El constructor inicializa el objeto; explicit evita conversiones implícitas inesperadas.
+    // Preparamos el objeto con su nombre. Con explicit pedimos construir Sesion de forma expresa,
+    // como Sesion("Ana").
     explicit Sesion(const string& nombre) : usuario(nombre) {
         cout << "Entra " << usuario << "\n";
     }

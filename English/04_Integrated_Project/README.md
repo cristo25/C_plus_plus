@@ -1,27 +1,31 @@
 # Campus library and routes
 
-A console application for managing books and requesting deliveries between buildings. Its purpose is to connect course tools around concrete operations: inspecting, changing, saving, queueing, traversing and finding a route.
+We will build a library where we can register books and organize deliveries between buildings. We will follow each operation from the menu to its data, using the classes and structures already studied.
 
-This guide's snippets show parts of the implementation, rather than independent programs. Follow the links to read complete declarations and methods; code comments also explain the decisions. The [Spanish version](../../Español/04_Proyecto_Integrador/README.md) has the same behavior.
+This guide uses fragments. We can open the linked files to follow the whole program. The [Spanish version](../../Español/04_Proyecto_Integrador/README.md) contains the same application.
 
 ## 1. What the application does
+
+We will choose operations from this menu. An ID is the number identifying a book; we use it to find the book even if its title changes.
 
 | Option | Operation | Concepts used |
 | --- | --- | --- |
 | 1 | Show the catalog ordered by ID | Read-only pointer vector and sorting |
 | 2 | Find a book by ID | Binary search over sorted IDs |
 | 3, 4, 5 | Add, rename and remove books | OOP, validation, DAO and files |
-| 6 | Undo the last catalog change | LIFO stack of snapshots |
-| 7 | Request book delivery | Structs, object copying and FIFO queue |
+| 6 | Undo the last catalog change | Stack of saved copies for undo |
+| 7 | Request book delivery | Copied records and arrival-order queue |
 | 8 | Process the next delivery | Graph, Dijkstra and path reconstruction |
 | 9 | Inspect pending requests | Queue copying without consumption |
 | 10 | View history forward or backward | Doubly linked list of indexes and message vector |
-| 11 | Show the map and reachable buildings | Adjacency lists and BFS |
+| 11 | Show the map and reachable buildings | Each building’s neighbors and exploration in layers |
 | 0 | Close the session | Destructors and resource cleanup |
 
-The catalog is saved after every committed change and undo operation. Requests, history and the stack belong to the current session. A request retains the book title at submission; later renaming or removing its catalog entry does not alter that request. We simulate delivery without tracking physical stock or borrowing.
+We save the catalog after each confirmed change. Pending deliveries, history and undo changes last only for the current session. When requesting delivery we copy the book record, preserving its title at that moment even if we later change or remove the catalog entry. Here we simulate deliveries without tracking physical book quantities.
 
 ## 2. Project organization
+
+We will divide the work like a real library: someone serves the desk, someone keeps the catalog and someone reads the map. In the program we give each file group one responsibility.
 
 ```text
 04_Integrated_Project/
@@ -53,11 +57,11 @@ The catalog is saved after every committed change and undo operation. Requests, 
 | main | Select an execution mode and connect objects |
 | Check | Verify the main flows without manual interaction |
 
-Headers declare contracts and `.cpp` files implement operations. Includes use `-Iinclude`; `.cpp` files are never included. We reuse [BookDAO.h](../02_OOP/09_DAO/BookDAO.h), [DoublyLinkedList.h](../03_DSA/03_Linked_Lists/02_Doubly_Linked/DoublyLinkedList.h), [Searches.h](../03_DSA/10_Searching/Searches.h) and [Graph.h](../03_DSA/08_Graphs/Graph.h), rather than copying them. Keep this project inside the course.
+In `.h` files we announce classes and operations; in `.cpp` files we write their steps. With `-Iinclude` we say where to find our headers. We reuse [BookDAO.h](../02_OOP/09_DAO/BookDAO.h), [DoublyLinkedList.h](../03_DSA/03_Linked_Lists/02_Doubly_Linked/DoublyLinkedList.h), [Searches.h](../03_DSA/10_Searching/Searches.h) and [Graph.h](../03_DSA/08_Graphs/Graph.h). We therefore keep this folder inside the course.
 
 ## 3. Compile and run
 
-Open Git Bash **in this folder**, `English/04_Integrated_Project`. You need C++17 and `g++`:
+We open Git Bash in `English/04_Integrated_Project` and compile all the files forming this application:
 
 ```bash
 mkdir -p build
@@ -65,7 +69,7 @@ g++ -std=c++17 -Wall -Wextra -pedantic -Iinclude src/main.cpp src/data/CatalogSt
 ./build/library.exe
 ```
 
-In PowerShell, create the folder with `New-Item -ItemType Directory -Force build`; the compilation command is the same. Run from the project root because the default catalog path is `data/catalog.txt`. On Linux or macOS you can omit `.exe`.
+In PowerShell we create the folder with `New-Item -ItemType Directory -Force build`, then use the same compilation command. We run from the project folder so `data/catalog.txt` goes where intended. On Linux or macOS we can omit `.exe`.
 
 ```bash
 ./build/library.exe --demo
@@ -74,27 +78,27 @@ In PowerShell, create the folder with `New-Item -ItemType Directory -Force build
 ./build/library.exe --help
 ```
 
-`--demo` prepares three books in memory for practice without creating a catalog on disk. `--data` selects another file. `--self-test` runs the check and exits without changing files. These are alternative modes and cannot be combined. No additional libraries need to be installed.
+With `--demo` we practice with three books in memory. With `--data` we choose another file. With `--self-test` we run checks and finish without changing files. We choose one mode at a time. We need only C++17, its standard libraries and the course headers.
 
-On Windows, `main.cpp` obtains arguments through native Unicode APIs to preserve paths such as `Español` and names using other alphabets. That part is inside `#ifdef _WIN32`; other systems use `argv`. The rest of the application uses the standard library and course headers.
+In `main` we receive command words through `argv`. For a path with accents or another alphabet, the terminal must supply UTF-8 text, a way to represent those characters. We can start with the default relative path; the program needs no Windows-specific functions.
 
 ## 4. A walkthrough to get started
 
-Run `--demo`. The catalog starts with IDs 10, 20 and 30, although its owning vector is not sorted. Choose option 1 to display them in order and option 2 to find ID 20.
+We will run `--demo`. With option 1 we see books 10, 20 and 30 ordered by ID; with option 2 we find 20. Original records need not be stored in that order: we prepare a sorted selection for queries.
 
-Then choose option 7, enter book 10, source 0 and target 4. Inspect pending requests with 9 and process the request with 8. You will see:
+With option 7 we request book 10 from building 0 to building 4. We inspect the queue with 9 and process it with 8. We obtain:
 
 ```text
 Library -> Engineering -> Laboratory -> Administration -> Residences | 7 minutes
 ```
 
-Add a book with 3, inspect the catalog and undo with 6. Option 10 traverses history in both directions. Requesting delivery to building 5 reports no connection and does not enqueue an impossible request. Entering `2abc`, an out-of-range number or an unknown option requires correcting the input.
+We then add a book with 3 and undo the change with 6. With 10 we traverse history in both directions. For building 5 we report no route and do not queue that delivery. We also try `2abc` or an unknown option: we request a corrected value before continuing.
 
 ## 5. OOP and DAO: assigning responsibilities
 
-[Library.h](include/services/Library.h) composes the DAO, map and session structures. It does not read the keyboard or print menus. [Console.h](include/ui/Console.h) provides that interface without deciding how to save books.
+In [Library.h](include/services/Library.h) we gather book and delivery rules. In [Console.h](include/ui/Console.h) we ask questions and show answers. This lets us change the menu without changing book storage.
 
-The existing DAO manages `Book`, enforces unique IDs and serializes titles containing spaces and quotes. [CatalogStore.h](include/data/CatalogStore.h) defines two actual ways to retain it:
+With the DAO we gather creating, finding, updating and removing records. To save them we turn their data into text; we call that serialization. In [CatalogStore.h](include/data/CatalogStore.h) we offer two ways to keep them:
 
 ```cpp
 class CatalogStore {
@@ -105,11 +109,11 @@ public:
 };
 ```
 
-`MemoryStore` serves demonstration mode. `FileStore` serves persistent mode. The service works with a reference to the base class, and `virtual` selects the implementation. Inheritance and polymorphism arise from a concrete difference in the application.
+With `MemoryStore` we keep them while the demonstration runs. With `FileStore` we save them to disk. We request `load` and `save` through a `CatalogStore` reference; thanks to `virtual`, we use the chosen variant's steps. This is the instrument idea again: one common request, different ways to fulfill it.
 
 ## 6. Ownership, references and pointers
 
-In [main.cpp](src/main.cpp), a `unique_ptr<CatalogStore>` owns the selected implementation. `Library` receives a reference; `Console` receives references to the library and streams. Objects are declared in that order and destroyed in reverse order:
+We will distinguish who releases an object from who only reads it. In [main.cpp](src/main.cpp) a `unique_ptr<CatalogStore>` takes responsibility for the store. We pass references to objects needing it. We also pass `cin` and `cout` to the console to indicate where to read and write:
 
 ```cpp
 Library library(*store);
@@ -117,13 +121,13 @@ Console console(library, cin, cout);
 console.run();
 ```
 
-The store must outlive the library. `*store` accesses the managed object without transferring ownership. `const Book&` and `const string&` parameters inspect arguments without copying them. Storing a `Book` **as a value member** of a request does create an independent copy.
+We can picture boxes and labels. `*store` leads to the store's box; the reference hands over another label for that same box. We keep the store until after Library ends. When receiving `const Book&` or `const string&`, we can read the original without copying or changing it through that reference.
 
-Imagine the DAO as a drawer of records, references as extra labels on its boxes and pointers as cards holding addresses. The sorted view holds cards; a request holds its own record. Changing the drawer can invalidate borrowed cards while the copied record continues to exist.
+View pointers are address cards. A delivery instead holds its own record. Changing the catalog may make older address cards unusable; the delivery's copied record keeps its data.
 
 ## 7. Pointer vector and binary search
 
-[booksSorted()](src/services/Library.cpp) builds a read-only view:
+We will sort cards to query books without moving their original boxes. In [Library.cpp](src/services/Library.cpp) we collect book addresses in a vector and sort those addresses by ID:
 
 ```cpp
 vector<const Book*> view;
@@ -135,7 +139,7 @@ sort(view.begin(), view.end(), [](const Book* left, const Book* right) {
 });
 ```
 
-Books are not copied and the DAO is not rearranged: we sort their addresses. Then `findById()` builds IDs from that view and calls the course binary search:
+The small function written with `[]` compares two books and decides which comes first. We call it a lambda. We then collect their IDs in the same order and search by halves:
 
 ```cpp
 const auto position = binarySearch(ids, id);
@@ -145,13 +149,13 @@ if (!position) {
 return view.at(*position);
 ```
 
-The essential condition is that IDs are sorted. `optional<size_t>` distinguishes absence from a valid index, including zero. The returned pointer observes a DAO book; it must not be used after adding, removing, renaming or undoing a change because we replace the entire catalog. The console uses it immediately; deliveries copy the book before any subsequent mutation.
+The search returns `optional<size_t>`: a small box containing a position or nothing. Position zero also counts as found. For an empty result we return `nullptr`; otherwise we lend the corresponding book address. We use it before changing the catalog, because adding, removing, renaming or undoing replaces its books and makes old addresses unusable.
 
-Once IDs are sorted, each comparison discards half the candidates. Doubling the book count adds about one comparison to that search (O(log n), where n is the book count and log n describes growth through halving). However, this code first collects and sorts every book address. That preparation also counts: its comparison bound grows like the book count multiplied by the number of halving levels (O(n log n)). The entire query therefore takes more work than searching an already prepared view.
+Once sorted, we discard about half the candidates each step (O(log n), where n is the book count and log n describes growth through halving). But first we collect and sort the cards, which also takes work. Its comparison bound combines n books with the levels of repeated halving (O(n log n)).
 
 ## 8. Structs and the delivery queue
 
-[Delivery.h](include/models/Delivery.h) groups a record and two map positions:
+We will prepare one record per delivery. In [Delivery.h](include/models/Delivery.h) we store a book copy and the departure and arrival positions:
 
 ```cpp
 struct Delivery {
@@ -161,13 +165,13 @@ struct Delivery {
 };
 ```
 
-Before queueing, the service checks that the book exists and a route is available. A `queue<Delivery>` processes requests in arrival order: first in, first out. Viewing pending requests traverses a copy so inspecting them does not consume them.
+Before adding it we check that the book and a route exist. We keep records in `queue<Delivery>` and serve in arrival order: first in, first out. We also call that rule FIFO. To inspect pending requests we traverse a copy of the queue, keeping the requests in place while displaying them.
 
-Processing prepares a `CompletedDelivery`, records the result and then removes the queue front. The returned result owns its data; it is not a reference to an element we just removed.
+When serving, we calculate the route, record the result and remove the first request. We return data owned by the completed delivery so we can still display it after removing the request from the queue.
 
 ## 9. Graph, BFS and Dijkstra
 
-[CampusMap.cpp](src/services/CampusMap.cpp) maintains an `array<string, 6>` of names and an adjacency-list `Graph`. Array positions are vertex IDs. A bidirectional road is stored as two directed edges.
+We will represent buildings with points and roads with connections. In [CampusMap.cpp](src/services/CampusMap.cpp) we keep names in a `vector<string>`; their positions are building numbers. In the graph we keep the roads leaving each building. To allow both directions we add a connection each way.
 
 | Connection | Minutes |
 | --- | --- |
@@ -178,7 +182,7 @@ Processing prepares a `CompletedDelivery`, records the result and then removes t
 | 2 Engineering ↔ 3 Administration | 6 |
 | 3 Administration ↔ 4 Residences | 2 |
 
-Annex 5 is isolated. BFS reports reachable buildings; it does not calculate minimum time when weights differ. Dijkstra uses a priority queue to improve known costs:
+We leave building 5 isolated. With BFS we explore in layers to see which buildings we can reach. For the shortest travel time we use Dijkstra: we process the cheapest known candidate first and update when a better path appears.
 
 ```cpp
 if (candidate < result.distances.at(edge.destination)) {
@@ -188,7 +192,7 @@ if (candidate < result.distances.at(edge.destination)) {
 }
 ```
 
-`shortestPaths()` adds predecessors to the existing algorithm. `dijkstra()` retains the earlier distances-only API for other course examples. The project reconstructs the path by following predecessors backward from the target, then reversing it:
+In `predecessors` we remember which building led to each destination; that previous building is called its predecessor. `shortestPaths` keeps costs and predecessors; `dijkstra` returns only costs. We rebuild the route backward from the destination, then reverse it:
 
 ```cpp
 while (cursor != source) {
@@ -201,18 +205,18 @@ while (cursor != source) {
 }
 ```
 
-For 0 to 4, going through 2 improves the direct connection to 1: the cost is `1 + 1 + 3 + 2 = 7`. No route is represented by `nullopt`; going from a building to itself costs zero. Dijkstra requires nonnegative weights; the graph rejects negative weights and checks addition for overflow.
+From 0 to 4 we pass through 2, 1 and 3: we add `1 + 1 + 3 + 2 = 7`. For no route we return `nullopt`, an empty result. Traveling from a place to itself costs zero. We reject negative minutes and check that sums fit within the largest number we can store.
 
 ## 10. Doubly linked list and message vector
 
-History combines two structures:
+We will store messages and their viewing order in two structures:
 
 ```cpp
 vector<string> events;
 DoublyLinkedList order;
 ```
 
-The vector owns messages. Each list node holds a message index, rather than a pointer into the vector. If vector growth reallocates storage, indexes still work because we append messages without rearranging or deleting them. The list links that order and allows traversal in both directions.
+In the vector we keep each message's text. In each list node we keep its position, like a page number. If the vector moves to a larger space, those numbers still work because we only append messages; we neither erase nor reorder them.
 
 ```text
 List:   [0] <-> [1] <-> [2]
@@ -220,11 +224,11 @@ List:   [0] <-> [1] <-> [2]
 Vector: message message message
 ```
 
-The course list releases its nodes in its destructor and disables owner copying. No node is exposed to the console. `history()` collects message copies by following indexes, so the interface does not need to know the internal links.
+With the doubly linked list we move to the next or previous message. We release its nodes when finished. When the console requests history, we return copies of the text; it does not need to change or know the list's internal arrows.
 
 ## 11. Stack, candidate changes and saving
 
-A change operates on a DAO copy. If it breaks the rules, it never reaches saving. On commit, the stack retains the previous state; if the store fails, the new snapshot is removed and the catalog is not replaced:
+We will prepare each change in a catalog copy. If it follows the rules, we keep the previous state on a stack so we can undo. If writing fails, we remove that new saved state and retain the earlier catalog:
 
 ```cpp
 undo.push(dao);
@@ -237,11 +241,11 @@ try {
 dao = move(candidate);
 ```
 
-Undo saves the previous state, installs it and only then removes the stack top. The stack is LIFO: the latest change is reversed first. Full snapshots are easy to follow, but memory grows with catalog size and change count; a larger application would benefit from inverse commands or a transactional log.
+With `try` we attempt saving; with `catch` we handle an error. `throw` passes it on so the console can display it. Only after saving do we replace the catalog. To undo, we work in reverse change order: last in, first out, also called LIFO. Each copy needs space; for many books and changes, we could save only the data needed to reverse each operation.
 
-[CatalogStore.cpp](src/data/CatalogStore.cpp) writes a snapshot to `.tmp`, checks closing, moves the previous catalog to `.bak` and installs the new file. If replacement fails, it attempts to restore the previous file. If an interruption leaves only `.bak`, the next load reads it. A corrupt catalog is rejected and retained for inspection.
+In [CatalogStore.cpp](src/data/CatalogStore.cpp) we first write a temporary `.tmp` file. We then keep the previous file as a `.bak` backup and put the new one in place. If replacement fails, we try to restore the earlier file. If only the backup remains on reopening, we read it. For damaged data we report the issue and preserve the file for inspection.
 
-The format reuses DAO serialization:
+We store text in this form:
 
 ```text
 2
@@ -249,23 +253,23 @@ The format reuses DAO serialization:
 20 "Book with \"quotes\""
 ```
 
-The first line gives the number of books that follow. The limit is 10000, IDs are unique positive integers and titles contain text, no control characters and at most 200 bytes. Replacement with a backup is intended for a local single-process application; it does not replace database transactions or guarantee durability through power loss. Generated catalogs, `.tmp` and `.bak` files are not uploaded to the repository.
+The first line gives the book count. We allow up to 10,000 books, distinct positive IDs and nonempty titles up to 200 bytes. A byte is a unit of memory; some letters occupy several. We reject line breaks and other control characters in titles. We use this storage from one running program at a time; several applications writing together would need coordinated changes, for example through a database. The backup helps recovery but does not guarantee preserving the latest write during a power failure.
 
 ## 12. Input, errors and the runnable check
 
-[Console.cpp](src/ui/Console.cpp) uses `getline` to avoid partial reads. It then converts the line to an integer and verifies that no characters remain. EOF ends the session even halfway through an operation; incomplete changes are never committed. Validation and save errors are displayed while the menu remains usable.
+We will read each complete answer with `getline` in [Console.cpp](src/ui/Console.cpp). We then use `istringstream` from `<sstream>` as a reader for that text: we try to obtain an integer and check for leftover letters. This rejects `12abc`. When input ends, we close the session; we also call that end of input EOF. We do not save an unfinished operation.
 
-[SelfCheck.cpp](tests/SelfCheck.cpp) verifies empty and sorted catalog searching, routes and an isolated target, FIFO queue, LIFO stack, reverse history, independent requests, recovery after a simulated save failure, invalid input and EOF. Its conditions stay active with `NDEBUG`.
+In [SelfCheck.cpp](tests/SelfCheck.cpp) we try searches, routes, delivery order, undo, history and incorrect input. We also simulate a saving failure to check that the previous books remain. We use ordinary conditions that stay active when compiling the final version.
 
 ```bash
 ./build/library.exe --self-test
 ```
 
-A successful check returns exit code 0; failure identifies the case and returns 1. To check persistence manually, run without `--demo`, add a title containing quotes, close and reopen: the catalog should retain it.
+If everything matches, we finish with 0; for a failure we display the case and return 1. To try files we run without `--demo`, add a title containing quotes, close and reopen: we should recover the same title.
 
 ## 13. Costs and further practice
 
-Here we count work and memory separately. Letters simply abbreviate quantities: n is the book count, h the history-message count, p the pending-request count, V the building count and E the connection count. Parenthesized notation summarizes how work grows; it does not give exact seconds or bytes.
+We will count how much work is added when data grows. We use n for books, h for history messages, p for pending requests, V for buildings and E for connections. Expressions in parentheses summarize growth; they do not give exact seconds.
 
 | Operation | What work it performs as data grows |
 | --- | --- |
@@ -279,6 +283,42 @@ Here we count work and memory separately. Letters simply abbreviate quantities: 
 | Dijkstra | Inspects connections and maintains a queue for selecting the cheapest candidate. More candidates need more adjustments, and a building may have repeated records. |
 | Reconstruct the path | Follows route buildings backward from the target; it visits at most all V buildings (O(V)). |
 
-While loading, the DAO compares each new book with those already read to detect duplicate IDs. With n books, these checks accumulate: first a few, then more, and the work can grow like n multiplied by n (O(n²)). The project prioritizes reading and connecting its pieces; each cost follows a decision that can be changed for a concrete need.
+While loading, we compare each book with those already read to detect repeated IDs. With n books, comparisons keep accumulating and work can grow like n times n (O(n²)). We can begin with few books, observe every step and then consider what to change for a much larger catalog.
 
-For practice, change a weight and predict the route, connect the annex, try IDs at the beginning and end, or extend the check with another input error. Before adding a structure, explain which operation it would improve. A tree or hash table may serve another query pattern, but every current structure already supports an actual operation.
+## 14. Integration practice
+
+**Practice.** Write an integrated library and delivery application.
+
+- Organize models, data, services and interface into folders with .h and .cpp files.
+- Add, find, update and remove books through a DAO.
+- Search ids through a sorted view and binary search.
+- Keep history in a doubly linked list and pending deliveries in a queue.
+- Use a stack to undo catalog changes.
+- Represent buildings as a graph and calculate routes with Dijkstra.
+- Save data and restore it after restarting.
+- Validate input and preserve the catalog when writing fails.
+
+## 15. Why we use each library
+
+Here we collect the tools appearing in the project. We can revisit the example introducing each before following an operation using it.
+
+| Library | Why we use it |
+| --- | --- |
+| `<algorithm>` | We sort data with sort or reverse their order with reverse. |
+| `<cstddef>` | We use size_t to count elements and represent nonnegative positions. |
+| `<exception>` | We catch errors through exception and read their message with what(). |
+| `<filesystem>` | We handle paths, folders and file renaming. |
+| `<fstream>` | We read and save files using ifstream and ofstream. |
+| `<istream>` | We receive an input source: keyboard, file or text in memory. |
+| `<limits>` | We use numeric_limits to check the largest allowed integer before adding. |
+| `<memory>` | We use unique_ptr to release its managed object automatically. |
+| `<optional>` | We store a result that may be missing: optional holds a value or is empty. |
+| `<ostream>` | We receive an output destination: screen, file or text in memory. |
+| `<queue>` | We serve by arrival with queue or by importance with priority_queue. |
+| `<sstream>` | We read or write text in memory as if it were a file. |
+| `<stack>` | We store a stack: with stack, the last item in comes out first. |
+| `<stdexcept>` | We report errors with messages, such as invalid_argument for an invalid value. |
+| `<string>` | We store and work with text using string. |
+| `<system_error>` | We check file-operation failures using error_code. |
+| `<utility>` | We use move to transfer data, swap to exchange it or pair to group two values. |
+| `<vector>` | We store a collection that can grow using vector. |

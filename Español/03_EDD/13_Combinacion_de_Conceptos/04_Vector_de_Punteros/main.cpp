@@ -1,19 +1,15 @@
 // 4. Un vector de punteros: una vista del inventario
 //
-// El inventario es un array de objetos; la vista es un vector de sus direcciones.
-// La vista puede crecer y repetir un producto sin copiarlo. Reasignar un puntero
-// de la vista cambia la selección, no el inventario. Producto*& recibe una
-// referencia a una tarjeta y Producto& una referencia al nuevo destino.
-// Aunque el vector reubique sus tarjetas al crecer, los productos de este array
-// local siguen en el mismo sitio. El inventario debe vivir más que la vista.
+// Vamos a seleccionar productos sin copiarlos. Guardamos los productos en un arreglo y sus
+// direcciones en vector<Producto*>. A esa selección la llamamos vista: puede crecer o mostrar un
+// producto varias veces sin crear productos nuevos. Con Producto*& damos a seleccionar otra
+// etiqueta del puntero original, por lo que puede cambiar su destino. Si recibiera solo Producto*,
+// cambiaría una copia de la tarjeta. Aunque crezca el vector de direcciones, estos productos del
+// arreglo permanecen en su lugar; deben seguir existiendo mientras los consultamos.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_POO/08_Headers/Producto.cpp -o programa.exe
-// Ejecutar: ./programa.exe
-//
-// Practica: Selecciona otro producto y explica qué elemento cambia y cuáles permanecen.
 
-#include <array>
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 #include "../../../02_POO/08_Headers/Producto.h"
 
@@ -25,20 +21,20 @@ void seleccionar(Producto*& seleccion, Producto& nuevoDestino) {
 }
 
 int main() {
-    array<Producto, 3> productos{
+    Producto productos[3]{
         Producto("Cuaderno", 300),
         Producto("Lapiz", 100),
         Producto("Libro", 500)
     };
-    vector<Producto*> vista{&productos.at(0), &productos.at(1)};
+    vector<Producto*> vista{&productos[0], &productos[1]};
     // at(0) devuelve una referencia al puntero guardado: int*& funciona igual.
-    seleccionar(vista.at(0), productos.at(2));
-    vista.push_back(&productos.at(0));
+    seleccionar(vista.at(0), productos[2]);
+    vista.push_back(&productos[0]);
 
     for (const Producto* producto : vista) {
         if (producto != nullptr) {
             cout << producto->consultarNombre() << "\n";
         }
     }
-    cout << "Primer objeto del inventario: " << productos.at(0).consultarNombre() << "\n";
+    cout << "Primer objeto del inventario: " << productos[0].consultarNombre() << "\n";
 }

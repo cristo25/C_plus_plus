@@ -1,10 +1,15 @@
 #ifndef PROJECT_LIBRARY_H
 #define PROJECT_LIBRARY_H
 
+// We store a result that may be missing: optional holds a value or is empty.
 #include <optional>
+// We serve by arrival with queue or by importance with priority_queue.
 #include <queue>
+// We store a stack: with stack, the last item in comes out first.
 #include <stack>
+// We store and work with text using string.
 #include <string>
+// We store a collection that can grow using vector.
 #include <vector>
 #include "data/CatalogStore.h"
 #include "services/CampusMap.h"
@@ -21,7 +26,7 @@ namespace project {
         CampusMap network;
         queue<Delivery> pending;
         stack<BookDAO> undo;
-        // Nodes hold stable indexes, rather than addresses that vector growth could invalidate.
+        // We keep position numbers in nodes; they keep working while we only append messages.
         vector<string> events;
         DoublyLinkedList order;
 

@@ -1,17 +1,10 @@
 // Your first program
 //
-// #include brings in declarations from the standard library. main is the entry point and cout
-// writes to the console. Returning 0 means success. using namespace std; lets us write standard
-// names without a prefix.
+// We will start by displaying a message. We can picture the program as a recipe: inside main we
+// write the steps, and with cout we send text to the screen. We put text in quotation marks; \n
+// starts a new output line. With return 0 we indicate that the program finished successfully.
+// Compiling turns this text file into a program the computer can run.
 //
-// Analogy: A program is a recipe. main tells the cook where to start, and each statement is a
-// step.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Replace the greeting with your name and add another line.
 
 #include <iostream>
 

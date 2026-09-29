@@ -1,7 +1,11 @@
 #include "datos/AlmacenCatalogo.h"
+// Leemos y guardamos archivos con ifstream y ofstream.
 #include <fstream>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
+// Consultamos si una operación de archivos falló mediante error_code.
 #include <system_error>
+// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
 #include <utility>
 
 namespace proyecto {
@@ -52,7 +56,8 @@ namespace proyecto {
     }
 
     void AlmacenArchivo::guardar(const LibroDAO& dao) {
-        // ponytail: un escritor por archivo; usar una base transaccional si habrá escritores concurrentes.
+        // ponytail: escribimos desde una sola ejecución; si varias aplicaciones necesitan guardar a
+        // la vez, usamos una base de datos que coordine sus cambios.
         if (!archivo.parent_path().empty()) {
             fs::create_directories(archivo.parent_path());
         }
@@ -63,7 +68,7 @@ namespace proyecto {
         temporal += ".tmp";
         fs::path respaldo = archivo;
         respaldo += ".bak";
-        // Escribimos y cerramos una instantánea completa antes de tocar el catálogo anterior.
+        // Escribimos y cerramos una copia completa completa antes de tocar el catálogo anterior.
         ofstream salida(temporal, ios::trunc);
         if (!salida || !dao.guardar(salida)) {
             throw runtime_error("No se pudo escribir el catalogo temporal");

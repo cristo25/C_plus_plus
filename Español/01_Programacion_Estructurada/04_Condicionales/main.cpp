@@ -1,11 +1,16 @@
 // Condicionales
 //
-// Aprende a elegir caminos y luego calcula un precio combinando switch e if. Resultado del
-// integrador: 25.
+// Vamos a combinar las dos formas de decidir. Primero elegimos un precio con switch; después usamos
+// if para aplicar un descuento a estudiantes. En precio recibimos la opción y si hay descuento. Si
+// la opción no existe, devolvemos -1 como señal acordada de error. La idea es separar dos
+// preguntas: qué se compra y qué descuento corresponde.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
+// Practica: Realiza un programa integrador para cobrar una entrada al cine.
 //
-// Ejecutar: ./programa.exe
+// - Elegir entre tres tipos de entrada con switch.
+// - Aplicar un descuento con if cuando corresponda.
+// - Rechazar opciones que no existan.
+// - Mostrar el precio inicial, descuento y total.
 
 #include <iostream>
 

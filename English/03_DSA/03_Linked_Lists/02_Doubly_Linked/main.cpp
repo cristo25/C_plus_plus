@@ -1,20 +1,15 @@
 // Doubly linked list
 //
-// Each node knows its previous and next node. Keeping a head and tail lets us append by adjusting a
-// fixed number of links, without traversing the list (O(1)). We can also traverse in either
-// direction. Searching for a value may require inspecting all n nodes (O(n)); unlinking an already
-// located node adjusts its neighboring links.
+// We will add a second arrow to each node: one to the next and another to the previous node. This
+// lets us traverse in both directions. We also keep the first and last addresses so appending
+// adjusts a few arrows without traversing the list (O(1)). When removing a node we repair both
+// connections, like removing a train carriage linked at both ends. We can follow those pointer
+// changes in DoublyLinkedList.h.
 //
-// Analogy: Train cars have couplings at both ends, allowing travel in either direction.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw the two links changed when removing a middle node.
 
 #include "DoublyLinkedList.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

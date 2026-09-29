@@ -1,28 +1,26 @@
 // Arrays
 //
-// Start with one drawer, then a cabinet. The integration example stores grades in a matrix and
-// averages in an array: 9 and 8.
+// We will combine a one-dimensional array with a matrix. In grades we store two students with three
+// grades each; in averages we store one result per student. We visit a row, add its grades and
+// divide by three. With static_cast<double> we treat the sum as a decimal number before dividing,
+// keeping the fractional part of the average.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
-#include <array>
 #include <iostream>
 
 using namespace std;
 
 int main() {
     // Each row holds one student's three grades; positions start at zero.
-    array<array<int, 3>, 2> grades{{{8, 9, 10}, {7, 8, 9}}};
-    array<double, 2> averages{};
-    for (size_t row = 0; row < grades.size(); ++row) {
+    int grades[2][3]{{8, 9, 10}, {7, 8, 9}};
+    double averages[2]{};
+    for (size_t row = 0; row < 2; ++row) {
         int sum = 0;
-        for (int grade : grades.at(row)) {
+        for (int grade : grades[row]) {
             sum += grade;
         }
         // Convert the sum to double so the average keeps its fractional part.
-        averages.at(row) = static_cast<double>(sum) / grades.at(row).size();
+        averages[row] = static_cast<double>(sum) / 3;
     }
 
     for (double average : averages) {

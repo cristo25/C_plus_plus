@@ -1,17 +1,11 @@
 // Manual dynamic memory
 //
-// new constructs a dynamic object and delete destroys it. Exactly one owner must be responsible
-// for releasing it. Arrays made with new[] need delete[]. Usually prefer values, vectors or
-// smart pointers.
+// We will create a box while the program is running. With new int(42) we reserve space for an
+// integer and receive its address. We store that address in number and read 42 through *number. The
+// box does not disappear merely because we stop using the pointer variable: here we must release it
+// exactly once with delete. We then set number to nullptr to avoid reusing the address. We never
+// use delete on an ordinary local variable or follow a pointer after releasing its data.
 //
-// Analogy: Rent a locker, keep its address and return it exactly once. Returning it twice or
-// visiting it afterward is an error.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw when the integer's lifetime begins and ends. Do not read it after delete.
 
 #include <iostream>
 

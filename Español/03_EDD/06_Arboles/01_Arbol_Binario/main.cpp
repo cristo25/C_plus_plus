@@ -1,18 +1,14 @@
 // Árbol binario: raíces, hijos y hojas
 //
-// Un árbol conecta nodos sin ciclos. La raíz no tiene padre; una hoja no tiene hijos. Un árbol
-// binario admite como máximo dos hijos por nodo. No todo árbol binario ordena sus valores.
+// Vamos a unir nodos formando ramas. En un árbol binario cada nodo puede tener como máximo un hijo
+// izquierdo y uno derecho. Al primer nodo lo llamamos raíz; a uno sin hijos lo llamamos hoja. Aquí
+// solo estamos construyendo la forma: tener dos ramas no obliga a ordenar los números. Para contar,
+// sumamos el nodo actual y los de sus dos ramas mediante recursión. Usamos unique_ptr para que cada
+// rama libere sus nodos al terminar.
 //
-// Analogía: Un organigrama empieza en un responsable y se divide en ramas. En este ejemplo cada
-// responsable tiene como máximo dos subordinados.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Dibuja el árbol, identifica sus hojas y agrega un nieto.
 
 #include <iostream>
+// Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
 
 using namespace std;

@@ -1,16 +1,14 @@
 // Graphs
 //
-// Study representation, traversal and minimum costs. BFS and DFS ignore weights; Dijkstra uses
-// them. The integration example compares traversals and obtains minimum cost 4 from 0 to 3. Free
-// functions in these headers are inline to avoid multiple definitions when linking.
+// We will use one map to answer different questions. With BFS we explore in layers; with DFS we
+// follow a branch before returning; with Dijkstra we find the lowest total cost. We share Graph.h
+// so every test uses the same map. We can compare traversal orders, but we do not treat BFS or DFS
+// order as a list of costs: each tool answers a different question.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include "Graph.h"
-#include <cassert>
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -24,10 +22,18 @@ int main() {
     map.connect(2, 1, 2);
     map.connect(1, 3, 1);
     map.connect(2, 3, 7);
-    // assert checks an integration result; it does not perform application operations.
-    assert((bfs(map, 0) == vector<size_t>{0, 1, 2, 3}));
-    assert((dfs(map, 0) == vector<size_t>{0, 1, 3, 2}));
-    assert(dijkstra(map, 0).at(3) == 4);
+    if (!((bfs(map, 0) == vector<size_t>{0, 1, 2, 3}))) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!((dfs(map, 0) == vector<size_t>{0, 1, 3, 2}))) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(dijkstra(map, 0).at(3) == 4)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     cout << "BFS: ";
     for (auto vertex : bfs(map, 0)) {
         cout << vertex << ' ';

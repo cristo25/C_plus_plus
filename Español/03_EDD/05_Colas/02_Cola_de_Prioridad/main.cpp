@@ -1,24 +1,18 @@
 // Cola de prioridad y heap
 //
-// priority_queue utiliza un heap (montículo). Por defecto coloca el mayor arriba; con greater<int>
-// coloca el menor. Consultar top accede directamente al valor prioritario, sin recorrer los demás
-// (O(1)). Al insertar o retirar puede ser necesario ajustar un camino de niveles del montículo, una
-// estructura que organiza los datos como un árbol. Su cantidad de niveles crece lentamente:
-// duplicar la cantidad de elementos añade aproximadamente un nivel (O(log n), con n elementos). No
-// conserva el orden de llegada entre prioridades iguales.
+// Vamos a atender según importancia en lugar de llegada. priority_queue coloca arriba el valor con
+// mayor prioridad: con enteros, normalmente es el mayor. Si queremos el menor, como un costo,
+// usamos greater<int>, una regla de comparación de <functional>. Podemos imaginar urgencias de un
+// hospital: llegar antes no siempre significa pasar antes. Con top consultamos el siguiente y con
+// pop lo retiramos; siempre necesitamos que haya datos.
 //
-// Analogía: En urgencias se atiende por prioridad; la gravedad decide el siguiente turno.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Retira todos los valores de ambas colas. Explica por qué un heap no equivale a un
-// vector completamente ordenado.
 
+// Elegimos primero el menor valor de una cola de prioridad mediante greater.
 #include <functional>
 #include <iostream>
+// Atendemos por llegada con queue o por importancia con priority_queue.
 #include <queue>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

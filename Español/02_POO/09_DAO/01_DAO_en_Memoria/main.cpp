@@ -1,20 +1,12 @@
 // DAO en memoria y CRUD
 //
-// DAO significa Data Access Object: es un patrón de acceso a datos, no un paradigma. LibroDAO
-// concentra crear, consultar, actualizar y eliminar (CRUD). La aplicación usa esas operaciones
-// sin manipular el contenedor. Por ahora vector es una colección que crece; lo estudiaremos en
-// EDD.
+// Vamos a reunir en LibroDAO las tareas de guardar, buscar, cambiar y eliminar libros. Podemos
+// imaginar un encargado del catálogo: le pedimos un libro por su id, que es un número que lo
+// identifica. DAO es el nombre habitual de una clase dedicada al acceso a datos. Aquí guardamos los
+// libros en un vector, por lo que desaparecen al terminar el programa. buscar presta un puntero al
+// libro, o devuelve nullptr si no existe. Antes de leerlo comprobamos el resultado; después de
+// cambiar el catálogo volvemos a buscarlo, porque el vector puede mover sus libros.
 //
-// Analogía: El bibliotecario (DAO) conoce dónde están los libros; tú le pides uno por su ficha
-// sin revisar cada estante.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega dos libros y lista dao.todos(). Comprueba que actualizar un ID inexistente
-// devuelve false.
-// La creación y la carga respetan el mismo límite de 10 000 libros.
 
 #include "../LibroDAO.h"
 #include <iostream>
@@ -36,7 +28,8 @@ int main() {
     if (!(dao.actualizar(1, "C++ paso a paso"))) {
         return 1;
     }
-    // La consulta devuelve un observador del catálogo. Modificar el vector puede invalidarlo.
+    // Recibimos una dirección prestada del catálogo. Después de cambiar sus libros volvemos a
+    // buscar antes de usar una dirección.
     const Libro* libro = dao.buscar(1);
 
     cout << libro->titulo << "\n";

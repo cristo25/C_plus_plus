@@ -1,19 +1,16 @@
 // Reading and writing files
 //
-// ofstream writes and ifstream reads. Check opening, writing and reading. Objects close their
-// files when leaving their scope. ios::app appends content.
+// We will keep text after the program ends. We can think of memory as a whiteboard and a file as a
+// notebook we put away. With ofstream we open the notebook for writing; with ifstream we open it
+// for reading. Both tools come from <fstream>. We use ios::app to add lines at the end without
+// erasing earlier ones. We check that opening and saving succeeded; when reading reaches the end,
+// eof tells us there is no more data.
 //
-// Analogy: Memory is a whiteboard erased when the program ends. A file is a notebook that keeps
-// your notes.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add another note and read the file again. Explain what ios::trunc would do.
 
+// We read and save files using ifstream and ofstream.
 #include <fstream>
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

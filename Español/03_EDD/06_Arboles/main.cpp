@@ -1,16 +1,14 @@
 // Árboles
 //
-// Distingue árbol binario de ABB y después estudia sus recorridos. El integrador inserta, busca,
-// recorre y elimina. Los ejemplos recursivos usan árboles pequeños; balanceo y recorridos
-// iterativos son ampliaciones para grandes profundidades.
+// Vamos a integrar las operaciones del árbol: insertar, buscar, recorrer y eliminar. Usamos Arbol.h
+// para seguir los mismos enlaces en cada caso. Primero comprobamos el árbol vacío, agregamos datos,
+// comparamos sus recorridos y al final retiramos todos los nodos. Podemos pensar en cuidar un árbol
+// de carpetas: cada cambio debe conservar el acceso a las ramas que todavía existen.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
 
 #include "Arbol.h"
-#include <cassert>
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;
@@ -18,14 +16,19 @@ using namespace curso;
 
 int main() {
     Arbol arbol;
-    // assert comprueba un resultado del integrador; no realiza operaciones del programa.
-    assert(arbol.valores().empty());
+    if (!(arbol.valores().empty())) {
+        cerr << "La comprobacion no dio el resultado esperado.\n";
+        return 1;
+    }
     for (int dato : {5, 3, 7, 2, 4, 6, 8}) {
         if (!(arbol.insertar(dato))) {
             return 1;
         }
     }
-    assert(arbol.contiene(4));
+    if (!(arbol.contiene(4))) {
+        cerr << "La comprobacion no dio el resultado esperado.\n";
+        return 1;
+    }
     // El árbol es el mismo; cambiamos cuándo se visita la raíz respecto de sus dos ramas.
     for (Recorrido orden : {Recorrido::Preorden, Recorrido::Inorden, Recorrido::Postorden}) {
         for (int dato : arbol.valores(orden)) {
@@ -36,11 +39,17 @@ int main() {
     if (!(arbol.eliminar(5))) {
         return 1;
     }
-    assert((arbol.valores() == vector<int>{2, 3, 4, 6, 7, 8}));
+    if (!((arbol.valores() == vector<int>{2, 3, 4, 6, 7, 8}))) {
+        cerr << "La comprobacion no dio el resultado esperado.\n";
+        return 1;
+    }
     for (int dato : {2, 3, 4, 6, 7, 8}) {
         if (!(arbol.eliminar(dato))) {
             return 1;
         }
     }
-    assert(arbol.valores().empty());
+    if (!(arbol.valores().empty())) {
+        cerr << "La comprobacion no dio el resultado esperado.\n";
+        return 1;
+    }
 }

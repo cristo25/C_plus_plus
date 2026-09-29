@@ -1,23 +1,30 @@
 // Entry point: configure the store and connect service and interface.
-// Compile from the project root with the README.md command. --self-test runs the check.
+//
+// We will build a campus library and route application. From a menu we add books, search by id,
+// organize deliveries and inspect routes. We divide the work: Console talks to the user, Library
+// applies rules, the DAO stores books and CampusMap calculates routes. We reuse course headers to
+// connect classes, lists, stacks, queues, searches and graphs. We can follow a request from entry
+// to recording; each file handles part of that journey. The project guide explains the pieces with
+// code fragments.
+//
+
 #include "ui/Console.h"
 #include "testing/SelfCheck.h"
+// We catch errors through exception and read their message with what().
 #include <exception>
+// We handle paths, folders and file renaming.
 #include <filesystem>
 #include <iostream>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
+// We store and work with text using string.
 #include <string>
+// We use move to transfer data or responsibility for releasing it.
 #include <utility>
+// We store a collection that can grow using vector.
 #include <vector>
-
-#ifdef _WIN32
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
-#include <windows.h>
-#include <shellapi.h>
-#endif
 
 using namespace std;
 using namespace project;
@@ -25,24 +32,9 @@ using namespace project;
 namespace {
     vector<filesystem::path> readArguments(int argc, char* argv[]) {
         vector<filesystem::path> result;
-#ifdef _WIN32
-        // Native wide arguments preserve Unicode paths that narrow argv can lose.
-        (void)argc;
-        (void)argv;
-        int count = 0;
-        unique_ptr<wchar_t*, decltype(&LocalFree)> arguments(
-            CommandLineToArgvW(GetCommandLineW(), &count), &LocalFree);
-        if (!arguments) {
-            throw runtime_error("Could not read command-line arguments");
-        }
-        for (int index = 0; index < count; ++index) {
-            result.emplace_back(arguments.get()[index]);
-        }
-#else
         for (int index = 0; index < argc; ++index) {
-            result.emplace_back(argv[index]);
+            result.emplace_back(filesystem::u8path(argv[index]));
         }
-#endif
         return result;
     }
 }

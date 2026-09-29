@@ -1,15 +1,10 @@
 // Repeating with while
 //
-// while checks its condition before each iteration. It may run zero times. Change something that
-// eventually makes the condition false.
+// We will repeat while a condition holds. With while we check before entering: if it is already
+// false, we make no turns. We can picture a savings box that receives money until a target is
+// reached. Inside the loop we change the savings; if the checked value never changes, we might
+// repeat forever.
 //
-// Analogy: Keep filling a piggy bank until you reach your savings goal.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Change the goal to 110 and explain why the final balance is 125.
 
 #include <iostream>
 

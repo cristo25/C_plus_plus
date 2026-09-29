@@ -1,8 +1,12 @@
+// With inline we allow these definitions to be shared from the header across several files.
+
 #ifndef COURSE_SORTS_H
 #define COURSE_SORTS_H
-#include <algorithm>
+// We use size_t to count elements and represent nonnegative positions.
 #include <cstddef>
+// We use swap to exchange two values.
 #include <utility>
+// We store a collection that can grow using vector.
 #include <vector>
 
 namespace course {

@@ -1,22 +1,15 @@
 // Insertar y eliminar en vectores
 //
-// insert y erase reciben iteradores. begin() apunta al primer elemento y end() representa el límite
-// posterior al último, que no se desreferencia. Insertar o borrar en medio obliga a desplazar los
-// elementos que quedan después. Cuantos más haya que mover, más trabajo; en el peor caso pueden ser
-// casi todos (O(n), donde n es la cantidad de elementos del vector). Una realocación invalida todos
-// los punteros, referencias e iteradores; un borrado invalida desde la posición eliminada.
+// Vamos a abrir y quitar espacios en medio de un vector. Con begin() obtenemos una posición que
+// señala el inicio; begin() + 1 señala el segundo elemento. A esa forma de señalar una posición la
+// llamamos iterador. insert coloca un dato y desplaza los siguientes; erase quita uno y cierra el
+// hueco. Por eso puede tocar mover casi todos los n elementos (O(n)). Después del cambio volvemos a
+// obtener las posiciones que necesitamos. Antes de pop_back comprobamos empty para no quitar algo
+// de un vector vacío.
 //
-// Analogía: Para abrir un hueco en medio del cajón debes mover las cosas de las secciones
-// siguientes.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Elimina todos los elementos iguales a 20 con remove y erase. Consulta la diferencia
-// entre mover al final y borrar.
 
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;
@@ -26,7 +19,8 @@ int main() {
     // begin() + 1 es la posición del segundo elemento: queda 10, 20, 30.
     numeros.insert(numeros.begin() + 1, 20);
 
-    // erase mueve los siguientes elementos; no reutilices iteradores invalidados por el borrado.
+    // Al borrar cerramos el hueco moviendo los siguientes datos. Después obtenemos de nuevo las
+    // posiciones que necesitemos.
     numeros.erase(numeros.begin());
 
     if (!numeros.empty()) {

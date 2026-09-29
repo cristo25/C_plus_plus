@@ -1,13 +1,13 @@
 // Queues
 //
-// Compare arrival order and priority order. The integration example produces 2 9 4 with FIFO and
-// 9 4 2 with priority.
+// We will put the same values into a normal queue and a priority queue. After storing 2, 9 and 4,
+// the first keeps that order; the second serves 9 first. This helps us decide which rule an
+// application needs: respecting arrival or choosing by importance. Changing the structure changes
+// the service rule even with identical data.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include <iostream>
+// We serve by arrival with queue or by importance with priority_queue.
 #include <queue>
 
 using namespace std;

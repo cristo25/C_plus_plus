@@ -1,24 +1,15 @@
 // Quick sort
 //
-// Choose a pivot, partition values and recursively sort the partitions. When partitions are
-// reasonably even, each level processes the n values and the level count grows like repeated
-// halving (O(n log n); n counts values). If the pivot leaves nearly everything on one side,
-// repeated long traversals can make work grow like n multiplied by n (O(n²)); choosing the last
-// value as pivot causes this for sorted or equal inputs. Up to one pending call per value can also
-// accumulate (O(n) memory for calls). Not stable. Read quickSort in ../Sorts.h.
+// We will choose one value as a reference for separating the rest; we call it the pivot. We put
+// smaller values on one side and repeat within each group. This is quick sort. With evenly split
+// groups, each level checks the n values and the levels grow through halving (O(n log n)). Here we
+// choose the last value: with sorted or equal input, almost everything can stay on one side and
+// cause repeated work (O(n²), like n times n). This choice helps us see why the pivot matters.
 //
-// Analogy: A pivot splits a line: smaller values move left and the rest move right; repeat
-// within each group.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Trace pivots for 4, 1, 3, 2. Try sorted data and explain why this version becomes
-// unbalanced.
 
 #include "../Sorts.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

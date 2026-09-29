@@ -1,18 +1,17 @@
 // Algoritmos de ordenamiento
 //
-// Estudia cada algoritmo con la misma entrada y compara trabajo, memoria y estabilidad. Estable
-// significa conservar el orden original de elementos con la misma clave. El integrador verifica
-// cinco algoritmos contra sort, incluyendo vector vacío, repetidos, negativos y datos ya
-// ordenados. Los punteros a funciones permiten repetir la misma comprobación.
+// Vamos a comprobar cinco maneras de ordenar usando las mismas entradas. Creamos una copia para
+// cada algoritmo y comparamos su resultado con sort. Incluimos datos vacíos, negativos, repetidos y
+// ya ordenados. Guardamos direcciones de funciones para poder llamar a cada algoritmo de la misma
+// manera: igual que un puntero puede señalar una caja, un puntero a función puede señalar una tarea
+// que podemos ejecutar. Si alguna comparación falla, mostramos el problema y terminamos.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
 
 #include "Ordenamientos.h"
+// Usamos sort para ordenar o cambiar el orden de los datos.
 #include <algorithm>
-#include <cassert>
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;
@@ -28,8 +27,10 @@ int main() {
             auto esperado = entrada;
             sort(esperado.begin(), esperado.end());
             ordenar(resultado);
-            // assert comprueba un resultado del integrador; no realiza operaciones del programa.
-            assert(resultado == esperado);
+            if (!(resultado == esperado)) {
+                cerr << "La comprobacion no dio el resultado esperado.\n";
+                return 1;
+            }
         }
     }
     cout << "Los 5 algoritmos coinciden con sort en 5 entradas.\n";

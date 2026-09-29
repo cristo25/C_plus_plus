@@ -1,19 +1,14 @@
 // Strings
 //
-// string manages a sequence of characters. Concatenate, inspect its size, search and extract
-// substrings. Check for string::npos before using a search result. size() counts bytes; UTF-8
-// characters can occupy multiple bytes.
+// We will work with text using string. We can picture a necklace where each bead is a letter or
+// symbol. With + we join text, with size we count positions, and with find we look for a part. If
+// the search returns string::npos, that part was not found. Only after checking do we use substr to
+// take a piece. Here we use simple text; an accented letter can occupy more than one position
+// depending on how it is stored.
 //
-// Analogy: A string is a necklace: every character is a bead. Join necklaces or take a section.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Search for a missing word and avoid calling substr with npos.
-// The found substring is also displayed on another line: Ana.
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

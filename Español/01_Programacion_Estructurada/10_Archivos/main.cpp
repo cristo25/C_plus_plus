@@ -1,53 +1,52 @@
 // Leer y escribir archivos
 //
-// ofstream escribe y ifstream lee. Comprueba apertura, escritura y lectura. Los objetos cierran
-// los archivos al salir de su bloque. ios::app agrega contenido al final.
+// Vamos a conservar texto cuando termine el programa. Podemos pensar en la memoria como un pizarrón
+// y en un archivo como un cuaderno que guardamos. Con ofstream abrimos el cuaderno para escribir;
+// con ifstream lo abrimos para leer. Ambas herramientas vienen de <fstream>. Usamos ios::app para
+// agregar líneas al final sin borrar las anteriores. Comprobamos que se pudo abrir y guardar; al
+// leer hasta el final, eof nos indica que ya no quedan datos.
 //
-// Analogía: La memoria es un pizarrón que se borra al terminar; un archivo es un cuaderno que
-// conserva tus anotaciones.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega otra nota y vuelve a leer el archivo. Explica qué ocurriría usando
-// ios::trunc.
 
-#include <fstream>
+// Leemos y guardamos archivos con ifstream y ofstream.
 #include <iostream>
+
+// <fstream> (file stream): Proporciona las herramientas para trabajar con archivos en disco.
+// Define 'ofstream' para escribir/guardar datos y 'ifstream' para leerlos.
+#include <fstream>
+
+// <string>: Permite usar el tipo de dato 'string' para almacenar y manipular cadenas de texto.
 #include <string>
 
 using namespace std;
 
 int main() {
     const string ruta = "notas_demo.txt";
+
+    // 1. Escritura: se abre en modo append (ios::app) para añadir al final sin borrar lo previo.
     {
-        // ios::app añade al final para conservar las líneas que ya existían.
         ofstream salida(ruta, ios::app);
         if (!salida) {
-            cerr << "No se pudo abrir el archivo.\n";
+            cerr << "No se pudo abrir el archivo para escribir.\n";
             return 1;
         }
+
         salida << "Estudiar C++\n";
-        salida.close();
-        if (!salida) {
-            cerr << "Error al guardar.\n";
-            return 1;
-        }
+        // Al salir de este bloque {}, el archivo se cierra automáticamente gracias al destructor de 'salida'.
     }
-    // La escritura ya terminó: abrimos ahora un flujo de lectura del mismo archivo.
+
+    // 2. Lectura: se abre el archivo para leer su contenido.
     ifstream entrada(ruta);
     if (!entrada) {
-        cerr << "No se pudo leer.\n";
+        cerr << "No se pudo abrir el archivo para leer.\n";
         return 1;
     }
+
     string linea;
+    // getline lee línea por línea y el bucle termina por sí solo al llegar al final del archivo.
     while (getline(entrada, linea)) {
         cout << linea << "\n";
     }
-    // Llegar al final es normal; un fallo de lectura diferente debe informarse.
-    if (!entrada.eof()) {
-        cerr << "Error de lectura.\n";
-        return 1;
-    }
+
+    // Al finalizar main(), 'entrada' se cierra automáticamente.
+    return 0;
 }

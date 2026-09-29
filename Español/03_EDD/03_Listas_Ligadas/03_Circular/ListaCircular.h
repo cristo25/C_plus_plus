@@ -1,5 +1,9 @@
+// Con = delete impedimos copiar la clase para no dejar dos objetos intentando liberar los mismos
+// nodos.
+
 #ifndef CURSO_LISTA_CIRCULAR_H
 #define CURSO_LISTA_CIRCULAR_H
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 namespace curso {

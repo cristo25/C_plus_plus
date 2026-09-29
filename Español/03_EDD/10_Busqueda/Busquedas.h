@@ -1,7 +1,12 @@
+// Con inline permitimos compartir estas definiciones desde el header entre varios archivos.
+
 #ifndef CURSO_BUSQUEDAS_H
 #define CURSO_BUSQUEDAS_H
+// Usamos size_t para contar elementos y representar posiciones no negativas.
 #include <cstddef>
+// Guardamos un resultado que puede faltar: optional tiene un valor o está vacío.
 #include <optional>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 namespace curso {
@@ -17,9 +22,10 @@ namespace curso {
         return nullopt;
     }
 
-    // Precondicion: datos ordenados de menor a mayor; devuelve la primera coincidencia.
+    // Antes de buscar necesitamos los datos ordenados de menor a mayor. Devolvemos la primera
+    // coincidencia.
     inline optional<size_t> binaria(const vector<int>& datos, int buscado) {
-        size_t inicio = 0, fin = datos.size(); // Rango [inicio, fin).
+        size_t inicio = 0, fin = datos.size(); // Revisamos desde inicio hasta antes de fin.
         while (inicio < fin) {
             size_t mitad = inicio + (fin - inicio) / 2;
             // Si la mitad es menor, descartamos su lado izquierdo; de lo contrario conservamos

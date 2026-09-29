@@ -1,13 +1,13 @@
 // Colas
 //
-// Compara orden de llegada y orden de prioridad. El integrador produce 2 9 4 con FIFO y 9 4 2
-// con prioridad.
+// Vamos a poner los mismos datos en una fila normal y en una fila con prioridad. Al guardar 2, 9 y
+// 4, la primera conserva ese orden; la segunda atiende primero el 9. Así podemos decidir qué regla
+// necesita una aplicación: respetar la llegada o elegir por importancia. Cambiar la estructura
+// cambia esa regla de atención, aunque los datos sean iguales.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
 
 #include <iostream>
+// Atendemos por llegada con queue o por importancia con priority_queue.
 #include <queue>
 
 using namespace std;

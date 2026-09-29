@@ -1,25 +1,11 @@
 // Const and headers in DSA
 //
-// A structure query can receive const vector<int>&, reading elements without copying or modifying
-// the vector. The vector and result here are const. The header declares the operation and an inline
-// constexpr constant, the implementation defines the algorithm with count_if, and main.cpp uses it.
-// The query inspects each element once; twice as many elements means twice as many visits (O(n),
-// where n is the element count). It only adds a counter and a few variables, without another
-// collection of the same size (O(1) additional memory). Lists, trees and graphs already have
-// headers containing classes and operations. This lesson separates a query's declaration from
-// implementation. Compare its signature with a sorting function taking vector<int>& to distinguish
-// reading from modification.
+// We will query a collection without changing it. With const vector<int>& we receive another label
+// for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp
+// we traverse the values and count those above a limit. We need neither copying nor sorting.
+// Doubling the data doubles the visits (O(n), with n elements). We add only a counter and a few
+// variables (O(1) additional memory).
 //
-// Analogy: A query inspects a drawer through glass and counts items without changing their
-// positions. Sorting requires opening the drawer and moving them.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp Queries.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add a query counting values below a limit without modifying the data. Test an empty
-// vector and expect 0. Try sorting the const vector and observe the compiler error; make a
-// mutable copy if sorting is required.
 
 #include "Queries.h"
 #include <iostream>

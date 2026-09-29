@@ -1,19 +1,31 @@
 # DAO: separar el acceso a datos
 
-Estudia CRUD en memoria y después persistencia. El integrador combina ambas operaciones usando un flujo en memoria para comprobar el formato sin crear archivos. Los headers de este bloque contienen definiciones dentro de la clase, implícitamente `inline`. El DAO permite consultas lineales y limita la carga a 10 000 registros; una base de datos será otro paso si hace falta.
+Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
 
-## Orden de estudio
+## DAO en memoria y CRUD
 
-1. [DAO en memoria](01_DAO_en_Memoria/main.cpp)
-2. [DAO en archivo](02_DAO_en_Archivo/main.cpp)
+Vamos a reunir en LibroDAO las tareas de guardar, buscar, cambiar y eliminar libros. Podemos imaginar un encargado del catálogo: le pedimos un libro por su id, que es un número que lo identifica. DAO es el nombre habitual de una clase dedicada al acceso a datos. Aquí guardamos los libros en un vector, por lo que desaparecen al terminar el programa. buscar presta un puntero al libro, o devuelve nullptr si no existe. Antes de leerlo comprobamos el resultado; después de cambiar el catálogo volvemos a buscarlo, porque el vector puede mover sus libros.
 
-Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
+[Programa comentado](01_DAO_en_Memoria/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-./programa.exe
-```
+## Persistir un DAO en un archivo
 
-Cada subcarpeta tiene su propio programa. Compila un ejemplo a la vez: todos tienen su propia función `main`.
+Vamos a guardar el catálogo en un archivo para recuperarlo después. Primero pedimos al DAO que escriba sus libros y luego que los lea en otro catálogo. Agregamos una copia completa al final del archivo en cada ejecución; al leer conservamos la última copia completa. Si encontramos datos incorrectos, avisamos sin sustituir el catálogo por una lectura incompleta. Para probar ese caso usamos istringstream: una herramienta de <sstream> que permite leer un texto ya guardado en memoria como si llegara de un archivo. Así podemos ensayar una entrada dañada sin dañar el archivo real.
 
-La creación y la carga respetan el mismo límite de 10 000 libros.
+[Programa comentado](02_DAO_en_Archivo/main.cpp).
+
+## DAO: separar el acceso a datos
+
+Vamos a recorrer todo el trabajo del catálogo: crear libros, cambiar un título, eliminar un libro y recuperar lo guardado. Aquí usamos stringstream, de <sstream>, como un cuaderno temporal en memoria: podemos escribir en él y volver a leer sin crear un archivo en disco. Después probamos una lectura con ids repetidos. La regla es sencilla: si no podemos recuperar todos los datos correctamente, conservamos el catálogo que ya teníamos.
+
+[Programa comentado](main.cpp).
+
+**Práctica.** Realiza un programa integrador para administrar y recuperar libros.
+
+- Crear tres libros, cambiar un título y eliminar uno.
+- Guardar el resultado y cargarlo en un segundo catálogo.
+- Comparar los libros recuperados con los originales.
+- Probar un id duplicado y un archivo incompleto.
+- Conservar los datos anteriores si falla la carga.
+
+[Volvemos a la guía general](../../README.md).

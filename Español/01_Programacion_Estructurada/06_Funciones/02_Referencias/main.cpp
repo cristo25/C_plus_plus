@@ -1,17 +1,15 @@
 // Valor, referencia y referencia const
 //
-// Una variable es una caja. Pasar por valor entrega una segunda caja; pasar por
-// referencia entrega otra etiqueta de la misma caja. Una referencia se inicializa
-// y permanece ligada al mismo objeto: asignarle un valor cambia ese objeto.
-// const T& es una etiqueta que permite leer, pero no escribir por ese acceso.
-// El objeto debe seguir vivo durante el uso de la referencia.
+// Vamos a comparar una copia con una referencia. Si una variable es una caja, pasarla por valor
+// entrega otra caja con el mismo contenido. Con int& ponemos otra etiqueta a la caja original: si
+// cambiamos el dato mediante esa etiqueta, cambiamos el original. Una referencia queda ligada a la
+// misma caja desde que nace; asignarle otro valor cambia el contenido, no la caja a la que se
+// refiere. Con const int& podemos leer mediante la etiqueta, pero no escribir. En todos los casos
+// necesitamos que la caja siga existiendo mientras la usamos.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-// Ejecutar: ./programa.exe
-//
-// Practica: Predice cada salida. Cambia int& por int y observa qué deja de cambiar.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;

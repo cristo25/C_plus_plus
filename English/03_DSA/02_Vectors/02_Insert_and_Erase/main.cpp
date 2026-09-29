@@ -1,22 +1,14 @@
 // Inserting and erasing in vectors
 //
-// insert and erase take iterators. begin() points to the first element; end() is past the last and
-// must not be dereferenced. Inserting or erasing in the middle shifts the elements after that
-// position. More elements to move means more work; in the worst case nearly all of them may move
-// (O(n), where n is the vector element count). Reallocation invalidates all pointers, references
-// and iterators; erasure invalidates them from the erased position onward.
+// We will open and remove spaces in the middle of a vector. With begin() we obtain a position
+// pointing to the start; begin() + 1 points to the second element. We call this way of pointing to
+// a position an iterator. insert places a value and shifts later ones; erase removes a value and
+// closes the gap. This may move nearly all n elements (O(n)). After changing the vector we obtain
+// needed positions again. Before pop_back we check empty so we do not remove from an empty vector.
 //
-// Analogy: Making room in the middle of a drawer requires moving the items in the following
-// compartments.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Remove every 20 using remove and erase. Explain the difference between rearranging
-// elements and erasing them.
 
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -26,7 +18,7 @@ int main() {
     // begin() + 1 is the second element's position: the values become 10, 20, 30.
     numbers.insert(numbers.begin() + 1, 20);
 
-    // erase shifts following elements; do not reuse iterators invalidated by removal.
+    // We close the gap by moving later values. Afterward we obtain the positions we need again.
     numbers.erase(numbers.begin());
 
     if (!numbers.empty()) {

@@ -1,23 +1,15 @@
 // DFS: búsqueda en profundidad
 //
-// DFS sigue una rama hasta que no puede avanzar y luego regresa. Puede usar recursión o una pila
-// explícita. Los visitados evitan ciclos. Al recorrer las listas de vecinos, visitamos los puntos
-// alcanzables y revisamos sus conexiones. En el peor caso el trabajo crece con todos los puntos y
-// conexiones del grafo (O(V + E), donde V cuenta vértices y E cuenta aristas). Las marcas de
-// visitado y los puntos pendientes de procesar necesitan espacio que crece con la cantidad de
-// puntos (O(V) de memoria adicional). El orden depende del orden de los vecinos.
+// Vamos a seguir un camino hasta donde podamos y después regresar para probar otro. Podemos
+// imaginar la exploración de un laberinto. A este recorrido lo llamamos DFS, o búsqueda en
+// profundidad. Aquí usamos recursión para recordar por dónde volver. Marcamos los lugares visitados
+// para no dar vueltas sin fin. El orden puede diferir del de BFS aunque ambos alcancen los mismos
+// lugares. Si revisamos todo el mapa, el trabajo crece con sus V lugares y E caminos (O(V + E)).
 //
-// Analogía: Exploras un laberinto siguiendo un pasillo hasta el fondo y retrocedes para probar
-// los demás.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Compara este recorrido con BFS usando el mismo dibujo.
 
 #include "../Grafo.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

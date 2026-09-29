@@ -1,18 +1,15 @@
 // Recursion
 //
-// A recursive function calls itself with a smaller problem. A base case stops the calls. Without
-// a base case or progress, the call stack may be exhausted. throw signals an invalid argument;
-// try/catch lets the example check the rejection.
+// We will solve a task by calling the same function with a smaller case; we call this recursion.
+// Here we calculate a factorial: 4! means 4 times 3 times 2 times 1. In factorial(n) we multiply n
+// by factorial(n - 1). We stop calls when n is 0 or 1, whose result is 1. We can picture boxes
+// inside boxes: we open them down to the smallest and then return, combining results. We limit n to
+// 12 so the result fits in int. With throw we report invalid data; with try and catch we catch that
+// report and display it.
 //
-// Analogy: Open a box containing a smaller box until reaching an empty one.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw the calls and returns of factorial(3), then write a version using for.
 
 #include <iostream>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
 
 using namespace std;

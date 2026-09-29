@@ -1,16 +1,10 @@
 // Functions: parameters and return values
 //
-// A function receives data, performs a task and may return a result. Parameters passed by value
-// are copies; changing them does not change the original.
+// We will put a calculation in a function. We can picture a small machine: it receives ingredients,
+// does its work and returns a result. We call the inputs parameters; with return we hand back the
+// result. When we receive an int by value, we work with a copy: changing it inside the function
+// does not change the original variable.
 //
-// Analogy: A machine receives ingredients through its input and delivers a product through its
-// output.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Write a function that converts minutes to seconds.
 
 #include <iostream>
 

@@ -1,8 +1,12 @@
+// Con inline permitimos compartir estas definiciones desde el header entre varios archivos.
+
 #ifndef CURSO_ORDENAMIENTOS_H
 #define CURSO_ORDENAMIENTOS_H
-#include <algorithm>
+// Usamos size_t para contar elementos y representar posiciones no negativas.
 #include <cstddef>
+// Usamos swap para intercambiar dos valores.
 #include <utility>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 namespace curso {
@@ -50,7 +54,8 @@ namespace curso {
         }
     }
 
-    // Merge sort: todos los rangos son [inicio, fin), con fin excluido.
+    // Trabajamos desde inicio hasta antes de fin; fin marca la primera posición que ya no pertenece
+    // al grupo.
     inline void mezclarRango(vector<int>& datos, vector<int>& auxiliar, size_t inicio, size_t fin) {
         if (fin - inicio < 2) {
             return;

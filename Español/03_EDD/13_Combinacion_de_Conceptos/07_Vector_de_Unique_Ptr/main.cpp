@@ -1,20 +1,18 @@
 // 7. Un vector de propietarios y un puntero observador
 //
-// vector<unique_ptr<Producto>> contiene tarjetas que además son responsables
-// de destruir sus productos. make_unique crea el objeto administrado. get()
-// presta su dirección, pero no entrega la propiedad. Al reubicar el vector
-// se mueven los propietarios; los productos administrados conservan su ubicación.
-// En cambio, vector<Producto> puede mover los objetos y dejar colgando sus punteros
-// al realocar. Borrar un unique_ptr destruye su producto: antes retiramos su
-// observador. Si hubiera más observadores, tendríamos que retirar todos.
+// Vamos a separar la ubicación de las tarjetas y la de los productos. En
+// vector<unique_ptr<Producto>> cada tarjeta también tiene la responsabilidad de liberar su
+// producto. Cuando el vector necesita más espacio puede mover las tarjetas; los productos creados
+// aparte conservan sus direcciones. Con get prestamos una dirección, pero no la responsabilidad de
+// borrar. Al eliminar la tarjeta responsable también se destruye el producto; antes dejamos de usar
+// todos los punteros prestados. Esto es distinto de vector<Producto>, donde al crecer pueden
+// mudarse los productos mismos.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_POO/08_Headers/Producto.cpp -o programa.exe
-// Ejecutar: ./programa.exe
-//
-// Practica: Añade un segundo observador y explica cuándo debes retirarlo también.
 
 #include <iostream>
+// Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 #include "../../../02_POO/08_Headers/Producto.h"
 
@@ -26,13 +24,14 @@ int main() {
     propietarios.push_back(make_unique<Producto>("Cuaderno", 300));
     const Producto* observador = propietarios.at(0).get();
 
-    // Una capacidad mayor obliga a realocar las tarjetas, no los productos que administran.
+    // Pedimos más espacio al vector: se mudan sus tarjetas, mientras los productos siguen donde
+    // estaban.
     propietarios.reserve(propietarios.capacity() + 1);
     propietarios.push_back(make_unique<Producto>("Lapiz", 100));
     cout << boolalpha << "El producto sigue en el mismo sitio: " << (observador == propietarios.at(0).get()) << "\n";
     cout << observador->consultarNombre() << "\n";
 
-    // No desreferencies el observador después de borrar su propietario.
+    // Dejamos de seguir esta dirección antes de liberar el producto que señalaba.
     observador = nullptr;
     propietarios.erase(propietarios.begin());
     cout << "Propietarios restantes: " << propietarios.size() << "\n";

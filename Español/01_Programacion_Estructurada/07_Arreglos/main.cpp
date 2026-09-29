@@ -1,28 +1,26 @@
 // Arreglos
 //
-// Empieza con un cajón y después con un mueble. El integrador guarda notas en una matriz y sus
-// promedios en un arreglo: 9 y 8.
+// Vamos a combinar un arreglo de una dimensión con una matriz. En notas guardamos dos alumnos, cada
+// uno con tres calificaciones; en promedios guardamos un resultado por alumno. Recorremos una fila,
+// sumamos sus notas y dividimos entre tres. Con static_cast<double> tratamos la suma como un número
+// con decimales antes de dividir, para conservar la parte decimal del promedio.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
 
-#include <array>
 #include <iostream>
 
 using namespace std;
 
 int main() {
     // Cada fila guarda las tres notas de un alumno; las posiciones empiezan en cero.
-    array<array<int, 3>, 2> notas{{{8, 9, 10}, {7, 8, 9}}};
-    array<double, 2> promedios{};
-    for (size_t fila = 0; fila < notas.size(); ++fila) {
+    int notas[2][3]{{8, 9, 10}, {7, 8, 9}};
+    double promedios[2]{};
+    for (size_t fila = 0; fila < 2; ++fila) {
         int suma = 0;
-        for (int nota : notas.at(fila)) {
+        for (int nota : notas[fila]) {
             suma += nota;
         }
         // Convertimos la suma a double para que el promedio no pierda su parte decimal.
-        promedios.at(fila) = static_cast<double>(suma) / notas.at(fila).size();
+        promedios[fila] = static_cast<double>(suma) / 3;
     }
 
     for (double promedio : promedios) {

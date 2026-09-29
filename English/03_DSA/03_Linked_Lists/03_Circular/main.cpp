@@ -1,21 +1,14 @@
 // Circular linked list
 //
-// The last node points to the first. Stop on returning to the start; waiting for nullptr would loop
-// forever. Keeping the last node lets us append by adjusting a few links without traversing the
-// list (O(1)). Searching or removing by value may require inspecting all n nodes (O(n)); n is the
-// node count. This variant is singly linked and circular.
+// We will close the chain into a circle: the last node points back to the first. We can picture
+// players taking repeated turns. Since we do not reach nullptr after one lap, we stop when we
+// return to the start. We keep the last node to append with a few changes (O(1)). Removing the only
+// node leaves an empty list; removing any other node keeps the circle closed.
 //
-// Analogy: A wheel of turns returns to the first person after serving the last.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw a single-node ring, which points to itself. Explain why removing it needs a
-// special case.
 
 #include "CircularList.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

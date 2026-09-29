@@ -1,23 +1,31 @@
 // Punto de entrada: configura el almacén y conecta servicio e interfaz.
-// Compila desde la raíz del proyecto con el comando de README.md. --self-test ejecuta la comprobación.
+//
+// Vamos a construir una aplicación de biblioteca y rutas del campus. Desde un menú agregamos
+// libros, buscamos por id, organizamos entregas y consultamos caminos. Dividimos el trabajo: la
+// consola conversa con la persona, Biblioteca aplica las reglas, el DAO guarda los libros y
+// MapaCampus calcula rutas. Reutilizamos los headers del curso para conectar clases, listas, pilas,
+// colas, búsquedas y grafos. Podemos seguir un pedido desde que entra hasta que queda registrado;
+// cada archivo se ocupa de una parte de ese recorrido. La guía del proyecto explica las piezas con
+// fragmentos de código.
+//
+
 #include "interfaz/Consola.h"
 #include "pruebas/Autocomprobacion.h"
+// Recogemos errores mediante exception y leemos su mensaje con what().
 #include <exception>
+// Manejamos rutas, carpetas y cambios de nombre de archivos.
 #include <filesystem>
 #include <iostream>
+// Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
+// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
 #include <utility>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
-
-#ifdef _WIN32
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
-#include <windows.h>
-#include <shellapi.h>
-#endif
 
 using namespace std;
 using namespace proyecto;
@@ -25,24 +33,9 @@ using namespace proyecto;
 namespace {
     vector<filesystem::path> leerArgumentos(int argc, char* argv[]) {
         vector<filesystem::path> resultado;
-#ifdef _WIN32
-        // Los argumentos nativos amplios conservan rutas Unicode que argv puede perder.
-        (void)argc;
-        (void)argv;
-        int cantidad = 0;
-        unique_ptr<wchar_t*, decltype(&LocalFree)> argumentos(
-            CommandLineToArgvW(GetCommandLineW(), &cantidad), &LocalFree);
-        if (!argumentos) {
-            throw runtime_error("No se pudieron leer los argumentos de consola");
-        }
-        for (int indice = 0; indice < cantidad; ++indice) {
-            resultado.emplace_back(argumentos.get()[indice]);
-        }
-#else
         for (int indice = 0; indice < argc; ++indice) {
-            resultado.emplace_back(argv[indice]);
+            resultado.emplace_back(filesystem::u8path(argv[indice]));
         }
-#endif
         return resultado;
     }
 }
@@ -78,7 +71,8 @@ int main(int argc, char* argv[]) {
             return autocomprobar(cout);
         }
 
-        // El puntero base posee una de dos implementaciones; virtual selecciona cargar/guardar en ejecución.
+        // Elegimos un almacén de memoria o de archivo. Mediante virtual llamamos a cargar y guardar
+        // de la variante elegida.
         unique_ptr<AlmacenCatalogo> almacen;
         if (demostracion) {
             LibroDAO inicial;

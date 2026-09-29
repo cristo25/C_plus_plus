@@ -1,23 +1,18 @@
 // Persisting a DAO in a file
 //
-// save serializes a snapshot and load validates it before replacing memory contents. quoted
-// preserves spaces and quotes. Each snapshot begins with its book count. The example appends
-// snapshots and reads the latest complete one. It reports damaged snapshots without silently
-// discarding them.
+// We will save the catalog in a file so we can retrieve it later. First we ask the DAO to write its
+// books and then read them into another catalog. We append a complete copy each run; while reading,
+// we keep the last complete copy. If data is invalid, we report it without replacing the catalog
+// with an incomplete reading. To try that case we use istringstream: a tool from <sstream> that
+// reads text already in memory as if it came from a file. This lets us test damaged input without
+// damaging the real file.
 //
-// Analogy: The librarian photographs the catalog at closing time and restores its latest
-// photograph when reopening.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Save a title containing quotes. Duplicate an ID in a copy of the file and verify
-// rejection.
 
 #include "../BookDAO.h"
+// We read and save files using ifstream and ofstream.
 #include <fstream>
 #include <iostream>
+// We read or write text in memory as if it were a file.
 #include <sstream>
 
 using namespace std;
@@ -28,8 +23,8 @@ int main() {
     if (!(dao.create({1, "C++ with examples"}))) {
         return 1;
     }
-    // ponytail: append-only journal; compact if the file grows too large.
-    // Append a snapshot; reading restores complete snapshots in order.
+    // ponytail: append-only journal; compact if the file grows too large. Append a complete copy;
+    // reading restores complete copies in order.
     ofstream output("books_demo.txt", ios::app);
     if (!output || !dao.save(output)) {
         cerr << "Could not save the catalog.\n";

@@ -1,17 +1,17 @@
 // Punteros: una caja, una tarjeta y una tarjeta de otra tarjeta
 //
-// La variable es una caja; un puntero es una tarjeta que guarda su dirección.
-// & obtiene una dirección y * sigue la dirección una vez. int** permite localizar
-// una tarjeta, leerla y después llegar a la caja. Copiar una tarjeta no copia la caja.
-// Un puntero no mantiene vivo su destino: aquí los enteros locales son propietarios.
-// nullptr significa sin destino; nunca lo desreferencies. Un puntero no nulo también
-// puede estar colgando si su objeto ya murió. No retornes direcciones de variables locales.
-// No hace falta new para observar objetos que ya existen.
+// Primero vamos a distinguir el dato de su dirección. Una variable como int es una caja que guarda
+// un entero; un puntero también es una variable, pero guarda la dirección de otra caja. Podemos
+// imaginar un dedo que señala dónde está el dato. Con & obtenemos esa dirección; con * seguimos la
+// dirección para leer o cambiar el dato. Copiar el puntero copia la dirección, no la caja. Con
+// int** guardamos la dirección de un puntero: seguimos dos señales para llegar al entero.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-// Ejecutar: ./programa.exe
+// Una referencia es otra etiqueta de la misma caja; un puntero puede cambiar de destino o guardar
+// nullptr, que significa que no señala nada. Nos sirve, por ejemplo, para elegir un producto o unir
+// nodos de listas, árboles y grafos. No necesitamos crear memoria nueva para señalar una variable
+// existente. Antes de seguir un puntero comprobamos que tiene un destino y que ese dato aún existe:
+// una dirección no mantiene viva la caja ni se vuelve nullptr automáticamente cuando desaparece.
 //
-// Practica: Añade const int* const y explica qué dos cosas ya no puedes cambiar.
 
 #include <iostream>
 
@@ -31,7 +31,7 @@ void redirigirCopia(int* direccion, int& otro) {
 }
 
 void redirigirReferencia(int*& direccion, int& otro) {
-    // int*& es un alias de la tarjeta del llamador: podemos cambiar su destino.
+    // int*& es otra etiqueta de la tarjeta del llamador: podemos cambiar su destino.
     direccion = &otro;
 }
 

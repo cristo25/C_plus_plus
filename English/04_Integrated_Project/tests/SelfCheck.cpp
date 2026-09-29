@@ -1,10 +1,16 @@
 #include "testing/SelfCheck.h"
 #include "ui/Console.h"
+// We use reverse to sort or change data order.
 #include <algorithm>
+// We catch errors through exception and read their message with what().
 #include <exception>
+// We read or write text in memory as if it were a file.
 #include <sstream>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
+// We store and work with text using string.
 #include <string>
+// We store a collection that can grow using vector.
 #include <vector>
 
 namespace project {

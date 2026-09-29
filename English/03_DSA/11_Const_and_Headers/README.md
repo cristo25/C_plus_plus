@@ -1,29 +1,19 @@
 # Const and headers in DSA
 
-## What you will learn
+We will connect this topic’s pieces before solving its integration task. Each link contains the program, comments and a practice task with requirements.
 
-A structure query can receive `const vector<int>&`, reading elements without copying or modifying the vector. The vector and result here are `const`. The header declares the operation and an `inline constexpr` constant, the implementation defines the algorithm with `count_if`, and main.cpp uses it. The query inspects each element once; twice as many elements means twice as many visits (O(n), where n is the element count). It only adds a counter and a few variables, without another collection of the same size (O(1) additional memory).
+## Const and headers in DSA
 
-Lists, trees and graphs already have headers containing classes and operations. This lesson separates a query's declaration from implementation. Compare its signature with a sorting function taking `vector<int>&` to distinguish reading from modification.
+We will query a collection without changing it. With const vector<int>& we receive another label for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp we traverse the values and count those above a limit. We need neither copying nor sorting. Doubling the data doubles the visits (O(n), with n elements). We add only a counter and a few variables (O(1) additional memory).
 
-## Analogy
+[Commented program](main.cpp).
 
-A query inspects a drawer through glass and counts items without changing their positions. Sorting requires opening the drawer and moving them.
+**Practice.** Write a query program split across files.
 
-## Run the example
+- Declare a function in a .h and write it in a .cpp.
+- Receive a vector through const vector<int>&.
+- Count values below a limit using a loop.
+- Return zero for an empty vector.
+- Check that the original data stayed unchanged.
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp Queries.cpp -o program.exe
-./program.exe
-```
-
-Output:
-
-```text
-Values above 7: 2
-9 4 10 6
-```
-
-## Practice
-
-Add a query counting values below a limit without modifying the data. Test an empty vector and expect 0. Try sorting the const vector and observe the compiler error; make a mutable copy if sorting is required.
+[Back to the general guide](../../README.md).

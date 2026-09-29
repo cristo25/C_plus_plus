@@ -1,16 +1,11 @@
 // Herencia
 //
-// Una clase derivada reutiliza una base cuando existe una relación «es un». La herencia pública
-// conserva esa relación para el usuario de la clase. Prefiere composición cuando la relación sea
-// «tiene un».
+// Vamos a describir una versión más específica de algo que ya tenemos. Una BicicletaElectrica sigue
+// siendo una Bicicleta, pero también tiene batería. Con : public Bicicleta conservamos las
+// operaciones públicas de la bicicleta y agregamos las propias. Llamamos herencia a esta relación.
+// En asistir revisamos la batería antes de gastarla y pedalear. Nos conviene cuando podemos decir
+// «es una»; para decir «tiene una parte» usamos la composición del tema anterior.
 //
-// Analogía: Una bicicleta eléctrica sigue siendo una bicicleta y añade una batería.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Consume la batería con un ciclo y verifica que no baje de cero.
 
 #include <iostream>
 

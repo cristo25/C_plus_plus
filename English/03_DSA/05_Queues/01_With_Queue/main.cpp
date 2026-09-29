@@ -1,18 +1,15 @@
 // FIFO queue
 //
-// queue processes values in arrival order: first in, first out. Add with push, inspect with
-// front and remove with pop. Check empty before access.
+// We will serve a line in arrival order. With queue from <queue>, we add at the back using push,
+// inspect the first using front and remove it using pop. We can picture people waiting at a service
+// desk. Before serving we check empty. We also call “first in, first out” FIFO; those letters
+// simply abbreviate the same rule.
 //
-// Analogy: A line at a food stall serves the first arrival first.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add a third person and verify the order.
 
 #include <iostream>
+// We serve by arrival with queue or by importance with priority_queue.
 #include <queue>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

@@ -1,8 +1,12 @@
 #include "services/Library.h"
 #include "../../../03_DSA/10_Searching/Searches.h"
+// We use sort to sort or change data order.
 #include <algorithm>
+// We use numeric_limits to check the largest allowed integer before adding.
 #include <limits>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
+// We use move to transfer data or responsibility for releasing it.
 #include <utility>
 
 namespace project {
@@ -67,9 +71,9 @@ namespace project {
     }
 
     void Library::commit(BookDAO candidate, const string& message) {
-        // Save before replacing the in-memory catalog. An I/O failure preserves the previous state.
-        // ponytail: each change copies every book and title for undo; use inverse commands if those
-        // copies take too much space.
+        // Save before replacing the in-memory catalog. If reading or writing fails, we keep the
+        // previous data. ponytail: each change copies every book and title for undo; use inverse
+        // commands if those copies take too much space.
         undo.push(dao);
         try {
             store.save(candidate);
@@ -127,7 +131,7 @@ namespace project {
         if (!network.shortestRoute(source, target)) {
             throw invalid_argument("There is no route between those buildings");
         }
-        // Copy the book before any future catalog mutation. The request is a snapshot.
+        // Copy the book before any future catalog mutation. The request is a complete copy.
         pending.push(Delivery{*book, source, target});
         record("Delivery requested for book: " + to_string(id));
     }

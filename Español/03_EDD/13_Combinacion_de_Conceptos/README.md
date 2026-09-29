@@ -1,153 +1,147 @@
 # Combinar conceptos: del cajón a un inventario con vistas
 
-Saber qué es un puntero no dice todavía dónde conviene usarlo. Aquí vamos a partir de una necesidad y cambiar la representación cuando aparezca una necesidad nueva. Conservamos `Producto`, la clase del [tema de headers de POO](../../02_POO/08_Headers/Producto.h), para concentrarnos en cómo se combinan los conceptos.
+Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
 
-Antes de empezar, ejecuta [referencias](../../01_Programacion_Estructurada/06_Funciones/02_Referencias/main.cpp) y [punteros básicos](../../01_Programacion_Estructurada/09_Punteros_Basicos/main.cpp). Sigue los pasos; cada `main.cpp` tiene la explicación junto a sus operaciones. Termina con el [integrador de esta carpeta](main.cpp).
+## 1. Un arreglo que contiene objetos
 
-## Ruta
+Vamos a guardar objetos completos en un arreglo. En Producto productos[3] cada compartimento contiene un producto con su nombre y precio. Reutilizamos Producto.h, que ya estudiamos en POO. Podemos imaginar un cajón con tres bloques de Minecraft: cada bloque conserva sus propios datos, aunque todos tengan el mismo tipo. Recorremos los productos mediante const Producto& para leer el original sin copiarlo ni cambiarlo. Cuando termina el arreglo también terminan los objetos que contiene.
 
-| Paso | Programa | Decisión que aprendemos |
-| --- | --- | --- |
-| 1 | [Arreglo de clases](01_Arreglo_de_Clases/main.cpp) | Guardar objetos completos |
-| 2 | [Arreglo de structs con clases](02_Arreglo_de_Structs_con_Clases/main.cpp) | Reunir un objeto y sus existencias |
-| 3 | [Arreglo de punteros](03_Arreglo_de_Punteros/main.cpp) | Separar una tarjeta de su destino |
-| 4 | [Vector de punteros](04_Vector_de_Punteros/main.cpp) | Crear una vista que crece sin copiar productos |
-| 5 | [Matriz de punteros](05_Matriz_de_Punteros/main.cpp) | Organizar vistas por filas y casillas |
-| 6 | [Arreglo de nodos enlazados](06_Arreglo_de_Nodos/main.cpp) | Separar ubicación física y orden lógico |
-| 7 | [Vector de unique_ptr](07_Vector_de_Unique_Ptr/main.cpp) | Dar un propietario a cada objeto dinámico |
-| 8 | [Clase con nodos struct](08_Clase_con_Nodos/main.cpp) | Encapsular una cadena y sus operaciones |
-| 9 | [Vector de clases con nodos](09_Vector_de_Clases_con_Nodos/main.cpp) | Reunir listas y distinguir qué se mueve |
+[Programa comentado](01_Arreglo_de_Clases/main.cpp).
 
-## 1. ¿Qué guarda realmente un arreglo de clases?
+**Práctica.** Realiza un programa con un arreglo de productos.
 
-Queremos tres productos. `array<Producto, 3>` es un cajón con tres compartimentos: cada uno contiene un objeto completo con su nombre y precio. La clase define cómo es cada objeto; el arreglo define cuántos caben y cómo recorrerlos. No hace falta una dirección para todas las operaciones: una referencia al compartimento basta para consultar el producto.
+- Crear tres objetos completos con nombre y precio.
+- Recorrerlos mediante referencias const.
+- Sumar sus precios en centavos.
+- Mostrar cada producto y el total.
+- Explicar qué contiene una casilla del arreglo.
 
-```cpp
-const Producto& producto = productos.at(0);
-cout << producto.consultarNombre() << "\n";
-```
+## 2. Un struct contiene una clase; un arreglo contiene esos structs
 
-La referencia no crea un producto extra. `at(0)` comprueba el índice; los índices empiezan en cero. Al terminar la vida del arreglo termina la de los objetos que contiene.
+Vamos a añadir la cantidad disponible a cada producto. Con struct Registro juntamos un Producto y un entero cantidad; después guardamos varias fichas Registro en un arreglo. Podemos imaginar un compartimento que contiene el producto y una etiqueta con sus existencias. Con registros[0].producto llegamos al objeto y con registros[0].cantidad al número. recibirUnidad recibe Registro& para cambiar la ficha original: si quitamos &, cambiaríamos solo una copia.
 
-## 2. ¿Cómo agrego datos que pertenecen al mismo registro?
+[Programa comentado](02_Arreglo_de_Structs_con_Clases/main.cpp).
 
-Ahora necesitamos la cantidad disponible. Un `Registro` contiene un `Producto` y un entero. El arreglo contiene registros; cada registro contiene un objeto de una clase. Son capas de composición, no conceptos rivales.
+**Práctica.** Realiza un programa que registre existencias por producto.
 
-```cpp
-struct Registro {
-    Producto producto;
-    int cantidad;
-};
+- Crear un struct que contenga un Producto y una cantidad.
+- Guardar al menos dos registros en un arreglo.
+- Recibir unidades mediante una función con referencia.
+- Rechazar cantidades negativas y evitar superar el límite del entero.
+- Mostrar las fichas después del cambio.
 
-void recibirUnidad(Registro& registro) {
-    if (registro.cantidad < 0 || registro.cantidad == numeric_limits<int>::max()) {
-        throw invalid_argument("Cantidad invalida");
-    }
-    ++registro.cantidad;
-}
-```
+## 3. Un arreglo de tarjetas para enteros
 
-`registros.at(0).producto` llega al objeto y `registros.at(0).cantidad` llega al número. Pasar el registro por referencia modifica la ficha original. Pasarlo por valor modificaría otra ficha. `struct` tiene acceso público por defecto; `class`, privado. Ambas pueden tener métodos y contener objetos de la otra.
+Vamos a guardar direcciones en lugar de enteros. En int* direcciones[3] tenemos tres tarjetas: cada una puede señalar una caja que está fuera del arreglo. Con *direcciones[0] seguimos la primera tarjeta y cambiamos rojo; con direcciones[0] = &azul cambiamos únicamente la tarjeta. Podemos tener dos tarjetas para la misma caja, o nullptr cuando no elegimos ninguna. El arreglo guarda los punteros, pero no se encarga de borrar los enteros locales a los que apuntan.
 
-## 3. ¿Qué cambia cuando el compartimento guarda una dirección?
+[Programa comentado](03_Arreglo_de_Punteros/main.cpp).
 
-`array<int*, 3>` contiene tres tarjetas, no tres enteros. Las cajas con los enteros están fuera del cajón. `direcciones.at(0) = &azul` cambia una tarjeta; `*direcciones.at(0) = 7` sigue la tarjeta y cambia el entero de destino. Antes de seguir una tarjeta hay que saber que su destino existe.
+**Práctica.** Realiza un programa con tres tarjetas para dos enteros.
 
-```text
-cajón de tarjetas                   cajas originales
-casilla 0: dirección de rojo ------> rojo: 2
-casilla 1: dirección de azul ------> azul: 5
-casilla 2: nullptr                   sin destino
-```
+- Guardar direcciones en un arreglo int* tarjetas[3].
+- Hacer que dos tarjetas señalen el mismo entero.
+- Cambiar ese entero mediante una tarjeta y consultar desde la otra.
+- Dejar una tarjeta en nullptr y comprobarla antes de seguirla.
+- Mostrar que cambiar una dirección no cambia el contenido anterior.
 
-La forma tradicional `int* tarjetas[3]` también es un arreglo de tres punteros. Usamos `array` porque conserva el tamaño y ofrece `at()` y `size()`. En una declaración, el `*` forma parte del tipo del puntero; en una expresión, sigue una dirección. Declara cada variable en su propia línea: en `int* a, b;` solo `a` sería puntero.
+## 4. Un vector de punteros: una vista del inventario
 
-## 4. ¿Cómo selecciono productos sin copiarlos?
+Vamos a seleccionar productos sin copiarlos. Guardamos los productos en un arreglo y sus direcciones en vector<Producto*>. A esa selección la llamamos vista: puede crecer o mostrar un producto varias veces sin crear productos nuevos. Con Producto*& damos a seleccionar otra etiqueta del puntero original, por lo que puede cambiar su destino. Si recibiera solo Producto*, cambiaría una copia de la tarjeta. Aunque crezca el vector de direcciones, estos productos del arreglo permanecen en su lugar; deben seguir existiendo mientras los consultamos.
 
-El inventario conserva los objetos. `vector<Producto*>` guarda una selección de sus direcciones. Puede crecer, omitir productos o mostrar uno varias veces. Tiene sentido cuando quiero una vista de datos que ya existen, no crear otros productos.
+[Programa comentado](04_Vector_de_Punteros/main.cpp).
 
-La función `seleccionar(Producto*& seleccion, Producto& nuevoDestino)` necesita cambiar la tarjeta del llamador. Por eso el primer parámetro es una referencia a un puntero. El segundo es un alias del nuevo producto: `&nuevoDestino` obtiene su dirección. Con `Producto* seleccion` solo cambiaríamos una copia de la tarjeta.
+**Práctica.** Realiza un programa que muestre una selección de productos.
 
-Aquí el propietario es un `array` local que permanece en su sitio. Realocar el vector de tarjetas no realoca los productos de ese arreglo. Sin embargo, una referencia a **una casilla del vector** sí se invalidaría al realocar: hay que distinguir la tarjeta guardada de la caja a la que apunta.
+- Guardar tres productos completos en un arreglo.
+- Guardar sus direcciones en un vector de punteros.
+- Cambiar una selección mediante una referencia a puntero.
+- Mostrar un producto dos veces sin copiarlo.
+- Comprobar que los productos originales conservan su posición.
 
-## 5. ¿Qué significa anidar arreglos de punteros?
+## 5. Un arreglo de arreglos de punteros
 
-Una vitrina tiene dos filas con dos casillas cada una:
+Vamos a organizar las tarjetas en filas y columnas. Producto* casillas[2][2] representa dos filas de dos direcciones. Con casillas[0][1] elegimos una tarjeta; si no es nullptr, podemos seguirla hasta el producto. Dos casillas pueden mostrar el mismo producto, como dos letreros que señalan la misma tienda. En este ejemplo añadimos const después de * para fijar las tarjetas; todavía podemos modificar los productos señalados. No confundimos una matriz con Producto**: la matriz contiene sus filas, mientras que el doble puntero guarda una dirección hacia otro puntero.
 
-```cpp
-array<array<Producto*, 2>, 2> casillas{};
-```
+[Programa comentado](05_Matriz_de_Punteros/main.cpp).
 
-Se lee de dentro hacia fuera: `Producto*` es una tarjeta; `array<Producto*, 2>` es una fila de dos tarjetas; el arreglo exterior tiene dos filas. En esta declaración, `{}` inicializa todos los punteros con `nullptr`. En el programa asignamos las cuatro casillas, incluyendo una con `nullptr`. `casillas.at(fila).at(columna)` elige una tarjeta y `*casillas.at(fila).at(columna)` llega a un producto, siempre que la tarjeta tenga un destino válido.
+**Práctica.** Realiza una vitrina de productos con una matriz de punteros.
 
-Una matriz así no es `Producto**`. Un doble puntero describe dos niveles de direcciones; un arreglo anidado contiene las filas físicamente. Tampoco contar casillas ocupadas equivale a contar objetos únicos: dos casillas pueden mostrar el mismo producto.
+- Crear dos filas con dos casillas cada una.
+- Incluir una casilla nullptr y dos que señalen el mismo producto.
+- Mostrar un aviso en las casillas vacías.
+- Cambiar un producto y comprobar que ambas tarjetas muestran el cambio.
+- Contar casillas ocupadas sin confundirlas con productos distintos.
 
-`const array<Producto*, 2>` impide reasignar sus tarjetas, pero permite modificar sus destinos. `array<const Producto*, 2>` permite cambiar las tarjetas y ofrece acceso de lectura a sus destinos. Puedes combinar ambos `const`.
+## 6. Nodos dentro de un arreglo, unidos por punteros
 
-## 6. ¿Puede un nodo vivir dentro de un arreglo?
+Vamos a guardar nodos completos dentro de un arreglo y unirlos con punteros. Cada Nodo contiene un Producto y siguiente, la dirección del próximo nodo. Las cajas están en las posiciones 0, 1 y 2, pero podemos recorrerlas en el orden 0, 2 y 1 siguiendo las flechas. El último enlace es nullptr. Como las cajas pertenecen al arreglo y no las creamos con new, no usamos delete. Limitamos las visitas a tres para detectar si por error cerramos un círculo. Al copiar manualmente estas fichas habría que reconstruir sus flechas para no seguir apuntando a las originales.
 
-Sí. El nodo contiene el dato y un enlace:
+[Programa comentado](06_Arreglo_de_Nodos/main.cpp).
 
-```cpp
-struct Nodo {
-    Producto producto;
-    Nodo* siguiente = nullptr;
-};
-```
+**Práctica.** Realiza un programa que enlace nodos dentro de un arreglo.
 
-El arreglo es propietario de los nodos. `siguiente` solo dice qué nodo visitar después. Si enlazamos `0 -> 2 -> 1`, el recorrido lógico cambia aunque los compartimentos físicos mantengan su posición. Primero elegimos el nodo inicial, después leemos su dato y seguimos su enlace; repetimos hasta `nullptr`.
+- Guardar tres nodos con productos.
+- Conectar las posiciones en el orden 2, 0 y 1.
+- Recorrer desde el nodo inicial siguiendo siguiente.
+- Detenerse en nullptr o avisar si se excede la cantidad de nodos.
+- Dibujar posiciones del arreglo y orden de visita por separado.
 
-El límite de visitas detecta un ciclo en este ejemplo de tres nodos. No se llama a `delete`: los nodos son elementos del arreglo. Copiar el arreglo copiaría las direcciones sin reconstruirlas; los enlaces de la copia seguirían apuntando a los nodos originales. Esta estructura enlazada necesita conservar la ubicación y la vida de su arreglo, o reconstruir los enlaces.
+## 7. Un vector de propietarios y un puntero observador
 
-## 7. ¿Quién destruye un objeto creado dinámicamente?
+Vamos a separar la ubicación de las tarjetas y la de los productos. En vector<unique_ptr<Producto>> cada tarjeta también tiene la responsabilidad de liberar su producto. Cuando el vector necesita más espacio puede mover las tarjetas; los productos creados aparte conservan sus direcciones. Con get prestamos una dirección, pero no la responsabilidad de borrar. Al eliminar la tarjeta responsable también se destruye el producto; antes dejamos de usar todos los punteros prestados. Esto es distinto de vector<Producto>, donde al crecer pueden mudarse los productos mismos.
 
-`unique_ptr<Producto>` es una tarjeta con responsabilidad: su propietario destruye el objeto al retirarse. `make_unique` crea el producto; `get()` presta una dirección para observarlo; `move` permite transferir la responsabilidad. Un puntero ordinario obtenido con `get()` no recibe esa propiedad.
+[Programa comentado](07_Vector_de_Unique_Ptr/main.cpp).
 
-`vector<unique_ptr<Producto>>` puede reubicar sus elementos sin mover los productos administrados. En el ejemplo forzamos la realocación con una capacidad mayor y verificamos que la dirección del producto sigue siendo la misma. Después retiramos el observador antes de borrar a su propietario.
+**Práctica.** Realiza un programa con productos administrados por unique_ptr dentro de un vector.
 
-En `vector<Producto>`, los productos son los elementos del vector: realocar invalida sus referencias y punteros. `reserve` solo evita nuevas realocaciones mientras no se supere la capacidad; no hace eternas las direcciones. Mover propietarios tampoco protege contra `erase`, `reset`, reemplazar un propietario o destruir la estructura: esas operaciones pueden destruir el destino.
+- Crear dos productos con make_unique.
+- Obtener un puntero de consulta mediante get.
+- Aumentar la capacidad del vector y comprobar la dirección del producto.
+- Retirar todas las consultas antes de borrar a su propietario.
+- Mostrar cuántos productos quedan.
 
-## 8. ¿Qué aporta la clase que administra los nodos?
+## 8. Una clase administra nodos struct
 
-[Estante.h](Estante.h) oculta el primer propietario y los enlaces. Dentro de cada nodo hay un `Producto` y un `unique_ptr<Nodo>` que administra el siguiente. La cadena queda así:
+Vamos a reunir la cadena y sus reglas dentro de Estante. Cada nodo contiene un Producto y un unique_ptr al siguiente; el estante se encarga del primero. Desde fuera pedimos agregar o consultar, sin cambiar directamente los enlaces. Podemos imaginar un encargado de estantería que acomoda las cajas y nos presta sus etiquetas para leerlas. primero() y siguienteNodo() prestan direcciones; consultarProducto() presta una referencia de lectura. Cuando vaciamos el estante, esas consultas dejan de servir porque sus cajas ya no existen.
 
-```text
-Estante
-  inicio: unique_ptr ---> Nodo [Producto | siguiente: unique_ptr]
-                                             |
-                                             v
-                         Nodo [Producto | siguiente: nullptr]
-```
+[Programa comentado](08_Clase_con_Nodos/main.cpp).
 
-`agregar()` crea un nodo y lo pone delante de la cadena: el orden de inserción se invierte. `primero()` y `siguienteNodo()` prestan `const Nodo*`; `consultarProducto()` presta `const Producto&`. Las consultas pueden leer sin cambiar los enlaces. El `friend` da a `Estante` acceso al enlace privado de su nodo para insertar y vaciar; los demás usuarios usan las consultas públicas.
+**Práctica.** Realiza un programa con una clase que administre una lista de productos.
 
-La clase impide copias para no duplicar propietarios. Permite movimiento porque transferir la cadena no necesita duplicar los nodos. `vaciar()` retira un nodo por vez, evitando una destrucción recursiva larga; la asignación por movimiento vacía primero el contenido anterior y protege contra moverse sobre sí misma. El total usa `long long` y comprueba el desbordamiento. Estas decisiones mantienen coherente la propiedad, no cambian el objetivo del ejercicio.
+- Guardar el primer nodo dentro de la clase.
+- Agregar tres productos mediante una operación pública.
+- Recorrerlos usando consultas const.
+- Calcular el valor total.
+- Vaciar la lista sin volver a usar direcciones de nodos eliminados.
 
-Las funciones están definidas dentro de la clase y son `inline`; incluir este header no necesita un `Estante.cpp` adicional. Las funciones de `Producto` están definidas en `Producto.cpp`, que sí debemos compilar y enlazar. El comando completo está en los comentarios de cada programa.
+## 9. Un vector contiene clases que administran nodos
 
-## 9. ¿Qué pasa al guardar estas clases en un vector?
+Vamos a guardar varios estantes en un vector. Dentro de cada estante hay nodos y dentro de cada nodo un producto: seguimos esas capas una a una. Al crecer el vector puede mudarse un estante, por lo que retiramos los punteros al propio estante antes de forzar ese cambio. Sus nodos se crearon aparte y no se mudan al transferir quién los administra. Por eso podemos conservar una consulta a un nodo mientras siga existiendo. Si vaciamos su estante, el nodo desaparece y debemos dejar de usar esa consulta.
 
-Ahora `vector<Estante>` contiene objetos que a su vez poseen nodos con productos. Al realocar, el vector mueve los estantes. Un `Estante*` a una casilla anterior se invalida. El puntero a un nodo administrado conserva su destino porque el nodo no se reubicó: solo cambió de ubicación su propietario.
+[Programa comentado](09_Vector_de_Clases_con_Nodos/main.cpp).
 
-El ejemplo retira el puntero al estante antes de forzar la realocación y consulta nuevamente el estante mediante `at(0)`. Conserva un `const Nodo*` para demostrar que el nodo sigue en el mismo lugar. Antes de vaciar esa lista retira también ese observador. Una referencia no evita estos problemas: también necesita que su objeto siga vivo y en el mismo lugar.
+**Práctica.** Realiza un programa con un vector de estantes que tengan nodos.
 
-## Integrador: ordenar la vista, conservar el inventario
+- Crear dos estantes y agregar productos a sus listas.
+- Distinguir un puntero al estante de otro a uno de sus nodos.
+- Retirar el puntero al estante antes de aumentar la capacidad del vector.
+- Consultar el nodo desde su nuevo propietario.
+- Retirar la consulta antes de vaciar su lista.
 
-El [main.cpp de esta carpeta](main.cpp) combina la cadena completa. Primero construye los propietarios; después recorre sus nodos y presta las direcciones a un vector. Ordena ese vector por precio y coloca algunas direcciones en una matriz. Las listas conservan su orden y sus productos: se ordenaron tarjetas, no objetos.
+## Integrador: propietarios, vistas, matrices y ordenamiento
 
-El resultado ordenado es `Lapiz: 100`, `Cuaderno: 300`, `Libro: 500`. El inventario suma 900 centavos. La matriz tiene tres casillas ocupadas, pero solo muestra dos productos distintos, porque repite el lápiz. La comprobación del integrador revisa esos datos y el orden de los enlaces originales.
+Vamos a combinar las capas para mostrar productos ordenados sin mover sus cajas originales. Guardamos estantes en un vector; cada estante contiene nodos y cada nodo contiene un producto. Reunimos direcciones de esos nodos en vista y ordenamos solo las tarjetas por precio. Después elegimos tarjetas para una matriz de exposición. Una misma tarjeta puede aparecer varias veces: contar casillas ocupadas no significa contar productos distintos. Calculamos el valor total desde los estantes para no sumar dos veces un producto repetido en la vitrina.
 
-```text
-propietarios: vector<Estante> -> Estante -> Nodo -> Producto
-                                           ^
-vista: vector<const Nodo*> -----------------|
-matriz: array<array<const Nodo*, 2>, 2> -----|
-```
+[Programa comentado](main.cpp).
 
-Una vista puede conservarse mientras los nodos estén vivos; borrar un nodo exige retirar sus observadores antes de volver a usarlos. Un `nullptr` en otra tarjeta no repara una dirección colgante. La matriz se destruye antes que los estantes porque fue declarada después en el mismo bloque.
+**Práctica.** Realiza un inventario integrador con estantes, nodos y vistas.
 
-## Cómo decidir la combinación
+- Guardar varios estantes en un vector y sus productos en nodos struct.
+- Crear una vista de punteros de lectura sin copiar los productos.
+- Ordenar la vista por nombre o precio.
+- Mostrar parte de la vista en una matriz de punteros con casillas vacías.
+- Cambiar una selección mediante una referencia a puntero.
+- Comprobar que el orden original y el total no cambian al ordenar la vista.
+- Explicar qué estructura libera cada objeto.
 
-Parte de las operaciones: ¿quiero guardar datos, agrupar datos que cambian juntos, seleccionar objetos existentes, ordenar una vista o enlazar un recorrido? Elige después quién administra la vida de los objetos y quién solo observa. Por último decide qué puede cambiar cada función: un valor, el objeto original, el destino de un puntero o solo una consulta.
-
-No se necesitan todas estas capas para todos los problemas. Una lista enlazada aquí sirve para estudiar nodos y propiedad; un inventario sencillo suele resolverse con un vector de registros. La lógica de combinar conceptos consiste en justificar cada capa y poder dibujar dónde está el dato, cómo llegas a él y cuándo deja de existir.
+[Volvemos a la guía general](../../README.md).

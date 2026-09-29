@@ -1,18 +1,8 @@
 // 6. Nodes inside an array, connected by pointers
 //
-// Node contains a Product and a card pointing to another Node. The array
-// stores complete nodes and manages their lifetimes. Links only describe
-// the visit order: 0 -> 2 -> 1, which can differ from physical array order.
-// The last link is nullptr. Do not use delete: no node was created with new.
-// Copying this array copies the links unchanged: they would still point to the
-// original array. An independent copy would need to rebuild its links.
-//
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_OOP/08_Headers/Product.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Link 2 -> 0 -> 1 and change the start. Why is there a visit limit?
+// We will store complete nodes in an array and link them with pointers. Each Node contains a
+// Product and next, the next node's address. The boxes occupy positions 0, 1 and 2, but arrows can
 
-#include <array>
 #include <iostream>
 #include "../../../02_OOP/08_Headers/Product.h"
 
@@ -25,18 +15,18 @@ struct Node {
 };
 
 int main() {
-    array<Node, 3> nodes{
+    Node nodes[3]{
         Node{Product("Notebook", 300)},
         Node{Product("Pencil", 100)},
         Node{Product("Book", 500)}
     };
-    nodes.at(0).next = &nodes.at(2);
-    nodes.at(2).next = &nodes.at(1);
+    nodes[0].next = &nodes[2];
+    nodes[2].next = &nodes[1];
 
-    const Node* cursor = &nodes.at(0);
+    const Node* cursor = &nodes[0];
     size_t visited = 0;
     // With three nodes, more than three visits means repeating a node: a cycle.
-    while (cursor != nullptr && visited < nodes.size()) {
+    while (cursor != nullptr && visited < 3) {
         cout << cursor->product.getName() << "\n";
         cursor = cursor->next;
         ++visited;

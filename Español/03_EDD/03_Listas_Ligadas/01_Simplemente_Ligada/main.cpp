@@ -1,22 +1,15 @@
 // Lista simplemente ligada
 //
-// Cada nodo guarda un dato y la dirección del siguiente. El último apunta a nullptr. Para llegar a
-// otro nodo seguimos los enlaces uno por uno. Recorrer la lista o buscar un valor puede exigir
-// visitar sus n nodos (O(n)); aquí n es la cantidad de nodos. El header implementa inserción al
-// final, eliminación de la primera coincidencia y liberación de todos los nodos.
+// Vamos a construir una cadena de cajas llamadas nodos. Cada nodo guarda un dato y un puntero al
+// siguiente, como una nota que indica dónde está la próxima caja. La lista guarda la dirección del
+// primero; el último señala nullptr. Para buscar seguimos las notas una a una: quizá debamos
+// visitar los n nodos (O(n)). Al quitar un nodo unimos su vecino anterior con el siguiente antes de
+// liberar la caja. Podemos ver esos pasos dentro de ListaSimple.h.
 //
-// Analogía: Una búsqueda del tesoro: cada tarjeta contiene un dato y la pista hacia la
-// siguiente. La última dice «fin».
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Dibuja los enlaces antes y después de eliminar el primer nodo. Agrega un método
-// contiene.
 
 #include "ListaSimple.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

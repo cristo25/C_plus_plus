@@ -1,26 +1,22 @@
 // Polymorphism and abstract classes
 //
-// virtual selects behavior using the actual object type. = 0 declares an abstract operation;
-// override verifies a correct override. A polymorphic base needs a virtual destructor when
-// derived objects are destroyed through it.
+// We will request the same action from different objects. With play we ask an Instrument to make a
+// sound, but a Guitar and a Drum answer differently. We call this polymorphism. With virtual we
+// allow each instrument its own answer; with = 0 we leave that answer unspecified in the general
+// class; with override we check that the new function matches the one being replaced. We pass a
+// reference to use the original instrument. A virtual destructor allows cleaning up the complete
+// object if we later delete it through an Instrument pointer.
 //
-// Analogy: The play-sound button works with different instruments, and each instrument decides
-// which sound to make.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add a Flute and use the same play function without changing it.
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
 
 class Instrument {
 public:
-    // A polymorphic base uses a virtual destructor to destroy derived objects correctly.
+    // With virtual we can release the complete instrument even when treating it as Instrument.
     virtual ~Instrument() = default;
     virtual string sound() const = 0;
 };

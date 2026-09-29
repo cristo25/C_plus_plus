@@ -1,36 +1,43 @@
 // Integration: a grade report
 //
-// Combine functions, references, strings, arrays, loops, conditions, a non-owning pointer and a
-// file. Read the steps in order: compute, classify, build the report and save it.
+// We will bring the lessons together in a report. We store grades in an array, calculate their
+// average with a function and use a condition to decide whether the student passed. With observer
+// we store the result's address: *observer reads that same average. We then build a text line and
+// append it to a file. We can follow the data all the way through: grades, calculation, decision,
+// message and saved notebook.
 //
-// Analogy: A teacher checks a drawer of grades, calculates an average and records it in a
-// notebook.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add another student and a function returning the highest grade. Keep grades between
-// 0 and 10.
 
-#include <array>
+// We read and save files using ifstream and ofstream.
 #include <fstream>
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
 
-double average(const array<int, 3>& grades) {
-    int sum = 0;
-    for (int grade : grades) {
+bool average(const int grades[], int count, double& outputAverage) {
+    if (count <= 0) {
+        return false;
+    }
+    long long sum = 0;
+    for (int index = 0; index < count; ++index) {
+        const int grade = grades[index];
+        if (grade < 0 || grade > 10) {
+            return false;
+        }
         sum += grade;
     }
-    return static_cast<double>(sum) / grades.size();
+    outputAverage = static_cast<double>(sum) / count;
+    return true;
 }
 
 int main() {
-    const array<int, 3> grades{8, 9, 10};
-    const double result = average(grades);
+    const int grades[3]{8, 9, 10};
+    double result = 0;
+    if (!average(grades, 3, result)) {
+        cerr << "Invalid grades.\n";
+        return 1;
+    }
     // This pointer reads the average without modifying it or owning its memory.
     const double* observer = &result;
 

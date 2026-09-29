@@ -1,15 +1,10 @@
 // Composition
 //
-// An object can contain another: a has-a relationship. Members are constructed before the
-// containing object's constructor body runs.
+// We will build one thing using another as a part. A Car has an Engine, so we store an Engine
+// object inside Car. We call this relationship composition. From main we ask the car to start, and
+// the car turns on its engine. We can picture a block containing an inventory: having a part does
+// not mean being that part. When the car's lifetime ends, its contained engine ends too.
 //
-// Analogy: A car has an engine; a car is not a type of engine.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add a method that turns the engine off through the car.
 
 #include <iostream>
 

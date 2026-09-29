@@ -1,19 +1,17 @@
 // Linked lists
 //
-// All three implementations store integers to focus on links and ownership. Manual new/delete
-// teaches the mechanism; standard containers manage storage for common applications. The
-// integration example uses all three headers and removes 20 from each list. Compare traversals,
-// then remove the first node, the last node and the only node.
+// We will compare all three lists using the same numbers. In the singly linked list we follow one
+// arrow, in the doubly linked list we can go back, and in the circular list we return to the
+// beginning. We insert 10, 20 and 30, remove 20 and check what remains. The main difference is how
+// we link nodes and when traversal stops. We can draw the same three boxes and change only their
+// arrows to understand it.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include "01_Singly_Linked/SinglyLinkedList.h"
 #include "02_Doubly_Linked/DoublyLinkedList.h"
 #include "03_Circular/CircularList.h"
-#include <cassert>
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -33,10 +31,18 @@ int main() {
         return 1;
     }
     const vector<int> expected{10, 30};
-    // assert checks an integration result; it does not perform application operations.
-    assert(singly.values() == expected && doubly.values() == expected);
-    assert(circular.values() == expected);
-    assert((doubly.reversed() == vector<int>{30, 10}));
+    if (!(singly.values() == expected && doubly.values() == expected)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(circular.values() == expected)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!((doubly.reversed() == vector<int>{30, 10}))) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     cout << "Simple: ";
     for (int value : singly.values()) {
         cout << value << ' ';

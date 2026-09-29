@@ -1,21 +1,17 @@
 // Integration: a library using objects
 //
-// Encapsulate a DAO using composition and practice polymorphism with two derived views. Reuse
-// the previous header. unique_ptr owns the view, and a virtual destructor allows releasing its
-// concrete type.
+// We will build a small library with several cooperating classes. Library contains a DAO for
+// storing books. A View decides how to show them: DetailView prints their details and SummaryView
+// shows the count. We request the catalog in the same way even when changing views. This brings
+// together composition, protected data, const queries and polymorphism. With unique_ptr we make
+// clear who releases the view when we stop using it.
 //
-// Analogy: The library has a librarian and shows its catalog through either a detailed service
-// window or a summary window.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add a view that shows only titles and reuse the same DAO.
 
 #include "../09_DAO/BookDAO.h"
 #include <iostream>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

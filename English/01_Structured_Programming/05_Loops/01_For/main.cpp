@@ -1,15 +1,10 @@
 // Repeating with for
 //
-// for groups initialization, condition and progress. Use it when you know the number of
-// repetitions.
+// We will repeat a task with for. Inside its parentheses we give the counter's starting value, the
+// condition for continuing and the change after each turn. We can picture five numbered lockers: we
+// inspect one, move ahead and repeat until the last. ++ increases the counter by one; the
+// instructions inside the braces run each time.
 //
-// Analogy: You visit five lockers one by one without skipping any.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Print the multiplication table for 7 with ten iterations.
 
 #include <iostream>
 

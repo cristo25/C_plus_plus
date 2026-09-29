@@ -1,17 +1,12 @@
 // 8. Una clase administra nodos struct
 //
-// Estante combina POO y listas: oculta una cadena de nodos struct; cada nodo
-// contiene una clase Producto y es dueño del siguiente mediante unique_ptr.
-// El estante posee el primer nodo. Los enlaces se cambian dentro de la clase.
-// primero() presta const Nodo*, y consultarProducto() presta const Producto&.
-// La vista prestada no puede sobrevivir a vaciar() ni a destruir el estante.
-// Lee Estante.h: el header tiene la implementación compartida para estos ejemplos.
-// Producto.cpp sigue enlazándose porque sus funciones se definieron fuera del header.
+// Vamos a reunir la cadena y sus reglas dentro de Estante. Cada nodo contiene un Producto y un
+// unique_ptr al siguiente; el estante se encarga del primero. Desde fuera pedimos agregar o
+// consultar, sin cambiar directamente los enlaces. Podemos imaginar un encargado de estantería que
+// acomoda las cajas y nos presta sus etiquetas para leerlas. primero() y siguienteNodo() prestan
+// direcciones; consultarProducto() presta una referencia de lectura. Cuando vaciamos el estante,
+// esas consultas dejan de servir porque sus cajas ya no existen.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_POO/08_Headers/Producto.cpp -o programa.exe
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega tres productos y predice su orden. Dibuja la cadena de propietarios.
 
 #include <iostream>
 #include "../Estante.h"

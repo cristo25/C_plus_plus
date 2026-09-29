@@ -1,13 +1,19 @@
 #ifndef COURSE_BOOK_DAO_H
 #define COURSE_BOOK_DAO_H
 
-#include <algorithm>
+// With quoted we preserve spaces and quotation marks when saving and reading titles.
 #include <iomanip>
+// We receive an input source: keyboard, file or text in memory.
 #include <istream>
+// We receive an output destination: screen, file or text in memory.
 #include <ostream>
+// We read or write text in memory as if it were a file.
 #include <sstream>
+// We store and work with text using string.
 #include <string>
+// We use move to transfer data or responsibility for releasing it.
 #include <utility>
+// We store a collection that can grow using vector.
 #include <vector>
 
 namespace course {
@@ -63,14 +69,13 @@ namespace course {
             return false;
         }
         bool remove(int id) {
-            auto it = find_if(books.begin(), books.end(), [id](const Book& book) {
-                return book.id == id;
-            });
-            if (it == books.end()) {
-                return false;
+            for (auto it = books.begin(); it != books.end(); ++it) {
+                if (it->id == id) {
+                    books.erase(it);
+                    return true;
+                }
             }
-            books.erase(it);
-            return true;
+            return false;
         }
         const vector<Book>& all() const {
             return books;
@@ -116,7 +121,7 @@ namespace course {
                     return false;
                 }
             }
-            // Replace the catalog only after validating the entire snapshot.
+            // Replace the catalog only after validating the complete copy.
             books = move(replacement.books);
             return true;
         }

@@ -1,47 +1,59 @@
 // Leer y mostrar datos
 //
-// getline lee una línea completa. getline(cin, ...) captura la edad como texto y un
-// istringstream la interpreta; comprueba el resultado antes de usarlos. Una entrada incorrecta
-// debe producir un mensaje y terminar sin calcular con datos inválidos.
+// Vamos a pedir un nombre y una edad. Con cout mostramos la pregunta; con getline(cin, nombre)
+// guardamos todo lo escrito hasta Enter, incluidos los espacios de un nombre completo. Con cin >>
+// edad intentamos leer un entero. Antes de usarlo comprobamos que la lectura funcionó y que está
+// entre 0 y 130. También revisamos el texto restante para rechazar una entrada como 20abc. En
+// find_first_not_of(" \t\r") buscamos algo distinto de espacios, tabulaciones o retorno de carro;
+// string::npos significa que no encontramos nada. Así evitamos aceptar un nombre formado solo por
+// espacios. Vamos a estudiar if con más detalle en el siguiente tema; aquí lo usamos para
+// detenernos ante un dato incorrecto.
+// Practica: Realiza un programa que registre a una persona.
 //
-// Analogía: La consola es una ventanilla: entra una solicitud, verificas que esté completa y
-// entregas una respuesta.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Solicita la ciudad con getline. Si mezclas >> y getline, consume antes el salto de
-// línea pendiente.
-// Se lee la línea completa para rechazar texto sobrante como 20abc, y se rechazan nombres
-// formados solo por espacios.
+// - Pedir nombre completo, ciudad y edad.
+// - Aceptar espacios en el nombre y la ciudad.
+// - Mostrar un aviso si falta el nombre o la edad no es válida.
+// - Mostrar una ficha con los datos cuando sean correctos.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
-#include <sstream>
 
 using namespace std;
 
 int main() {
-    string nombre;
+    string nombreCompleto;
+    string ciudad;
     int edad = 0;
-    cout << "Nombre: ";
-    // getline captura la línea completa, incluidos espacios; rechazamos un nombre vacío.
-    if (!getline(cin, nombre) || nombre.find_first_not_of(" \t\r") == string::npos) {
-        cerr << "Nombre invalido.\n";
+
+    // 1. Pedir nombre completo (acepta espacios)
+    cout << "Ingresa tu nombre completo: ";
+    getline(cin, nombreCompleto);
+
+    // 2. Pedir ciudad (acepta espacios)
+    cout << "Ingresa tu ciudad: ";
+    getline(cin, ciudad);
+
+    // 3. Pedir edad
+    cout << "Ingresa tu edad: ";
+    cin >> edad;
+
+    // Validación básica y clara para principiantes
+    if (nombreCompleto.empty() || ciudad.empty()) {
+        cerr << "Error: El nombre y la ciudad no pueden estar vacios.\n";
         return 1;
     }
-    cout << "Edad: ";
-    string linea;
-    if (!getline(cin, linea)) {
+
+    if (cin.fail() || edad < 0 || edad > 130) {
+        cerr << "Error: La edad no es valida.\n";
         return 1;
     }
-    // Interpretamos el texto como un número. ws consume espacios; eof descarta texto sobrante
-    // como 20abc.
-    istringstream lectura(linea);
-    if (!(lectura >> edad) || edad < 0 || edad > 130 || !(lectura >> ws).eof()) {
-        cerr << "Edad invalida.\n";
-        return 1;
-    }
-    cout << "Hola, " << nombre << ". Tienes " << edad << " anios.\n";
+
+    // 4. Mostrar ficha de datos
+    cout << "\n--- FICHA DE REGISTRO ---\n";
+    cout << "Nombre : " << nombreCompleto << "\n";
+    cout << "Ciudad : " << ciudad << "\n";
+    cout << "Edad   : " << edad << " anios\n";
+
+    return 0;
 }

@@ -1,21 +1,16 @@
 // Ownership with unique_ptr
 //
-// unique_ptr has one owner and releases its object automatically. make_unique constructs it.
-// move transfers ownership; a unique_ptr cannot be copied. Use raw pointers only as observers
-// when the target's lifetime is guaranteed.
+// We will give one tool responsibility for releasing the box. With unique_ptr from <memory>, we
+// keep that responsibility alongside the address. make_unique creates the data; get lends us its
+// address for reading. That borrowed pointer must not release it. With move from <utility>, we
+// transfer responsibility to newOwner and leave the old owner empty. When the new owner ends, the
+// integer is released automatically. This helps us avoid forgetting delete.
 //
-// Analogy: A unique key controls the locker. When handing over that key, the former owner no
-// longer holds it.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Call reset() and check that the owner becomes empty. Do not use the observer
-// afterward.
 
 #include <iostream>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
+// We use move to transfer data or responsibility for releasing it.
 #include <utility>
 
 using namespace std;

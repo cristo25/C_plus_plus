@@ -1,6 +1,10 @@
+// Con inline permitimos compartir estas definiciones desde el header entre varios archivos.
+
 #ifndef CURSO_CONSULTAS_H
 #define CURSO_CONSULTAS_H
+// Usamos size_t para contar elementos y representar posiciones no negativas.
 #include <cstddef>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 namespace curso {

@@ -1,27 +1,23 @@
 // Polimorfismo y clases abstractas
 //
-// Un método virtual permite elegir la implementación según el objeto real. = 0 define una
-// operación abstracta y override verifica que la redefiniste correctamente. Una base polimórfica
-// necesita destructor virtual si se destruyen derivados mediante ella.
+// Vamos a pedir la misma acción a objetos diferentes. Con tocar pedimos que suene un Instrumento,
+// pero una Guitarra y un Tambor responden de forma distinta. A eso lo llamamos polimorfismo. Con
+// virtual permitimos que cada instrumento tenga su propia respuesta; con = 0 dejamos esa respuesta
+// pendiente en la clase general; con override comprobamos que la nueva función corresponde a la que
+// queremos reemplazar. Pasamos una referencia para usar el instrumento original. El destructor
+// virtual permite limpiar el objeto completo si después lo eliminamos mediante un puntero a
+// Instrumento.
 //
-// Analogía: El botón «hacer sonido» funciona con varios instrumentos; cada instrumento decide
-// qué sonido producir.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega Flauta y úsala con la misma función tocar. No cambies esa función.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;
 
 class Instrumento {
 public:
-    // Una base polimórfica usa destructor virtual para destruir correctamente sus objetos
-    // derivados.
+    // Con virtual podemos liberar el instrumento completo aunque lo tratemos como Instrumento.
     virtual ~Instrumento() = default;
     virtual string sonar() const = 0;
 };

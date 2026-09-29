@@ -1,14 +1,10 @@
 // Repeating with do while
 //
-// do while checks its condition after the body, so it always runs at least once.
+// We will make at least one attempt before asking whether to continue. In do while we run the
+// braces first and check the condition afterward. We can picture trying a key and only then
+// deciding whether another attempt is needed. Even if the first check is false, we have already
+// made one turn.
 //
-// Analogy: Try a key once before deciding whether to keep trying.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Start with attempts = 3 and observe that the body still runs.
 
 #include <iostream>
 
@@ -16,8 +12,6 @@ using namespace std;
 
 int main() {
     int attempts = 0;
-    // Make an attempt first, then decide whether to repeat. There is always at least one
-    // attempt.
     do {
         ++attempts;
         cout << "Attempt " << attempts << "\n";

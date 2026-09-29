@@ -1,17 +1,13 @@
 // A stack using vector
 //
-// A stack follows LIFO: last in, first out. Use push_back, back and pop_back; check empty before
-// accessing or removing a value.
+// We will use a vector like a stack of plates: we add and remove only at the top. With push_back we
+// add, with back we inspect the last value, and with pop_back we remove it. The last item in is the
+// first out. Before reading or removing we check that the stack is not empty. If we need the
+// removed value, we save it before pop_back because that operation does not return it.
 //
-// Analogy: A stack of plates accepts and removes plates at its top.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Push three values and pop them in a loop until the stack is empty.
 
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

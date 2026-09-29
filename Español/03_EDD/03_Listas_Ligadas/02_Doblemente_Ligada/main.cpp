@@ -1,21 +1,15 @@
 // Lista doblemente ligada
 //
-// Cada nodo conoce al anterior y al siguiente. Guardar inicio y fin permite agregar al final
-// ajustando una cantidad fija de enlaces, sin recorrer la lista (O(1)). También permite recorrerla
-// en ambos sentidos. Buscar un valor puede exigir revisar los n nodos (O(n)); borrar un nodo ya
-// localizado requiere ajustar sus enlaces vecinos.
+// Vamos a añadir una segunda flecha a cada nodo: una hacia el siguiente y otra hacia el anterior.
+// Así podemos recorrer la cadena en ambos sentidos. Conservamos también el principio y el final
+// para agregar al final ajustando unas pocas flechas, sin recorrer toda la lista (O(1)). Al borrar
+// cuidamos ambas conexiones, como al retirar un vagón de un tren unido por delante y por detrás.
+// Podemos seguir el ajuste de los punteros en ListaDoble.h.
 //
-// Analogía: Los vagones de un tren están enganchados por delante y por detrás; puedes caminar en
-// ambos sentidos.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Dibuja los dos enlaces que cambian al borrar un nodo del medio.
 
 #include "ListaDoble.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

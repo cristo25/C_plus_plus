@@ -1,18 +1,16 @@
 // Vectores de objetos
 //
-// Un vector puede guardar objetos del mismo tipo. Un struct tiene miembros públicos por defecto;
-// en una class son privados por defecto. const auto& permite recorrer sin copiar ni modificar.
+// Vamos a guardar fichas completas dentro del vector. Con struct Alumno reunimos un nombre y una
+// nota, como dos casillas de una misma ficha. vector<Alumno> guarda esas fichas y push_back agrega
+// otra. Con const auto& leemos cada ficha sin copiarla: auto permite que C++ deduzca el tipo, & nos
+// da otra etiqueta del mismo objeto y const impide cambiarlo mediante esa etiqueta. Usamos el punto
+// para elegir un dato de la ficha.
 //
-// Analogía: El cajón ahora guarda fichas completas: cada ficha tiene un nombre y una nota.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Calcula el promedio del grupo. Define qué hacer si el vector está vacío.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

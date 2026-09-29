@@ -1,17 +1,30 @@
 # Queues
 
-Compare arrival order and priority order. The integration example produces `2 9 4` with FIFO and `9 4 2` with priority.
+We will connect this topic’s pieces before solving its integration task. Each link contains the program, comments and a practice task with requirements.
 
-## Study order
+## FIFO queue
 
-1. [FIFO queue](01_With_Queue/main.cpp)
-2. [Priority queues and heaps](02_Priority_Queue/main.cpp)
+We will serve a line in arrival order. With queue from <queue>, we add at the back using push, inspect the first using front and remove it using pop. We can picture people waiting at a service desk. Before serving we check empty. We also call “first in, first out” FIFO; those letters simply abbreviate the same rule.
 
-After finishing the subfolders, read and run the `main.cpp` **in this folder**. It combines what you learned in the individual lessons.
+[Commented program](01_With_Queue/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-./program.exe
-```
+## Priority queues and heaps
 
-Every subfolder has its own program. Compile one example at a time: each has its own `main` function.
+We will serve by importance instead of arrival. priority_queue puts the highest-priority value at the top: for integers this is normally the largest. To choose the smallest, such as a cost, we use greater<int>, a comparison rule from <functional>. We can picture a hospital's urgent cases: arriving first does not always mean being served first. With top we inspect the next value and with pop we remove it; data must be present.
+
+[Commented program](02_Priority_Queue/main.cpp).
+
+## Queues
+
+We will put the same values into a normal queue and a priority queue. After storing 2, 9 and 4, the first keeps that order; the second serves 9 first. This helps us decide which rule an application needs: respecting arrival or choosing by importance. Changing the structure changes the service rule even with identical data.
+
+[Commented program](main.cpp).
+
+**Practice.** Write an integrated request-service program.
+
+- Store the same priority numbers in queue and priority_queue.
+- Display each full service order.
+- Add a new request after serving one.
+- Explain which fits a ticket desk and which fits urgent cases.
+
+[Back to the general guide](../../README.md).

@@ -1,7 +1,8 @@
 #include "servicios/MapaCampus.h"
+// Usamos reverse para ordenar o cambiar el orden de los datos.
 #include <algorithm>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
-#include <tuple>
 
 namespace proyecto {
     using namespace std;
@@ -9,13 +10,18 @@ namespace proyecto {
     MapaCampus::MapaCampus()
         : etiquetas{"Biblioteca", "Laboratorio", "Ingenieria", "Administracion", "Residencias", "Anexo sin conexion"},
           red(etiquetas.size()) {
-        const array<tuple<size_t, size_t, int>, 6> conexiones{
-            tuple<size_t, size_t, int>{0, 1, 4},
-            tuple<size_t, size_t, int>{0, 2, 1},
-            tuple<size_t, size_t, int>{2, 1, 1},
-            tuple<size_t, size_t, int>{1, 3, 3},
-            tuple<size_t, size_t, int>{2, 3, 6},
-            tuple<size_t, size_t, int>{3, 4, 2}
+        struct Conexion {
+            size_t origen;
+            size_t destino;
+            int minutos;
+        };
+        const Conexion conexiones[6]{
+            Conexion{0, 1, 4},
+            Conexion{0, 2, 1},
+            Conexion{2, 1, 1},
+            Conexion{1, 3, 3},
+            Conexion{2, 3, 6},
+            Conexion{3, 4, 2}
         };
         // Cada camino funciona en ambos sentidos; el anexo 5 queda aislado para practicar ese caso.
         for (const auto& [origen, destino, minutos] : conexiones) {
@@ -24,7 +30,7 @@ namespace proyecto {
         }
     }
 
-    const array<string, 6>& MapaCampus::nombres() const {
+    const vector<string>& MapaCampus::nombres() const {
         return etiquetas;
     }
 

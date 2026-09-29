@@ -1,6 +1,7 @@
 #ifndef PROJECT_CATALOG_STORE_H
 #define PROJECT_CATALOG_STORE_H
 
+// We handle paths, folders and file renaming.
 #include <filesystem>
 #include "../../../02_OOP/09_DAO/BookDAO.h"
 

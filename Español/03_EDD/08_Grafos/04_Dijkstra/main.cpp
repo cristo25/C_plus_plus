@@ -1,27 +1,17 @@
 // Dijkstra: caminos de menor costo
 //
-// Dijkstra obtiene distancias mínimas con pesos no negativos. Usa una cola de prioridad de menor
-// costo, mejora distancias y descarta entradas obsoletas. INFINITO indica un vértice inalcanzable.
-// Además de revisar conexiones, esta versión organiza los candidatos en una cola de prioridad para
-// elegir el de menor costo. Al haber más candidatos, mantener esa prioridad requiere más ajustes.
-// Un mismo punto puede aparecer varias veces si encontramos mejores caminos hacia él; por eso la
-// cola también necesita espacio para esos registros pendientes. La memoria puede crecer con los
-// vértices y las aristas del grafo (O(V + E), donde V cuenta puntos y E cuenta conexiones). La
-// función dijkstra devuelve los costos; caminosMinimos también conserva desde qué punto llegamos a
-// cada destino, para reconstruir las rutas.
+// Vamos a buscar el camino cuyo costo total sea menor. Podemos imaginar que cada carretera indica
+// minutos: llegar con menos carreteras no siempre significa llegar antes. Con Dijkstra guardamos el
+// mejor costo conocido y atendemos primero el candidato más barato mediante una cola de prioridad.
+// Si encontramos una mejora, actualizamos el costo. Esta versión requiere costos no negativos.
+// INFINITO es una marca para indicar que aún no encontramos una ruta; no representa minutos reales.
+// dijkstra devuelve costos; en caminosMinimos también guardamos de dónde llegamos para reconstruir
+// una ruta.
 //
-// Analogía: Un repartidor compara el costo total de las rutas y siempre considera primero la
-// alternativa más barata disponible.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega un vector de predecesores para reconstruir una ruta. Para pesos negativos
-// investiga Bellman-Ford en una ampliación posterior.
 
 #include "../Grafo.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

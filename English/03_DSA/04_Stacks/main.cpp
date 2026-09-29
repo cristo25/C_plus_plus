@@ -1,14 +1,14 @@
 // Stacks
 //
-// Compare a vector implementation with the stack adapter. The integration example verifies that
-// both produce 3 2 1.
+// We will compare a stack built with vector against one using stack. We put 1, 2 and 3 into both
+// and remove from the top. In both, 3 must come out first. We are practicing the removal order:
+// that rule defines a stack even when we use different storage tools.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include <iostream>
+// We store a stack: with stack, the last item in comes out first.
 #include <stack>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

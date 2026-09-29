@@ -1,22 +1,12 @@
 // Representing graphs
 //
-// A graph represents connected points: points are called vertices and connections are edges.
-// Imagine buildings joined by roads. An adjacency list stores a list for each building and an entry
-// for each recorded connection. Memory grows with both the buildings and connections (O(V + E): V
-// is the vertex count and E is the edge count). An adjacency matrix reserves a slot for every pair
-// of buildings, even when they are unconnected: 5 buildings need 5 times 5, or 25 slots; 10 need
-// 100 (O(V²): V² means V multiplied by V). These expressions describe memory growth, not an exact
-// byte count. Graph stores directed edges with nonnegative weights. Add both directions for an
-// undirected connection.
+// We will draw places joined by roads. We call each place a vertex, each connection an edge, and
+// the whole arrangement a graph. In connect we give the source, destination and cost. For travel
+// both ways we add both directions. We keep a neighbor list per place: memory grows with places and
+// roads (O(V + E), where V counts vertices and E counts edges). Another option is a table with one
+// slot per pair of places: five places need 25 slots and ten need 100 (O(V²), meaning V multiplied
+// by V).
 //
-// Analogy: Cities are vertices, roads are edges, and the cost of traveling a road is its weight.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw the map and add an isolated vertex. Compare lists and matrices for a sparse
-// graph.
 
 #include "../Graph.h"
 #include <iostream>

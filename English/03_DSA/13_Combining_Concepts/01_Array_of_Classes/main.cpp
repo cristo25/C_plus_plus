@@ -1,17 +1,12 @@
 // 1. An array containing objects
 //
-// First decide what to store: products with a name and price. We reuse
-// Product.h from OOP. array<Product, 3> contains three objects, like a drawer
-// with three compartments holding complete products, rather than addresses.
-// The array manages their lifetimes. const auto& lets us inspect each product
-// without copying it or modifying it through that reference.
+// We will store complete objects in an array. In Product products[3], each compartment contains a
+// product with its name and price. We reuse Product.h from OOP. We can picture a drawer with three
+// Minecraft blocks: each keeps its own data even though all share a type. We traverse through const
+// Product& to read the original without copying or changing it. When the array ends, its contained
+// objects end too.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_OOP/08_Headers/Product.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Change one price and predict the total. Explain why pointers are unnecessary here.
 
-#include <array>
 #include <iostream>
 #include "../../../02_OOP/08_Headers/Product.h"
 
@@ -19,7 +14,7 @@ using namespace std;
 using namespace course;
 
 int main() {
-    const array<Product, 3> products{
+    const Product products[3]{
         Product("Notebook", 300),
         Product("Pencil", 100),
         Product("Book", 500)

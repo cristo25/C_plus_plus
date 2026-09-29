@@ -1,13 +1,19 @@
 #ifndef CURSO_LIBRO_DAO_H
 #define CURSO_LIBRO_DAO_H
 
-#include <algorithm>
+// Con quoted conservamos espacios y comillas al guardar y recuperar títulos.
 #include <iomanip>
+// Recibimos una fuente de lectura: puede ser teclado, archivo o texto en memoria.
 #include <istream>
+// Recibimos un destino de escritura: pantalla, archivo o texto en memoria.
 #include <ostream>
+// Leemos o escribimos texto en memoria como si fuera un archivo.
 #include <sstream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
+// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
 #include <utility>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 namespace curso {
@@ -64,14 +70,13 @@ namespace curso {
             return false;
         }
         bool eliminar(int id) {
-            auto it = find_if(libros.begin(), libros.end(), [id](const Libro& libro) {
-                return libro.id == id;
-            });
-            if (it == libros.end()) {
-                return false;
+            for (auto it = libros.begin(); it != libros.end(); ++it) {
+                if (it->id == id) {
+                    libros.erase(it);
+                    return true;
+                }
             }
-            libros.erase(it);
-            return true;
+            return false;
         }
         const vector<Libro>& todos() const {
             return libros;
@@ -87,7 +92,7 @@ namespace curso {
             return static_cast<bool>(salida);
         }
         bool cargar(istream& entrada) {
-            // Lee una instantanea completa; si falla, conserva el estado anterior.
+            // Lee una copia completa completa; si falla, conserva el estado anterior.
             string linea;
             if (!getline(entrada, linea)) {
                 return false;
@@ -117,7 +122,7 @@ namespace curso {
                     return false;
                 }
             }
-            // Solo sustituimos el catálogo después de validar toda la instantánea.
+            // Solo sustituimos el catálogo después de validar toda la copia.
             libros = move(nuevo.libros);
             return true;
         }

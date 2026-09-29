@@ -1,7 +1,8 @@
 #include "services/CampusMap.h"
+// We use reverse to sort or change data order.
 #include <algorithm>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
-#include <tuple>
 
 namespace project {
     using namespace std;
@@ -9,13 +10,18 @@ namespace project {
     CampusMap::CampusMap()
         : labels{"Library", "Laboratory", "Engineering", "Administration", "Residences", "Disconnected annex"},
           network(labels.size()) {
-        const array<tuple<size_t, size_t, int>, 6> connections{
-            tuple<size_t, size_t, int>{0, 1, 4},
-            tuple<size_t, size_t, int>{0, 2, 1},
-            tuple<size_t, size_t, int>{2, 1, 1},
-            tuple<size_t, size_t, int>{1, 3, 3},
-            tuple<size_t, size_t, int>{2, 3, 6},
-            tuple<size_t, size_t, int>{3, 4, 2}
+        struct Connection {
+            size_t source;
+            size_t target;
+            int minutes;
+        };
+        const Connection connections[6]{
+            Connection{0, 1, 4},
+            Connection{0, 2, 1},
+            Connection{2, 1, 1},
+            Connection{1, 3, 3},
+            Connection{2, 3, 6},
+            Connection{3, 4, 2}
         };
         // Each road works in both directions; annex 5 stays isolated to practice that case.
         for (const auto& [source, target, minutes] : connections) {
@@ -24,7 +30,7 @@ namespace project {
         }
     }
 
-    const array<string, 6>& CampusMap::names() const {
+    const vector<string>& CampusMap::names() const {
         return labels;
     }
 

@@ -1,22 +1,15 @@
 // Bubble sort
 //
-// Compare adjacent values and swap inverted pairs. Each pass moves the largest remaining value to
-// the end. With n values, repeated passes compare many of the same neighbors: work can grow roughly
-// like n multiplied by n (O(n²), on average and in the worst case). If values are already sorted,
-// the change flag allows stopping after one pass over the n values (O(n)). It only needs a few
-// extra variables, without another input-sized array (O(1) additional memory). Stable. Read
-// bubbleSort in ../Sorts.h.
+// We will sort by comparing neighbors. If the left value is larger, we swap their positions; after
+// a pass the largest remaining value ends up at the end. We can picture large bubbles rising. If a
+// pass makes no swaps, we are done. With n values we may repeat many comparisons, roughly like n
+// times n (O(n²)); already sorted data needs only one pass (O(n)). The complete function is in
+// Sorts.h.
 //
-// Analogy: Large bubbles rise toward an end; each pass moves the largest number there.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw every pass for 4, 2, 3, 1.
 
 #include "../Sorts.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

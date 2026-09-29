@@ -1,17 +1,17 @@
 // Pointers: a box, a card and a card pointing to another card
 //
-// The variable is a box; a pointer is a card holding its address.
-// & obtains an address and * follows it once. int** lets you locate a card,
-// read it and then reach the box. Copying a card does not copy the box.
-// A pointer does not keep its target alive: the local integers own themselves here.
-// nullptr means no target; never dereference it. A non-null pointer can also
-// dangle if its object has died. Do not return addresses of local variables.
-// You do not need new to observe objects that already exist.
+// First we will distinguish a value from its address. A variable such as int is a box holding a
+// whole number; a pointer is also a variable, but it holds another box's address. We can picture a
+// finger pointing to the data. With & we obtain that address; with * we follow it to read or change
+// the value. Copying a pointer copies the address, not the box. With int** we store a pointer's
+// address: we follow two signs to reach the number.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-// Run: ./program.exe
+// A reference is another label for the same box; a pointer can change destinations or hold nullptr,
+// meaning it points nowhere. This helps us select a product or link nodes in lists, trees and
+// graphs. We do not need new memory to point to an existing variable. Before following a pointer we
+// check that it has a destination and that the data still exists: an address does not keep the box
+// alive or automatically become nullptr when the box disappears.
 //
-// Practice: Add const int* const and explain which two things can no longer change.
 
 #include <iostream>
 
@@ -31,7 +31,7 @@ void redirectCopy(int* address, int& other) {
 }
 
 void redirectReference(int*& address, int& other) {
-    // int*& aliases the caller's card: we can change its destination.
+    // int*& gives another label to the caller's card: we can change its destination.
     address = &other;
 }
 

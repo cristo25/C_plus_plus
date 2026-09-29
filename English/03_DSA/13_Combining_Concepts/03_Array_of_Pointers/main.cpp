@@ -1,18 +1,12 @@
 // 3. An array of cards pointing to integers
 //
-// Now the drawer holds cards: array<int*, 3>. Each card can point to an
-// integer living outside the array. The array contains the pointers,
-// but does not own the integers. *addresses.at(0) follows the first card
-// and changes red; assigning addresses.at(0) only changes that card.
-// nullptr leaves a compartment without a target. Destroying the cards does not
-// destroy the boxes, and copying the cards preserves the same targets.
+// We will store addresses instead of integers. In int* addresses[3] we have three cards: each can
+// point to a box outside the array. With *addresses[0] we follow the first card and change red;
+// with addresses[0] = &blue we change only the card. Two cards can point to the same box, or hold
+// nullptr when no box is selected. The array holds the pointers but does not delete the local
+// integers they point to.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Point two cards at red and change red through one of them.
 
-#include <array>
 #include <iostream>
 
 using namespace std;
@@ -20,12 +14,12 @@ using namespace std;
 int main() {
     int red = 2;
     int blue = 5;
-    array<int*, 3> addresses{&red, &blue, nullptr};
+    int* addresses[3]{&red, &blue, nullptr};
 
     // * changes the target integer. red goes from 2 to 7.
-    *addresses.at(0) = 7;
+    *addresses[0] = 7;
     // Without * we change the card. red remains 7.
-    addresses.at(0) = &blue;
+    addresses[0] = &blue;
     for (const int* address : addresses) {
         if (address != nullptr) {
             cout << *address << "\n";

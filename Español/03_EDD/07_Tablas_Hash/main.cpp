@@ -1,24 +1,17 @@
 // Tablas hash con unordered_map
 //
-// unordered_map asocia claves únicas con valores mediante una función hash. La función hash orienta
-// la consulta hacia un grupo de entradas. En promedio, buscar o insertar necesita una cantidad de
-// pasos que no crece con el total de entradas (O(1)). Si muchas claves caen en el mismo grupo, una
-// operación puede tener que revisar las n entradas de la tabla (O(n) en el peor caso). La
-// biblioteca administra las colisiones; el orden de recorrido no está garantizado. operator[] puede
-// insertar: usa find para solo consultar.
+// Vamos a buscar por una clave, como encontrar una ficha de alumno por su matrícula. unordered_map
+// relaciona una clave con un dato; aquí un número con un nombre. Por dentro usa una función hash,
+// que calcula en qué grupo buscar la clave. Con find buscamos sin crear una ficha; si obtenemos
+// end(), no existe. En la ficha encontrada, first es la clave y second el dato. No esperamos que
+// sus fichas aparezcan ordenadas. Habitualmente revisamos pocas entradas, pero si muchas claves
+// caen juntas podemos tener que revisar muchas.
 //
-// Analogía: Un recepcionista transforma una clave en el número de un casillero. Si varias claves
-// coinciden, debe distinguir sus fichas.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Intenta insertar dos veces la misma clave con emplace y revisa el valor booleano del
-// resultado.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
+// Relacionamos una clave con un dato para buscar, como matrícula y nombre.
 #include <unordered_map>
 
 using namespace std;

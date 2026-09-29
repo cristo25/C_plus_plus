@@ -1,21 +1,15 @@
 // Búsqueda lineal
 //
-// Revisa desde el inicio hasta encontrar el valor. No necesita orden previo. Si el valor está al
-// final o no existe, puede revisar los n elementos (O(n), donde n es la cantidad de elementos).
-// Solo necesita unas pocas variables para llevar la posición actual y el resultado (O(1) de memoria
-// adicional). optional contiene una posición o nullopt si no existe. Comprueba que tiene valor
-// antes de usar *resultado. La posición 0 también es un resultado válido.
+// Vamos a buscar como si revisáramos un cajón casilla por casilla. No necesitamos ordenar antes:
+// avanzamos hasta encontrar el dato o llegar al final. Podemos visitar los n elementos (O(n)). Para
+// devolver el resultado usamos optional: una cajita de <optional> que puede guardar una posición o
+// estar vacía. Comprobamos si contiene algo antes de leer *posicion. Una posición cero es un
+// resultado válido; no debemos confundirla con «no encontrado».
 //
-// Analogía: Buscas una llave revisando cada compartimento del cajón.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Busca el primer elemento, el último y uno inexistente.
 
 #include "../Busquedas.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

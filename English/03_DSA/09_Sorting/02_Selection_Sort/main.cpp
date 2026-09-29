@@ -1,21 +1,15 @@
 // Selection sort
 //
-// Find the smallest pending value and swap it into the next position. After choosing one value, it
-// scans the remaining section again to choose the next. With n values, comparisons accumulate
-// roughly like n multiplied by n, even for sorted input (O(n²)). It only uses a few extra
-// variables, without another array of the same size (O(1) additional memory). This implementation
-// is not stable. Read selectionSort in ../Sorts.h.
+// We will find the smallest remaining value and place it at the beginning of the unsorted section.
+// Then we repeat with the rest. We can picture choosing the smallest book from a pile and placing
+// it in a row. Even if numbers are already sorted, we keep finding each group’s minimum; with n
+// values, work grows roughly like n times n (O(n²)). Swapping distant positions can change the
+// order of tied elements.
 //
-// Analogy: Always take the smallest card from a pile and put it in the next free slot.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Count comparisons for four values and compare with bubble sort.
 
 #include "../Sorts.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

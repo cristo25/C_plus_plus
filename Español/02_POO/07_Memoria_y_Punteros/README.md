@@ -1,20 +1,31 @@
 # Memoria y punteros en POO
 
-Relaciona propiedad con vida del objeto. El integrador administra un alumno con `unique_ptr` y lo consulta mediante un puntero que no es propietario.
+Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
 
-## Orden de estudio
+## Memoria dinámica manual
 
-1. [New y delete](01_New_y_Delete/main.cpp)
-2. [Unique ptr](02_Unique_Ptr/main.cpp)
+Vamos a crear una caja mientras el programa está funcionando. Con new int(42) reservamos espacio para un entero y recibimos su dirección. Guardamos esa dirección en numero y con *numero consultamos el 42. Esa caja no desaparece por dejar de usar la variable puntero: aquí debemos liberarla una sola vez con delete. Después ponemos numero en nullptr para no reutilizar esa dirección. Nunca usamos delete sobre una variable normal ni seguimos un puntero después de liberar su dato.
 
-Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
+[Programa comentado](01_New_y_Delete/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-./programa.exe
-```
+## Propiedad con unique_ptr
 
-Cada subcarpeta tiene su propio programa. Compila un ejemplo a la vez: todos tienen su propia función `main`.
+Vamos a dar a una sola herramienta la responsabilidad de liberar la caja. Con unique_ptr, de <memory>, guardamos esa responsabilidad junto con la dirección. make_unique crea el dato; get nos presta su dirección para consultarlo. Ese puntero prestado no debe liberarlo. Con move, de <utility>, trasladamos la responsabilidad a nuevoPropietario y dejamos vacío al anterior. Al terminar el nuevo propietario se libera el entero automáticamente. Esta ayuda evita que olvidemos un delete.
 
+[Programa comentado](02_Unique_Ptr/main.cpp).
 
-Para combinar estos conceptos, sigue la [ruta de arreglos, vistas y clases con nodos](../../03_EDD/13_Combinacion_de_Conceptos/README.md). Allí se explica qué punteros siguen siendo válidos al crecer un vector y cuáles se invalidan.
+## Memoria y punteros en POO
+
+Vamos a aplicar los punteros a un objeto Alumno. Creamos el alumno con make_unique y prestamos su dirección con get. Con consulta->consultarNombre() seguimos esa dirección y llamamos a una función del alumno; -> equivale a seguir el puntero y usar el punto. Cuando llamamos reset liberamos el alumno. A partir de ese momento la dirección prestada deja de servir: debemos dejar de usarla y ponerla en nullptr. El puntero prestado nunca es responsable de borrar el alumno.
+
+[Programa comentado](main.cpp).
+
+**Práctica.** Realiza un programa integrador con un objeto administrado por unique_ptr.
+
+- Crear una clase con nombre y una consulta const.
+- Crear un objeto con make_unique y observarlo mediante get.
+- Mostrar su nombre usando ->.
+- Retirar el observador antes de llamar reset.
+- Explicar qué variable liberó el objeto.
+
+[Volvemos a la guía general](../../README.md).

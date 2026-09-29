@@ -1,23 +1,15 @@
 // Selección
 //
-// Busca el menor de la zona pendiente y lo intercambia con su primera posición. Después de elegir
-// un dato vuelve a revisar la zona pendiente para elegir el siguiente. Con n datos, las
-// comparaciones se acumulan de forma parecida a n multiplicado por n, incluso si ya estaban
-// ordenados (O(n²)). Solo usa unas pocas variables adicionales, sin otro arreglo del mismo tamaño
-// (O(1) de memoria adicional). No es estable en esta implementación. Lee su función en
-// ../Ordenamientos.h.
+// Vamos a buscar el menor dato pendiente y colocarlo al principio de la zona sin ordenar. Después
+// repetimos con el resto. Podemos imaginar que elegimos el libro más pequeño de un montón y lo
+// ponemos en una fila. Aunque los números ya estén ordenados, seguimos buscando el menor de cada
+// grupo; con n datos el trabajo crece aproximadamente como n por n (O(n²)). Al intercambiar
+// posiciones lejanas podemos cambiar el orden de elementos que empatan.
 //
-// Analogía: De un montón de cartas tomas siempre la menor y la colocas en la siguiente posición
-// libre.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Cuenta comparaciones para cuatro valores y compáralas con burbuja.
 
 #include "../Ordenamientos.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

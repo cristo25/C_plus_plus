@@ -1,23 +1,15 @@
 // Inserción
 //
-// Mantiene una zona izquierda ordenada e inserta cada dato nuevo desplazando los mayores. Cada dato
-// nuevo puede obligarnos a desplazar muchos de los anteriores. Con n datos, ese trabajo repetido
-// puede crecer como n multiplicado por n (O(n²), en promedio y en el peor caso). Si ya estaban
-// ordenados, basta con avanzar por ellos una vez (O(n)). Usa unas pocas variables adicionales, sin
-// otro arreglo del mismo tamaño (O(1) de memoria adicional). Es estable. Lee su función en
-// ../Ordenamientos.h.
+// Vamos a ordenar como una mano de cartas. Tomamos un dato nuevo y desplazamos los anteriores que
+// sean mayores hasta abrirle un lugar. Así mantenemos ordenada la parte izquierda. Si los datos ya
+// están ordenados avanzamos una sola vez (O(n), con n datos); si debemos desplazar muchos en cada
+// paso, el trabajo puede crecer como n por n (O(n²)). Al no adelantar un dato sobre otro igual
+// conservamos el orden de los empates.
 //
-// Analogía: Ordenas una mano de cartas colocando cada carta nueva en su lugar entre las
-// anteriores.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Traza los desplazamientos cuando insertas el 2 en 1, 3, 4.
 
 #include "../Ordenamientos.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

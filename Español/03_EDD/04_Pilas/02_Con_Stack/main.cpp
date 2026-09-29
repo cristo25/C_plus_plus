@@ -1,21 +1,15 @@
 // El adaptador stack
 //
-// stack ofrece solo las operaciones de pila: push, top, pop, size, empty. pop elimina pero no
-// devuelve el valor; consúltalo antes con top. El adaptador restringe las operaciones del
-// contenedor subyacente.
+// Vamos a usar stack, la herramienta de <stack> que ofrece directamente las operaciones de una
+// pila. push agrega arriba, top permite leer la cima y pop la retira. Podemos imaginar un historial
+// para deshacer: la última acción que hicimos es la primera que revisamos. Aquí mostramos qué
+// acción se desharía; retirarla del historial no modifica por sí sola un documento real.
 //
-// Analogía: Una caja de platos con una sola abertura arriba: no puedes tomar el plato de en
-// medio.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Simula dos operaciones y dos acciones de deshacer; protege también el tercer
-// intento.
 
 #include <iostream>
+// Guardamos una pila: con stack sale primero lo último que entró.
 #include <stack>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;

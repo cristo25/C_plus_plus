@@ -1,16 +1,16 @@
 // Searching
 //
-// Search first without ordering, then after sorting. The integration example compares both
-// searches on sorted values and shows the original index of 8 changing from 0 to 4.
+// We will compare one-by-one search with halving search. First we search unsorted data, then sort
+// and try both methods on the same vector. The number stays the same, but sorting can change its
+// position. We also count the preparation: building a sorted list is extra work, even if searching
+// within it afterward is faster.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include "Searches.h"
+// We use sort to sort or change data order.
 #include <algorithm>
-#include <cassert>
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -18,12 +18,17 @@ using namespace course;
 
 int main() {
     vector<int> data{8, 3, 5, 1, 3};
-    // assert checks an integration result; it does not perform application operations.
-    assert(linearSearch(data, 8).value() == 0);
+    if (!(linearSearch(data, 8).value() == 0)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     // Binary search requires sorted input; sorting changes the original positions of values.
     sort(data.begin(), data.end());
     for (int target : {0, 1, 3, 5, 8, 99}) {
-        assert(linearSearch(data, target) == binarySearch(data, target));
+        if (!(linearSearch(data, target) == binarySearch(data, target))) {
+            cerr << "The check did not produce the expected result.\n";
+            return 1;
+        }
     }
     cout << "Index of 8 after sorting: " << binarySearch(data, 8).value() << "\n";
 }

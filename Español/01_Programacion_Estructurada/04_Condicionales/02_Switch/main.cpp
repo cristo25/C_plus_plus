@@ -1,18 +1,20 @@
 // Elegir con switch
 //
-// switch elige entre valores concretos de un entero, carácter o enumeración. break termina un
-// caso; default atiende valores desconocidos.
+// Vamos a elegir una bebida mediante un número. Con switch comparamos ese número con cada case,
+// como al escoger una opción de un menú. Con break salimos del switch después de atender la opción;
+// con default respondemos cuando el número no coincide con ninguna. Nos sirve cuando tenemos
+// opciones concretas, por ejemplo 1, 2 y 3. En este ejemplo devolvemos directamente la bebida con
+// return: salimos de la función y no necesitamos break en esos casos.
 //
-// Analogía: Un menú de restaurante tiene opciones numeradas. Cada número lleva a una
-// preparación.
+// Practica: Realiza un programa con un menú de tres bebidas.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega una tercera bebida. Prueba también la opción 0.
+// - Asignar un número a cada bebida.
+// - Mostrar el nombre y precio de la opción elegida.
+// - Informar cuando la opción no exista.
+// - Usar break para terminar cada caso.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;

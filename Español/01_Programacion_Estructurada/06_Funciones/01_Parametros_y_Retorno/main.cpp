@@ -1,15 +1,10 @@
 // Funciones: parámetros y retorno
 //
-// Una función recibe datos, realiza una tarea y puede devolver un resultado. Los parámetros por
-// valor son copias: cambiarlos no modifica el original.
+// Vamos a separar un cálculo en una función. Podemos imaginar una máquina pequeña: recibe
+// ingredientes, trabaja y devuelve un resultado. A los datos de entrada los llamamos parámetros;
+// con return entregamos el resultado. Cuando recibimos un int por valor, trabajamos con una copia:
+// cambiarla dentro de la función no cambia la variable que enviamos.
 //
-// Analogía: Una máquina recibe ingredientes por una entrada y entrega un producto por la salida.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Crea una función que convierta minutos a segundos.
 
 #include <iostream>
 

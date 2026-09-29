@@ -1,23 +1,19 @@
 // Persistir un DAO en un archivo
 //
-// guardar serializa una instantánea y cargar la valida antes de reemplazar los datos en memoria.
-// quoted conserva espacios y comillas. Cada instantánea comienza con su cantidad de libros. Este
-// ejemplo agrega instantáneas al archivo y recupera la última completa.
+// Vamos a guardar el catálogo en un archivo para recuperarlo después. Primero pedimos al DAO que
+// escriba sus libros y luego que los lea en otro catálogo. Agregamos una copia completa al final
+// del archivo en cada ejecución; al leer conservamos la última copia completa. Si encontramos datos
+// incorrectos, avisamos sin sustituir el catálogo por una lectura incompleta. Para probar ese caso
+// usamos istringstream: una herramienta de <sstream> que permite leer un texto ya guardado en
+// memoria como si llegara de un archivo. Así podemos ensayar una entrada dañada sin dañar el
+// archivo real.
 //
-// Analogía: El bibliotecario toma una fotografía del catálogo al cerrar. Al abrir consulta la
-// fotografía más reciente para recuperar el estado.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Guarda un título con comillas. Modifica una copia del archivo para duplicar un ID y
-// comprueba el rechazo.
-// La creación y la carga respetan el mismo límite de 10 000 libros.
 
 #include "../LibroDAO.h"
+// Leemos y guardamos archivos con ifstream y ofstream.
 #include <fstream>
 #include <iostream>
+// Leemos o escribimos texto en memoria como si fuera un archivo.
 #include <sstream>
 
 using namespace std;
@@ -28,9 +24,9 @@ int main() {
     if (!(dao.crear({1, "C++ con ejemplos"}))) {
         return 1;
     }
-    // ponytail: diario por anexado; compactar si el archivo crece demasiado.
-    // Guardamos una instantánea por anexado; al leer, recuperamos las instantáneas completas en
-    // orden.
+    // ponytail: agregamos copias al final; si el archivo crece demasiado, guardamos solo la última
+    // copia completa. Guardamos una copia completa por anexado; al leer, recuperamos las copias
+    // completas completas en orden.
     ofstream salida("libros_demo.txt", ios::app);
     if (!salida || !dao.guardar(salida)) {
         cerr << "No se pudo guardar el catalogo.\n";

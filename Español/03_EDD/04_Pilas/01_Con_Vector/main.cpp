@@ -1,17 +1,13 @@
 // Una pila con vector
 //
-// Una pila sigue LIFO: el último que entra es el primero que sale. push_back, back y pop_back
-// permiten implementarla; comprueba empty antes de consultar o sacar.
+// Vamos a usar un vector como una pila de platos: solo ponemos y quitamos por arriba. Con push_back
+// agregamos, con back miramos el último dato y con pop_back lo retiramos. El último en entrar es el
+// primero en salir. Antes de consultar o quitar revisamos que la pila no esté vacía. Si necesitamos
+// el dato retirado, lo guardamos antes de llamar pop_back, porque esa operación no lo devuelve.
 //
-// Analogía: Una pila de platos: colocas uno arriba y retiras el de arriba.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega tres elementos y retíralos con un ciclo hasta que quede vacía.
 
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

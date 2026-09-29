@@ -1,19 +1,15 @@
 // 9. Un vector contiene clases que administran nodos
 //
-// vector<Estante> guarda estantes completos. Cada estante es dueño de una lista;
-// cada nodo struct guarda un Producto y es dueño del siguiente. Al crecer el
-// vector puede mover los estantes: un Estante* a un elemento deja de ser válido.
-// Los nodos administrados conservan su dirección porque se transfiere su propiedad.
-// Estante no se copia: copiar requeriría duplicar la cadena. Su movimiento noexcept
-// permite que el vector lo reubique. Una referencia también quedaría invalidada
-// si se refiriera al estante reubicado; no adquiere estabilidad por ser referencia.
+// Vamos a guardar varios estantes en un vector. Dentro de cada estante hay nodos y dentro de cada
+// nodo un producto: seguimos esas capas una a una. Al crecer el vector puede mudarse un estante,
+// por lo que retiramos los punteros al propio estante antes de forzar ese cambio. Sus nodos se
+// crearon aparte y no se mudan al transferir quién los administra. Por eso podemos conservar una
+// consulta a un nodo mientras siga existiendo. Si vaciamos su estante, el nodo desaparece y debemos
+// dejar de usar esa consulta.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_POO/08_Headers/Producto.cpp -o programa.exe
-// Ejecutar: ./programa.exe
-//
-// Practica: Añade otro estante después de reserve y comprueba desde el vector el nodo prestado.
 
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 #include "../Estante.h"
 
@@ -35,7 +31,7 @@ int main() {
     estantes.emplace_back("Libros");
     estantes.at(1).agregar(Producto("Libro", 500));
 
-    // Este nodo sigue vivo, con el mismo propietario lógico y la misma dirección.
+    // Este nodo sigue vivo, con el mismo responsable de liberar el nodo y la misma dirección.
     cout << boolalpha << "Nodo en el mismo sitio: " << (direccionNodo == estantes.at(0).primero()) << "\n";
     cout << direccionNodo->consultarProducto().consultarNombre() << "\n";
     for (const Estante& estante : estantes) {

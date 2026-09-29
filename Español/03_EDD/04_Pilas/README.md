@@ -1,17 +1,30 @@
 # Pilas
 
-Compara el mecanismo con vector y la interfaz de `stack`. El integrador verifica que ambos producen `3 2 1`.
+Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
 
-## Orden de estudio
+## Una pila con vector
 
-1. [Con vector](01_Con_Vector/main.cpp)
-2. [Con stack](02_Con_Stack/main.cpp)
+Vamos a usar un vector como una pila de platos: solo ponemos y quitamos por arriba. Con push_back agregamos, con back miramos el último dato y con pop_back lo retiramos. El último en entrar es el primero en salir. Antes de consultar o quitar revisamos que la pila no esté vacía. Si necesitamos el dato retirado, lo guardamos antes de llamar pop_back, porque esa operación no lo devuelve.
 
-Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
+[Programa comentado](01_Con_Vector/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-./programa.exe
-```
+## El adaptador stack
 
-Cada subcarpeta tiene su propio programa. Compila un ejemplo a la vez: todos tienen su propia función `main`.
+Vamos a usar stack, la herramienta de <stack> que ofrece directamente las operaciones de una pila. push agrega arriba, top permite leer la cima y pop la retira. Podemos imaginar un historial para deshacer: la última acción que hicimos es la primera que revisamos. Aquí mostramos qué acción se desharía; retirarla del historial no modifica por sí sola un documento real.
+
+[Programa comentado](02_Con_Stack/main.cpp).
+
+## Pilas
+
+Vamos a comparar una pila construida con vector con otra de tipo stack. Introducimos 1, 2 y 3 en ambas y retiramos por el extremo superior. En las dos debe salir primero el 3. La idea que estamos practicando es el orden de salida; una pila se reconoce por esa regla, aunque usemos herramientas distintas para guardarla.
+
+[Programa comentado](main.cpp).
+
+**Práctica.** Realiza un programa integrador que compare dos pilas.
+
+- Agregar los mismos datos a un vector y a un stack.
+- Consultar las dos cimas antes de retirar.
+- Comprobar que sale el mismo dato en cada paso.
+- Terminar con ambas pilas vacías.
+
+[Volvemos a la guía general](../../README.md).

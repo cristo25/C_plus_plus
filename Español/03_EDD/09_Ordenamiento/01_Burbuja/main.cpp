@@ -1,22 +1,15 @@
 // Burbuja
 //
-// Compara vecinos y los intercambia si están invertidos. Cada pasada coloca el mayor restante al
-// final. Con n datos, las pasadas comparan repetidamente muchos de los mismos vecinos: el trabajo
-// puede crecer aproximadamente como n multiplicado por n (O(n²), tanto en promedio como en el peor
-// caso). Si ya están ordenados, el indicador de cambios permite terminar tras una pasada por los n
-// datos (O(n)). Solo necesita unas pocas variables adicionales, sin crear otro arreglo del tamaño
-// de la entrada (O(1) de memoria adicional). Es estable. Lee su función en ../Ordenamientos.h.
+// Vamos a ordenar comparando vecinos. Si el de la izquierda es mayor, cambiamos sus posiciones;
+// repetimos una pasada y el mayor pendiente acaba al final. Podemos imaginar burbujas grandes que
+// van subiendo. Si una pasada no hace cambios, ya terminamos. Con n datos podemos repetir muchas
+// comparaciones, aproximadamente como n por n (O(n²)); si ya estaban ordenados basta una pasada
+// (O(n)). La función completa está en Ordenamientos.h.
 //
-// Analogía: Las burbujas grandes suben al extremo; cada pasada lleva el mayor número al final.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Dibuja cada pasada para los datos 4, 2, 3, 1.
 
 #include "../Ordenamientos.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

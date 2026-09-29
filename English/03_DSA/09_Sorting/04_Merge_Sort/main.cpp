@@ -1,23 +1,16 @@
 // Merge sort
 //
-// Split into halves, sort each half and merge them. Halving creates several levels of work;
-// doubling the data adds about one level. At each level, merging visits all n values in total: the
-// work combines the value count with the number of levels (O(n log n); n counts values and log n
-// describes halving levels). It needs an auxiliary array that grows with the data (O(n) memory) and
-// keeps pending calls along the current division path (O(log n) memory for calls). Stable because
-// ties select the left item first. Read mergeSort in ../Sorts.h.
+// We will divide a pile into halves until the groups are small, then join them in order. We can
+// picture two helpers sorting their sheets: when joining them, we always take the smallest
+// available sheet. This is merge sort. We need extra mixing space that grows with the n values
+// (O(n) additional memory). Each level visits all values, and there are as many levels as repeated
+// halvings (O(n log n), with n values and log n levels). For a tie we take the left value first to
+// preserve order.
 //
-// Analogy: Divide sheets between two helpers, then combine their sorted piles by choosing the
-// smaller available sheet.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw splits and merges for six values. Observe that the range endpoint is excluded.
 
 #include "../Sorts.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

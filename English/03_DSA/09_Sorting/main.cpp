@@ -1,18 +1,17 @@
 // Sorting algorithms
 //
-// Study algorithms using the same input and compare time, memory and stability. Stability
-// preserves the original order of elements with equal keys. The integration example checks five
-// algorithms against sort, including empty input, duplicates, negatives and sorted values.
-// Function pointers allow repeating the same check.
+// We will check five ways of sorting using identical inputs. We create a copy for each algorithm
+// and compare its result with sort. We include empty, negative, repeated and already sorted data.
+// We keep function addresses to call each algorithm in the same way: just as a pointer can point to
+// a box, a function pointer can point to a task we can run. If a comparison fails, we display the
+// problem and stop.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include "Sorts.h"
+// We use sort to sort or change data order.
 #include <algorithm>
-#include <cassert>
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -29,8 +28,10 @@ int main() {
             auto expected = input;
             sort(expected.begin(), expected.end());
             sortValues(result);
-            // assert checks an integration result; it does not perform application operations.
-            assert(result == expected);
+            if (!(result == expected)) {
+                cerr << "The check did not produce the expected result.\n";
+                return 1;
+            }
         }
     }
     cout << "All 5 algorithms match sort on 5 inputs.\n";

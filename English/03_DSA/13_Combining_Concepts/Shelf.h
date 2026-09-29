@@ -1,11 +1,24 @@
-// Shared header for steps 8, 9 and the integration example; in-class function definitions are inline.
+// With = delete we prevent copying the class so two objects cannot try to release the same nodes.
+//
+// With friend we let the named class change the node’s private links.
+//
+// With noexcept we state that these operations will not report errors through throw. Parameters
+// with && receive an object whose data we can transfer; with move we transfer that responsibility.
+
+// We share this class across steps 8, 9 and the integration example. We can define its functions
+// inside the class and use this header from several files.
 #ifndef COURSE_SHELF_H
 #define COURSE_SHELF_H
 
+// We use numeric_limits to check the largest allowed integer before adding.
 #include <limits>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
+// We store and work with text using string.
 #include <string>
+// We use move to transfer data or responsibility for releasing it.
 #include <utility>
 #include "../../02_OOP/08_Headers/Product.h"
 

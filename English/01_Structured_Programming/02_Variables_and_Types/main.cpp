@@ -1,19 +1,14 @@
 // Variables, types and operators
 //
-// Declare int, double, char, bool and string. Use const for values that do not change. Integer
-// division discards the fractional part; convert an operand to double to keep it.
+// We will store data in variables. We can picture each variable as a named box: int stores whole
+// numbers, double and float store numbers with decimal places, char stores one character, bool
+// stores true or false, and string stores text. In count we store the number of notebooks; we
+// multiply it by price to get total. With const we protect a value that should stay unchanged.
+// Dividing whole numbers drops the decimal part: 5 / 2 gives 2, whereas 5.0 / 2 gives 2.5.
 //
-// Analogy: A variable is a labeled box. Its type determines what it can hold. const seals its
-// contents.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Compute the price of five products. Compare 7 / 2 with 7.0 / 2.
-// Also prints integer division 2 and floating-point division 2.5.
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

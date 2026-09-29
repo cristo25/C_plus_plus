@@ -1,22 +1,15 @@
 // BFS: breadth-first search
 //
-// BFS uses a queue and visits by levels. Mark vertices when enqueueing to prevent repeated visits
-// through cycles. Only vertices reachable from the start are visited. In unweighted graphs, levels
-// express minimum edge counts. Traversing neighbor lists visits reachable points and inspects their
-// connections. In the worst case, work grows with all graph points and connections (O(V + E), where
-// V counts vertices and E counts edges). Visited markers and points waiting to be processed need
-// space that grows with the point count (O(V) additional memory).
+// We will explore a map in layers. We visit the start, then its neighbors, then their neighbors. We
+// keep pending places in a queue to preserve that order. We call this BFS, or breadth-first search.
+// We mark each place when adding it so we do not repeat it, even with roads back. We reach only
+// places connected to the start. A full traversal checks the places and roads (O(V + E), with V
+// places and E connections).
 //
-// Analogy: Explore a city in rings, starting with nearby neighbors and then their neighbors.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Connect a vertex to 4 and explain how neighbor ordering affects the traversal order.
 
 #include "../Graph.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

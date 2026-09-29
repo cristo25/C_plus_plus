@@ -1,15 +1,10 @@
 // Repetir con do while
 //
-// do while evalúa la condición después del cuerpo, por lo que siempre ejecuta al menos una
-// vuelta.
+// Vamos a hacer al menos un intento antes de preguntar si seguimos. En do while primero ejecutamos
+// lo que está entre llaves y después comprobamos la condición. Podemos imaginar que probamos una
+// llave y solo entonces decidimos si hace falta otro intento. Aunque la condición resulte falsa
+// desde la primera revisión, ya hicimos una vuelta.
 //
-// Analogía: Pruebas una llave al menos una vez antes de decidir si necesitas seguir intentando.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Empieza con intentos = 3 y observa que el cuerpo se ejecuta igualmente.
 
 #include <iostream>
 

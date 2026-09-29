@@ -1,19 +1,14 @@
 // Cadenas con string
 //
-// string administra una secuencia de caracteres. Puedes concatenar, consultar el tamaño, buscar
-// y extraer fragmentos. Comprueba string::npos antes de usar un resultado de búsqueda.
+// Vamos a trabajar con texto usando string. Podemos imaginar un collar en el que cada cuenta es una
+// letra o un signo. Con + unimos textos, con size contamos sus posiciones y con find buscamos una
+// parte. Si la búsqueda devuelve string::npos, esa parte no existe. Solo después de comprobarlo
+// usamos substr para tomar un fragmento. Aquí trabajamos con texto sencillo; una letra con acento
+// puede ocupar más de una posición según cómo se guarde.
 //
-// Analogía: Una cadena es un collar: cada carácter es una cuenta; puedes unir collares o tomar
-// un tramo.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Busca una palabra que no exista y evita llamar substr con npos.
-// El fragmento encontrado se muestra en otra línea: Ana.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;

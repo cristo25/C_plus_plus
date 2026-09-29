@@ -1,18 +1,15 @@
 // Recursión
 //
-// Una función recursiva se llama a sí misma con un problema menor. El caso base detiene las
-// llamadas. Sin caso base o sin avance, la pila de llamadas puede agotarse.
+// Vamos a resolver una tarea llamando a la misma función con un caso más pequeño; a eso lo llamamos
+// recursión. Aquí calculamos el factorial: 4! significa 4 por 3 por 2 por 1. En factorial(n)
+// multiplicamos n por el resultado de factorial(n - 1). Detenemos las llamadas cuando n es 0 o 1,
+// cuyo resultado es 1. Podemos imaginar cajas dentro de cajas: abrimos hasta la más pequeña y
+// después regresamos reuniendo resultados. Limitamos n a 12 para que el resultado quepa en int. Con
+// throw avisamos de un dato inválido; con try y catch recogemos ese aviso para mostrarlo.
 //
-// Analogía: Abres una caja que contiene otra más pequeña, hasta llegar a una caja vacía.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Dibuja las llamadas de factorial(3) y su regreso. Después escribe la versión con
-// for.
 
 #include <iostream>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
 
 using namespace std;
@@ -30,7 +27,6 @@ int factorial(int n) {
 }
 
 int main() {
-
     try {
         cout << factorial(5) << "\n";
     } catch (const invalid_argument& error) {

@@ -1,18 +1,16 @@
 // Vectors of objects
 //
-// A vector can store objects of one type. Members of a struct are public by default; members of
-// a class are private by default. const auto& traverses without copying or changing objects.
+// We will store complete records inside the vector. With struct Student we group a name and a
+// grade, like two boxes on one card. vector<Student> holds those cards and push_back adds another.
+// With const auto& we read each card without copying it: auto lets C++ infer the type, & gives
+// another label for the same object, and const prevents changes through that label. We use a dot to
+// choose a field on the card.
 //
-// Analogy: The drawer now stores complete cards, each containing a name and a grade.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Compute the group's average and define what happens when the vector is empty.
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

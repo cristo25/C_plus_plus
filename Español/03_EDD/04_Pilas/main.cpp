@@ -1,14 +1,15 @@
 // Pilas
 //
-// Compara el mecanismo con vector y la interfaz de stack. El integrador verifica que ambos
-// producen 3 2 1.
+// Vamos a comparar una pila construida con vector con otra de tipo stack. Introducimos 1, 2 y 3 en
+// ambas y retiramos por el extremo superior. En las dos debe salir primero el 3. La idea que
+// estamos practicando es el orden de salida; una pila se reconoce por esa regla, aunque usemos
+// herramientas distintas para guardarla.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
 
 #include <iostream>
+// Guardamos una pila: con stack sale primero lo último que entró.
 #include <stack>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

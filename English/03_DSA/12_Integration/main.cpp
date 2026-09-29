@@ -1,31 +1,27 @@
 // Integration: processing tasks and querying routes
 //
-// Combine vector, linked list, stack, queue, priority queue, BST, hash table, graph, sorting and
-// searching. Reuse the DSA headers. The queue defines processing order, the list keeps history,
-// and the stack identifies the next undo action.
+// We will bring the structures together in a task-and-delivery workshop. We store tasks in a
+// vector, serve them through a queue and record events in a list. With a stack we inspect the
+// latest action that could be undone. We use a tree and an id table to practice queries, and sort
+// numbers before searching by halves. Finally we use a graph to calculate routes. Each structure
+// serves a different need; this example brings them together to show how data moves between them.
 //
-// Analogy: A workshop receives jobs, processes them, keeps a history, organizes priorities and
-// consults a delivery map.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add a fourth task and update the checks. Which structure would you choose for
-// history alone? This demonstration combines structures to practice, not because every one is
-// needed for that single requirement.
 
 #include "../03_Linked_Lists/01_Singly_Linked/SinglyLinkedList.h"
 #include "../06_Trees/Tree.h"
 #include "../08_Graphs/Graph.h"
 #include "../09_Sorting/Sorts.h"
 #include "../10_Searching/Searches.h"
-#include <cassert>
 #include <iostream>
+// We serve by arrival with queue or by importance with priority_queue.
 #include <queue>
+// We store a stack: with stack, the last item in comes out first.
 #include <stack>
+// We store and work with text using string.
 #include <string>
+// We connect a key to a value for lookup, such as a student number and name.
 #include <unordered_map>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -53,20 +49,37 @@ int main() {
         index.insert(id);
         cout << "Process: " << names.at(id) << "\n";
     }
-    // assert checks an integration result; it does not perform application operations.
-    assert(history.values() == ids && undo.top() == 2);
-    assert(urgent.top() == 3 && index.contains(2));
+    if (!(history.values() == ids && undo.top() == 2)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(urgent.top() == 3 && index.contains(2))) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     mergeSort(ids);
-    assert(ids == index.values());
-    assert(binarySearch(ids, 2).value() == 1);
+    if (!(ids == index.values())) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(binarySearch(ids, 2).value() == 1)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
 
     // The graph models trips; Dijkstra computes the lowest delivery cost.
     Graph routes(3);
     routes.connect(0, 1, 4);
     routes.connect(0, 2, 1);
     routes.connect(2, 1, 1);
-    assert(bfs(routes, 0).size() == 3 && dfs(routes, 0).size() == 3);
-    assert(dijkstra(routes, 0).at(1) == 2);
+    if (!(bfs(routes, 0).size() == 3 && dfs(routes, 0).size() == 3)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(dijkstra(routes, 0).at(1) == 2)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     cout << "Last task (undo): " << names.at(undo.top()) << "\n";
     cout << "Minimum delivery cost 0 -> 1: " << dijkstra(routes, 0).at(1) << "\n";
 }

@@ -1,26 +1,16 @@
 // Dijkstra: minimum-cost paths
 //
-// Dijkstra finds minimum distances for nonnegative weights. Use a minimum-priority queue, improve
-// distances and discard outdated entries. INFINITY_DISTANCE means unreachable. Besides inspecting
-// connections, this version organizes candidates in a priority queue to select the cheapest one.
-// More candidates mean more work maintaining that priority. A point can appear several times as
-// better routes are found, so the queue also needs space for these pending records. Memory can grow
-// with the graph vertices and edges (O(V + E), where V counts points and E counts connections). The
-// dijkstra function returns costs; shortestPaths also records the predecessor of each destination
-// so routes can be reconstructed.
+// We will look for the path with the lowest total cost. We can picture roads labeled in minutes:
+// fewer roads do not always mean earlier arrival. With Dijkstra we keep the best known cost and use
+// a priority queue to process the cheapest candidate first. When we find an improvement, we update
+// its cost. This version requires nonnegative costs. INFINITY_DISTANCE is a marker for a route not
+// yet found, not a real number of minutes. dijkstra returns costs; shortestPaths also remembers
+// where we came from so a route can be rebuilt.
 //
-// Analogy: A courier compares total route costs and always considers the cheapest available
-// alternative first.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Track predecessors to reconstruct a route. For negative weights, study Bellman-Ford
-// in a later extension.
 
 #include "../Graph.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

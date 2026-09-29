@@ -2,6 +2,7 @@
 #ifndef COURSE_PRODUCT_H
 #define COURSE_PRODUCT_H
 
+// We store and work with text using string.
 #include <string>
 
 namespace course {

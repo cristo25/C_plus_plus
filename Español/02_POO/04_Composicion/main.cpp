@@ -1,15 +1,11 @@
 // Composición
 //
-// Un objeto puede contener otro: la relación es «tiene un». El miembro se construye antes del
-// cuerpo del constructor del objeto que lo contiene.
+// Vamos a construir una cosa usando otra como parte. Un Auto tiene un Motor; por eso guardamos un
+// objeto Motor dentro de Auto. A esta relación la llamamos composición. Desde main pedimos que
+// arranque el auto, y el auto se encarga de encender su motor. Podemos imaginar un bloque que
+// contiene un inventario: tener una parte no significa ser esa parte. Al terminar el auto también
+// termina el motor que contiene.
 //
-// Analogía: Un automóvil tiene un motor; no es un tipo de motor.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega un método para apagar el motor a través del automóvil.
 
 #include <iostream>
 

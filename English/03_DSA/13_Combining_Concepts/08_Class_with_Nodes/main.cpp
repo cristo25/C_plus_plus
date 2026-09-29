@@ -1,17 +1,12 @@
 // 8. A class manages struct nodes
 //
-// Shelf combines OOP and lists: it hides a chain of struct nodes; each node
-// contains a Product class object and owns the next node through unique_ptr.
-// The shelf owns the first node. Links are changed inside the class.
-// first() lends const Node*, and getProduct() lends const Product&.
-// The borrowed view must not outlive clear() or destruction of the shelf.
-// Read Shelf.h: the header holds the shared implementation for these examples.
-// Product.cpp must still be linked because its functions are defined outside its header.
+// We will keep the chain and its rules inside Shelf. Each node contains a Product and a unique_ptr
+// to the next node; the shelf is responsible for the first. From outside we request additions or
+// queries without directly changing links. We can picture a shelf keeper arranging boxes and
+// lending their labels for reading. first() and nextNode() lend addresses; getProduct() lends a
+// read-only reference. Emptying the shelf invalidates those queries because their boxes no longer
+// exist.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_OOP/08_Headers/Product.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Add three products and predict their order. Draw the chain of owners.
 
 #include <iostream>
 #include "../Shelf.h"

@@ -1,19 +1,12 @@
 // In-memory DAO and CRUD
 //
-// DAO means Data Access Object: a data-access pattern, not a paradigm. BookDAO centralizes
-// create, read, update and delete (CRUD). Call its operations without manipulating storage
-// directly. For now, view vector as a growing collection; DSA studies it in detail. The
-// educational DAO accepts at most 10,000 books, consistently across creation, saving and
-// loading.
+// We will bring storing, finding, updating and removing books together in BookDAO. We can picture a
+// catalog keeper: we request a book by its id, a number identifying it. DAO is the usual name for a
+// class dedicated to data access. Here we keep books in a vector, so they disappear when the
+// program ends. find lends a pointer to a book, or returns nullptr if it is missing. We check
+// before reading it; after changing the catalog we find it again because the vector may move its
+// books.
 //
-// Analogy: The librarian knows where books are stored. Ask for a book by its ID without
-// inspecting every shelf.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add two books and list dao.all(). Verify that updating an unknown ID returns false.
 
 #include "../BookDAO.h"
 #include <iostream>
@@ -35,7 +28,8 @@ int main() {
     if (!(dao.update(1, "C++ step by step"))) {
         return 1;
     }
-    // The query returns an observer of the catalog. Modifying the vector may invalidate it.
+    // We receive a borrowed catalog address. After changing its books, we search again before using
+    // an address.
     const Book* book = dao.findById(1);
 
     cout << book->title << "\n";

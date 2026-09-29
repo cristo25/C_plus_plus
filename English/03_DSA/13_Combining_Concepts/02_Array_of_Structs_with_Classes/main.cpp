@@ -1,19 +1,16 @@
 // 2. A struct contains a class; an array contains those structs
 //
-// We want stock counts as well as products. Record groups a Product with
-// a quantity: each drawer compartment contains a complete record with both.
-// class and struct can contain each other; their main difference is default
-// access. A class enforces product rules and a simple struct groups it with
-// a quantity. A function takes Record& to modify the actual array record.
+// We will add available quantity to each product. With struct Record we group a Product and an
+// integer quantity, then store several Record cards in an array. We can picture a compartment
+// holding the product and a stock label. With records[0].product we reach the object, and with
+// records[0].quantity the number. receiveOne takes Record& to change the original card: removing &
+// would change only a copy.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../../02_OOP/08_Headers/Product.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Replace Record& with Record. Predict and explain the printed quantity.
 
-#include <array>
 #include <iostream>
+// We use numeric_limits to check the largest allowed integer before adding.
 #include <limits>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
 #include "../../../02_OOP/08_Headers/Product.h"
 
@@ -34,12 +31,12 @@ void receiveOne(Record& record) {
 }
 
 int main() {
-    array<Record, 2> records{
+    Record records[2]{
         Record{Product("Notebook", 300), 2},
         Record{Product("Pencil", 100), 5}
     };
 
-    receiveOne(records.at(0));
+    receiveOne(records[0]);
     for (const Record& record : records) {
         cout << record.product.getName() << ": " << record.quantity << "\n";
     }

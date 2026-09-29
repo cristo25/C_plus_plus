@@ -1,22 +1,17 @@
 // Integrador: una biblioteca con objetos
 //
-// Usa composición para encapsular un DAO y herencia con dos vistas para practicar polimorfismo.
-// Reutiliza el header del tema anterior. unique_ptr administra la vista y el destructor virtual
-// permite liberar su tipo concreto.
+// Vamos a construir una pequeña biblioteca con varias clases que colaboran. Biblioteca contiene un
+// DAO para guardar libros. Una Vista decide cómo mostrarlos: VistaDetalle escribe sus datos y
+// VistaResumen muestra cuántos hay. Pedimos mostrar el catálogo de la misma manera aunque cambiemos
+// de vista. Así reunimos composición, datos protegidos, consultas const y polimorfismo. Con
+// unique_ptr dejamos claro quién se encarga de liberar la vista cuando ya no la usamos.
 //
-// Analogía: La biblioteca tiene un bibliotecario y puede mostrar el catálogo en dos ventanillas:
-// una detallada y otra resumida.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega una vista que muestre solo los títulos y reutiliza el mismo DAO.
-// La creación y la carga respetan el mismo límite de 10 000 libros.
 
 #include "../09_DAO/LibroDAO.h"
 #include <iostream>
+// Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;

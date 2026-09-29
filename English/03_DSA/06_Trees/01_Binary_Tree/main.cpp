@@ -1,18 +1,14 @@
 // Binary trees: roots, children and leaves
 //
-// A tree connects nodes without cycles. The root has no parent; leaves have no children. A
-// binary tree allows at most two children per node. A binary tree need not order its values.
+// We will link nodes into branches. In a binary tree each node can have at most one left child and
+// one right child. We call the first node the root and a node with no children a leaf. Here we are
+// building the shape only: having two branches does not require sorted numbers. To count, we add
+// the current node and both branches recursively. We use unique_ptr so each branch releases its
+// nodes when finished.
 //
-// Analogy: An organization chart starts with one manager and branches into subordinates, at most
-// two per manager here.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Draw the tree, identify its leaves and add a grandchild.
 
 #include <iostream>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
 
 using namespace std;

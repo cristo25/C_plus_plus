@@ -1,8 +1,13 @@
 #include "ui/Console.h"
+// We catch errors through exception and read their message with what().
 #include <exception>
+// We use numeric_limits to check the largest allowed integer before adding.
 #include <limits>
+// We store a result that may be missing: optional holds a value or is empty.
 #include <optional>
+// We read or write text in memory as if it were a file.
 #include <sstream>
+// We store and work with text using string.
 #include <string>
 
 namespace project {

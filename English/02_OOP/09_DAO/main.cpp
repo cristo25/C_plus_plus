@@ -1,17 +1,15 @@
 // DAO: separating data access
 //
-// Study in-memory CRUD and persistence. The integration example combines CRUD and serialization
-// using a string stream without writing files. Definitions inside classes are implicitly inline.
-// This DAO uses linear queries and allows at most 10,000 books; a database is a later step when
-// needed.
+// We will follow the catalog's whole workflow: create books, change a title, remove a book and
+// restore saved data. Here we use stringstream from <sstream> as a temporary notebook in memory: we
+// can write into it and read back without creating a disk file. We then try input with repeated
+// ids. Our rule is simple: if we cannot restore every record correctly, we keep the catalog we
+// already had.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include "BookDAO.h"
-#include <cassert>
 #include <iostream>
+// We read or write text in memory as if it were a file.
 #include <sstream>
 
 using namespace std;
@@ -40,13 +38,21 @@ int main() {
     if (!(copy.load(file))) {
         return 1;
     }
-    // assert checks an integration result; it does not perform application operations.
-    assert(copy.all().size() == 1);
-    assert(copy.findById(2)->title == "Objects and \"classes\"");
+    if (!(copy.all().size() == 1)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(copy.findById(2)->title == "Objects and \"classes\"")) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     istringstream duplicates("2\n2 \"One\"\n2 \"Two\"\n");
     if (copy.load(duplicates)) {
         return 1;
     }
-    assert(copy.all().size() == 1);
+    if (!(copy.all().size() == 1)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     cout << copy.findById(2)->title << "\n";
 }

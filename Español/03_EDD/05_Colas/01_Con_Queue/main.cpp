@@ -1,18 +1,15 @@
 // Cola FIFO
 //
-// queue atiende en orden de llegada: first in, first out. Agrega con push, consulta con front y
-// elimina con pop. Comprueba empty antes de consultar.
+// Vamos a atender una fila por orden de llegada. Con queue, de <queue>, agregamos al final mediante
+// push, consultamos al primero con front y lo retiramos con pop. Podemos imaginar una fila de
+// personas esperando una ventanilla. Antes de atender revisamos empty. A la regla «primero en
+// entrar, primero en salir» también la llamamos FIFO; las siglas solo abrevian esa misma idea.
 //
-// Analogía: La fila de las tortillas: se atiende primero a quien llegó primero.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Agrega una tercera persona y verifica el orden.
 
 #include <iostream>
+// Atendemos por llegada con queue o por importancia con priority_queue.
 #include <queue>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;

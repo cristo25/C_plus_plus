@@ -1,23 +1,15 @@
 // Recorridos de un árbol
 //
-// Preorden visita raíz, izquierda, derecha. Inorden visita izquierda, raíz, derecha. Postorden
-// visita izquierda, derecha, raíz. En un ABB, inorden produce valores ordenados. El recorrido
-// visita cada nodo, de modo que el trabajo crece con sus n nodos (O(n)). Además guarda las llamadas
-// que esperan regresar: puede haber una por cada nivel del camino actual, hasta la altura h del
-// árbol (O(h) de memoria para esas llamadas). El vector de salida necesita guardar los n
-// resultados.
+// Vamos a visitar el mismo árbol en tres órdenes. En preorden leemos primero el nodo y después sus
+// ramas; en inorden leemos izquierda, nodo y derecha; en postorden dejamos el nodo para el final.
+// En un árbol de búsqueda, inorden nos muestra los números ordenados. Podemos imaginar que
+// recorremos las mismas habitaciones pero anotamos su nombre al entrar, a mitad de la visita o al
+// salir. En todos los casos visitamos los n nodos (O(n)).
 //
-// Analogía: Recorres una casa: puedes registrar el cuarto antes de visitar sus anexos, entre
-// ambos anexos o al terminar de visitarlos.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Dibuja el árbol y reproduce cada recorrido con flechas antes de ejecutarlo.
 
 #include "../Arbol.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

@@ -1,25 +1,19 @@
 // Ordenar con la biblioteca estándar
 //
-// sort limita el crecimiento de las comparaciones incluso en el peor caso. Con n datos, el límite
-// crece como la cantidad de datos multiplicada por la cantidad de niveles que tendría dividirlos
-// repetidamente por mitades (O(n log n)). Esto describe el límite de trabajo, sin exigir que el
-// algoritmo interno use literalmente esas divisiones. No garantiza estabilidad. stable_sort
-// conserva el orden de elementos equivalentes. El comparador debe expresar un orden estricto: usa
-// <, no <=. Aprende los algoritmos manuales y usa la biblioteca para tareas habituales.
+// Vamos a comparar lo aprendido con herramientas que C++ ya trae en <algorithm>. sort ordena un
+// grupo entre begin() y end(); end() marca el lugar después del último dato. Para fichas de alumnos
+// damos una función que decide cuál va primero. La función pequeña escrita con [] se llama lambda:
+// aquí recibe dos alumnos y compara sus notas con <. stable_sort conserva el orden previo de
+// quienes empatan. Primero entendemos los movimientos manuales y ahora podemos usar esta
+// herramienta para resolver una tarea completa.
 //
-// Analogía: Encargas ordenar el cajón a una herramienta ya probada, indicándole cómo comparar
-// sus objetos.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Ordena por nombre. Después ordena por nota descendente conservando el orden de los
-// empates.
 
+// Usamos sort, stable_sort para ordenar o cambiar el orden de los datos.
 #include <algorithm>
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

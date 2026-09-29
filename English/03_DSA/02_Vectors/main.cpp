@@ -1,14 +1,16 @@
 // Vectors
 //
-// Study size, traversal, modification and stored objects. The integration example organizes
-// tasks, completes one and removes it, leaving Compile and Practice.
+// We will combine creation, editing and object records in a task list. Each Task stores its name
+// and whether it is finished. We insert a task, mark another and remove a record. We can picture a
+// notebook where we add and remove rows. The vector keeps the data together, but positions may
+// change when inserting or erasing; we therefore distinguish a task's name from its current
+// position.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

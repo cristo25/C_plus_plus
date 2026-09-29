@@ -1,18 +1,17 @@
-// These guards prevent processing the header twice in one translation unit.
+// With these three instructions we avoid reading this header twice while compiling one file.
 #ifndef COURSE_GRADES_H
 #define COURSE_GRADES_H
-#include <array>
 
 namespace course {
     using namespace std;
 
     // Shared constants: every file uses the same grading rules.
-    inline constexpr int MIN_GRADE = 0;
-    inline constexpr int MAX_GRADE = 10;
-    inline constexpr int PASSING_GRADE = 6;
+    const int MIN_GRADE = 0;
+    const int MAX_GRADE = 10;
+    const int PASSING_GRADE = 6;
 
     // Declare the service here; Grades.cpp contains its definition.
-    double calculateAverage(const array<int, 3>& grades);
+    bool calculateAverage(const int grades[], int count, double& result);
     bool hasPassed(double average);
 } // namespace course
 #endif

@@ -1,22 +1,12 @@
 // Complexity: time and space
 //
-// To compare programs, imagine increasing the amount of data. Reaching a slot directly by its index
-// takes a fixed amount of work even when there are more slots (written O(1); it does not mean
-// exactly one step). Inspecting every slot does increase the work: 20 visits are twice as many as
-// 10 (O(n), where n is the number of elements). If we repeatedly halve what remains, going from 8
-// to 1 takes three divisions and from 16 to 1 takes four (O(log n); here log n describes growth
-// through halving). These abbreviations are called Big O notation and describe how work can grow,
-// without specifying exact seconds. We can also count the extra data the program needs to keep:
-// that is auxiliary memory.
+// We will compare how much work we do as data grows. Reaching a slot directly takes a fixed amount
+// of work even with more slots (O(1); it does not mean exactly one step). Checking ten slots means
+// ten visits, and checking twenty means twenty (O(n), where n is the slot count). By halving, we go
+// from 8 to 1 in three divisions and from 16 to 1 in four (O(log n), where log n describes growth
+// through halving). We call these abbreviations Big O notation: they describe growth, not exact
+// seconds. We can also count extra data kept while doing the task; we call that auxiliary memory.
 //
-// Analogy: Finding a numbered compartment is direct. Inspecting every compartment takes longer
-// as the cabinet grows. Halving a sorted guide discards many pages at once.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Compare n = 8, 16 and 32. Draw the growth of n and the number of halvings.
 
 #include <iostream>
 

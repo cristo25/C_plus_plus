@@ -1,87 +1,88 @@
 # Learn C++ step by step
 
-This is the course's general guide: structured programming, object-oriented programming (OOP), and data structures and algorithms (DSA). Each topic combines an explanation, an analogy when useful, and a code example. There are **84 independent programs**.
-
-Program-specific explanations, compilation commands and exercises are **comments inside `.cpp` and `.h` files**. OOP and DSA retain guides for comparing concepts and variants; individual programs do not need separate READMEs.
+We will start with variables, decisions and loops. Then we will build objects and connect data through arrays, lists, trees and graphs. We will finish with a library and route application. At each step we connect the explanation with names and operations in the program.
 
 ## Study order
 
-1. [Structured programming](#structured-programming): data, decisions, loops and functions.
-2. [Object-oriented programming](#object-oriented-programming): state, behavior and ownership.
-3. [Data structures and algorithms](#data-structures-and-algorithms): data organization, traversals and costs.
-4. [Integrated project](04_Integrated_Project/README.md): a console application with catalog, deliveries and routes.
+1. [Structured programming](#structured-programming).
+2. [Object-oriented programming](#object-oriented-programming).
+3. [Data structures and algorithms](#data-structures-and-algorithms).
+4. [Integrated project](04_Integrated_Project/README.md).
 
-Follow the folder numbers. Read the comments in `main.cpp` and predict its output. In divided topics, finish the subfolders before the `main.cpp` beside them. Read any course header it includes to see the implementation. Run the example and try the exercise in its comments.
+We have 84 programs. Within a topic we follow the numbered subfolders and then the integration example beside them. We first read the comments, predict what will happen and run the example. We then solve its practice task: the statement and requirements also appear inside main.cpp.
 
 ## Compile and run
 
-Use C++17 with GCC (`g++`) or Clang (`clang++`). Open Git Bash or PowerShell **in the example folder**, not the course root:
+To turn code into a program we use a C++17 compiler such as g++. We open Git Bash or PowerShell in the example folder and run:
 
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
 ./program.exe
 ```
 
-Each example has its own `main`. Compile one program at a time. On Linux or macOS, use `program` instead of `program.exe`. Code blocks in this guide correspond to the linked file; run that file from its folder. Examples create demonstration data in their working directory.
+With `-std=c++17` we choose the C++ version; with `-Wall -Wextra -pedantic` we request warnings that help find mistakes; with `-o` we choose the output program name. We compile one main.cpp at a time because each example has its own starting point.
 
-These examples compile more than one implementation file:
-
-| Folder | Files to compile together |
-| --- | --- |
-| `01_Structured_Programming/12_Const_and_Headers` | `main.cpp Grades.cpp` |
-| `02_OOP/08_Headers` | `main.cpp Product.cpp` |
-| `03_DSA/11_Const_and_Headers` | `main.cpp Queries.cpp` |
-| `03_DSA/13_Combining_Concepts` | `main.cpp ../../02_OOP/08_Headers/Product.cpp` |
-
-Combination steps using `Product` also link `Product.cpp`. From a topic subfolder, its path starts with `../../../02_OOP/`; each `main.cpp` gives its complete command at the beginning.
-
-For example, inside `02_OOP/08_Headers`:
+When we split work across files, we compile their `.cpp` files together. For example, in the OOP headers lesson:
 
 ```bash
 g++ -std=c++17 -Wall -Wextra -pedantic main.cpp Product.cpp -o program.exe
 ./program.exe
 ```
 
-Include the `.h`, never the `.cpp`. Declarations let you call functions from other files; the compiler and linker need their definitions.
+We include the `.h` to learn which functions are available, and add the `.cpp` files to the command to include their bodies. Each program's comments contain its complete command. On Linux or macOS we can use `program` without `.exe`.
+
+## Libraries and symbols as we encounter them
+
+A library groups tools already available in C++. With `#include` we state which ones we need. We start with `<iostream>` for screen and keyboard; we add `<string>` for text, `<fstream>` for files and `<vector>` for growing collections. Fixed-size arrays use brackets and need no extra library. Beside each additional include we explain why we use it.
+
+With `using namespace std;` we can write `cout`, `string` and `vector` using those short names. In some headers we group our functions inside `namespace course`, like a folder of names to avoid confusing them with others. With `using namespace course;` we can use those names in the example.
+
+In later topics we encounter `auto`: we let C++ infer the type from the value. It does not change what we store. With `size_t` we represent nonnegative counts and positions. With `.at(position)` we read a vector slot and get an error if it does not exist; with `[]` we must check the boundary ourselves. Traditional arrays use only brackets.
+
+We can also read the [good practices guide](GOOD_PRACTICES.md), where we connect these habits with teamwork.
 
 ## Structured programming
 
-Learn to represent data, make decisions, repeat operations and divide tasks before designing objects.
+### 01.01. Your first program
 
-### 1. Your first program
-
-`#include` brings in declarations from the standard library. `main` is the entry point and `cout` writes to the console. Returning 0 means success. `using namespace std;` lets us write standard names without a prefix.
-
-Analogy: A program is a recipe. `main` tells the cook where to start, and each statement is a step.
+We will start by displaying a message. We can picture the program as a recipe: inside main we write the steps, and with cout we send text to the screen. We put text in quotation marks; \n starts a new output line. With return 0 we indicate that the program finished successfully. Compiling turns this text file into a program the computer can run.
 
 Complete example: [main.cpp](01_Structured_Programming/01_Hello_World/main.cpp).
 
 ```cpp
 #include <iostream>
 
+// Lets us write cout without the standard namespace prefix.
 using namespace std;
 
+// Execution starts in main; returning 0 reports success.
 int main() {
     cout << "Hello, C++!\n";
     return 0;
 }
 ```
 
-### 2. Variables, types and operators
+**Practice.** Write a program that displays an introduction card.
 
-Declare `int`, `double`, `char`, `bool` and `string`. Use `const` for values that do not change. Integer division discards the fractional part; convert an operand to `double` to keep it.
+- Show a name and a course of study on separate lines.
+- Add a welcome message.
+- Finish without requesting input yet.
 
-Analogy: A variable is a labeled box. Its type determines what it can hold. `const` seals its contents.
+### 01.02. Variables, types and operators
+
+We will store data in variables. We can picture each variable as a named box: int stores whole numbers, double and float store numbers with decimal places, char stores one character, bool stores true or false, and string stores text. In count we store the number of notebooks; we multiply it by price to get total. With const we protect a value that should stay unchanged. Dividing whole numbers drops the decimal part: 5 / 2 gives 2, whereas 5.0 / 2 gives 2.5.
 
 Complete example: [main.cpp](01_Structured_Programming/02_Variables_and_Types/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
 
 int main() {
+    // const protects unchanged data; quantity remains a variable we can modify.
     const string product = "Notebook";
     int count = 3;
     const double price = 12.5;
@@ -91,23 +92,28 @@ int main() {
 
     cout << product << ": " << total << "\n";
     cout << category << " available: " << boolalpha << available << "\n";
+    // Two integers use integer division: 5 / 2 is 2. A double operand preserves the fraction.
     cout << "Integer division: " << 5 / 2 << "\n";
     cout << "Floating-point division: " << 5.0 / 2 << "\n";
 }
 ```
 
-### 3. Reading and displaying input
+**Practice.** Write a program that calculates a purchase total.
 
-`getline(cin, text)` reads a whole line. An `istringstream` parses the age from that line. Validate the extraction, the allowed range and that no extra text remains. Reject empty or whitespace-only names. Handle invalid input with clear error messages.
+- Store a product name, quantity and price.
+- Calculate and display a total with decimal places.
+- Use const for a price that stays unchanged during the program.
 
-Analogy: The console is a service window: receive a request, check it, then return a response.
+### 01.03. Reading and displaying input
+
+We will ask for a name and an age. With cout we display the question; with getline(cin, name) we store everything up to Enter, including spaces in a full name. With cin >> age we try to read a whole number. Before using it, we check that reading succeeded and the age is between 0 and 130. We also check the remaining text to reject input such as 20abc. In find_first_not_of(" \t\r") we look for something other than spaces, tabs or a carriage return; string::npos means that nothing was found. This keeps us from accepting a name made only of spaces. We will study if in the next lesson; here we use it to stop when input is incorrect.
 
 Complete example: [main.cpp](01_Structured_Programming/03_Input_and_Output/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
-#include <sstream>
 
 using namespace std;
 
@@ -115,17 +121,21 @@ int main() {
     string name;
     int age = 0;
     cout << "Name: ";
+    // We read up to Enter so a full name can contain spaces.
     if (!getline(cin, name) || name.find_first_not_of(" \t\r") == string::npos) {
         cerr << "Invalid name.\n";
         return 1;
     }
     cout << "Age: ";
-    string line;
-    if (!getline(cin, line)) {
+    // With >> we try to store an integer. If reading fails, we show the error.
+    if (!(cin >> age) || age < 0 || age > 130) {
+        cerr << "Invalid age.\n";
         return 1;
     }
-    istringstream parser(line);
-    if (!(parser >> age) || age < 0 || age > 130 || !(parser >> ws).eof()) {
+    // We check the rest of the same line: 20abc is not a valid age.
+    string remainder;
+    getline(cin, remainder);
+    if (cin.bad() || remainder.find_first_not_of(" \t\r") != string::npos) {
         cerr << "Invalid age.\n";
         return 1;
     }
@@ -133,17 +143,42 @@ int main() {
 }
 ```
 
-### 4. Conditionals
+**Practice.** Write a program that registers a person.
 
-Choose execution paths, then combine `switch` and `if` to calculate a discounted price. The integration example produces `25`.
+- Ask for a full name, city and age.
+- Allow spaces in the name and city.
+- Show a message if the name is missing or the age is invalid.
+- Display a card with the valid details.
 
-**Decisions with if and else.** A condition evaluates to `true` or `false`. `if`, `else if` and `else` select a branch. Combine conditions with `&&`, `||` and `!`.
+### 01.04.01. Decisions with if and else
 
-Analogy: A fork in the road sends you along a different path depending on the sign.
+We will choose which instructions to run. With if we ask a question, such as whether someone is at least 18. If the answer is true, we enter its braces; with else we handle the other case. We can join questions: && requires both to be true, || requires at least one, and ! reverses an answer. We can picture two doors: the condition decides which one we take.
 
-**Choosing with switch.** `switch` selects among concrete integer, character or enumeration values. `break` ends a case and `default` handles unknown values. This example uses `return`, which ends both the case and the function.
+Complete example: [main.cpp](01_Structured_Programming/04_Conditionals/01_If_Else/main.cpp).
 
-Analogy: A numbered restaurant menu sends each choice to a different preparation.
+**Practice.** Write a program that decides entry to an event.
+
+- Store an age and whether an adult accompanies the visitor.
+- Allow adults or accompanied minors to enter.
+- Display the reason for the decision.
+- Try ages 17 and 18.
+
+### 01.04.02. Choosing with switch
+
+We will choose a drink using a number. With switch we compare that number against each case, like choosing from a menu. With break we leave the switch after handling an option; with default we respond when none matches. This is useful for a fixed set of options, such as 1, 2 and 3. In this example we return the drink directly with return: we leave the function, so those cases do not need break.
+
+Complete example: [main.cpp](01_Structured_Programming/04_Conditionals/02_Switch/main.cpp).
+
+**Practice.** Write a program with a three-drink menu.
+
+- Assign a number to each drink.
+- Display the selected name and price.
+- Report an unknown option.
+- Use break to finish each case.
+
+### 01.04. Conditionals
+
+We will combine both ways of making decisions. First we choose a price with switch; then we use if to apply a student discount. The price function receives the option and discount eligibility. For an unknown option we return -1 as an agreed error signal. We separate two questions: what is being bought and which discount applies.
 
 Complete example: [main.cpp](01_Structured_Programming/04_Conditionals/main.cpp).
 
@@ -154,6 +189,7 @@ using namespace std;
 
 int price(int option, bool isStudent) {
     int base = 0;
+    // switch selects a price by option; break prevents falling through to the next case.
     switch (option) {
         case 1:
             base = 20;
@@ -164,6 +200,7 @@ int price(int option, bool isStudent) {
         default:
             return -1;
     }
+    // After choosing the price, apply the discount only when its condition holds.
     if (isStudent) {
         base -= 5;
     }
@@ -176,21 +213,54 @@ int main() {
 }
 ```
 
-### 5. Loops
+**Practice.** Write an integrated program that prices a cinema ticket.
 
-Compare when each loop checks its condition. The integration example accumulates jobs, processes them and issues a notice: `6` deliveries and `1` notice.
+- Choose among three ticket types with switch.
+- Apply a discount with if when eligible.
+- Reject unknown options.
+- Display the original price, discount and total.
 
-**Repeating with for.** `for` groups initialization, condition and progress. Use it when you know the number of repetitions.
+### 01.05.01. Repeating with for
 
-Analogy: You visit five lockers one by one without skipping any.
+We will repeat a task with for. Inside its parentheses we give the counter's starting value, the condition for continuing and the change after each turn. We can picture five numbered lockers: we inspect one, move ahead and repeat until the last. ++ increases the counter by one; the instructions inside the braces run each time.
 
-**Repeating with while.** `while` checks its condition before each iteration. It may run zero times. Change something that eventually makes the condition false.
+Complete example: [main.cpp](01_Structured_Programming/05_Loops/01_For/main.cpp).
 
-Analogy: Keep filling a piggy bank until you reach your savings goal.
+**Practice.** Write a program that displays the seven times table.
 
-**Repeating with do while.** `do while` checks its condition after the body, so it always runs at least once.
+- Use a counter from 1 to 10.
+- Calculate each multiplication inside the for loop.
+- Show each operation and result on its own line.
 
-Analogy: Try a key once before deciding whether to keep trying.
+### 01.05.02. Repeating with while
+
+We will repeat while a condition holds. With while we check before entering: if it is already false, we make no turns. We can picture a savings box that receives money until a target is reached. Inside the loop we change the savings; if the checked value never changes, we might repeat forever.
+
+Complete example: [main.cpp](01_Structured_Programming/05_Loops/02_While/main.cpp).
+
+**Practice.** Write a program that simulates weekly savings.
+
+- Start with zero savings.
+- Add 25 each week until reaching at least 110.
+- Count weeks and display savings after each one.
+- Show why the final amount can exceed the target.
+
+### 01.05.03. Repeating with do while
+
+We will make at least one attempt before asking whether to continue. In do while we run the braces first and check the condition afterward. We can picture trying a key and only then deciding whether another attempt is needed. Even if the first check is false, we have already made one turn.
+
+Complete example: [main.cpp](01_Structured_Programming/05_Loops/03_Do_While/main.cpp).
+
+**Practice.** Write a program that simulates up to three attempts.
+
+- Display the attempt message inside do.
+- Increase the counter each turn.
+- Stop after three attempts.
+- Try starting the counter at 3.
+
+### 01.05. Loops
+
+We will use all three loops in one task. With for we collect amounts from several days; with while we remove groups of ten until finished; with do while we show at least one notice. We can picture a shop: we receive orders, deliver them and finally report completion. We choose each loop according to when its condition needs checking.
 
 Complete example: [main.cpp](01_Structured_Programming/05_Loops/main.cpp).
 
@@ -201,15 +271,19 @@ using namespace std;
 
 int main() {
     int total = 0;
+    // for combines initialization, condition and update. This loop accumulates three days of
+    // work.
     for (int day = 1; day <= 3; ++day) {
         total += day * 10;
     }
     int deliveries = 0;
+    // while checks the condition before each delivery.
     while (total > 0) {
         total -= 10;
         ++deliveries;
     }
     int notices = 0;
+    // do executes the body at least once and checks its condition afterward.
     do {
         ++notices;
     } while (notices < 1);
@@ -218,22 +292,35 @@ int main() {
 }
 ```
 
-### 6. Functions
+**Practice.** Write an integrated program that organizes deliveries.
 
-Split a problem into small tasks. The integration example calculates a subtotal by value and applies a coupon by reference; the total is `50`.
+- Add orders from three days with for.
+- Handle orders one at a time with while.
+- Show at least one final notice with do while.
+- Count and display completed orders.
 
-**Functions: parameters and return values.** A function receives data, performs a task and may return a result. Parameters passed by value are copies; changing them does not change the original.
+### 01.06.01. Functions: parameters and return values
 
-Analogy: A machine receives ingredients through its input and delivers a product through its output.
+We will put a calculation in a function. We can picture a small machine: it receives ingredients, does its work and returns a result. We call the inputs parameters; with return we hand back the result. When we receive an int by value, we work with a copy: changing it inside the function does not change the original variable.
 
-**Value, reference and const reference.** Imagine a box holding the number 4. An `int` parameter receives another box containing a copy: changing it does not affect the original. An `int&` parameter puts another label on the original box: changing it affects the caller's data. `const string&` lends a read-only label and avoids copying the string.
+Complete example: [main.cpp](01_Structured_Programming/06_Functions/01_Parameters_and_Return/main.cpp).
 
-The `&` in `int& alias = box;` declares a reference; in `&box` it obtains an address. A call such as `changeOriginal(box)` does not use `&`: the parameter type decides whether to copy or use a reference. A reference needs a valid object and cannot be rebound; `alias = other` assigns the value of `other` to the original box. A `const` reference limits that access, but another non-const access can still change the object.
+**Practice.** Write a program that converts minutes to seconds.
+
+- Create a function that receives the minutes.
+- Return the result with return.
+- Call it with three different values.
+- Display the results from main.
+
+### 01.06.02. Value, reference and const reference
+
+We will compare a copy with a reference. If a variable is a box, passing by value hands over another box with the same contents. With int& we attach another label to the original box: changing the value through that label changes the original. A reference stays attached to the same box from its creation; assigning another value changes the contents, not the box it refers to. With const int& we can read through the label but cannot write. The box must keep existing while we use it.
 
 Complete example: [main.cpp](01_Structured_Programming/06_Functions/02_References/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
@@ -280,7 +367,16 @@ int main() {
 }
 ```
 
-Then compare these calls with the functions in this topic's integration example.
+**Practice.** Write a program that compares three ways of receiving a balance.
+
+- Create a function that receives int and changes only its copy.
+- Create another that receives int& and changes the original balance.
+- Create a read-only query with const int&.
+- Display the balance before and after each call.
+
+### 01.06. Functions
+
+We will combine functions that calculate with functions that modify. First we obtain a subtotal from price and quantity. Then we pass the total by reference to apply a coupon to that same variable. We can picture a cash register: one task calculates and another updates the amount. This lets us follow each step without putting everything inside main.
 
 Complete example: [main.cpp](01_Structured_Programming/06_Functions/main.cpp).
 
@@ -289,9 +385,11 @@ Complete example: [main.cpp](01_Structured_Programming/06_Functions/main.cpp).
 
 using namespace std;
 
+// Value parameters are copies; return sends the result back.
 int subtotal(int count, int price) {
     return count * price;
 }
+// int& aliases the original total: the discount changes the variable in main.
 void applyCoupon(int& total) {
     if (total >= 50) {
         total -= 10;
@@ -309,35 +407,61 @@ int main() {
 }
 ```
 
-### 7. Arrays
+**Practice.** Write an integrated purchase program with a coupon.
 
-Start with one drawer, then a cabinet. The integration example stores grades in a matrix and averages in an array: `9` and `8`.
+- Calculate the subtotal in a function that returns a number.
+- Apply the discount through a reference to the total.
+- Keep the discount from making the total negative.
+- Display the subtotal and final total.
 
-**One-dimensional arrays.** `array<int, 4>` stores four contiguous integers. Its size is fixed, with indices 0 through 3. `at()` checks bounds; `[]` requires a valid index. A traditional array is written `int data[4]` and has no `at()`.
+### 01.07.01. One-dimensional arrays
 
-Analogy: An array is a drawer for one type of item, divided into numbered compartments starting at zero. Four compartments cannot hold a fifth item.
+We will store several whole numbers in one drawer. With int drawer[4] we reserve four compartments of the same type. We count from zero: drawer[0] is the first and drawer[3] the last. Brackets choose a slot; they do not check that it exists, so we never use drawer[4]. We visit the slots to add their values and then change the second. This array has a fixed size and needs no additional library.
 
-**Matrices.** A matrix has rows and columns. Here an `array` contains arrays; both indices start at zero.
+Complete example: [main.cpp](01_Structured_Programming/07_Arrays/01_One_Dimensional/main.cpp).
 
-Analogy: A cabinet has drawers (rows), and each drawer has compartments (columns).
+**Practice.** Write a program that works with five grades.
+
+- Store them in an int grades[5] array.
+- Visit only positions 0 through 4.
+- Calculate the sum and a decimal average.
+- Display the highest grade.
+
+### 01.07.02. Matrices
+
+We will move from one drawer to a cabinet with several drawers. In int cabinet[2][3] we have two rows and three columns. We choose a row first and then a slot: cabinet[1][2] is the third slot in the second row. We use one loop for rows and another for their values. Both start at zero and stop before leaving the cabinet.
+
+Complete example: [main.cpp](01_Structured_Programming/07_Arrays/02_Matrices/main.cpp).
+
+**Practice.** Write a program that displays a two-row, three-column matrix.
+
+- Store six numbers in an array with two bracket pairs.
+- Display each row on its own line.
+- Calculate the sum of each row separately.
+- Keep every row and column access inside the array.
+
+### 01.07. Arrays
+
+We will combine a one-dimensional array with a matrix. In grades we store two students with three grades each; in averages we store one result per student. We visit a row, add its grades and divide by three. With static_cast<double> we treat the sum as a decimal number before dividing, keeping the fractional part of the average.
 
 Complete example: [main.cpp](01_Structured_Programming/07_Arrays/main.cpp).
 
 ```cpp
-#include <array>
 #include <iostream>
 
 using namespace std;
 
 int main() {
-    array<array<int, 3>, 2> grades{{{8, 9, 10}, {7, 8, 9}}};
-    array<double, 2> averages{};
-    for (size_t row = 0; row < grades.size(); ++row) {
+    // Each row holds one student's three grades; positions start at zero.
+    int grades[2][3]{{8, 9, 10}, {7, 8, 9}};
+    double averages[2]{};
+    for (size_t row = 0; row < 2; ++row) {
         int sum = 0;
-        for (int grade : grades.at(row)) {
+        for (int grade : grades[row]) {
             sum += grade;
         }
-        averages.at(row) = static_cast<double>(sum) / grades.at(row).size();
+        // Convert the sum to double so the average keeps its fractional part.
+        averages[row] = static_cast<double>(sum) / 3;
     }
 
     for (double average : averages) {
@@ -346,16 +470,22 @@ int main() {
 }
 ```
 
-### 8. Strings
+**Practice.** Write an integrated student-grade program.
 
-`string` manages a sequence of characters. Concatenate, inspect its size, search and extract substrings. Check for `string::npos` before using a search result. `size()` counts bytes; UTF-8 characters can occupy multiple bytes.
+- Store three students with four grades each in a matrix.
+- Store the three averages in another array.
+- Display each average and whether the student passed.
+- Keep grades between 0 and 10.
 
-Analogy: A string is a necklace: every character is a bead. Join necklaces or take a section.
+### 01.08. Strings
+
+We will work with text using string. We can picture a necklace where each bead is a letter or symbol. With + we join text, with size we count positions, and with find we look for a part. If the search returns string::npos, that part was not found. Only after checking do we use substr to take a piece. Here we use simple text; an accented letter can occupy more than one position depending on how it is stored.
 
 Complete example: [main.cpp](01_Structured_Programming/08_Strings/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
@@ -363,51 +493,29 @@ using namespace std;
 int main() {
     string name = "Ana";
     string greeting = "Hello, " + name;
+    // find returns the index of the matching text, or string::npos when absent.
     auto position = greeting.find(name);
 
     cout << greeting << "\n";
     if (position != string::npos) {
+        // Extract the substring only after checking that a match exists.
         cout << greeting.substr(position) << "\n";
     }
 }
 ```
 
-### 9. Pointers: addresses and contents
+**Practice.** Write a program that finds a word inside a sentence.
 
-Think of a room full of boxes. Each variable is a box of a data type; its address tells us where to locate it. A pointer is another variable, like a card holding that address. The card and the box are distinct objects. A reference is another label on the box; a pointer is an independent card that can change destination.
+- Store the sentence and word in string variables.
+- Display the position when found.
+- Show a message when find returns string::npos.
+- Extract the piece only if it was found.
 
-```cpp
-int box = 10;
-int* address = &box;
-int** cardOfCard = &address;
-```
+### 01.09. Pointers: a box, a card and a card pointing to another card
 
-```text
-cardOfCard: [address of address]
-                        |
-                        v
-address:    [address of box]
-                        |
-                        v
-box:        [10]
-```
+First we will distinguish a value from its address. A variable such as int is a box holding a whole number; a pointer is also a variable, but it holds another box's address. We can picture a finger pointing to the data. With & we obtain that address; with * we follow it to read or change the value. Copying a pointer copies the address, not the box. With int** we store a pointer's address: we follow two signs to reach the number.
 
-`&box` asks where the box is. `address` reads the address stored on the card. `*address` follows one address and reaches the integer. `&address` obtains the card's own address. `*cardOfCard` reaches the pointer `address`; `**cardOfCard` reaches the integer `box`. These are not two integer boxes: there are two variables storing addresses and one integer.
-
-**Copying, writing and redirecting.** `int* other = address` copies a card, rather than the integer. Both cards point to the same box. `*other = 25` changes that box and both pointers observe the change. `other = &anotherBox` redirects only `other`; it does not move the box or redirect `address`. `other = nullptr` leaves that card without a target; it does not destroy any box.
-
-**Passing data to functions.** First decide what the function needs to change:
-
-| Parameter | What it receives | What it can change | Typical call |
-| --- | --- | --- | --- |
-| `int value` | Another box containing a copy | Its local copy | `function(box)` |
-| `int& value` | Another label on the box | The original integer | `function(box)` |
-| `const int& value` | A read-only label | Cannot change the integer through that access | `function(box)` |
-| `int* value` | A copy of the card | The target integer; redirecting the copy does not change the caller's card | `function(address)` or `function(&box)` |
-| `int*& value` | A label on the caller's card | The original card and, with a valid target, its integer | `function(address)` |
-| `int** value` | A card pointing to another card | The original pointer through `*value`; its integer through `**value`, when both targets are valid | `function(&address)` |
-
-The example prints whether each call preserves or changes the original address. First it modifies the integer through `int*`; then it redirects a local copy; then it changes the original card through `int*&` and through `int**`. The reference to the new target requires that integer to remain alive after the call.
+A reference is another label for the same box; a pointer can change destinations or hold nullptr, meaning it points nowhere. This helps us select a product or link nodes in lists, trees and graphs. We do not need new memory to point to an existing variable. Before following a pointer we check that it has a destination and that the data still exists: an address does not keep the box alive or automatically become nullptr when the box disappears.
 
 Complete example: [main.cpp](01_Structured_Programming/09_Basic_Pointers/main.cpp).
 
@@ -482,27 +590,25 @@ int main() {
 }
 ```
 
-**Where `const` goes.** In `const int* p`, the card can be redirected, but it cannot write to the integer. In `int* const p`, the card has a fixed target and can write to the integer. In `const int* const p`, both kinds of access are limited. This does not freeze an object modifiable through other access paths: it limits what can be done through that name.
+**Practice.** Write a program that selects between two integers with a pointer.
 
-**When an address stops being usable.** A card does not keep its box alive. A pointer to a local variable becomes invalid when that variable's scope ends; do not return that address. A pointer to a destroyed object dangles even if it is not `nullptr`. Comparing with `nullptr` only detects the absence of a target, not whether an object is alive. Clearing a card also does not clear other copies of its address.
+- Create two variables and a pointer to one of them.
+- Change a value through * and display the original variable.
+- Change the pointer destination and display both integers.
+- Assign nullptr at the end and check it before reading.
+- Draw the boxes and arrows after each change.
 
-`new` creates an object with dynamic storage duration and `delete` destroys one created that way; do not use `delete` with a local variable or an element of an owning array. Later, `unique_ptr` will manage that destruction automatically. `get()` lends an address without transferring responsibility.
+### 01.10. Reading and writing files
 
-**Arrays and addresses.** An array holds contiguous elements of one type. If `int* p = numbers.data();`, `p + 1` points to the next integer, not the next byte. Pointer arithmetic is only valid within the same array and up to the position just past its final element; that past-the-end position must not be dereferenced. A `vector` can reallocate as it grows and invalidate pointers and references to its elements. An array of pointers holds cards: distinguish it from a pointer to an array's first element.
-
-In OOP, `pointer->method()` means `(*pointer).method()` for these ordinary pointers. The [combining concepts route](03_DSA/13_Combining_Concepts/README.md) extends the same analogy to arrays and vectors of pointers, matrices, nodes and classes managing lists.
-
-### 10. Reading and writing files
-
-`ofstream` writes and `ifstream` reads. Check opening, writing and reading. Objects close their files when leaving their scope. `ios::app` appends content.
-
-Analogy: Memory is a whiteboard erased when the program ends. A file is a notebook that keeps your notes.
+We will keep text after the program ends. We can think of memory as a whiteboard and a file as a notebook we put away. With ofstream we open the notebook for writing; with ifstream we open it for reading. Both tools come from <fstream>. We use ios::app to add lines at the end without erasing earlier ones. We check that opening and saving succeeded; when reading reaches the end, eof tells us there is no more data.
 
 Complete example: [main.cpp](01_Structured_Programming/10_Files/main.cpp).
 
 ```cpp
+// We read and save files using ifstream and ofstream.
 #include <fstream>
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
@@ -510,6 +616,7 @@ using namespace std;
 int main() {
     const string path = "notes_demo.txt";
     {
+        // ios::app appends to preserve lines that already exist.
         ofstream output(path, ios::app);
         if (!output) {
             cerr << "Could not open the file.\n";
@@ -522,6 +629,7 @@ int main() {
             return 1;
         }
     }
+    // Writing has finished: open a reading stream for the same file.
     ifstream input(path);
     if (!input) {
         cerr << "Could not read.\n";
@@ -531,6 +639,7 @@ int main() {
     while (getline(input, line)) {
         cout << line << "\n";
     }
+    // Reaching the end is normal; a different reading failure must be reported.
     if (!input.eof()) {
         cerr << "Read error.\n";
         return 1;
@@ -538,16 +647,22 @@ int main() {
 }
 ```
 
-### 11. Recursion
+**Practice.** Write a program that saves and reads reminders.
 
-A recursive function calls itself with a smaller problem. A base case stops the calls. Without a base case or progress, the call stack may be exhausted. `throw` signals an invalid argument; `try/catch` lets the example check the rejection.
+- Append a reminder to a text file.
+- Check that the file opened and saved successfully.
+- Read and display all its lines.
+- Run twice and check that both reminders remain.
 
-Analogy: Open a box containing a smaller box until reaching an empty one.
+### 01.11. Recursion
+
+We will solve a task by calling the same function with a smaller case; we call this recursion. Here we calculate a factorial: 4! means 4 times 3 times 2 times 1. In factorial(n) we multiply n by factorial(n - 1). We stop calls when n is 0 or 1, whose result is 1. We can picture boxes inside boxes: we open them down to the smallest and then return, combining results. We limit n to 12 so the result fits in int. With throw we report invalid data; with try and catch we catch that report and display it.
 
 Complete example: [main.cpp](01_Structured_Programming/11_Recursion/main.cpp).
 
 ```cpp
 #include <iostream>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
 
 using namespace std;
@@ -556,9 +671,11 @@ int factorial(int n) {
     if (n < 0 || n > 12) {
         throw invalid_argument("Use a number between 0 and 12");
     }
+    // Base case: 0! and 1! equal 1. Without a stopping case, recursion would not end.
     if (n <= 1) {
         return 1;
     }
+    // Each call solves a smaller problem; returning calls multiply their results.
     return n * factorial(n - 1);
 }
 
@@ -573,68 +690,90 @@ int main() {
 }
 ```
 
-### 12. Const and headers in structured programming
+**Practice.** Write a program that calculates a sum recursively.
 
-`const` prevents changing a value after declaration. These grades and their average never change, so they are constants. `const array<int, 3>&` reads grades without copying or modifying them. `constexpr` allows compile-time evaluation; `inline constexpr` header constants can be shared across implementation files.
+- Create a function that adds from 1 to n.
+- Define a case that ends without another call.
+- Use a smaller value on each call.
+- Try 0, 1 and 5 and explain how the result returns.
 
-`Grades.h` declares functions and constants, `Grades.cpp` defines their operations, and `main.cpp` organizes execution. Splitting a program into files does not require a class.
+### 01.12. Const and headers in structured programming
 
-Analogy: The header is an instruction card describing available services. The implementation does the work. `const` puts glass over the drawer: you can inspect grades without moving them.
+We will split a program into files. In Grades.h we list the functions we can use; in Grades.cpp we write their steps; from main.cpp we call them. We can picture the .h as a menu and the .cpp as the kitchen. With const we protect the grades from accidental changes. We also pass their count: when receiving an array as a parameter, the function needs that count to know where to stop. With #ifndef, #define and #endif we avoid reading the same header twice inside a file being compiled.
 
 Complete example: [main.cpp](01_Structured_Programming/12_Const_and_Headers/main.cpp).
 
 ```cpp
 #include "Grades.h"
 #include <iostream>
-#include <stdexcept>
 
 using namespace std;
 using namespace course;
 
 int main() {
-    const array<int, 3> grades{8, 9, 10};
-    try {
-        const double average = calculateAverage(grades);
-        cout << "Average: " << average << "\n";
-        if (hasPassed(average)) {
-            cout << "Passed\n";
-        } else {
-            cout << "Failed\n";
-        }
-    } catch (const invalid_argument& error) {
-        cerr << error.what() << "\n";
+    const int grades[3]{8, 9, 10};
+    double average = 0;
+    // We receive true for valid grades; the average is written through a reference.
+    if (!calculateAverage(grades, 3, average)) {
+        cerr << "Grades must be between 0 and 10.\n";
         return 1;
+    }
+    cout << "Average: " << average << "\n";
+    if (hasPassed(average)) {
+        cout << "Passed\n";
+    } else {
+        cout << "Failed\n";
     }
 }
 ```
 
-### 13. Integration: a grade report
+**Practice.** Write a grade program split across three files.
 
-Combine functions, references, strings, arrays, loops, conditions, a non-owning pointer and a file. Read the steps in order: compute, classify, build the report and save it.
+- Declare functions in a .h and write their bodies in another .cpp.
+- Receive a const grade array together with its count.
+- Calculate the average and highest grade without modifying the grades.
+- Display from main whether the average reaches the passing grade.
+- Compile both .cpp files together.
 
-Analogy: A teacher checks a drawer of grades, calculates an average and records it in a notebook.
+### 01.13. Integration: a grade report
+
+We will bring the lessons together in a report. We store grades in an array, calculate their average with a function and use a condition to decide whether the student passed. With observer we store the result's address: *observer reads that same average. We then build a text line and append it to a file. We can follow the data all the way through: grades, calculation, decision, message and saved notebook.
 
 Complete example: [main.cpp](01_Structured_Programming/13_Integration/main.cpp).
 
 ```cpp
-#include <array>
+// We read and save files using ifstream and ofstream.
 #include <fstream>
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
 
-double average(const array<int, 3>& grades) {
-    int sum = 0;
-    for (int grade : grades) {
+bool average(const int grades[], int count, double& outputAverage) {
+    if (count <= 0) {
+        return false;
+    }
+    long long sum = 0;
+    for (int index = 0; index < count; ++index) {
+        const int grade = grades[index];
+        if (grade < 0 || grade > 10) {
+            return false;
+        }
         sum += grade;
     }
-    return static_cast<double>(sum) / grades.size();
+    outputAverage = static_cast<double>(sum) / count;
+    return true;
 }
 
 int main() {
-    const array<int, 3> grades{8, 9, 10};
-    const double result = average(grades);
+    const int grades[3]{8, 9, 10};
+    double result = 0;
+    if (!average(grades, 3, result)) {
+        cerr << "Invalid grades.\n";
+        return 1;
+    }
+    // This pointer reads the average without modifying it or owning its memory.
     const double* observer = &result;
 
     string status;
@@ -644,6 +783,7 @@ int main() {
         status = "Failed";
     }
     const string report = "Ana: " + to_string(*observer) + " - " + status;
+    // The report combines an array, function, condition, string and file in one workflow.
     ofstream output("report_demo.txt", ios::app);
     if (!output) {
         cerr << "Could not open the report.\n";
@@ -660,27 +800,33 @@ int main() {
 }
 ```
 
+**Practice.** Write an integrated school-report program.
+
+- Store names and three grades per student using string and arrays.
+- Calculate averages and highest grades with functions.
+- Use a reference to update a value and a pointer to read another.
+- Classify each average with if and display the report.
+- Save reports without erasing earlier ones.
+- Separate declarations and functions into a .h and a .cpp.
+
 ## Object-oriented programming
 
-Apply the preceding foundations to state, behavior, ownership and data access.
+### 02.01. Classes and objects
 
-[Block guide](02_OOP/README.md).
-
-### 1. Classes and objects
-
-A class defines data and operations. An object is a concrete instance. `public` makes members accessible from outside; the next lesson protects state with `private`.
-
-Analogy: A class is a bicycle blueprint. Every bicycle built from it is an object with its own color.
+We will bring together data and actions that belong to the same thing. We can picture a class as the blueprint for a Minecraft block: it describes the data and actions of each block created from it. Each actual block would be an object. In this program we use Bicycle: we store color and speed, and pedal increases the speed. We create red and blue separately; pedaling red does not change blue. We call the stored data attributes and the functions inside the class methods. With public we allow main to use them.
 
 Complete example: [main.cpp](02_OOP/01_Classes_and_Objects/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
 
+// The class is a blueprint; each object has its own color and speed.
 class Bicycle {
+// These public attributes introduce objects; the next lesson protects their state.
 public:
     string color;
     int speed = 0;
@@ -701,11 +847,16 @@ int main() {
 }
 ```
 
-### 2. Encapsulation and const
+**Practice.** Write a program with a Minecraft-inspired Block class.
 
-`private` protects state. Public methods control valid changes. A `const` method queries without changing the object. Integer cents avoid floating-point rounding; this example limits its balance to 1,000,000 cents. You do not need a getter and setter for every attribute.
+- Store a name, a texture as text and a hardness value.
+- Create two objects with different data.
+- Add an action that reduces hardness without making it negative.
+- Show that changing one block does not change the other.
 
-Analogy: A piggy bank does not let you reach directly inside: its operations control deposits and withdrawals.
+### 02.02. Encapsulation and const
+
+We will protect a savings-box balance. Instead of allowing any change from main, we keep it inside the class and provide deposit and withdraw operations. Each function checks its rules before changing the balance. We call this encapsulation: keeping data and its rules behind controlled operations. Inside class, members are private unless we write public. With balance() const we can read without changing the savings: const after a function promises to respect the object's data.
 
 Complete example: [main.cpp](02_OOP/02_Encapsulation/main.cpp).
 
@@ -716,6 +867,7 @@ using namespace std;
 
 class PiggyBank {
     int balanceCents = 0; // Integer cents avoid rounding errors.
+// balance is private by default in class. Only validated methods can change it.
 public:
     bool deposit(int cents) {
         if (cents <= 0 || cents > 1000000 - balanceCents) {
@@ -731,6 +883,7 @@ public:
         balanceCents -= cents;
         return true;
     }
+    // const after the parentheses promises that this query does not modify the object.
     int balance() const {
         return balanceCents;
     }
@@ -755,16 +908,23 @@ int main() {
 }
 ```
 
-### 3. Constructors, destructors and RAII
+**Practice.** Write a program with a savings box that protects its balance.
 
-A constructor establishes initial state; a destructor runs when the object's lifetime ends. RAII ties a resource's lifetime to an object's lifetime. Strings, files and smart pointers already manage resources this way.
+- Keep the balance private.
+- Accept positive deposits and withdrawals within the balance.
+- Return whether each operation succeeded.
+- Read the balance through a const method.
+- Try withdrawing more than the available money.
 
-Analogy: Opening a shop puts up its sign; closing it puts away the resources it managed.
+### 02.03. Constructors, destructors
+
+We will observe when an object starts and ends. Its constructor has the class name and prepares its data; in Session it stores the user and announces entry. Its destructor has ~ before the name and runs when the object's lifetime ends. We can picture opening a shop and closing it when leaving. Here the braces mark that stay: reaching their closing brace displays the exit message. Later we will use the same idea to release memory and close files automatically.
 
 Complete example: [main.cpp](02_OOP/03_Constructors_and_Destructors/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
@@ -773,9 +933,11 @@ class Session {
     string user;
 
 public:
+    // The constructor initializes the object; explicit prevents unexpected implicit conversions.
     explicit Session(const string& name) : user(name) {
         cout << "Enter " << user << "\n";
     }
+    // The destructor runs automatically when the object's lifetime ends.
     ~Session() {
         cout << "Leave " << user << "\n";
     }
@@ -793,11 +955,16 @@ int main() {
 }
 ```
 
-### 4. Composition
+**Practice.** Write a program that shows the lifetime of two sessions.
 
-An object can contain another: a has-a relationship. Members are constructed before the containing object's constructor body runs.
+- Store a name when constructing each object.
+- Display a message in each constructor and destructor.
+- Create both objects inside the same braces.
+- Record the order of their messages when leaving.
 
-Analogy: A car has an engine; a car is not a type of engine.
+### 02.04. Composition
+
+We will build one thing using another as a part. A Car has an Engine, so we store an Engine object inside Car. We call this relationship composition. From main we ask the car to start, and the car turns on its engine. We can picture a block containing an inventory: having a part does not mean being that part. When the car's lifetime ends, its contained engine ends too.
 
 Complete example: [main.cpp](02_OOP/04_Composition/main.cpp).
 
@@ -819,6 +986,7 @@ public:
 };
 
 class Car {
+    // Composition: a Car HAS an Engine. Its lifetime is tied to the car's lifetime.
     Engine engine;
 
 public:
@@ -839,11 +1007,16 @@ int main() {
 }
 ```
 
-### 5. Inheritance
+**Practice.** Write a program with a chest containing an inventory.
 
-A derived class reuses a base when an is-a relationship exists. Public inheritance preserves that relationship for callers. Prefer composition for has-a relationships. This base is not used to destroy derived objects through base pointers; the next lesson covers virtual destructors.
+- Create an Inventory class with an item count.
+- Store an Inventory as part of Chest.
+- Add a chest operation that reads the count.
+- Create two chests and check that their inventories are independent.
 
-Analogy: An electric bicycle is still a bicycle and adds a battery.
+### 02.05. Inheritance
+
+We will describe a more specific version of something we already have. An ElectricBicycle is still a Bicycle, but it also has a battery. With : public Bicycle we retain the bicycle's public operations and add our own. We call this relationship inheritance. In assist we check the battery before spending it and pedaling. This fits an “is a” relationship; for “has a part” we use the composition from the previous lesson.
 
 Complete example: [main.cpp](02_OOP/05_Inheritance/main.cpp).
 
@@ -864,6 +1037,7 @@ public:
     }
 };
 
+// Inheritance: an electric bicycle IS a bicycle and reuses its public operations.
 class ElectricBicycle : public Bicycle {
     int battery = 100;
 
@@ -891,22 +1065,29 @@ int main() {
 }
 ```
 
-### 6. Polymorphism and abstract classes
+**Practice.** Write a program with an electric bicycle.
 
-`virtual` selects behavior using the actual object type. `= 0` declares an abstract operation; `override` verifies a correct override. A polymorphic base needs a virtual destructor when derived objects are destroyed through it.
+- Keep a Bicycle class’s operations through inheritance.
+- Add a battery with an initial charge.
+- Prevent assistance when the battery is too low.
+- Display speed and charge after several attempts.
 
-Analogy: The play-sound button works with different instruments, and each instrument decides which sound to make.
+### 02.06. Polymorphism and abstract classes
+
+We will request the same action from different objects. With play we ask an Instrument to make a sound, but a Guitar and a Drum answer differently. We call this polymorphism. With virtual we allow each instrument its own answer; with = 0 we leave that answer unspecified in the general class; with override we check that the new function matches the one being replaced. We pass a reference to use the original instrument. A virtual destructor allows cleaning up the complete object if we later delete it through an Instrument pointer.
 
 Complete example: [main.cpp](02_OOP/06_Polymorphism/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
 
 class Instrument {
 public:
+    // A polymorphic base uses a virtual destructor to destroy derived objects correctly.
     virtual ~Instrument() = default;
     virtual string sound() const = 0;
 };
@@ -924,6 +1105,7 @@ public:
     }
 };
 
+// The reference avoids copying the base; virtual selects the sound using the actual object.
 void play(const Instrument& instrument) {
     cout << instrument.sound() << "\n";
 }
@@ -938,23 +1120,51 @@ int main() {
 }
 ```
 
-### 7. Memory and pointers in OOP
+**Practice.** Write a program that plays three instruments.
 
-Connect ownership to object lifetime. The integration example owns a student through `unique_ptr` and queries it through a non-owning pointer.
+- Keep a general Instrument class with a virtual sound function.
+- Create three classes that return different sounds.
+- Use one play function for all three objects.
+- Give the general class a virtual destructor.
 
-**Manual dynamic memory.** `new` constructs a dynamic object and `delete` destroys it. Exactly one owner must be responsible for releasing it. Arrays made with `new[]` need `delete[]`. Usually prefer values, vectors or smart pointers.
+### 02.07.01. Manual dynamic memory
 
-Analogy: Rent a locker, keep its address and return it exactly once. Returning it twice or visiting it afterward is an error.
+We will create a box while the program is running. With new int(42) we reserve space for an integer and receive its address. We store that address in number and read 42 through *number. The box does not disappear merely because we stop using the pointer variable: here we must release it exactly once with delete. We then set number to nullptr to avoid reusing the address. We never use delete on an ordinary local variable or follow a pointer after releasing its data.
 
-**Ownership with unique_ptr.** `unique_ptr` has one owner and releases its object automatically. `make_unique` constructs it. `move` transfers ownership; a `unique_ptr` cannot be copied. Use raw pointers only as observers when the target's lifetime is guaranteed.
+Complete example: [main.cpp](02_OOP/07_Memory_and_Pointers/01_New_and_Delete/main.cpp).
 
-Analogy: A unique key controls the locker. When handing over that key, the former owner no longer holds it.
+**Practice.** Write a program that allocates an integer and changes its value.
+
+- Create the integer with new and store its address.
+- Display and modify it through the pointer.
+- Release it exactly once with delete.
+- Set the pointer to nullptr and never read the released data.
+
+### 02.07.02. Ownership with unique_ptr
+
+We will give one tool responsibility for releasing the box. With unique_ptr from <memory>, we keep that responsibility alongside the address. make_unique creates the data; get lends us its address for reading. That borrowed pointer must not release it. With move from <utility>, we transfer responsibility to newOwner and leave the old owner empty. When the new owner ends, the integer is released automatically. This helps us avoid forgetting delete.
+
+Complete example: [main.cpp](02_OOP/07_Memory_and_Pointers/02_Unique_Ptr/main.cpp).
+
+**Practice.** Write a program that transfers responsibility for a value.
+
+- Create an integer with make_unique.
+- Read it through a pointer obtained with get.
+- Transfer it to another unique_ptr with move.
+- Check that the old owner is empty.
+- Stop using the borrowed pointer before the data is released.
+
+### 02.07. Memory and pointers in OOP
+
+We will apply pointers to a Student object. We create the student with make_unique and lend its address with get. With observer->getName() we follow that address and call a student function; -> means following the pointer and using the dot. Calling reset releases the student. The borrowed address then becomes unusable: we must stop using it and set it to nullptr. The borrowed pointer is never responsible for deleting the student.
 
 Complete example: [main.cpp](02_OOP/07_Memory_and_Pointers/main.cpp).
 
 ```cpp
 #include <iostream>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
@@ -972,25 +1182,27 @@ public:
 
 int main() {
     auto owner = make_unique<Student>("Ana");
+    // get returns an observer: unique_ptr remains the owner and releases the object.
     const Student* observer = owner.get();
 
     cout << observer->getName() << "\n";
+    // reset destroys the object. The observer can no longer be dereferenced afterward.
     owner.reset();
     observer = nullptr;
 }
 ```
 
-[Topic and variant guide](02_OOP/07_Memory_and_Pointers/README.md).
+**Practice.** Write an integrated program with an object managed by unique_ptr.
 
-### 8. Const, headers and compiling multiple files
+- Create a class with a name and a const query.
+- Create an object with make_unique and observe it with get.
+- Display its name using ->.
+- Clear the observer before calling reset.
+- Explain which variable released the object.
 
-`Product.h` declares the class, `Product.cpp` defines its methods, and `main.cpp` uses it. `#ifndef` guards prevent repeated declarations. Compile both implementation files and link them. Include headers, never implementation files. Declarations live in `namespace course`, where `using namespace std;` does not introduce standard names into the includer's global namespace.
+### 02.08. Const, headers and compiling multiple files
 
-Analogy: The header is a restaurant menu, the implementation is its kitchen, and `main` places the order.
-
-`main.cpp` creates a `const Product`: you can query its name and price without modifying it. Query methods put `const` after their parentheses in both the header and implementation, allowing calls on const objects. The name query returns `const string&` to avoid a copy and protect the original text.
-
-Distinguish three uses: const values, read-only `const T&` parameters or results, and const methods that inspect object state. A price-changing method should not be const.
+We will separate a class so several programs can use it. In Product.h we show its stored data and available operations; in Product.cpp we write how those operations work. From main we create a Product with a name and price. We store prices as whole cents to avoid small decimal-rounding differences. With const we protect the object and its queries. To run it we compile main.cpp together with Product.cpp; including the .h only announces the functions, not their bodies.
 
 Complete example: [main.cpp](02_OOP/08_Headers/main.cpp).
 
@@ -1002,32 +1214,59 @@ using namespace std;
 using namespace course;
 
 int main() {
+    // A const object allows only methods that respect its state, such as these queries.
     const Product notebook("Notebook", 1250);
 
     cout << notebook.getName() << ": " << notebook.getPrice() << " cents\n";
 }
 ```
 
-[Topic and variant guide](02_OOP/08_Headers/README.md).
+**Practice.** Write a program with a Product class split into files.
 
-### 9. DAO: separating data access
+- Store a name and a private price in cents.
+- Declare the class in Product.h and its functions in Product.cpp.
+- Read both values through const methods.
+- Create two products from main and display their details.
+- Reject a negative price.
 
-Study in-memory CRUD and persistence. The integration example combines CRUD and serialization using a string stream without writing files. Definitions inside classes are implicitly inline. This DAO uses linear queries and allows at most 10,000 books; a database is a later step when needed.
+### 02.09.01. In-memory DAO and CRUD
 
-**In-memory DAO and CRUD.** DAO means Data Access Object: a data-access pattern, not a paradigm. `BookDAO` centralizes create, read, update and delete (CRUD). Call its operations without manipulating storage directly. For now, view `vector` as a growing collection; DSA studies it in detail. The educational DAO accepts at most 10,000 books, consistently across creation, saving and loading.
+We will bring storing, finding, updating and removing books together in BookDAO. We can picture a catalog keeper: we request a book by its id, a number identifying it. DAO is the usual name for a class dedicated to data access. Here we keep books in a vector, so they disappear when the program ends. find lends a pointer to a book, or returns nullptr if it is missing. We check before reading it; after changing the catalog we find it again because the vector may move its books.
 
-Analogy: The librarian knows where books are stored. Ask for a book by its ID without inspecting every shelf.
+Complete example: [main.cpp](02_OOP/09_DAO/01_In_Memory_DAO/main.cpp).
 
-**Persisting a DAO in a file.** `save` serializes a snapshot and `load` validates it before replacing memory contents. `quoted` preserves spaces and quotes. Each snapshot begins with its book count. The example appends snapshots and reads the latest complete one. It reports damaged snapshots without silently discarding them.
+**Practice.** Write an in-memory book catalog.
 
-Analogy: The librarian photographs the catalog at closing time and restores its latest photograph when reopening.
+- Create books with positive ids and nonempty titles.
+- Prevent duplicate ids.
+- Find, update and remove by id.
+- Check the pointer before displaying a result.
+- Report missing books.
+
+### 02.09.02. Persisting a DAO in a file
+
+We will save the catalog in a file so we can retrieve it later. First we ask the DAO to write its books and then read them into another catalog. We append a complete copy each run; while reading, we keep the last complete copy. If data is invalid, we report it without replacing the catalog with an incomplete reading. To try that case we use istringstream: a tool from <sstream> that reads text already in memory as if it came from a file. This lets us test damaged input without damaging the real file.
+
+Complete example: [main.cpp](02_OOP/09_DAO/02_File_DAO/main.cpp).
+
+**Practice.** Write a catalog that can be saved and restored.
+
+- Save at least two books in a file.
+- Check for opening, writing and reading errors.
+- Restore the books in another DAO object.
+- Try titles containing spaces and quotation marks.
+- Reject incomplete input while preserving the previous catalog.
+
+### 02.09. DAO: separating data access
+
+We will follow the catalog's whole workflow: create books, change a title, remove a book and restore saved data. Here we use stringstream from <sstream> as a temporary notebook in memory: we can write into it and read back without creating a disk file. We then try input with repeated ids. Our rule is simple: if we cannot restore every record correctly, we keep the catalog we already had.
 
 Complete example: [main.cpp](02_OOP/09_DAO/main.cpp).
 
 ```cpp
 #include "BookDAO.h"
-#include <cassert>
 #include <iostream>
+// We read or write text in memory as if it were a file.
 #include <sstream>
 
 using namespace std;
@@ -1047,6 +1286,7 @@ int main() {
     if (!(original.remove(1))) {
         return 1;
     }
+    // Simulate a file in memory to save and restore without creating disk data.
     stringstream file;
     if (!(original.save(file))) {
         return 1;
@@ -1055,37 +1295,53 @@ int main() {
     if (!(copy.load(file))) {
         return 1;
     }
-    assert(copy.all().size() == 1);
-    assert(copy.findById(2)->title == "Objects and \"classes\"");
+    if (!(copy.all().size() == 1)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(copy.findById(2)->title == "Objects and \"classes\"")) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     istringstream duplicates("2\n2 \"One\"\n2 \"Two\"\n");
     if (copy.load(duplicates)) {
         return 1;
     }
-    assert(copy.all().size() == 1);
+    if (!(copy.all().size() == 1)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     cout << copy.findById(2)->title << "\n";
 }
 ```
 
-[Topic and variant guide](02_OOP/09_DAO/README.md).
+**Practice.** Write an integrated program that manages and restores books.
 
-### 10. Integration: a library using objects
+- Create three books, change a title and remove one.
+- Save the result and load it into a second catalog.
+- Compare restored books with the originals.
+- Try a duplicate id and incomplete input.
+- Keep previous data if loading fails.
 
-Encapsulate a DAO using composition and practice polymorphism with two derived views. Reuse the previous header. `unique_ptr` owns the view, and a virtual destructor allows releasing its concrete type.
+### 02.10. Integration: a library using objects
 
-Analogy: The library has a librarian and shows its catalog through either a detailed service window or a summary window.
+We will build a small library with several cooperating classes. Library contains a DAO for storing books. A View decides how to show them: DetailView prints their details and SummaryView shows the count. We request the catalog in the same way even when changing views. This brings together composition, protected data, const queries and polymorphism. With unique_ptr we make clear who releases the view when we stop using it.
 
 Complete example: [main.cpp](02_OOP/10_Integration/main.cpp).
 
 ```cpp
 #include "../09_DAO/BookDAO.h"
 #include <iostream>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
 using namespace course;
 
 class Library {
+    // Composition: the library delegates storage to the DAO.
     BookDAO dao;
 
 public:
@@ -1127,6 +1383,8 @@ int main() {
     if (library.registerBook({1, "Duplicate"})) {
         return 1;
     }
+    // Polymorphism lets one interface show details or a summary; unique_ptr manages its
+    // lifetime.
     unique_ptr<View> view = make_unique<DetailView>();
 
     cout << view->render(library.catalog());
@@ -1136,17 +1394,20 @@ int main() {
 }
 ```
 
+**Practice.** Write an integrated OOP library application.
+
+- Separate classes and functions into .h and .cpp files.
+- Store books through a DAO contained in Library.
+- Offer detail and summary views through a shared base class.
+- Reject duplicate ids and empty titles.
+- Use const for read-only queries.
+- Save and restore the catalog from a file.
+
 ## Data structures and algorithms
 
-Choose structures based on their operations and costs. DSA is a field of study that can use both structured programming and OOP.
+### 03.01. Complexity: time and space
 
-[Block guide](03_DSA/README.md).
-
-### 1. Complexity: time and space
-
-To compare programs, imagine increasing the amount of data. Reaching a slot directly by its index takes a fixed amount of work even when there are more slots (written O(1); it does not mean exactly one step). Inspecting every slot does increase the work: 20 visits are twice as many as 10 (O(n), where n is the number of elements). If we repeatedly halve what remains, going from 8 to 1 takes three divisions and from 16 to 1 takes four (O(log n); here log n describes growth through halving). These abbreviations are called Big O notation and describe how work can grow, without specifying exact seconds. We can also count the extra data the program needs to keep: that is auxiliary memory.
-
-Analogy: Finding a numbered compartment is direct. Inspecting every compartment takes longer as the cabinet grows. Halving a sorted guide discards many pages at once.
+We will compare how much work we do as data grows. Reaching a slot directly takes a fixed amount of work even with more slots (O(1); it does not mean exactly one step). Checking ten slots means ten visits, and checking twenty means twenty (O(n), where n is the slot count). By halving, we go from 8 to 1 in three divisions and from 16 to 1 in four (O(log n), where log n describes growth through halving). We call these abbreviations Big O notation: they describe growth, not exact seconds. We can also count extra data kept while doing the task; we call that auxiliary memory.
 
 Complete example: [main.cpp](03_DSA/01_Complexity/main.cpp).
 
@@ -1158,6 +1419,8 @@ using namespace std;
 int halvingSteps(int n) {
     int steps = 0;
     while (n > 1) {
+        // Each iteration halves what remains: 1024 reaches 1 in ten divisions. Starting with twice
+        // as many, 2048, only adds one division (O(log n) growth, with n as the initial amount).
         n /= 2;
         ++steps;
     }
@@ -1170,27 +1433,63 @@ int main() {
 }
 ```
 
-### 2. Vectors
+**Practice.** Write a program that compares two ways of counting work.
 
-Study size, traversal, modification and stored objects. The integration example organizes tasks, completes one and removes it, leaving `Compile` and `Practice`.
+- Count visits when traversing 8, 16 and 32 elements.
+- Count the divisions needed to reduce each number to 1.
+- Display both results in a table.
+- Explain in words why they grow differently.
 
-**Creating and traversing a vector.** `vector` is a contiguous array whose size can change. `size()` counts elements; `capacity()` counts reserved slots. Appending with `push_back` normally uses a free slot. When reserved storage fills up, the vector needs another block and must relocate its elements: that insertion may visit all n existing elements (O(n)). Spreading these expansions over many insertions keeps the work per insertion bounded by a constant amount; this is called amortized cost (amortized O(1)).
+### 03.02.01. Creating and traversing a vector
 
-Analogy: A growing drawer can move to a larger drawer when full. Its compartments still start at index zero.
+We will use a drawer whose number of slots can grow: vector<int>, from <vector>. With push_back we add at the end; with size we check how many values it holds. We visit the numbers to add them. When reserved space fills up, the vector can move to another block with its data; old addresses no longer work. Usually adding at the end takes little work; spreading those moves across many insertions keeps average work per insertion bounded (amortized O(1): we spread growth costs across many operations).
 
-**Inserting and erasing in vectors.** `insert` and `erase` take iterators. `begin()` points to the first element; `end()` is past the last and must not be dereferenced. Inserting or erasing in the middle shifts the elements after that position. More elements to move means more work; in the worst case nearly all of them may move (O(n), where n is the vector element count). Reallocation invalidates all pointers, references and iterators; erasure invalidates them from the erased position onward.
+Complete example: [main.cpp](03_DSA/02_Vectors/01_Create_and_Traverse/main.cpp).
 
-Analogy: Making room in the middle of a drawer requires moving the items in the following compartments.
+**Practice.** Write a program that gathers quantities in a vector.
 
-**Vectors of objects.** A vector can store objects of one type. Members of a `struct` are public by default; members of a `class` are private by default. `const auto&` traverses without copying or changing objects.
+- Start with two numbers and append three more with push_back.
+- Display the element count.
+- Traverse them to calculate a sum and average.
+- Check that it is not empty before dividing.
 
-Analogy: The drawer now stores complete cards, each containing a name and a grade.
+### 03.02.02. Inserting and erasing in vectors
+
+We will open and remove spaces in the middle of a vector. With begin() we obtain a position pointing to the start; begin() + 1 points to the second element. We call this way of pointing to a position an iterator. insert places a value and shifts later ones; erase removes a value and closes the gap. This may move nearly all n elements (O(n)). After changing the vector we obtain needed positions again. Before pop_back we check empty so we do not remove from an empty vector.
+
+Complete example: [main.cpp](03_DSA/02_Vectors/02_Insert_and_Erase/main.cpp).
+
+**Practice.** Write a program that edits a list of numbers.
+
+- Insert a number between two others.
+- Remove the first and display the result.
+- Remove the last only when elements remain.
+- Display the vector after each operation.
+
+### 03.02.03. Vectors of objects
+
+We will store complete records inside the vector. With struct Student we group a name and a grade, like two boxes on one card. vector<Student> holds those cards and push_back adds another. With const auto& we read each card without copying it: auto lets C++ infer the type, & gives another label for the same object, and const prevents changes through that label. We use a dot to choose a field on the card.
+
+Complete example: [main.cpp](03_DSA/02_Vectors/03_Vector_of_Objects/main.cpp).
+
+**Practice.** Write a program that stores student records.
+
+- Group name and grade in a struct.
+- Store at least three students in a vector.
+- Traverse records through const references.
+- Display students whose grade is at least 6.
+
+### 03.02. Vectors
+
+We will combine creation, editing and object records in a task list. Each Task stores its name and whether it is finished. We insert a task, mark another and remove a record. We can picture a notebook where we add and remove rows. The vector keeps the data together, but positions may change when inserting or erasing; we therefore distinguish a task's name from its current position.
 
 Complete example: [main.cpp](03_DSA/02_Vectors/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -1202,6 +1501,7 @@ struct Task {
 
 int main() {
     vector<Task> tasks{{"Read", false}, {"Practice", false}};
+    // Inserting in the middle shifts following elements; the vector preserves their order.
     tasks.insert(tasks.begin() + 1, {"Compile", false});
     tasks.at(0).done = true;
     tasks.erase(tasks.begin());
@@ -1211,29 +1511,24 @@ int main() {
 }
 ```
 
-[Topic and variant guide](03_DSA/02_Vectors/README.md).
+**Practice.** Write an integrated task program using vector.
 
-### 3. Linked lists
+- Store each task name and status in a struct.
+- Add one task at the end and another in the middle.
+- Mark a task as finished.
+- Remove a task and display the rest.
+- Check positions before using them.
 
-All three implementations store integers to focus on links and ownership. Manual `new/delete` teaches the mechanism; standard containers manage storage for common applications. The integration example uses all three headers and removes 20 from each list. Compare traversals, then remove the first node, the last node and the only node.
+### 03.03.01. Singly linked list
 
-**Singly linked list.** Every node holds a value and the address of the next node. The last points to `nullptr`. Reaching another node means following links one by one. Traversing the list or searching for a value may require visiting all n nodes (O(n)); n is the number of nodes. The header appends values, removes the first matching value and releases all nodes. Appending here also follows links until it reaches the last node, so more nodes mean more work.
-
-Analogy: A treasure hunt: every card contains a value and a clue pointing to the next card; the last says end.
-
-**Doubly linked list.** Each node knows its previous and next node. Keeping a head and tail lets us append by adjusting a fixed number of links, without traversing the list (O(1)). We can also traverse in either direction. Searching for a value may require inspecting all n nodes (O(n)); unlinking an already located node adjusts its neighboring links.
-
-Analogy: Train cars have couplings at both ends, allowing travel in either direction.
-
-**Circular linked list.** The last node points to the first. Stop on returning to the start; waiting for `nullptr` would loop forever. Keeping the last node lets us append by adjusting a few links without traversing the list (O(1)). Searching or removing by value may require inspecting all n nodes (O(n)); n is the node count. This variant is singly linked and circular.
-
-Analogy: A wheel of turns returns to the first person after serving the last.
+We will build a chain of boxes called nodes. Each node stores a value and a pointer to the next node, like a note showing where the next box is. The list stores the first address; the last points to nullptr. To search we follow the notes one at a time and may visit all n nodes (O(n)). When removing a node we join its previous neighbor to the next before releasing the box. We can see those steps inside SinglyLinkedList.h.
 
 Complete example: [main.cpp](03_DSA/03_Linked_Lists/01_Singly_Linked/main.cpp).
 
 ```cpp
 #include "SinglyLinkedList.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -1244,6 +1539,7 @@ int main() {
     if (!(list.values().empty() && !list.remove(99))) {
         return 1;
     }
+    // The nodes will form 10 -> 20 -> 30; the header implements the links.
     list.append(10);
     list.append(20);
     list.append(30);
@@ -1261,25 +1557,78 @@ int main() {
 }
 ```
 
-[Topic and variant guide](03_DSA/03_Linked_Lists/README.md).
+**Practice.** Write a program with a singly linked list.
 
-### 4. Stacks
+- Add three numbers using nodes and links.
+- Display them by following the links.
+- Remove a middle node without losing the others.
+- Try an empty list and removing its last node.
+- Release every node when it leaves the list.
 
-Compare a vector implementation with the stack adapter. The integration example verifies that both produce `3 2 1`.
+### 03.03.02. Doubly linked list
 
-**A stack using vector.** A stack follows LIFO: last in, first out. Use `push_back`, `back` and `pop_back`; check `empty` before accessing or removing a value.
+We will add a second arrow to each node: one to the next and another to the previous node. This lets us traverse in both directions. We also keep the first and last addresses so appending adjusts a few arrows without traversing the list (O(1)). When removing a node we repair both connections, like removing a train carriage linked at both ends. We can follow those pointer changes in DoublyLinkedList.h.
 
-Analogy: A stack of plates accepts and removes plates at its top.
+Complete example: [main.cpp](03_DSA/03_Linked_Lists/02_Doubly_Linked/main.cpp).
 
-**The stack adapter.** `stack` exposes only stack operations: `push`, `top`, `pop`, `size` and `empty`. `pop` removes without returning a value; query `top` first. An adapter restricts operations on its underlying container.
+**Practice.** Write a program with a doubly linked list.
 
-Analogy: A box of plates with one opening at the top cannot expose the middle plate.
+- Store three numbers and display both directions.
+- Remove the middle node and traverse again.
+- Try removing the first and last nodes.
+- Check that backward links agree with forward links.
+
+### 03.03.03. Circular linked list
+
+We will close the chain into a circle: the last node points back to the first. We can picture players taking repeated turns. Since we do not reach nullptr after one lap, we stop when we return to the start. We keep the last node to append with a few changes (O(1)). Removing the only node leaves an empty list; removing any other node keeps the circle closed.
+
+Complete example: [main.cpp](03_DSA/03_Linked_Lists/03_Circular/main.cpp).
+
+**Practice.** Write a program that organizes turns in a circular list.
+
+- Add three players identified by number.
+- Display exactly one lap of turns.
+- Remove a player without breaking the circle.
+- Try one remaining player and then empty the list.
+
+### 03.03. Linked lists
+
+We will compare all three lists using the same numbers. In the singly linked list we follow one arrow, in the doubly linked list we can go back, and in the circular list we return to the beginning. We insert 10, 20 and 30, remove 20 and check what remains. The main difference is how we link nodes and when traversal stops. We can draw the same three boxes and change only their arrows to understand it.
+
+Complete example: [main.cpp](03_DSA/03_Linked_Lists/main.cpp).
+
+**Practice.** Write an integrated program comparing three lists.
+
+- Insert the same five values into singly linked, doubly linked and circular lists.
+- Remove the same value from all three.
+- Display forward traversals and the doubly linked list in reverse.
+- Limit the circular list to one lap.
+- Try each list after emptying it.
+
+### 03.04.01. A stack using vector
+
+We will use a vector like a stack of plates: we add and remove only at the top. With push_back we add, with back we inspect the last value, and with pop_back we remove it. The last item in is the first out. Before reading or removing we check that the stack is not empty. If we need the removed value, we save it before pop_back because that operation does not return it.
+
+Complete example: [main.cpp](03_DSA/04_Stacks/01_With_Vector/main.cpp).
+
+**Practice.** Write a program that removes numbers like a stack of plates.
+
+- Append four numbers to a vector.
+- Always inspect and remove the last one.
+- Display the numbers in removal order.
+- Avoid reading or removing from an empty stack.
+
+### 03.04.02. The stack adapter
+
+We will use stack, the <stack> tool that directly provides stack operations. push adds at the top, top reads the top, and pop removes it. We can picture an undo history: the last action we performed is the first one we examine. Here we show which action would be undone; removing it from history does not itself change a real document.
 
 Complete example: [main.cpp](03_DSA/04_Stacks/02_With_Stack/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store a stack: with stack, the last item in comes out first.
 #include <stack>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
@@ -1290,31 +1639,44 @@ int main() {
     history.push("Delete");
     if (!history.empty()) {
 
+        // top reads the last value; pop removes it without returning the value.
         cout << "Undo: " << history.top() << "\n";
         history.pop();
     }
 }
 ```
 
-[Topic and variant guide](03_DSA/04_Stacks/README.md).
+**Practice.** Write a program that displays actions waiting to be undone.
 
-### 5. Queues
+- Store three action descriptions in stack<string>.
+- Display the latest action before removing it.
+- Remove all in reverse arrival order.
+- Report when no actions remain.
 
-Compare arrival order and priority order. The integration example produces `2 9 4` with FIFO and `9 4 2` with priority.
+### 03.04. Stacks
 
-**FIFO queue.** `queue` processes values in arrival order: first in, first out. Add with `push`, inspect with `front` and remove with `pop`. Check `empty` before access.
+We will compare a stack built with vector against one using stack. We put 1, 2 and 3 into both and remove from the top. In both, 3 must come out first. We are practicing the removal order: that rule defines a stack even when we use different storage tools.
 
-Analogy: A line at a food stall serves the first arrival first.
+Complete example: [main.cpp](03_DSA/04_Stacks/main.cpp).
 
-**Priority queues and heaps.** `priority_queue` uses a heap. By default the largest value is at the top; `greater<int>` puts the smallest there. `top` directly accesses the priority value without traversing other elements (O(1)). Inserting or removing may require adjusting a path through heap levels, which organize data like a tree. The number of levels grows slowly: doubling the element count adds about one level (O(log n), with n elements). Equal priorities do not preserve arrival order.
+**Practice.** Write an integrated program comparing two stacks.
 
-Analogy: An emergency room serves patients by severity rather than arrival order.
+- Add the same values to a vector and a stack.
+- Inspect both tops before removing.
+- Check that each step removes the same value.
+- Finish with both stacks empty.
+
+### 03.05.01. FIFO queue
+
+We will serve a line in arrival order. With queue from <queue>, we add at the back using push, inspect the first using front and remove it using pop. We can picture people waiting at a service desk. Before serving we check empty. We also call “first in, first out” FIFO; those letters simply abbreviate the same rule.
 
 Complete example: [main.cpp](03_DSA/05_Queues/01_With_Queue/main.cpp).
 
 ```cpp
 #include <iostream>
+// We serve by arrival with queue or by importance with priority_queue.
 #include <queue>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;
@@ -1324,6 +1686,7 @@ int main() {
     row.push("Ana");
     row.push("Luis");
 
+    // The front person arrived first; reading and removing require a nonempty queue.
     while (!row.empty()) {
         cout << "Serve: " << row.front() << "\n";
         row.pop();
@@ -1331,28 +1694,48 @@ int main() {
 }
 ```
 
-[Topic and variant guide](03_DSA/05_Queues/README.md).
+**Practice.** Write a program that serves a line of people.
 
-### 6. Trees
+- Store at least three names in queue<string>.
+- Display who is at the front before removing them.
+- Serve in arrival order.
+- Report when the line becomes empty.
 
-Distinguish binary trees from binary search trees, then study traversal orders. The integration example inserts, searches, traverses and removes. Recursive examples use small trees; balancing and iterative traversal are extensions for great depths.
+### 03.05.02. Priority queues and heaps
 
-**Binary trees: roots, children and leaves.** A tree connects nodes without cycles. The root has no parent; leaves have no children. A binary tree allows at most two children per node. A binary tree need not order its values.
+We will serve by importance instead of arrival. priority_queue puts the highest-priority value at the top: for integers this is normally the largest. To choose the smallest, such as a cost, we use greater<int>, a comparison rule from <functional>. We can picture a hospital's urgent cases: arriving first does not always mean being served first. With top we inspect the next value and with pop we remove it; data must be present.
 
-Analogy: An organization chart starts with one manager and branches into subordinates, at most two per manager here.
+Complete example: [main.cpp](03_DSA/05_Queues/02_Priority_Queue/main.cpp).
 
-**Binary search trees (BST).** This BST places smaller values on the left and larger ones on the right, rejecting duplicates. Inserting, searching or removing follows a path through tree levels. The work depends on how many levels that path contains: h denotes height, the number of levels on the longest path (O(h)). A very stretched tree can require passing through almost every node. Removing a node with two children replaces it with the smallest value in its right subtree. An unbalanced BST may become a chain.
+**Practice.** Write a program that compares priorities and costs.
 
-Analogy: Each node in a number guide tells you whether to follow smaller or larger values.
+- Store 2, 9 and 4 in two priority queues.
+- Remove the largest first in one and the smallest first in the other.
+- Display all values in both orders.
+- Check for data before top or pop.
 
-**Tree traversals.** Preorder visits root, left, right. Inorder visits left, root, right. Postorder visits left, right, root. Inorder produces sorted values in a BST. A traversal visits every node, so its work grows with the n nodes (O(n)). It also keeps calls waiting to return: there can be one for each level on the current path, up to the tree height h (O(h) memory for those calls). The output vector needs room for the n results.
+### 03.05. Queues
 
-Analogy: Visit a house and record each room before its annexes, between its annexes, or after them.
+We will put the same values into a normal queue and a priority queue. After storing 2, 9 and 4, the first keeps that order; the second serves 9 first. This helps us decide which rule an application needs: respecting arrival or choosing by importance. Changing the structure changes the service rule even with identical data.
+
+Complete example: [main.cpp](03_DSA/05_Queues/main.cpp).
+
+**Practice.** Write an integrated request-service program.
+
+- Store the same priority numbers in queue and priority_queue.
+- Display each full service order.
+- Add a new request after serving one.
+- Explain which fits a ticket desk and which fits urgent cases.
+
+### 03.06.01. Binary trees: roots, children and leaves
+
+We will link nodes into branches. In a binary tree each node can have at most one left child and one right child. We call the first node the root and a node with no children a leaf. Here we are building the shape only: having two branches does not require sorted numbers. To count, we add the current node and both branches recursively. We use unique_ptr so each branch releases its nodes when finished.
 
 Complete example: [main.cpp](03_DSA/06_Trees/01_Binary_Tree/main.cpp).
 
 ```cpp
 #include <iostream>
+// We use unique_ptr to release its managed object automatically.
 #include <memory>
 
 using namespace std;
@@ -1366,6 +1749,7 @@ struct Node {
 };
 
 int countNodes(const Node* node) {
+    // An empty branch contributes zero; each node counts itself plus its two children's nodes.
     if (!node) {
         return 0;
     }
@@ -1381,19 +1765,64 @@ int main() {
 }
 ```
 
-[Topic and variant guide](03_DSA/06_Trees/README.md).
+**Practice.** Write a program that builds a five-node binary tree.
 
-### 7. Hash tables with unordered_map
+- Create a root and branches with at most two children per node.
+- Draw which node belongs to each branch.
+- Count nodes with a recursive function.
+- Check that an empty branch contributes zero.
 
-`unordered_map` associates unique keys with values through hashing. The hash function directs a lookup toward a group of entries. On average, lookup or insertion takes an amount of work that does not grow with the total entry count (O(1)). If many keys land in the same group, an operation may inspect all n entries (O(n) in the worst case). The library manages collisions and does not guarantee iteration order. `operator[]` can insert; use `find` for lookup alone.
+### 03.06.02. Binary search trees (BST)
 
-Analogy: A receptionist turns a key into a locker number and distinguishes records when several keys collide.
+We will add a rule to the tree: smaller numbers go left and larger ones go right. When searching, we choose one branch and discard the other. We call this a binary search tree, or BST. Here we do not store duplicates. When removing a node with two children, we find a replacement that preserves the ordering. If the tree becomes a chain, we must traverse many nodes; calling it a tree does not guarantee fast searches.
+
+Complete example: [main.cpp](03_DSA/06_Trees/02_Binary_Search_Tree/main.cpp).
+
+**Practice.** Write a program with a binary search tree.
+
+- Insert seven distinct numbers.
+- Search for a present and a missing number.
+- Remove a leaf, a node with one child and a node with two children.
+- Display sorted values after each removal.
+
+### 03.06.03. Tree traversals
+
+We will visit the same tree in three orders. In preorder we read the node before its branches; in inorder we read left branch, node, then right branch; in postorder we leave the node until last. In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms but recording each name on entry, midway or on exit. In all three cases we visit all n nodes (O(n)).
+
+Complete example: [main.cpp](03_DSA/06_Trees/03_Traversals/main.cpp).
+
+**Practice.** Write a program showing three traversals of one tree.
+
+- Build a tree with at least seven nodes.
+- Display preorder, inorder and postorder separately.
+- Predict all outputs with a drawing before running.
+- Check that each node appears once per traversal.
+
+### 03.06. Trees
+
+We will integrate tree operations: insertion, search, traversal and removal. We use Tree.h to follow the same links in every case. First we check an empty tree, add values, compare its traversals and finally remove all nodes. We can picture maintaining a tree of folders: each change must preserve access to branches that still exist.
+
+Complete example: [main.cpp](03_DSA/06_Trees/main.cpp).
+
+**Practice.** Write an integrated program managing numbers in a tree.
+
+- Add and search for numbers without duplicates.
+- Offer all three traversals.
+- Remove the root without losing other values.
+- Empty the tree and insert again.
+- Display a message when a number is missing.
+
+### 03.07. Hash tables with unordered_map
+
+We will search by a key, like finding a student card by registration number. unordered_map connects a key to a value; here, a number to a name. Internally it uses a hash function, which calculates the group where a key should be sought. With find we search without creating a card; end() means it is missing. In a found card, first is the key and second the value. We do not expect cards to appear in order. Usually we inspect few entries, but many keys landing together may require many checks.
 
 Complete example: [main.cpp](03_DSA/07_Hash_Tables/main.cpp).
 
 ```cpp
 #include <iostream>
+// We store and work with text using string.
 #include <string>
+// We connect a key to a value for lookup, such as a student number and name.
 #include <unordered_map>
 
 using namespace std;
@@ -1402,6 +1831,7 @@ int main() {
     unordered_map<int, string> students;
     students.emplace(101, "Ana");
     students.emplace(102, "Luis");
+    // find reads without inserting a new key; here 101 exists because it was inserted above.
     auto found = students.find(101);
     cout << found->second << "\n";
     if (!(students.erase(102) == 1 && students.size() == 1)) {
@@ -1410,25 +1840,16 @@ int main() {
 }
 ```
 
-### 8. Graphs
+**Practice.** Write a student directory keyed by registration number.
 
-Study representation, traversal and minimum costs. BFS and DFS ignore weights; Dijkstra uses them. The integration example compares traversals and obtains minimum cost 4 from 0 to 3. Free functions in these headers are inline to avoid multiple definitions when linking.
+- Store three distinct numbers and names.
+- Search with find and check whether the result is end().
+- Remove a number and search for it again.
+- Report a missing number without creating a new entry.
 
-**Representing graphs.** A graph represents connected points: points are called vertices and connections are edges. Imagine buildings joined by roads. An adjacency list stores a list for each building and an entry for each recorded connection. Memory grows with both the buildings and connections (O(V + E): V is the vertex count and E is the edge count). An adjacency matrix reserves a slot for every pair of buildings, even when they are unconnected: 5 buildings need 5 times 5, or 25 slots; 10 need 100 (O(V²): V² means V multiplied by V). These expressions describe memory growth, not an exact byte count. `Graph` stores directed edges with nonnegative weights. Add both directions for an undirected connection.
+### 03.08.01. Representing graphs
 
-Analogy: Cities are vertices, roads are edges, and the cost of traveling a road is its weight.
-
-**BFS: breadth-first search.** BFS uses a queue and visits by levels. Mark vertices when enqueueing to prevent repeated visits through cycles. Only vertices reachable from the start are visited. In unweighted graphs, levels express minimum edge counts. Traversing neighbor lists visits reachable points and inspects their connections. In the worst case, work grows with all graph points and connections (O(V + E), where V counts vertices and E counts edges). Visited markers and points waiting to be processed need space that grows with the point count (O(V) additional memory).
-
-Analogy: Explore a city in rings, starting with nearby neighbors and then their neighbors.
-
-**DFS: depth-first search.** DFS follows a branch as far as possible, then backtracks. Use recursion or an explicit stack. Visited markers prevent cycles. Traversing neighbor lists visits reachable points and inspects their connections. In the worst case, work grows with all graph points and connections (O(V + E), where V counts vertices and E counts edges). Visited markers and points waiting to be processed need space that grows with the point count (O(V) additional memory). Order depends on neighbor order; use an explicit stack for great depths.
-
-Analogy: Explore a maze by following a hallway to its end, then returning to try the remaining hallways.
-
-**Dijkstra: minimum-cost paths.** Dijkstra finds minimum distances for nonnegative weights. Use a minimum-priority queue, improve distances and discard outdated entries. `INFINITY_DISTANCE` means unreachable. Besides inspecting connections, this version organizes candidates in a priority queue to select the cheapest one. More candidates mean more work maintaining that priority. A point can appear several times as better routes are found, so the queue also needs space for these pending records. Memory can grow with the graph vertices and edges (O(V + E), where V counts points and E counts connections). The dijkstra function returns costs; shortestPaths also records the predecessor of each destination so routes can be reconstructed.
-
-Analogy: A courier compares total route costs and always considers the cheapest available alternative first.
+We will draw places joined by roads. We call each place a vertex, each connection an edge, and the whole arrangement a graph. In connect we give the source, destination and cost. For travel both ways we add both directions. We keep a neighbor list per place: memory grows with places and roads (O(V + E), where V counts vertices and E counts edges). Another option is a table with one slot per pair of places: five places need 25 slots and ten need 100 (O(V²), meaning V multiplied by V).
 
 Complete example: [main.cpp](03_DSA/08_Graphs/01_Representation/main.cpp).
 
@@ -1441,6 +1862,7 @@ using namespace course;
 
 int main() {
     Graph map(3);
+    // An edge is a trip from source to destination; the third argument is its cost.
     map.connect(0, 1, 5);
     map.connect(1, 0, 5); // Two-way road.
     map.connect(1, 2, 2); // One-way road.
@@ -1451,42 +1873,146 @@ int main() {
 }
 ```
 
-[Topic and variant guide](03_DSA/08_Graphs/README.md).
+**Practice.** Write a program representing four places and their roads.
 
-### 9. Sorting algorithms
+- Create a graph with four vertices.
+- Add one-way roads and a two-way road.
+- Store a nonnegative cost per road.
+- Display each place’s neighbors.
+- Draw the same map using circles and arrows.
 
-Study algorithms using the same input and compare time, memory and stability. Stability preserves the original order of elements with equal keys. The integration example checks five algorithms against `sort`, including empty input, duplicates, negatives and sorted values. Function pointers allow repeating the same check.
+### 03.08.02. BFS: breadth-first search
 
-**Bubble sort.** Compare adjacent values and swap inverted pairs. Each pass moves the largest remaining value to the end. With n values, repeated passes compare many of the same neighbors: work can grow roughly like n multiplied by n (O(n²), on average and in the worst case). If values are already sorted, the change flag allows stopping after one pass over the n values (O(n)). It only needs a few extra variables, without another input-sized array (O(1) additional memory). Stable. Read `bubbleSort` in `../Sorts.h`.
+We will explore a map in layers. We visit the start, then its neighbors, then their neighbors. We keep pending places in a queue to preserve that order. We call this BFS, or breadth-first search. We mark each place when adding it so we do not repeat it, even with roads back. We reach only places connected to the start. A full traversal checks the places and roads (O(V + E), with V places and E connections).
 
-Analogy: Large bubbles rise toward an end; each pass moves the largest number there.
+Complete example: [main.cpp](03_DSA/08_Graphs/02_BFS/main.cpp).
 
-**Selection sort.** Find the smallest pending value and swap it into the next position. After choosing one value, it scans the remaining section again to choose the next. With n values, comparisons accumulate roughly like n multiplied by n, even for sorted input (O(n²)). It only uses a few extra variables, without another array of the same size (O(1) additional memory). This implementation is not stable. Read `selectionSort` in `../Sorts.h`.
+**Practice.** Write a program that traverses a map in layers with BFS.
 
-Analogy: Always take the smallest card from a pile and put it in the next free slot.
+- Create five places, including one isolated place.
+- Use a queue for pending places.
+- Mark visited places to prevent repeats.
+- Display the order from a start and explain why the isolated place is absent.
 
-**Insertion sort.** Maintain a sorted left section and insert each new value by shifting larger ones. Each new value may require shifting many earlier ones. With n values, this repeated work can grow like n multiplied by n (O(n²), on average and in the worst case). If values are already sorted, one pass through them is enough (O(n)). It uses a few extra variables, without another array of the same size (O(1) additional memory). Stable. Read `insertionSort` in `../Sorts.h`.
+### 03.08.03. DFS: depth-first search
 
-Analogy: Sort a hand of cards by inserting each new card among the previous cards.
+We will follow a path as far as possible and then return to try another. We can picture exploring a maze. We call this DFS, or depth-first search. Here we use recursion to remember where to return. We mark visited places so we do not go around forever. The order can differ from BFS even though both reach the same places. A full traversal grows with the map’s V places and E roads (O(V + E)).
 
-**Merge sort.** Split into halves, sort each half and merge them. Halving creates several levels of work; doubling the data adds about one level. At each level, merging visits all n values in total: the work combines the value count with the number of levels (O(n log n); n counts values and log n describes halving levels). It needs an auxiliary array that grows with the data (O(n) memory) and keeps pending calls along the current division path (O(log n) memory for calls). Stable because ties select the left item first. Read `mergeSort` in `../Sorts.h`.
+Complete example: [main.cpp](03_DSA/08_Graphs/03_DFS/main.cpp).
 
-Analogy: Divide sheets between two helpers, then combine their sorted piles by choosing the smaller available sheet.
+**Practice.** Write a program that explores a map with DFS.
 
-**Quick sort.** Choose a pivot, partition values and recursively sort the partitions. When partitions are reasonably even, each level processes the n values and the level count grows like repeated halving (O(n log n); n counts values). If the pivot leaves nearly everything on one side, repeated long traversals can make work grow like n multiplied by n (O(n²)); choosing the last value as pivot causes this for sorted or equal inputs. Up to one pending call per value can also accumulate (O(n) memory for calls). Not stable. Read `quickSort` in `../Sorts.h`.
+- Create several paths and one leading back to the start.
+- Mark visited places.
+- Display the traversal without repeating places.
+- Compare its order with BFS on the same map.
 
-Analogy: A pivot splits a line: smaller values move left and the rest move right; repeat within each group.
+### 03.08.04. Dijkstra: minimum-cost paths
 
-**Sorting with the standard library.** `sort` limits comparison growth even in the worst case. With n values, the bound grows like the value count multiplied by the number of levels in repeated halving (O(n log n)). This describes a work bound without requiring the internal algorithm to literally use those divisions. It does not guarantee stability. `stable_sort` preserves equivalent elements' order. The comparator must express a strict order: use `<`, not `<=`. A lambda `[](...) { ... }` defines a small function at its use site.
+We will look for the path with the lowest total cost. We can picture roads labeled in minutes: fewer roads do not always mean earlier arrival. With Dijkstra we keep the best known cost and use a priority queue to process the cheapest candidate first. When we find an improvement, we update its cost. This version requires nonnegative costs. INFINITY_DISTANCE is a marker for a route not yet found, not a real number of minutes. dijkstra returns costs; shortestPaths also remembers where we came from so a route can be rebuilt.
 
-Analogy: Give the drawer to a tested sorting tool and tell it how to compare its objects.
+Complete example: [main.cpp](03_DSA/08_Graphs/04_Dijkstra/main.cpp).
+
+**Practice.** Write a program that finds the lowest cost between places.
+
+- Create a map with nonnegative costs.
+- Include an indirect route cheaper than a direct one.
+- Calculate costs from a start with Dijkstra.
+- Report an unreachable destination.
+- Draw and add up the cheapest route by hand to check it.
+
+### 03.08. Graphs
+
+We will use one map to answer different questions. With BFS we explore in layers; with DFS we follow a branch before returning; with Dijkstra we find the lowest total cost. We share Graph.h so every test uses the same map. We can compare traversal orders, but we do not treat BFS or DFS order as a list of costs: each tool answers a different question.
+
+Complete example: [main.cpp](03_DSA/08_Graphs/main.cpp).
+
+**Practice.** Write an integrated school-route program.
+
+- Store at least five buildings and travel minutes between them.
+- Display BFS and DFS from the same building.
+- Calculate lowest costs with Dijkstra.
+- Include a disconnected building and report when it is unreachable.
+- Keep the graph and its operations in a header.
+
+### 03.09.01. Bubble sort
+
+We will sort by comparing neighbors. If the left value is larger, we swap their positions; after a pass the largest remaining value ends up at the end. We can picture large bubbles rising. If a pass makes no swaps, we are done. With n values we may repeat many comparisons, roughly like n times n (O(n²)); already sorted data needs only one pass (O(n)). The complete function is in Sorts.h.
+
+Complete example: [main.cpp](03_DSA/09_Sorting/01_Bubble_Sort/main.cpp).
+
+**Practice.** Write a program that bubble-sorts numbers.
+
+- Include negatives and duplicates.
+- Compare neighbors and swap reversed pairs.
+- Stop when a pass makes no changes.
+- Display the vector before and after.
+
+### 03.09.02. Selection sort
+
+We will find the smallest remaining value and place it at the beginning of the unsorted section. Then we repeat with the rest. We can picture choosing the smallest book from a pile and placing it in a row. Even if numbers are already sorted, we keep finding each group’s minimum; with n values, work grows roughly like n times n (O(n²)). Swapping distant positions can change the order of tied elements.
+
+Complete example: [main.cpp](03_DSA/09_Sorting/02_Selection_Sort/main.cpp).
+
+**Practice.** Write a program that selection-sorts numbers.
+
+- Find the position of the smallest remaining value.
+- Swap it with the first position of the unsorted section.
+- Display the array after each pass.
+- Try sorted data and duplicates.
+
+### 03.09.03. Insertion sort
+
+We will sort like arranging a hand of cards. We take a new value and shift larger earlier values until there is room for it. This keeps the left section sorted. For already sorted data we move through once (O(n), with n values); shifting many values each time can make work grow like n times n (O(n²)). By not moving a value ahead of an equal one, we preserve the order of ties.
+
+Complete example: [main.cpp](03_DSA/09_Sorting/03_Insertion_Sort/main.cpp).
+
+**Practice.** Write a program that insertion-sorts numbers.
+
+- Keep the left side of the vector sorted.
+- Save the current value before shifting larger ones.
+- Show where each new value ends up.
+- Try a sorted list and a reversed list.
+
+### 03.09.04. Merge sort
+
+We will divide a pile into halves until the groups are small, then join them in order. We can picture two helpers sorting their sheets: when joining them, we always take the smallest available sheet. This is merge sort. We need extra mixing space that grows with the n values (O(n) additional memory). Each level visits all values, and there are as many levels as repeated halvings (O(n log n), with n values and log n levels). For a tie we take the left value first to preserve order.
+
+Complete example: [main.cpp](03_DSA/09_Sorting/04_Merge_Sort/main.cpp).
+
+**Practice.** Write a program that merge-sorts numbers.
+
+- Divide until groups contain one element.
+- Merge two sorted groups into extra storage.
+- Take the left value first when tied.
+- Draw the divisions and merges for six numbers.
+
+### 03.09.05. Quick sort
+
+We will choose one value as a reference for separating the rest; we call it the pivot. We put smaller values on one side and repeat within each group. This is quick sort. With evenly split groups, each level checks the n values and the levels grow through halving (O(n log n)). Here we choose the last value: with sorted or equal input, almost everything can stay on one side and cause repeated work (O(n²), like n times n). This choice helps us see why the pivot matters.
+
+Complete example: [main.cpp](03_DSA/09_Sorting/05_Quick_Sort/main.cpp).
+
+**Practice.** Write a program that quick-sorts numbers.
+
+- Choose and identify the pivot at each step.
+- Separate smaller values before processing the groups.
+- Try mixed, sorted and equal data.
+- Draw a case where one group is almost empty.
+
+### 03.09.06. Sorting with the standard library
+
+We will compare our work with tools C++ already provides in <algorithm>. sort orders a range between begin() and end(); end() marks the position after the last value. For student records we provide a function deciding which comes first. The small function written with [] is called a lambda: here it receives two students and compares their grades with <. stable_sort preserves the earlier order of ties. After understanding manual movements, we can use this tool for a complete task.
 
 Complete example: [main.cpp](03_DSA/09_Sorting/06_STD_Sort/main.cpp).
 
 ```cpp
+// We use sort, stable_sort to sort or change data order.
 #include <algorithm>
 #include <iostream>
+// We store and work with text using string.
 #include <string>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -1501,6 +2027,7 @@ int main() {
     sort(numbers.begin(), numbers.end());
 
     vector<Student> group{{"Ana", 8}, {"Eva", 9}, {"Luis", 8}};
+    // stable_sort preserves the original order of ties: Ana stays before Luis.
     stable_sort(group.begin(), group.end(), [](const Student& a, const Student& b) {
         return a.grade < b.grade;
     });
@@ -1511,31 +2038,57 @@ int main() {
 }
 ```
 
-[Topic and variant guide](03_DSA/09_Sorting/README.md).
+**Practice.** Write a program that sorts student records.
 
-### 10. Searching
+- Store name and grade in a vector of structs.
+- Sort by grade with a comparison function.
+- Use stable_sort to preserve the order of ties.
+- Display the result and check two equal grades.
 
-Search first without ordering, then after sorting. The integration example compares both searches on sorted values and shows the original index of 8 changing from 0 to 4.
+### 03.09. Sorting algorithms
 
-**Linear search.** Inspect values from the start until finding a match. No sorting is required. If the target is last or absent, it may inspect all n elements (O(n), where n is the element count). It only needs a few variables for the current position and result (O(1) additional memory). `optional` holds a position or `nullopt` for absence. Check before using `*result`; index 0 is valid. In applications you can use `find` instead.
+We will check five ways of sorting using identical inputs. We create a copy for each algorithm and compare its result with sort. We include empty, negative, repeated and already sorted data. We keep function addresses to call each algorithm in the same way: just as a pointer can point to a box, a function pointer can point to a task we can run. If a comparison fails, we display the problem and stop.
 
-Analogy: Search a drawer for a key by checking every compartment.
+Complete example: [main.cpp](03_DSA/09_Sorting/main.cpp).
 
-**Binary search.** Requires ascending sorted data. Each step roughly halves the remaining search range. Imagine reducing 16 candidates to 8, then 4, 2 and 1: four divisions. Starting with 32 adds just one division to that sequence. This is why work grows slowly as the data increases (O(log n), where n is the element count and log n describes growth through halving). This version uses a few variables without copying the vector (O(1) additional memory). Sorting has a separate cost. This version returns the first match; `lower_bound` is its standard alternative, while `binary_search` returns only existence.
+**Practice.** Write an integrated sorting program.
 
-Analogy: Open a sorted guide at its middle and decide which half could contain the requested number.
+- Apply bubble, selection, insertion, merge and quick sort to copies of the same data.
+- Compare their results.
+- Try empty input, one element, negatives, duplicates and reverse order.
+- Count comparisons in at least two algorithms.
+- Explain why the same output can require different work.
+
+### 03.10.01. Linear search
+
+We will search by checking a drawer one slot at a time. We do not need to sort first: we move until we find the value or reach the end. We may visit all n elements (O(n)). To return the result we use optional: a small box from <optional> that either holds a position or is empty. We check that it holds something before reading *position. Position zero is valid and must not be confused with “not found”.
+
+Complete example: [main.cpp](03_DSA/10_Searching/01_Linear_Search/main.cpp).
+
+**Practice.** Write a program that searches numbers one by one.
+
+- Search without sorting the vector.
+- Return the first matching position.
+- Distinguish position zero from a missing result.
+- Try the first, last, repeated and missing values.
+
+### 03.10.02. Binary search
+
+We will search an already sorted list. We look at the middle and decide which half could contain the number. We can picture numbered pages: for a smaller page, we discard the right half. Reducing 16 candidates to 8, 4, 2 and 1 takes four divisions; starting with 32 adds just one (O(log n), where n counts candidates and log n describes the divisions). This version finds the first match. We receive a position or an empty result and check which before reading it.
 
 Complete example: [main.cpp](03_DSA/10_Searching/02_Binary_Search/main.cpp).
 
 ```cpp
 #include "../Searches.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
 using namespace course;
 
 int main() {
+    // The data is already sorted: each comparison can discard half of the remaining range.
     const vector<int> data{1, 3, 3, 5, 8};
     auto position = binarySearch(data, 3);
 
@@ -1545,15 +2098,31 @@ int main() {
 }
 ```
 
-[Topic and variant guide](03_DSA/10_Searching/README.md).
+**Practice.** Write a program that searches by halving.
 
-### 11. Const and headers in DSA
+- Use numbers sorted from smallest to largest.
+- Show how the search boundaries change.
+- Find the first match among duplicates.
+- Report missing data.
+- Explain why unsorted input cannot be treated the same way.
 
-A structure query can receive `const vector<int>&`, reading elements without copying or modifying the vector. The vector and result here are `const`. The header declares the operation and an `inline constexpr` constant, the implementation defines the algorithm with `count_if`, and main.cpp uses it. The query inspects each element once; twice as many elements means twice as many visits (O(n), where n is the element count). It only adds a counter and a few variables, without another collection of the same size (O(1) additional memory).
+### 03.10. Searching
 
-Lists, trees and graphs already have headers containing classes and operations. This lesson separates a query's declaration from implementation. Compare its signature with a sorting function taking `vector<int>&` to distinguish reading from modification.
+We will compare one-by-one search with halving search. First we search unsorted data, then sort and try both methods on the same vector. The number stays the same, but sorting can change its position. We also count the preparation: building a sorted list is extra work, even if searching within it afterward is faster.
 
-Analogy: A query inspects a drawer through glass and counts items without changing their positions. Sorting requires opening the drawer and moving them.
+Complete example: [main.cpp](03_DSA/10_Searching/main.cpp).
+
+**Practice.** Write an integrated searching program.
+
+- Search several values with linear search.
+- Create a sorted copy for binary search.
+- Compare whether both find each value.
+- Show how sorting changes positions.
+- Also try an empty vector.
+
+### 03.11. Const and headers in DSA
+
+We will query a collection without changing it. With const vector<int>& we receive another label for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp we traverse the values and count those above a limit. We need neither copying nor sorting. Doubling the data doubles the visits (O(n), with n elements). We add only a counter and a few variables (O(1) additional memory).
 
 Complete example: [main.cpp](03_DSA/11_Const_and_Headers/main.cpp).
 
@@ -1566,6 +2135,7 @@ using namespace course;
 
 int main() {
     const vector<int> data{9, 4, 10, 6};
+    // The query receives const vector<int>&: count without copying or changing the data.
     const size_t count = countAbove(data, EXAMPLE_LIMIT);
     cout << "Values above " << EXAMPLE_LIMIT << ": " << count << "\n";
     for (const int value : data) {
@@ -1575,13 +2145,17 @@ int main() {
 }
 ```
 
-[Topic and variant guide](03_DSA/11_Const_and_Headers/README.md).
+**Practice.** Write a query program split across files.
 
-### 12. Integration: processing tasks and querying routes
+- Declare a function in a .h and write it in a .cpp.
+- Receive a vector through const vector<int>&.
+- Count values below a limit using a loop.
+- Return zero for an empty vector.
+- Check that the original data stayed unchanged.
 
-Combine vector, linked list, stack, queue, priority queue, BST, hash table, graph, sorting and searching. Reuse the DSA headers. The queue defines processing order, the list keeps history, and the stack identifies the next undo action.
+### 03.12. Integration: processing tasks and querying routes
 
-Analogy: A workshop receives jobs, processes them, keeps a history, organizes priorities and consults a delivery map.
+We will bring the structures together in a task-and-delivery workshop. We store tasks in a vector, serve them through a queue and record events in a list. With a stack we inspect the latest action that could be undone. We use a tree and an id table to practice queries, and sort numbers before searching by halves. Finally we use a graph to calculate routes. Each structure serves a different need; this example brings them together to show how data moves between them.
 
 Complete example: [main.cpp](03_DSA/12_Integration/main.cpp).
 
@@ -1591,12 +2165,16 @@ Complete example: [main.cpp](03_DSA/12_Integration/main.cpp).
 #include "../08_Graphs/Graph.h"
 #include "../09_Sorting/Sorts.h"
 #include "../10_Searching/Searches.h"
-#include <cassert>
 #include <iostream>
+// We serve by arrival with queue or by importance with priority_queue.
 #include <queue>
+// We store a stack: with stack, the last item in comes out first.
 #include <stack>
+// We store and work with text using string.
 #include <string>
+// We connect a key to a value for lookup, such as a student number and name.
 #include <unordered_map>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;
@@ -1605,6 +2183,7 @@ using namespace course;
 int main() {
     vector<int> ids{3, 1, 2};
     unordered_map<int, string> names{{1, "Read"}, {2, "Compile"}, {3, "Practice"}};
+    // The queue organizes work by arrival; the hash table maps each ID to its name.
     queue<int> pending;
     priority_queue<int> urgent;
     for (int id : ids) {
@@ -1612,6 +2191,7 @@ int main() {
         urgent.push(id);
     }
     SinglyLinkedList history;
+    // The stack reads the last task; the list records history and the BST supports queries.
     stack<int> undo;
     Tree index;
     while (!pending.empty()) {
@@ -1622,51 +2202,192 @@ int main() {
         index.insert(id);
         cout << "Process: " << names.at(id) << "\n";
     }
-    assert(history.values() == ids && undo.top() == 2);
-    assert(urgent.top() == 3 && index.contains(2));
+    if (!(history.values() == ids && undo.top() == 2)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(urgent.top() == 3 && index.contains(2))) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     mergeSort(ids);
-    assert(ids == index.values());
-    assert(binarySearch(ids, 2).value() == 1);
+    if (!(ids == index.values())) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(binarySearch(ids, 2).value() == 1)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
 
+    // The graph models trips; Dijkstra computes the lowest delivery cost.
     Graph routes(3);
     routes.connect(0, 1, 4);
     routes.connect(0, 2, 1);
     routes.connect(2, 1, 1);
-    assert(bfs(routes, 0).size() == 3 && dfs(routes, 0).size() == 3);
-    assert(dijkstra(routes, 0).at(1) == 2);
+    if (!(bfs(routes, 0).size() == 3 && dfs(routes, 0).size() == 3)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
+    if (!(dijkstra(routes, 0).at(1) == 2)) {
+        cerr << "The check did not produce the expected result.\n";
+        return 1;
+    }
     cout << "Last task (undo): " << names.at(undo.top()) << "\n";
     cout << "Minimum delivery cost 0 -> 1: " << dijkstra(routes, 0).at(1) << "\n";
 }
 ```
 
-### 13. Combining concepts gradually
+**Practice.** Write an integrated task-and-route program.
 
-Learning each tool separately helps us recognize it; combining tools means deciding which problem each one solves. Imagine an inventory: first store products, then group stock counts, then lend addresses to select products, and finally build classes managing nodes. Each step adds a need and keeps what we have learned.
+- Store ids and names for at least four tasks.
+- Serve arrivals with a queue and keep history in a list.
+- Inspect the latest task through a stack.
+- Sort ids and find one through binary search.
+- Represent deliveries with a graph and calculate Dijkstra costs.
+- Explain each structure’s responsibility.
 
-| Step | Program | Decision we learn |
-| --- | --- | --- |
-| 1 | [Array of classes](03_DSA/13_Combining_Concepts/01_Array_of_Classes/main.cpp) | Store complete objects |
-| 2 | [Array of structs with classes](03_DSA/13_Combining_Concepts/02_Array_of_Structs_with_Classes/main.cpp) | Group an object with its stock count |
-| 3 | [Array of pointers](03_DSA/13_Combining_Concepts/03_Array_of_Pointers/main.cpp) | Separate a card from its target |
-| 4 | [Vector of pointers](03_DSA/13_Combining_Concepts/04_Vector_of_Pointers/main.cpp) | Grow a view without copying products |
-| 5 | [Matrix of pointers](03_DSA/13_Combining_Concepts/05_Matrix_of_Pointers/main.cpp) | Organize views by rows and slots |
-| 6 | [Array of linked nodes](03_DSA/13_Combining_Concepts/06_Array_of_Linked_Nodes/main.cpp) | Separate physical location from logical order |
-| 7 | [Vector of unique_ptr](03_DSA/13_Combining_Concepts/07_Vector_of_Unique_Ptr/main.cpp) | Give each dynamic object an owner |
-| 8 | [Class with struct nodes](03_DSA/13_Combining_Concepts/08_Class_with_Nodes/main.cpp) | Encapsulate a chain and its operations |
-| 9 | [Vector of classes with nodes](03_DSA/13_Combining_Concepts/09_Vector_of_Classes_with_Nodes/main.cpp) | Group lists and distinguish what moves |
+### 03.13.01. 1. An array containing objects
 
-The [topic guide](03_DSA/13_Combining_Concepts/README.md) explains why the representation changes at each step. Each program comments its operations; [Shelf.h](03_DSA/13_Combining_Concepts/Shelf.h) provides the class used by the last two steps and the integration example. We reuse `Product.h` and `Product.cpp` from OOP.
+We will store complete objects in an array. In Product products[3], each compartment contains a product with its name and price. We reuse Product.h from OOP. We can picture a drawer with three Minecraft blocks: each keeps its own data even though all share a type. We traverse through const Product& to read the original without copying or changing it. When the array ends, its contained objects end too.
 
-This integration example stores a `vector<Shelf>`; each shelf owns `struct` nodes, and each node contains a `Product`. A `vector<const Node*>` lends a view that we sort by price; an array of arrays of pointers displays slots that can repeat targets. The total is calculated from owners so repetitions are not counted as extra products.
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/01_Array_of_Classes/main.cpp).
+
+**Practice.** Write a program with an array of products.
+
+- Create three complete objects with names and prices.
+- Traverse them through const references.
+- Add their prices in cents.
+- Display each product and the total.
+- Explain what one array slot contains.
+
+### 03.13.02. 2. A struct contains a class; an array contains those structs
+
+We will add available quantity to each product. With struct Record we group a Product and an integer quantity, then store several Record cards in an array. We can picture a compartment holding the product and a stock label. With records[0].product we reach the object, and with records[0].quantity the number. receiveOne takes Record& to change the original card: removing & would change only a copy.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/02_Array_of_Structs_with_Classes/main.cpp).
+
+**Practice.** Write a program that tracks stock per product.
+
+- Create a struct containing a Product and a quantity.
+- Store at least two records in an array.
+- Receive units through a function taking a reference.
+- Reject negative quantities and prevent exceeding the integer limit.
+- Display the records after the change.
+
+### 03.13.03. 3. An array of cards pointing to integers
+
+We will store addresses instead of integers. In int* addresses[3] we have three cards: each can point to a box outside the array. With *addresses[0] we follow the first card and change red; with addresses[0] = &blue we change only the card. Two cards can point to the same box, or hold nullptr when no box is selected. The array holds the pointers but does not delete the local integers they point to.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/03_Array_of_Pointers/main.cpp).
+
+**Practice.** Write a program with three address cards for two integers.
+
+- Store addresses in an int* cards[3] array.
+- Point two cards at the same integer.
+- Change that integer through one card and read through the other.
+- Leave one card as nullptr and check before following it.
+- Show that changing an address does not change the previous contents.
+
+### 03.13.04. 4. A vector of pointers: an inventory view
+
+We will select products without copying them. We store products in an array and their addresses in vector<Product*>. We call this selection a view: it can grow or show a product several times without creating new products. With Product*& we give selectProduct another label for the original pointer, allowing it to change the destination. Receiving only Product* would change a copy of the card. Growing the address vector does not move these array products; they must keep existing while we read them.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/04_Vector_of_Pointers/main.cpp).
+
+**Practice.** Write a program that displays a selection of products.
+
+- Store three complete products in an array.
+- Keep their addresses in a vector of pointers.
+- Change a selection through a reference to a pointer.
+- Display a product twice without copying it.
+- Check that original products stay in place.
+
+### 03.13.05. 5. An array of arrays of pointers
+
+We will arrange address cards in rows and columns. Product* slots[2][2] represents two rows of two addresses. With slots[0][1] we select a card; if it is not nullptr, we can follow it to the product. Two slots can show the same product, like two signs pointing to the same shop. Here we add const after * to fix the cards; we can still modify their products. A matrix is not Product**: it contains its rows, whereas a double pointer stores an address leading to another pointer.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/05_Matrix_of_Pointers/main.cpp).
+
+**Practice.** Write a product display using a matrix of pointers.
+
+- Create two rows with two slots each.
+- Include a nullptr slot and two slots pointing to one product.
+- Display a notice for empty slots.
+- Change a product and check both cards show the change.
+- Count occupied slots without confusing them with distinct products.
+
+### 03.13.06. 6. Nodes inside an array, connected by pointers
+
+We will store complete nodes in an array and link them with pointers. Each Node contains a Product and next, the next node's address. The boxes occupy positions 0, 1 and 2, but arrows can make us visit 0, 2 and 1. The last link is nullptr. The boxes belong to the array and were not created with new, so we do not use delete. We limit visits to three to detect an accidental circle. Manually copying these records would require rebuilding their arrows so they no longer point to the originals.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/06_Array_of_Linked_Nodes/main.cpp).
+
+**Practice.** Write a program that links nodes inside an array.
+
+- Store three nodes containing products.
+- Connect positions in the order 2, 0 and 1.
+- Traverse from the starting node through next.
+- Stop at nullptr or report exceeding the node count.
+- Draw array positions separately from visit order.
+
+### 03.13.07. 7. A vector of owners and an observer pointer
+
+We will separate the location of cards from that of products. In vector<unique_ptr<Product>>, each card is also responsible for releasing its product. When the vector needs more space it can move the cards; separately created products keep their addresses. With get we lend an address, not deletion responsibility. Removing the responsible card also destroys its product; before that we stop using every borrowed pointer. This differs from vector<Product>, where growth can move the products themselves.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/07_Vector_of_Unique_Ptr/main.cpp).
+
+**Practice.** Write a program with products managed by unique_ptr inside a vector.
+
+- Create two products with make_unique.
+- Obtain a reading pointer with get.
+- Grow the vector’s capacity and check the product address.
+- Clear every observer before removing its owner.
+- Display how many products remain.
+
+### 03.13.08. 8. A class manages struct nodes
+
+We will keep the chain and its rules inside Shelf. Each node contains a Product and a unique_ptr to the next node; the shelf is responsible for the first. From outside we request additions or queries without directly changing links. We can picture a shelf keeper arranging boxes and lending their labels for reading. first() and nextNode() lend addresses; getProduct() lends a read-only reference. Emptying the shelf invalidates those queries because their boxes no longer exist.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/08_Class_with_Nodes/main.cpp).
+
+**Practice.** Write a program with a class managing a product list.
+
+- Keep the first node inside the class.
+- Add three products through a public operation.
+- Traverse them using const queries.
+- Calculate the total value.
+- Empty the list without reusing deleted-node addresses.
+
+### 03.13.09. 9. A vector contains classes managing nodes
+
+We will store several shelves in a vector. Each shelf contains nodes and each node a product: we follow those layers one at a time. Growing the vector can move a shelf, so we clear pointers to the shelf itself before forcing that change. Its nodes were created separately and do not move when their manager changes location. We can therefore keep a node query while the node still exists. Emptying its shelf destroys the node, so we must stop using that query.
+
+Complete example: [main.cpp](03_DSA/13_Combining_Concepts/09_Vector_of_Classes_with_Nodes/main.cpp).
+
+**Practice.** Write a program with a vector of shelves containing nodes.
+
+- Create two shelves and add products to their lists.
+- Distinguish a shelf pointer from a pointer to one of its nodes.
+- Clear the shelf pointer before growing vector capacity.
+- Read the node through its relocated owner.
+- Clear the query before emptying its list.
+
+### 03.13. Integration: owners, views, matrices and sorting
+
+We will combine the layers to display sorted products without moving their original boxes. We store shelves in a vector; each shelf contains nodes and each node a product. We collect node addresses in view and sort only those cards by price. Then we choose cards for a display matrix. One card may appear several times: counting occupied slots does not count distinct products. We calculate total value from the shelves so a repeated display does not count the product twice.
 
 Complete example: [main.cpp](03_DSA/13_Combining_Concepts/main.cpp).
 
 ```cpp
+// We use sort to sort or change data order.
 #include <algorithm>
-#include <array>
 #include <iostream>
+// We use numeric_limits to check the largest allowed integer before adding.
 #include <limits>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
+// We store a collection that can grow using vector.
 #include <vector>
 #include "Shelf.h"
 
@@ -1721,9 +2442,9 @@ int main() {
     const Shelf::Node* selection = nullptr;
     selectProduct(selection, view.at(0));
     // The matrix displays two unique products in three slots: selection appears twice.
-    const array<array<const Shelf::Node*, 2>, 2> slots{
-        array<const Shelf::Node*, 2>{selection, nullptr},
-        array<const Shelf::Node*, 2>{view.at(1), selection}
+    const Shelf::Node* const slots[2][2]{
+        {selection, nullptr},
+        {view.at(1), selection}
     };
     size_t occupied = 0;
     for (const auto& row : slots) {
@@ -1753,18 +2474,29 @@ int main() {
 }
 ```
 
-The products total 900 cents. The view is ordered as pencil, notebook and book; inventory links keep their order. Before designing another combination, draw who contains the data, who owns it and who only holds an address. Then decide whether each function receives a copy, a reference, a read-only view or a reference to a pointer.
+**Practice.** Write an integrated inventory with shelves, nodes and views.
 
-## How the three areas connect
+- Store shelves in a vector and their products in struct nodes.
+- Create a read-only pointer view without copying products.
+- Sort the view by name or price.
+- Display part of it in a pointer matrix with empty slots.
+- Change a selection through a reference to a pointer.
+- Check that sorting the view leaves original order and totals unchanged.
+- Explain which structure releases each object.
 
-Start by reading data, making decisions and dividing work into functions. OOP groups data and operations into objects and controls who can modify them. DSA helps choose how to store those objects and which algorithms to use. DAO separates data access from application rules; it is not a programming paradigm.
+## Integrated project
 
-An array is a drawer with fixed compartments; a vector can grow. A class may represent each record in that drawer. A DAO may manage the records, while a graph models routes between their locations. The block integration examples practice these connections.
+We will build a campus library and route application. From a menu we add books, search by id, organize deliveries and inspect routes. We divide the work: Console talks to the user, Library applies rules, the DAO stores books and CampusMap calculates routes. We reuse course headers to connect classes, lists, stacks, queues, searches and graphs. We can follow a request from entry to recording; each file handles part of that journey. The project guide explains the pieces with code fragments.
 
-## Final project
+[Guide by sections](04_Integrated_Project/README.md).
 
-The [fourth folder](04_Integrated_Project/README.md) contains a console library with a persistent catalog, binary search, doubly linked history, undo stack, delivery queue, graph, BFS and Dijkstra. It separates models, data, services, interface and the runnable check into headers and implementation files. Its guide explains the flow in sections with code snippets.
+**Practice.** Write an integrated library and delivery application.
 
-Start with `--demo` to explore the menu with three sample books; use `--self-test` to run the check. The project guide provides complete compilation commands.
-
-The [Spanish version](../Español/README.md) follows the same order with matching translated examples.
+- Organize models, data, services and interface into folders with .h and .cpp files.
+- Add, find, update and remove books through a DAO.
+- Search ids through a sorted view and binary search.
+- Keep history in a doubly linked list and pending deliveries in a queue.
+- Use a stack to undo catalog changes.
+- Represent buildings as a graph and calculate routes with Dijkstra.
+- Save data and restore it after restarting.
+- Validate input and preserve the catalog when writing fails.

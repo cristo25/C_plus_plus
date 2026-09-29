@@ -1,24 +1,15 @@
 // Árbol binario de búsqueda (ABB)
 //
-// En este ABB los menores van a la izquierda y los mayores a la derecha; rechazamos duplicados.
-// Para insertar, buscar o eliminar seguimos un camino entre niveles del árbol. El trabajo depende
-// de cuántos niveles tenga ese camino: llamamos h a la altura, es decir, la cantidad de niveles del
-// camino más largo (O(h)). Un árbol muy alargado puede obligarnos a pasar por casi todos sus nodos.
-// Al borrar un nodo con dos hijos, lo sustituimos por el menor del subárbol derecho. Un ABB sin
-// balancear puede degenerar en una cadena.
+// Vamos a añadir una regla al árbol: los números menores van a la izquierda y los mayores a la
+// derecha. Así, al buscar elegimos una rama y descartamos la otra. Llamamos a esta organización
+// árbol binario de búsqueda, o ABB. Aquí no guardamos repetidos. Al borrar un nodo con dos hijos
+// buscamos un reemplazo que conserve el orden. Si el árbol queda como una cadena, tendremos que
+// recorrer muchos nodos; no basta con llamarlo árbol para que siempre busque rápido.
 //
-// Analogía: Una guía de números: cada nodo indica si seguir hacia los menores o hacia los
-// mayores.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Inserta números ya ordenados y dibuja el árbol. Compara su altura con otro orden de
-// inserción.
 
 #include "../Arbol.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;
@@ -26,7 +17,8 @@ using namespace curso;
 
 int main() {
     Arbol arbol;
-    // Al borrar una raíz con dos hijos, el header busca el sucesor y conserva la regla del ABB.
+    // Si quitamos la raíz con dos hijos, usamos el menor dato de la rama derecha como reemplazo
+    // para conservar el orden.
     if (!(!arbol.contiene(8) && !arbol.eliminar(8))) {
         return 1;
     }

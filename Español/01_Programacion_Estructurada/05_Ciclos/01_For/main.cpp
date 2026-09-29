@@ -1,15 +1,15 @@
 // Repetir con for
 //
-// for reúne inicio, condición y avance. Es apropiado cuando conoces cuántas repeticiones
-// necesitas.
+// Vamos a repetir una tarea con for. Entre sus paréntesis indicamos dónde empieza el contador,
+// cuándo seguimos y cómo cambia después de cada vuelta. Podemos imaginar cinco casilleros
+// numerados: revisamos uno, avanzamos y repetimos hasta el último. ++ aumenta el contador en uno;
+// las instrucciones entre llaves se ejecutan en cada vuelta.
 //
-// Analogía: Recorres cinco casilleros, uno por uno, sin saltarte ninguno.
+// Practica: Realiza un programa que muestre la tabla del 7.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Imprime la tabla del 7 con un ciclo de diez repeticiones.
+// - Usar un contador desde 1 hasta 10.
+// - Calcular cada multiplicación dentro del for.
+// - Mostrar cada operación y su resultado en una línea.
 
 #include <iostream>
 

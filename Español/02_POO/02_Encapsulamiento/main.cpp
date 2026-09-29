@@ -1,17 +1,12 @@
 // Encapsulamiento y const
 //
-// private protege el estado. Los métodos públicos controlan cambios válidos; los métodos const
-// consultan sin modificar el objeto. No necesitas un getter y un setter por cada atributo.
+// Vamos a proteger el saldo de una alcancía. En lugar de permitir cualquier cambio desde main, lo
+// guardamos dentro de la clase y ofrecemos depositar y retirar. Cada función comprueba sus reglas
+// antes de cambiar el saldo. Llamamos encapsulamiento a reunir esos datos y sus reglas detrás de
+// operaciones controladas. Dentro de class, los datos son privados si no escribimos public. Con
+// consultar() const podemos leer el saldo sin cambiarlo: const al final de una función promete
+// respetar los datos del objeto.
 //
-// Analogía: Una alcancía no deja meter la mano directamente: sus operaciones controlan cómo
-// entra y sale el dinero.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Comprueba que no puedes acceder a saldo directamente desde main. Prueba retirar
-// cero.
 
 #include <iostream>
 

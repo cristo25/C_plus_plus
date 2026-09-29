@@ -1,25 +1,16 @@
 // Quick sort
 //
-// Elige un pivote, coloca los menores a un lado y ordena las particiones. Cuando las particiones
-// quedan repartidas de forma parecida, cada nivel procesa los n datos y la cantidad de niveles
-// crece como las divisiones por mitades (O(n log n); n cuenta datos). Si el pivote deja casi todo
-// en un solo lado, repetimos recorridos largos y el trabajo puede crecer como n multiplicado por n
-// (O(n²)); elegir el último dato como pivote provoca ese caso con entradas ordenadas o iguales.
-// También pueden acumularse hasta una llamada pendiente por dato (O(n) de memoria para las
-// llamadas). No es estable. Lee su función en ../Ordenamientos.h.
+// Vamos a elegir un dato como referencia para separar los demás; a ese dato lo llamamos pivote.
+// Ponemos los menores de un lado y repetimos en cada grupo. Eso hace quick sort. Si los grupos
+// quedan parejos, cada nivel revisa los n datos y los niveles crecen por mitades (O(n log n)). Aquí
+// elegimos el último dato: con entradas ordenadas o iguales puede quedar casi todo de un lado y
+// repetirse mucho trabajo (O(n²), como n por n). Esta elección nos ayuda a observar por qué importa
+// el pivote.
 //
-// Analogía: Un pivote divide una fila: los menores pasan a la izquierda y los demás a la
-// derecha; repites en cada grupo.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Traza el pivote en 4, 1, 3, 2. Prueba datos ordenados y explica por qué esta versión
-// se desequilibra.
 
 #include "../Ordenamientos.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

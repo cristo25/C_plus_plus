@@ -1,18 +1,37 @@
 # Árboles
 
-Distingue árbol binario de ABB y después estudia sus recorridos. El integrador inserta, busca, recorre y elimina. Los ejemplos recursivos usan árboles pequeños; balanceo y recorridos iterativos son ampliaciones para grandes profundidades.
+Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
 
-## Orden de estudio
+## Árbol binario: raíces, hijos y hojas
 
-1. [Árbol binario](01_Arbol_Binario/main.cpp)
-2. [Binario de búsqueda](02_Binario_de_Busqueda/main.cpp)
-3. [Recorridos](03_Recorridos/main.cpp)
+Vamos a unir nodos formando ramas. En un árbol binario cada nodo puede tener como máximo un hijo izquierdo y uno derecho. Al primer nodo lo llamamos raíz; a uno sin hijos lo llamamos hoja. Aquí solo estamos construyendo la forma: tener dos ramas no obliga a ordenar los números. Para contar, sumamos el nodo actual y los de sus dos ramas mediante recursión. Usamos unique_ptr para que cada rama libere sus nodos al terminar.
 
-Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
+[Programa comentado](01_Arbol_Binario/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-./programa.exe
-```
+## Árbol binario de búsqueda (ABB)
 
-Cada subcarpeta tiene su propio programa. Compila un ejemplo a la vez: todos tienen su propia función `main`.
+Vamos a añadir una regla al árbol: los números menores van a la izquierda y los mayores a la derecha. Así, al buscar elegimos una rama y descartamos la otra. Llamamos a esta organización árbol binario de búsqueda, o ABB. Aquí no guardamos repetidos. Al borrar un nodo con dos hijos buscamos un reemplazo que conserve el orden. Si el árbol queda como una cadena, tendremos que recorrer muchos nodos; no basta con llamarlo árbol para que siempre busque rápido.
+
+[Programa comentado](02_Binario_de_Busqueda/main.cpp).
+
+## Recorridos de un árbol
+
+Vamos a visitar el mismo árbol en tres órdenes. En preorden leemos primero el nodo y después sus ramas; en inorden leemos izquierda, nodo y derecha; en postorden dejamos el nodo para el final. En un árbol de búsqueda, inorden nos muestra los números ordenados. Podemos imaginar que recorremos las mismas habitaciones pero anotamos su nombre al entrar, a mitad de la visita o al salir. En todos los casos visitamos los n nodos (O(n)).
+
+[Programa comentado](03_Recorridos/main.cpp).
+
+## Árboles
+
+Vamos a integrar las operaciones del árbol: insertar, buscar, recorrer y eliminar. Usamos Arbol.h para seguir los mismos enlaces en cada caso. Primero comprobamos el árbol vacío, agregamos datos, comparamos sus recorridos y al final retiramos todos los nodos. Podemos pensar en cuidar un árbol de carpetas: cada cambio debe conservar el acceso a las ramas que todavía existen.
+
+[Programa comentado](main.cpp).
+
+**Práctica.** Realiza un programa integrador para administrar números en un árbol.
+
+- Agregar y buscar números sin permitir repetidos.
+- Ofrecer los tres recorridos.
+- Eliminar la raíz sin perder los otros datos.
+- Vaciar el árbol y volver a insertar.
+- Mostrar un mensaje cuando una búsqueda no encuentre el número.
+
+[Volvemos a la guía general](../../README.md).

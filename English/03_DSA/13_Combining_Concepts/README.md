@@ -1,154 +1,147 @@
 # Combining concepts: from a drawer to an inventory with views
 
-Knowing what a pointer is does not yet tell you where to use it. Here we start with a need and change the representation when a new need appears. We keep `Product`, the class from the [OOP headers topic](../../02_OOP/08_Headers/Product.h), so we can focus on how the concepts combine.
+We will connect this topic’s pieces before solving its integration task. Each link contains the program, comments and a practice task with requirements.
 
-Before starting, run [references](../../01_Structured_Programming/06_Functions/02_References/main.cpp) and [basic pointers](../../01_Structured_Programming/09_Basic_Pointers/main.cpp). Follow the steps; each `main.cpp` explains its operations in comments. Finish with this folder's [integration example](main.cpp).
+## 1. An array containing objects
 
-## Route
+We will store complete objects in an array. In Product products[3], each compartment contains a product with its name and price. We reuse Product.h from OOP. We can picture a drawer with three Minecraft blocks: each keeps its own data even though all share a type. We traverse through const Product& to read the original without copying or changing it. When the array ends, its contained objects end too.
 
-| Step | Program | Decision we learn |
-| --- | --- | --- |
-| 1 | [Array of classes](01_Array_of_Classes/main.cpp) | Store complete objects |
-| 2 | [Array of structs with classes](02_Array_of_Structs_with_Classes/main.cpp) | Group an object with its stock count |
-| 3 | [Array of pointers](03_Array_of_Pointers/main.cpp) | Separate a card from its target |
-| 4 | [Vector of pointers](04_Vector_of_Pointers/main.cpp) | Grow a view without copying products |
-| 5 | [Matrix of pointers](05_Matrix_of_Pointers/main.cpp) | Organize views by rows and slots |
-| 6 | [Array of linked nodes](06_Array_of_Linked_Nodes/main.cpp) | Separate physical location from logical order |
-| 7 | [Vector of unique_ptr](07_Vector_of_Unique_Ptr/main.cpp) | Give each dynamic object an owner |
-| 8 | [Class with struct nodes](08_Class_with_Nodes/main.cpp) | Encapsulate a chain and its operations |
-| 9 | [Vector of classes with nodes](09_Vector_of_Classes_with_Nodes/main.cpp) | Group lists and distinguish what moves |
+[Commented program](01_Array_of_Classes/main.cpp).
 
-## 1. What does an array of classes actually store?
+**Practice.** Write a program with an array of products.
 
-We want three products. `array<Product, 3>` is a drawer with three compartments: each contains a complete object with its name and price. The class defines each object; the array defines how many fit and how to visit them. We do not need addresses for every operation: a reference to a compartment is enough to inspect its product.
+- Create three complete objects with names and prices.
+- Traverse them through const references.
+- Add their prices in cents.
+- Display each product and the total.
+- Explain what one array slot contains.
 
-```cpp
-const Product& product = products.at(0);
-cout << product.getName() << "\n";
-```
+## 2. A struct contains a class; an array contains those structs
 
-The reference does not create an extra product. `at(0)` checks the index; indexes start at zero. When the array's lifetime ends, so do those of its contained objects.
+We will add available quantity to each product. With struct Record we group a Product and an integer quantity, then store several Record cards in an array. We can picture a compartment holding the product and a stock label. With records[0].product we reach the object, and with records[0].quantity the number. receiveOne takes Record& to change the original card: removing & would change only a copy.
 
-## 2. How do I add data belonging to the same record?
+[Commented program](02_Array_of_Structs_with_Classes/main.cpp).
 
-Now we need stock counts. A `Record` contains a `Product` and an integer. The array holds records; each record holds an object of a class. These are layers of composition, rather than competing concepts.
+**Practice.** Write a program that tracks stock per product.
 
-```cpp
-struct Record {
-    Product product;
-    int quantity;
-};
+- Create a struct containing a Product and a quantity.
+- Store at least two records in an array.
+- Receive units through a function taking a reference.
+- Reject negative quantities and prevent exceeding the integer limit.
+- Display the records after the change.
 
-void receiveOne(Record& record) {
-    if (record.quantity < 0 || record.quantity == numeric_limits<int>::max()) {
-        throw invalid_argument("Invalid quantity");
-    }
-    ++record.quantity;
-}
-```
+## 3. An array of cards pointing to integers
 
-`records.at(0).product` reaches the object and `records.at(0).quantity` reaches the number. Passing the record by reference changes the original record. Passing it by value would change another record. `struct` has public access by default; `class` has private access. Both can have methods and contain objects of the other.
+We will store addresses instead of integers. In int* addresses[3] we have three cards: each can point to a box outside the array. With *addresses[0] we follow the first card and change red; with addresses[0] = &blue we change only the card. Two cards can point to the same box, or hold nullptr when no box is selected. The array holds the pointers but does not delete the local integers they point to.
 
-## 3. What changes when a compartment holds an address?
+[Commented program](03_Array_of_Pointers/main.cpp).
 
-`array<int*, 3>` holds three cards, rather than three integers. The integer boxes are outside the drawer. `addresses.at(0) = &blue` changes a card; `*addresses.at(0) = 7` follows the card and changes its target integer. Before following a card, we must know its target exists.
+**Practice.** Write a program with three address cards for two integers.
 
-```text
-drawer of cards                     original boxes
-slot 0: address of red ------------> red: 2
-slot 1: address of blue -----------> blue: 5
-slot 2: nullptr                     no target
-```
+- Store addresses in an int* cards[3] array.
+- Point two cards at the same integer.
+- Change that integer through one card and read through the other.
+- Leave one card as nullptr and check before following it.
+- Show that changing an address does not change the previous contents.
 
-The traditional form `int* cards[3]` is also an array of three pointers. We use `array` because it retains its size and provides `at()` and `size()`. In a declaration, `*` defines a pointer type; in an expression, it follows an address. Declare each variable on its own line: in `int* a, b;` only `a` would be a pointer.
+## 4. A vector of pointers: an inventory view
 
-## 4. How do I select products without copying them?
+We will select products without copying them. We store products in an array and their addresses in vector<Product*>. We call this selection a view: it can grow or show a product several times without creating new products. With Product*& we give selectProduct another label for the original pointer, allowing it to change the destination. Receiving only Product* would change a copy of the card. Growing the address vector does not move these array products; they must keep existing while we read them.
 
-The inventory keeps the objects. `vector<Product*>` holds a selection of their addresses. It can grow, omit products or show one several times. It makes sense when we want a view of existing data, rather than new products.
+[Commented program](04_Vector_of_Pointers/main.cpp).
 
-The function `selectProduct(Product*& selection, Product& replacement)` needs to change the caller's card. Its first parameter is therefore a reference to a pointer. The second aliases the new product: `&replacement` obtains its address. With `Product* selection` we would only change a copy of the card.
+**Practice.** Write a program that displays a selection of products.
 
-Here the owner is a local `array` that stays in place. Reallocating the card vector does not relocate the products in that array. However, a reference to **a vector slot** would be invalidated by reallocation: distinguish the stored card from the box it points to.
+- Store three complete products in an array.
+- Keep their addresses in a vector of pointers.
+- Change a selection through a reference to a pointer.
+- Display a product twice without copying it.
+- Check that original products stay in place.
 
-## 5. What does nesting arrays of pointers mean?
+## 5. An array of arrays of pointers
 
-A display has two rows with two slots each:
+We will arrange address cards in rows and columns. Product* slots[2][2] represents two rows of two addresses. With slots[0][1] we select a card; if it is not nullptr, we can follow it to the product. Two slots can show the same product, like two signs pointing to the same shop. Here we add const after * to fix the cards; we can still modify their products. A matrix is not Product**: it contains its rows, whereas a double pointer stores an address leading to another pointer.
 
-```cpp
-array<array<Product*, 2>, 2> slots{};
-```
+[Commented program](05_Matrix_of_Pointers/main.cpp).
 
-Read from the inside out: `Product*` is a card; `array<Product*, 2>` is a row of two cards; the outer array has two rows. In this declaration, `{}` initializes every pointer to `nullptr`. The program assigns all four slots, including one with `nullptr`. `slots.at(row).at(column)` selects a card and `*slots.at(row).at(column)` reaches a product, provided the card has a valid target.
+**Practice.** Write a product display using a matrix of pointers.
 
-Such a matrix is not `Product**`. A double pointer describes two address levels; a nested array physically contains its rows. Counting occupied slots is also different from counting unique objects: two slots can display the same product.
+- Create two rows with two slots each.
+- Include a nullptr slot and two slots pointing to one product.
+- Display a notice for empty slots.
+- Change a product and check both cards show the change.
+- Count occupied slots without confusing them with distinct products.
 
-`const array<Product*, 2>` prevents reassigning its cards, but permits changing their targets. `array<const Product*, 2>` permits changing the cards and provides read access to their targets. Both kinds of `const` can be combined.
+## 6. Nodes inside an array, connected by pointers
 
-## 6. Can a node live inside an array?
+We will store complete nodes in an array and link them with pointers. Each Node contains a Product and next, the next node's address. The boxes occupy positions 0, 1 and 2, but arrows can make us visit 0, 2 and 1. The last link is nullptr. The boxes belong to the array and were not created with new, so we do not use delete. We limit visits to three to detect an accidental circle. Manually copying these records would require rebuilding their arrows so they no longer point to the originals.
 
-Yes. The node contains data and a link:
+[Commented program](06_Array_of_Linked_Nodes/main.cpp).
 
-```cpp
-struct Node {
-    Product product;
-    Node* next = nullptr;
-};
-```
+**Practice.** Write a program that links nodes inside an array.
 
-The array owns the nodes. `next` only says which node to visit afterward. Linking `0 -> 2 -> 1` changes the logical traversal while the physical compartments stay in place. First choose a starting node, then read its data and follow its link; repeat until `nullptr`.
+- Store three nodes containing products.
+- Connect positions in the order 2, 0 and 1.
+- Traverse from the starting node through next.
+- Stop at nullptr or report exceeding the node count.
+- Draw array positions separately from visit order.
 
-The visit limit detects a cycle in this three-node example. We never call `delete`: the nodes are array elements. Copying the array would copy addresses without rebuilding them; the copy's links would still point to the original nodes. This linked structure needs to preserve its array's location and lifetime, or rebuild its links.
+## 7. A vector of owners and an observer pointer
 
-## 7. Who destroys a dynamically created object?
+We will separate the location of cards from that of products. In vector<unique_ptr<Product>>, each card is also responsible for releasing its product. When the vector needs more space it can move the cards; separately created products keep their addresses. With get we lend an address, not deletion responsibility. Removing the responsible card also destroys its product; before that we stop using every borrowed pointer. This differs from vector<Product>, where growth can move the products themselves.
 
-`unique_ptr<Product>` is a card with responsibility: its owner destroys the object when released. `make_unique` creates the product; `get()` lends an address for observation; `move` transfers responsibility. An ordinary pointer obtained through `get()` does not receive that ownership.
+[Commented program](07_Vector_of_Unique_Ptr/main.cpp).
 
-`vector<unique_ptr<Product>>` can relocate its elements without moving their managed products. In the example we force reallocation with a larger capacity and verify that the product address remains the same. Then we clear the observer before erasing its owner.
+**Practice.** Write a program with products managed by unique_ptr inside a vector.
 
-In `vector<Product>`, products are the vector elements: reallocation invalidates their references and pointers. `reserve` only avoids further reallocations until capacity is exceeded; it does not make addresses permanent. Moving owners also does not protect against `erase`, `reset`, replacing an owner or destroying the structure: those operations can destroy the target.
+- Create two products with make_unique.
+- Obtain a reading pointer with get.
+- Grow the vector’s capacity and check the product address.
+- Clear every observer before removing its owner.
+- Display how many products remain.
 
-## 8. What does the class managing nodes contribute?
+## 8. A class manages struct nodes
 
-[Shelf.h](Shelf.h) hides the first owner and the links. Each node contains a `Product` and a `unique_ptr<Node>` owning the next node. The chain looks like this:
+We will keep the chain and its rules inside Shelf. Each node contains a Product and a unique_ptr to the next node; the shelf is responsible for the first. From outside we request additions or queries without directly changing links. We can picture a shelf keeper arranging boxes and lending their labels for reading. first() and nextNode() lend addresses; getProduct() lends a read-only reference. Emptying the shelf invalidates those queries because their boxes no longer exist.
 
-```text
-Shelf
-  head: unique_ptr -----> Node [Product | next: unique_ptr]
-                                             |
-                                             v
-                         Node [Product | next: nullptr]
-```
+[Commented program](08_Class_with_Nodes/main.cpp).
 
-`add()` creates a node and puts it before the chain: insertion order is reversed. `first()` and `nextNode()` lend `const Node*`; `getProduct()` lends `const Product&`. Queries can read without changing links. `friend` gives `Shelf` access to its node's private link for insertion and clearing; other users use public queries.
+**Practice.** Write a program with a class managing a product list.
 
-The class disables copying to avoid duplicating owners. It permits moving because transferring a chain does not require duplicating nodes. `clear()` releases one node at a time, avoiding long recursive destruction; move assignment first clears the old contents and guards against moving onto itself. The total uses `long long` and checks for overflow. These choices keep ownership consistent without changing the exercise's purpose.
+- Keep the first node inside the class.
+- Add three products through a public operation.
+- Traverse them using const queries.
+- Calculate the total value.
+- Empty the list without reusing deleted-node addresses.
 
-Functions defined inside the class are `inline`; including this header does not require an additional `Shelf.cpp`. Product functions are defined in `Product.cpp`, which must be compiled and linked. Each program's comments provide its complete command.
+## 9. A vector contains classes managing nodes
 
-## 9. What happens when these classes live inside a vector?
+We will store several shelves in a vector. Each shelf contains nodes and each node a product: we follow those layers one at a time. Growing the vector can move a shelf, so we clear pointers to the shelf itself before forcing that change. Its nodes were created separately and do not move when their manager changes location. We can therefore keep a node query while the node still exists. Emptying its shelf destroys the node, so we must stop using that query.
 
-Now `vector<Shelf>` contains objects that in turn own nodes with products. During reallocation, the vector moves shelves. A `Shelf*` pointing to a previous slot is invalidated. A pointer to a managed node keeps its target because the node was not relocated: only its owner changed location.
+[Commented program](09_Vector_of_Classes_with_Nodes/main.cpp).
 
-The example clears the shelf pointer before forcing reallocation and inspects the shelf again through `at(0)`. It keeps a `const Node*` to demonstrate that the node stays in the same place. Before clearing that list it also clears this observer. A reference does not avoid these problems: its object must also stay alive and in place.
+**Practice.** Write a program with a vector of shelves containing nodes.
 
-## Integration: sort the view, preserve the inventory
+- Create two shelves and add products to their lists.
+- Distinguish a shelf pointer from a pointer to one of its nodes.
+- Clear the shelf pointer before growing vector capacity.
+- Read the node through its relocated owner.
+- Clear the query before emptying its list.
 
-This folder's [main.cpp](main.cpp) combines the entire chain. It first builds owners, then traverses their nodes and lends addresses to a vector. It sorts that vector by price and puts some addresses in a matrix. The lists keep their order and products: we sorted cards, rather than objects.
+## Integration: owners, views, matrices and sorting
 
-The sorted output is `Pencil: 100`, `Notebook: 300`, `Book: 500`. The inventory totals 900 cents. The matrix has three occupied slots but only displays two distinct products, because it repeats the pencil. The integration check verifies these values and the original links' order.
+We will combine the layers to display sorted products without moving their original boxes. We store shelves in a vector; each shelf contains nodes and each node a product. We collect node addresses in view and sort only those cards by price. Then we choose cards for a display matrix. One card may appear several times: counting occupied slots does not count distinct products. We calculate total value from the shelves so a repeated display does not count the product twice.
 
-```text
-owners: vector<Shelf> -> Shelf -> Node -> Product
-                                   ^
-view: vector<const Node*> ----------|
-matrix: array<array<const Node*, 2>, 2>
-        |__________________________|
-```
+[Commented program](main.cpp).
 
-A view can be retained while the nodes are alive; deleting a node requires clearing its observers before using them again. A `nullptr` in another card does not repair a dangling address. The matrix is destroyed before the shelves because it was declared later in the same scope.
+**Practice.** Write an integrated inventory with shelves, nodes and views.
 
-## How to choose the combination
+- Store shelves in a vector and their products in struct nodes.
+- Create a read-only pointer view without copying products.
+- Sort the view by name or price.
+- Display part of it in a pointer matrix with empty slots.
+- Change a selection through a reference to a pointer.
+- Check that sorting the view leaves original order and totals unchanged.
+- Explain which structure releases each object.
 
-Start with the operations: do I want to store data, group data that changes together, select existing objects, sort a view or link a traversal? Then choose who manages object lifetimes and who only observes. Finally decide what each function may change: a value, the original object, a pointer's destination or a read-only query.
-
-Every problem does not need all these layers. A linked list here teaches nodes and ownership; a simple inventory usually needs only a vector of records. The logic of combining concepts lies in justifying each layer and being able to draw where the data lives, how you reach it and when it stops existing.
+[Back to the general guide](../../README.md).

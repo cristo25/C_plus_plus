@@ -1,17 +1,15 @@
 // Value, reference and const reference
 //
-// A variable is a box. Passing by value supplies a second box; passing by
-// reference supplies another label for the same box. A reference is initialized
-// and stays bound to the same object: assigning a value changes that object.
-// const T& is a label that permits reading, but not writing through that access.
-// The object must remain alive while the reference is used.
+// We will compare a copy with a reference. If a variable is a box, passing by value hands over
+// another box with the same contents. With int& we attach another label to the original box:
+// changing the value through that label changes the original. A reference stays attached to the
+// same box from its creation; assigning another value changes the contents, not the box it refers
+// to. With const int& we can read through the label but cannot write. The box must keep existing
+// while we use it.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Predict each output. Replace int& with int and observe what stops changing.
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

@@ -1,11 +1,10 @@
 // Conditionals
 //
-// Choose execution paths, then combine switch and if to calculate a discounted price. The
-// integration example produces 25.
+// We will combine both ways of making decisions. First we choose a price with switch; then we use
+// if to apply a student discount. The price function receives the option and discount eligibility.
+// For an unknown option we return -1 as an agreed error signal. We separate two questions: what is
+// being bought and which discount applies.
 //
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
 
 #include <iostream>
 

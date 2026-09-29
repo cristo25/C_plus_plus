@@ -1,4 +1,5 @@
 #include "Producto.h"
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
 
 using namespace std;

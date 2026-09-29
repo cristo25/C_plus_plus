@@ -1,4 +1,5 @@
 #include "Product.h"
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
 
 using namespace std;

@@ -1,25 +1,16 @@
 // Merge sort
 //
-// Divide por mitades, ordena cada mitad y las mezcla. Dividir por mitades crea varios niveles de
-// trabajo; duplicar la cantidad de datos añade aproximadamente un nivel. En cada nivel, las mezclas
-// recorren en conjunto los n datos: el trabajo combina la cantidad de datos con la cantidad de
-// niveles (O(n log n); n cuenta datos y log n describe los niveles de división). Necesita un
-// arreglo auxiliar que crece con esos datos (O(n) de memoria) y guarda las llamadas pendientes del
-// camino de divisiones actual (O(log n) de memoria para las llamadas). Es estable porque, ante
-// empates, toma primero el elemento de la izquierda. Lee su función en ../Ordenamientos.h.
+// Vamos a dividir un montón en mitades hasta tener grupos pequeños y después reunirlos en orden.
+// Podemos imaginar dos ayudantes que ordenan sus hojas: al juntarlas elegimos siempre la menor hoja
+// disponible. Eso hace merge sort. Necesitamos otro espacio para la mezcla, que crece con los n
+// datos (O(n) de memoria adicional). En cada nivel recorremos todos los datos y tenemos tantos
+// niveles como divisiones por mitades (O(n log n), con n datos y log n niveles). Ante un empate
+// tomamos primero el dato de la izquierda para conservar su orden.
 //
-// Analogía: Divides hojas entre dos ayudantes y luego reúnes sus montones ordenados tomando la
-// menor hoja disponible.
-//
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Dibuja las divisiones y mezclas de seis números. Observa que el final del rango se
-// excluye.
 
 #include "../Ordenamientos.h"
 #include <iostream>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 using namespace std;

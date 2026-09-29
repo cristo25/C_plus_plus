@@ -1,23 +1,20 @@
 // Integration: owners, views, matrices and sorting
 //
-// This example combines the nine steps into one operation: show products
-// in sorted order without reorganizing their inventory. A vector holds Shelf
-// classes; each class owns struct nodes containing Product. We build a view
-// of const Node*, sort it by price and select addresses for a matrix.
-// const& parameters inspect owners; const Node*& changes a selection.
-// Never delete nodes while borrowed views are in use. Repeated slots are not
-// extra stock: calculate the total from the owners.
+// We will combine the layers to display sorted products without moving their original boxes. We
+// store shelves in a vector; each shelf contains nodes and each node a product. We collect node
+// addresses in view and sort only those cards by price. Then we choose cards for a display matrix.
+// One card may appear several times: counting occupied slots does not count distinct products. We
+// calculate total value from the shelves so a repeated display does not count the product twice.
 //
-// Compile from this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp ../../02_OOP/08_Headers/Product.cpp -o program.exe
-// Run: ./program.exe
-//
-// Practice: Sort by name and demonstrate that the original list order did not change.
 
+// We use sort to sort or change data order.
 #include <algorithm>
-#include <array>
 #include <iostream>
+// We use numeric_limits to check the largest allowed integer before adding.
 #include <limits>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
+// We store a collection that can grow using vector.
 #include <vector>
 #include "Shelf.h"
 
@@ -72,9 +69,9 @@ int main() {
     const Shelf::Node* selection = nullptr;
     selectProduct(selection, view.at(0));
     // The matrix displays two unique products in three slots: selection appears twice.
-    const array<array<const Shelf::Node*, 2>, 2> slots{
-        array<const Shelf::Node*, 2>{selection, nullptr},
-        array<const Shelf::Node*, 2>{view.at(1), selection}
+    const Shelf::Node* const slots[2][2]{
+        {selection, nullptr},
+        {view.at(1), selection}
     };
     size_t occupied = 0;
     for (const auto& row : slots) {

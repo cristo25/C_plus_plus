@@ -1,12 +1,22 @@
+// Con inline permitimos compartir estas definiciones desde el header entre varios archivos.
+
 #ifndef CURSO_GRAFO_H
 #define CURSO_GRAFO_H
+// Usamos size_t para contar elementos y representar posiciones no negativas.
 #include <cstddef>
+// Elegimos primero el menor valor de una cola de prioridad mediante greater.
 #include <functional>
+// Consultamos con numeric_limits el mayor entero permitido antes de sumar.
 #include <limits>
+// Guardamos un resultado que puede faltar: optional tiene un valor o está vacío.
 #include <optional>
+// Atendemos por llegada con queue o por importancia con priority_queue.
 #include <queue>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
+// Usamos pair para guardar dos datos juntos.
 #include <utility>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 namespace curso {
@@ -18,7 +28,8 @@ namespace curso {
     };
 
     class Grafo {
-        // Cada vértice tiene una lista de carreteras salientes: representación por adyacencia.
+        // Guardamos para cada lugar una lista de los caminos que salen de él; esa es su lista de
+        // vecinos.
         vector<vector<Arista>> adyacencia;
 
     public:
@@ -107,7 +118,8 @@ namespace curso {
                     continue;
                 }
                 const long long candidato = distancia + arista.peso;
-                // Relajamos: mejora el costo y guardamos desde qué vértice llegamos.
+                // Encontramos un viaje más barato: cambiamos el costo y recordamos desde dónde
+                // llegamos.
                 if (candidato < resultado.distancias.at(arista.destino)) {
                     resultado.distancias.at(arista.destino) = candidato;
                     resultado.anteriores.at(arista.destino) = actual;
@@ -118,7 +130,8 @@ namespace curso {
         return resultado;
     }
 
-    // Los ejemplos anteriores conservan la misma API de solo distancias.
+    // Con esta función devolvemos solo los costos, como en los ejemplos que no necesitan mostrar la
+    // ruta.
     inline vector<long long> dijkstra(const Grafo& grafo, size_t origen) {
         return caminosMinimos(grafo, origen).distancias;
     }

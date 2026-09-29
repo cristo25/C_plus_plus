@@ -1,11 +1,10 @@
 // Funciones
 //
-// Divide un problema en tareas pequeñas. El integrador calcula un subtotal por valor y aplica un
-// cupón por referencia; el total es 50.
+// Vamos a combinar funciones que calculan con funciones que modifican. Primero obtenemos un
+// subtotal a partir del precio y la cantidad. Después pasamos el total por referencia para aplicar
+// un cupón sobre esa misma variable. Podemos imaginar una caja registradora: una tarea calcula y
+// otra actualiza el importe. Así podemos seguir cada paso sin mezclar todo dentro de main.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
 
 #include <iostream>
 
@@ -15,7 +14,7 @@ using namespace std;
 int subtotal(int cantidad, int precio) {
     return cantidad * precio;
 }
-// int& es un alias del total original: el descuento sí cambia la variable de main.
+// int& es otra etiqueta del total original: el descuento sí cambia la variable de main.
 void aplicarCupon(int& total) {
     if (total >= 50) {
         total -= 10;

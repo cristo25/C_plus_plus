@@ -1,7 +1,11 @@
 #include "data/CatalogStore.h"
+// We read and save files using ifstream and ofstream.
 #include <fstream>
+// We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
+// We check file-operation failures using error_code.
 #include <system_error>
+// We use move to transfer data or responsibility for releasing it.
 #include <utility>
 
 namespace project {
@@ -52,7 +56,8 @@ namespace project {
     }
 
     void FileStore::save(const BookDAO& dao) {
-        // ponytail: one writer per file; use a transactional database for concurrent writers.
+        // ponytail: we write from one running program; for several simultaneous writers we use a
+        // database that coordinates changes.
         if (!file.parent_path().empty()) {
             fs::create_directories(file.parent_path());
         }

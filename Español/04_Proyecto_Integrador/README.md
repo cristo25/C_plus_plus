@@ -1,27 +1,31 @@
 # Biblioteca y rutas del campus
 
-Una aplicación de consola que permite administrar libros y solicitar entregas entre edificios. El objetivo es unir las herramientas del curso alrededor de operaciones concretas: consultar, modificar, guardar, encolar, recorrer y encontrar una ruta.
+Vamos a construir una biblioteca donde podamos registrar libros y organizar entregas entre edificios. Vamos a seguir cada operación desde el menú hasta sus datos, usando las clases y estructuras que ya estudiamos.
 
-Los fragmentos de esta guía muestran partes de la implementación, no programas independientes. Sigue los enlaces para leer las declaraciones y los métodos completos; el código también explica sus decisiones con comentarios. La [versión inglesa](../../English/04_Integrated_Project/README.md) tiene el mismo comportamiento.
+Los bloques de esta guía son fragmentos. Podemos abrir los archivos enlazados para seguir el programa completo. En la [versión inglesa](../../English/04_Integrated_Project/README.md) encontramos la misma aplicación.
 
 ## 1. Qué hace la aplicación
+
+Vamos a elegir las operaciones desde este menú. Un ID es el número que identifica un libro; lo usamos para encontrarlo aunque cambie su título.
 
 | Opción | Operación | Qué aplica |
 | --- | --- | --- |
 | 1 | Mostrar catálogo ordenado por ID | Vector de punteros de lectura y ordenamiento |
 | 2 | Buscar un libro por ID | Búsqueda binaria sobre IDs ordenados |
 | 3, 4, 5 | Agregar, renombrar y eliminar libros | POO, validación, DAO y archivos |
-| 6 | Deshacer el último cambio del catálogo | Pila LIFO de instantáneas |
-| 7 | Solicitar entrega de un libro | Structs, copia de objetos y cola FIFO |
+| 6 | Deshacer el último cambio del catálogo | Pila de copias para deshacer |
+| 7 | Solicitar entrega de un libro | Fichas copiadas y cola por llegada |
 | 8 | Atender la siguiente entrega | Grafo, Dijkstra y reconstrucción del camino |
 | 9 | Consultar solicitudes pendientes | Copia de una cola sin consumirla |
 | 10 | Ver historial hacia delante o atrás | Lista doble de índices y vector de mensajes |
-| 11 | Mostrar mapa y edificios alcanzables | Lista de adyacencia y BFS |
+| 11 | Mostrar mapa y edificios alcanzables | Vecinos de cada edificio y recorrido por capas |
 | 0 | Cerrar la sesión | Destructores y liberación de recursos |
 
-El catálogo se guarda después de cada cambio confirmado y de cada operación de deshacer. Solicitudes, historial y pila pertenecen a la sesión actual. Una solicitud guarda el título que tenía el libro al solicitarla; renombrar o eliminar su ficha después no altera esa solicitud. Simulamos el reparto, sin llevar existencias físicas ni préstamos.
+Guardamos el catálogo después de cada cambio confirmado. Las entregas pendientes, el historial y los cambios que podemos deshacer duran solo durante la sesión. Al pedir una entrega copiamos la ficha del libro: así conservamos el título que tenía al solicitarla, aunque después lo cambiemos o eliminemos del catálogo. Aquí simulamos entregas; no llevamos cantidades físicas de libros.
 
 ## 2. Organización del proyecto
+
+Vamos a repartir el trabajo como en una biblioteca real: una persona atiende la ventanilla, otra cuida el catálogo y otra consulta el mapa. En el programa damos una responsabilidad a cada grupo de archivos.
 
 ```text
 04_Proyecto_Integrador/
@@ -53,11 +57,11 @@ El catálogo se guarda después de cada cambio confirmado y de cada operación d
 | main | Elegir el modo de ejecución y conectar los objetos |
 | Comprobación | Verificar los flujos principales sin interacción manual |
 
-Los `.h` declaran contratos y los `.cpp` implementan operaciones. Los includes usan `-Iinclude`; no se incluyen archivos `.cpp`. Reutilizamos [LibroDAO.h](../02_POO/09_DAO/LibroDAO.h), [ListaDoble.h](../03_EDD/03_Listas_Ligadas/02_Doblemente_Ligada/ListaDoble.h), [Busquedas.h](../03_EDD/10_Busqueda/Busquedas.h) y [Grafo.h](../03_EDD/08_Grafos/Grafo.h), en lugar de copiarlos. Por eso hay que conservar el proyecto dentro del curso.
+En los `.h` anunciamos las clases y sus operaciones; en los `.cpp` escribimos sus pasos. Con `-Iinclude` indicamos dónde buscar nuestros headers. Reutilizamos [LibroDAO.h](../02_POO/09_DAO/LibroDAO.h), [ListaDoble.h](../03_EDD/03_Listas_Ligadas/02_Doblemente_Ligada/ListaDoble.h), [Busquedas.h](../03_EDD/10_Busqueda/Busquedas.h) y [Grafo.h](../03_EDD/08_Grafos/Grafo.h). Por eso mantenemos esta carpeta dentro del curso.
 
 ## 3. Compilar y ejecutar
 
-Abre Git Bash **en esta carpeta**, `Español/04_Proyecto_Integrador`. Necesitas C++17 y `g++`:
+Abrimos Git Bash en `Español/04_Proyecto_Integrador` y compilamos todos los archivos que forman esta aplicación:
 
 ```bash
 mkdir -p build
@@ -65,7 +69,7 @@ g++ -std=c++17 -Wall -Wextra -pedantic -Iinclude src/main.cpp src/datos/AlmacenC
 ./build/biblioteca.exe
 ```
 
-En PowerShell, crea la carpeta con `New-Item -ItemType Directory -Force build`; el comando de compilación es el mismo. Ejecuta desde la raíz del proyecto, porque la ruta predeterminada del catálogo es `datos/catalogo.txt`. En Linux o macOS puedes omitir `.exe`.
+En PowerShell creamos la carpeta con `New-Item -ItemType Directory -Force build`; después usamos el mismo comando de compilación. Ejecutamos desde la carpeta del proyecto para que `datos/catalogo.txt` quede en el lugar previsto. En Linux o macOS podemos omitir `.exe`.
 
 ```bash
 ./build/biblioteca.exe --demo
@@ -74,27 +78,27 @@ En PowerShell, crea la carpeta con `New-Item -ItemType Directory -Force build`; 
 ./build/biblioteca.exe --help
 ```
 
-`--demo` prepara tres libros en memoria para practicar sin crear un catálogo en disco. `--data` permite elegir otro archivo. `--self-test` ejecuta la comprobación y termina; no modifica archivos. Son modos alternativos, no se combinan. No necesitas instalar bibliotecas adicionales.
+Con `--demo` practicamos con tres libros en memoria. Con `--data` elegimos otro archivo. Con `--self-test` ejecutamos las comprobaciones y terminamos sin cambiar archivos. Elegimos un modo cada vez. Solo necesitamos C++17, sus bibliotecas estándar y los headers del curso.
 
-En Windows, `main.cpp` obtiene los argumentos con las API nativas de Unicode para conservar rutas como `Español` o nombres en otros alfabetos. Esa parte está dentro de `#ifdef _WIN32`; en otros sistemas se usa `argv`. El resto de la aplicación utiliza la biblioteca estándar y los headers del curso.
+En `main` recibimos las palabras del comando mediante `argv`. Para una ruta con acentos u otro alfabeto necesitamos que la terminal entregue ese texto en UTF-8, una forma de representar esos caracteres. Para empezar podemos usar la ruta relativa predeterminada; el programa no necesita funciones particulares de Windows.
 
 ## 4. Un recorrido para empezar
 
-Ejecuta `--demo`. El catálogo empieza con los IDs 10, 20 y 30, aunque su vector propietario no está ordenado. Usa la opción 1 para verlos ordenados y la 2 para buscar el 20.
+Vamos a ejecutar `--demo`. Con la opción 1 vemos los libros 10, 20 y 30 ordenados por ID; con la 2 buscamos el 20. Los datos originales no necesitan estar guardados en ese orden: preparamos una selección ordenada para consultarlos.
 
-Después elige la opción 7, indica el libro 10, origen 0 y destino 4. Consulta pendientes con 9 y atiende con 8. Verás:
+Con la opción 7 pedimos el libro 10 desde el edificio 0 hasta el 4. Consultamos la cola con 9 y atendemos con 8. Obtenemos:
 
 ```text
 Biblioteca -> Ingenieria -> Laboratorio -> Administracion -> Residencias | 7 minutos
 ```
 
-Agrega un libro con 3, consulta el catálogo y deshaz con 6. En la opción 10 puedes recorrer el historial en ambos sentidos. Solicitar una ruta al edificio 5 muestra que no hay conexión; no agrega una solicitud imposible a la cola. Escribir `2abc`, un número fuera de rango o una opción desconocida obliga a corregir la entrada.
+Después agregamos un libro con 3 y deshacemos el cambio con 6. Con 10 recorremos el historial en ambos sentidos. Si pedimos el edificio 5, avisamos que no hay ruta y no agregamos esa entrega a la cola. También probamos `2abc` o una opción desconocida: pedimos corregir el dato antes de continuar.
 
 ## 5. POO y DAO: decidir quién hace cada trabajo
 
-[Biblioteca.h](include/servicios/Biblioteca.h) compone el DAO, mapa y estructuras de la sesión. No lee del teclado ni imprime menús. [Consola.h](include/interfaz/Consola.h) presta esa interfaz sin decidir cómo guardar los libros.
+En [Biblioteca.h](include/servicios/Biblioteca.h) reunimos las reglas de los libros y las entregas. En [Consola.h](include/interfaz/Consola.h) hacemos las preguntas y mostramos respuestas. Así podemos cambiar el menú sin cambiar la forma de guardar los libros.
 
-El DAO existente administra `Libro`, valida IDs únicos y serializa títulos con espacios y comillas. [AlmacenCatalogo.h](include/datos/AlmacenCatalogo.h) define dos maneras reales de conservarlo:
+Con el DAO concentramos crear, buscar, actualizar y eliminar fichas. Al guardar convertimos sus datos en texto; a ese paso lo llamamos serializar. En [AlmacenCatalogo.h](include/datos/AlmacenCatalogo.h) ofrecemos dos maneras de conservarlos:
 
 ```cpp
 class AlmacenCatalogo {
@@ -105,11 +109,11 @@ public:
 };
 ```
 
-`AlmacenMemoria` sirve al modo de demostración. `AlmacenArchivo` sirve al modo persistente. El servicio trabaja con una referencia a la base, y `virtual` selecciona la implementación. Así aparecen herencia y polimorfismo por una diferencia concreta del programa.
+Con `AlmacenMemoria` los guardamos mientras dura la demostración. Con `AlmacenArchivo` los guardamos en disco. Pedimos `cargar` y `guardar` mediante una referencia a `AlmacenCatalogo`; gracias a `virtual`, usamos los pasos de la variante elegida. Aquí aplicamos la misma idea de los instrumentos: una petición común, distintas formas de resolverla.
 
 ## 6. Propiedad, referencias y punteros
 
-En [main.cpp](src/main.cpp), un `unique_ptr<AlmacenCatalogo>` es dueño de la implementación elegida. `Biblioteca` recibe una referencia; `Consola` recibe referencias a la biblioteca y a los streams. Los objetos se declaran en ese orden y se destruyen en el orden inverso:
+Vamos a distinguir quién libera un objeto y quién solo lo consulta. En [main.cpp](src/main.cpp) un `unique_ptr<AlmacenCatalogo>` queda a cargo del almacén. Pasamos referencias a los objetos que necesitan usarlo. También pasamos `cin` y `cout` a la consola para indicar de dónde leer y dónde escribir:
 
 ```cpp
 Biblioteca biblioteca(*almacen);
@@ -117,13 +121,13 @@ Consola consola(biblioteca, cin, cout);
 consola.ejecutar();
 ```
 
-El almacén debe vivir durante toda la vida de la biblioteca. `*almacen` accede al objeto administrado; no transfiere su propiedad. Los parámetros `const Libro&` y `const string&` consultan sin copiar argumentos. Cuando guardamos un `Libro` **como miembro por valor** de una solicitud, sí creamos una copia independiente.
+Podemos imaginar cajas y etiquetas. `*almacen` nos lleva a la caja del almacén; la referencia entrega otra etiqueta para usar esa misma caja. Conservamos el almacén hasta después de terminar Biblioteca. Cuando recibimos `const Libro&` o `const string&` podemos leer el original sin copiarlo ni cambiarlo mediante esa referencia.
 
-Imagina que el DAO es el cajón de fichas, las referencias son otras etiquetas sobre sus cajas y los punteros son tarjetas con direcciones. La vista ordenada contiene tarjetas; una solicitud contiene su propia ficha. Cambiar el cajón puede invalidar tarjetas prestadas, mientras que la ficha copiada sigue existiendo.
+Los punteros de una vista son tarjetas con direcciones. Una entrega, en cambio, guarda una ficha propia. Si cambiamos el catálogo, las tarjetas anteriores pueden dejar de servir; la ficha copiada en la entrega conserva sus datos.
 
 ## 7. Vector de punteros y búsqueda binaria
 
-[catalogoOrdenado()](src/servicios/Biblioteca.cpp) crea una vista de lectura:
+Vamos a ordenar tarjetas para consultar libros sin cambiar su ubicación original. En [Biblioteca.cpp](src/servicios/Biblioteca.cpp) reunimos las direcciones de los libros en un vector y ordenamos esas direcciones por ID:
 
 ```cpp
 vector<const Libro*> vista;
@@ -135,7 +139,7 @@ sort(vista.begin(), vista.end(), [](const Libro* izquierdo, const Libro* derecho
 });
 ```
 
-No se copian libros ni se reordena el DAO: se ordenan sus direcciones. Después `buscar()` construye los IDs de esa misma vista y llama a la búsqueda binaria del curso:
+La función pequeña escrita con `[]` compara dos libros y decide cuál va primero. La llamamos lambda. Después reunimos sus IDs en ese mismo orden y buscamos por mitades:
 
 ```cpp
 const auto posicion = binaria(ids, id);
@@ -145,13 +149,13 @@ if (!posicion) {
 return vista.at(*posicion);
 ```
 
-La condición indispensable es que los IDs estén ordenados. `optional<size_t>` distingue la ausencia de un índice válido, incluido el cero. El puntero devuelto observa un libro del DAO; deja de poder usarse después de agregar, eliminar, renombrar o deshacer un cambio, porque sustituimos el catálogo completo. La consola lo usa inmediatamente; las entregas copian el libro antes de cualquier modificación posterior.
+La búsqueda devuelve `optional<size_t>`: una cajita que contiene una posición o está vacía. Una posición cero también cuenta como encontrada. Si está vacía devolvemos `nullptr`; si tiene un resultado, prestamos la dirección del libro correspondiente. La usamos antes de modificar el catálogo, porque agregar, borrar, cambiar un título o deshacer sustituye sus libros y deja sin validez las direcciones anteriores.
 
-Una vez que los IDs están ordenados, cada comparación permite descartar la mitad de los candidatos. Duplicar la cantidad de libros añade aproximadamente una comparación a esa búsqueda (O(log n), donde n es la cantidad de libros y log n describe ese crecimiento por mitades). Sin embargo, aquí primero hay que reunir y ordenar las direcciones de todos los libros. Ese trabajo previo también cuenta: preparar la vista requiere un número de comparaciones cuyo límite crece como la cantidad de libros multiplicada por los niveles de división por mitades (O(n log n)). Por eso la consulta completa cuesta más que buscar dentro de una vista ya preparada.
+Una vez ordenados, descartamos aproximadamente la mitad de los candidatos en cada paso (O(log n), donde n es la cantidad de libros y log n describe ese crecimiento por mitades). Pero primero reunimos y ordenamos las tarjetas: ese trabajo también cuenta. Su límite de comparaciones combina los n libros con los niveles de división por mitades (O(n log n)).
 
 ## 8. Structs y cola de entregas
 
-[Entrega.h](include/modelos/Entrega.h) reúne una ficha y dos posiciones del mapa:
+Vamos a preparar una ficha para cada entrega. En [Entrega.h](include/modelos/Entrega.h) guardamos una copia del libro y las posiciones de salida y llegada:
 
 ```cpp
 struct Entrega {
@@ -161,13 +165,13 @@ struct Entrega {
 };
 ```
 
-Antes de encolar, el servicio comprueba que el libro exista y que haya ruta. Una `queue<Entrega>` atiende por orden de llegada: primero entra, primero sale. Consultar pendientes recorre una copia, para que mirar no equivalga a consumir solicitudes.
+Antes de agregarla comprobamos que el libro existe y hay un camino. Guardamos las fichas en `queue<Entrega>` y atendemos por llegada: primero entra, primero sale. A esa regla también la llamamos FIFO. Para mirar pendientes recorremos una copia de la cola; así no quitamos solicitudes al mostrarlas.
 
-Al atender una entrega se prepara un `EntregaResuelta`, se registra el resultado y después se retira el frente de la cola. El resultado devuelto contiene datos propios; no es una referencia a un elemento que acabamos de eliminar.
+Al atender calculamos la ruta, guardamos el resultado y retiramos la primera solicitud. Devolvemos datos propios de la entrega resuelta, para poder seguir mostrándolos después de quitarla de la cola.
 
 ## 9. Grafo, BFS y Dijkstra
 
-[MapaCampus.cpp](src/servicios/MapaCampus.cpp) mantiene un `array<string, 6>` con nombres y un `Grafo` de listas de adyacencia. Las posiciones del arreglo son los IDs de los vértices. Una conexión bidireccional se guarda como dos aristas dirigidas.
+Vamos a representar los edificios con puntos y los caminos con conexiones. En [MapaCampus.cpp](src/servicios/MapaCampus.cpp) guardamos los nombres en un `vector<string>`; sus posiciones son los números de los edificios. En el grafo guardamos la lista de caminos que salen de cada edificio. Para permitir ida y vuelta agregamos una conexión en cada sentido.
 
 | Conexión | Minutos |
 | --- | --- |
@@ -178,7 +182,7 @@ Al atender una entrega se prepara un `EntregaResuelta`, se registra el resultado
 | 2 Ingeniería ↔ 3 Administración | 6 |
 | 3 Administración ↔ 4 Residencias | 2 |
 
-El anexo 5 está aislado. BFS indica qué edificios son alcanzables; no calcula el menor tiempo cuando los pesos difieren. Dijkstra usa una cola de prioridad y mejora costos conocidos:
+Dejamos el edificio 5 aislado. Con BFS exploramos por capas y vemos a cuáles podemos llegar. Para encontrar el viaje de menos minutos usamos Dijkstra: atendemos primero el candidato de menor costo conocido y actualizamos cuando aparece un camino mejor.
 
 ```cpp
 if (candidato < resultado.distancias.at(arista.destino)) {
@@ -188,7 +192,7 @@ if (candidato < resultado.distancias.at(arista.destino)) {
 }
 ```
 
-La función `caminosMinimos()` añade predecesores al algoritmo existente. `dijkstra()` conserva la API anterior de solo distancias para los otros ejemplos del curso. En el proyecto reconstruimos el camino siguiendo predecesores desde el destino y finalmente lo invertimos:
+En `anteriores` recordamos desde qué edificio llegamos a cada destino; a ese edificio previo también lo llamamos predecesor. `caminosMinimos` guarda costos y anteriores; `dijkstra` devuelve solo los costos. Reconstruimos la ruta desde el destino hacia atrás y después invertimos el resultado:
 
 ```cpp
 while (actual != origen) {
@@ -201,18 +205,18 @@ while (actual != origen) {
 }
 ```
 
-Para ir de 0 a 4, el camino por 2 mejora el acceso directo a 1: cuesta `1 + 1 + 3 + 2 = 7`. La ausencia de ruta se representa con `nullopt`; ir del mismo edificio a sí mismo cuesta cero. Dijkstra requiere pesos no negativos; el grafo rechaza pesos negativos y comprueba el desbordamiento al sumar.
+De 0 a 4 pasamos por 2, 1 y 3: sumamos `1 + 1 + 3 + 2 = 7`. Cuando no hay ruta devolvemos `nullopt`, el resultado vacío. Ir del origen a sí mismo cuesta cero. No aceptamos minutos negativos y comprobamos que una suma no supere el mayor número que podemos guardar.
 
 ## 10. Lista doble y vector de mensajes
 
-El historial combina dos estructuras:
+Vamos a guardar los mensajes y el orden en que los consultamos con dos estructuras:
 
 ```cpp
 vector<string> eventos;
 ListaDoble orden;
 ```
 
-El vector es dueño de los mensajes. Cada nodo de la lista guarda el índice de un mensaje, no un puntero hacia el vector. Si el vector realoca al crecer, los índices siguen sirviendo porque anexamos mensajes sin reordenarlos ni borrarlos. La lista enlaza ese orden y permite recorrerlo en ambos sentidos.
+En el vector guardamos el texto de cada mensaje. En cada nodo de la lista guardamos su posición, como un número de página. Si el vector se muda a un espacio mayor, esos números siguen funcionando porque solo agregamos mensajes al final; no los borramos ni cambiamos su orden.
 
 ```text
 Lista: [0] <-> [1] <-> [2]
@@ -220,11 +224,11 @@ Lista: [0] <-> [1] <-> [2]
 Vector: mensaje mensaje mensaje
 ```
 
-La lista del curso libera sus nodos en su destructor e impide copias de propietarios. No se devuelve ningún nodo a la consola. `historial()` reúne copias de los mensajes siguiendo los índices; así la interfaz no necesita conocer los enlaces internos.
+Con la lista doble podemos pasar al mensaje siguiente o al anterior. Al terminar liberamos sus nodos. Cuando la consola pide el historial, le entregamos copias de los textos; no necesita cambiar ni conocer las flechas de la lista.
 
 ## 11. Pila, cambios candidatos y guardado
 
-Un cambio trabaja sobre una copia del DAO. Si no cumple las reglas, no llega al guardado. Al confirmar, la pila conserva el estado anterior; si falla el almacén, se retira esa nueva instantánea y no se sustituye el catálogo:
+Vamos a preparar cada cambio en una copia del catálogo. Si cumple las reglas, guardamos una copia del estado anterior en una pila para poder deshacer. Si falla la escritura, retiramos esa nueva copia y conservamos el catálogo anterior:
 
 ```cpp
 deshacerCambios.push(dao);
@@ -237,11 +241,11 @@ try {
 dao = move(candidato);
 ```
 
-Deshacer guarda primero el estado anterior, lo instala y solo entonces retira la cima. La pila es LIFO: el último cambio se revierte primero. Las instantáneas completas son fáciles de seguir, pero su memoria crece con el tamaño del catálogo y la cantidad de cambios; para una aplicación grande convendrían comandos inversos o un registro transaccional.
+Con `try` intentamos guardar; con `catch` atendemos el error. `throw` vuelve a comunicarlo para que la consola lo muestre. Solo después de guardar sustituimos el catálogo. Para deshacer seguimos el orden inverso de los cambios: último en entrar, primero en salir, también llamado LIFO. Cada copia ocupa espacio; con muchos libros y cambios podríamos guardar solo los datos necesarios para revertir cada operación.
 
-[AlmacenCatalogo.cpp](src/datos/AlmacenCatalogo.cpp) escribe una instantánea en `.tmp`, comprueba el cierre, mueve el catálogo anterior a `.bak` y coloca el nuevo archivo. Si falla el reemplazo, intenta restaurar el anterior. Si una interrupción deja solo `.bak`, la siguiente carga lo lee. Un catálogo corrupto se rechaza y se conserva para revisarlo.
+En [AlmacenCatalogo.cpp](src/datos/AlmacenCatalogo.cpp) escribimos primero un archivo temporal `.tmp`. Después conservamos el anterior como respaldo `.bak` y colocamos el nuevo. Si falla ese cambio de archivos intentamos recuperar el anterior. Si al volver a abrir solo queda el respaldo, lo leemos. Si hay datos dañados, avisamos y conservamos el archivo para revisarlo.
 
-El formato aprovecha la serialización del DAO:
+El texto guardado tiene esta forma:
 
 ```text
 2
@@ -249,23 +253,23 @@ El formato aprovecha la serialización del DAO:
 20 "Libro con \"comillas\""
 ```
 
-La primera línea indica cuántos libros siguen. Hay un límite de 10 000, IDs positivos sin repetición y títulos con texto, sin caracteres de control y de hasta 200 bytes. El reemplazo con respaldo es para una aplicación local de un solo proceso; no sustituye transacciones de una base de datos ni garantiza durabilidad ante pérdida de energía. `.tmp`, `.bak` y el catálogo generado no se suben al repositorio.
+En la primera línea indicamos cuántos libros siguen. Permitimos hasta 10 000 libros, IDs positivos distintos y títulos con texto de hasta 200 bytes. Un byte es una unidad de memoria; algunas letras ocupan varios. Rechazamos saltos de línea y otros caracteres de control dentro del título. Usamos este guardado desde una sola ejecución del programa a la vez; para varias aplicaciones escribiendo juntas necesitaríamos coordinar sus cambios, por ejemplo mediante una base de datos. El respaldo ayuda a recuperar fallos, pero no garantiza conservar la última escritura ante un corte eléctrico.
 
 ## 12. Entrada, errores y comprobación
 
-[Consola.cpp](src/interfaz/Consola.cpp) usa `getline` para no mezclar lecturas parciales. Después convierte la línea a entero y comprueba que no queden caracteres. EOF termina la sesión incluso si aparece a mitad de una operación; ningún cambio incompleto se confirma. Los errores de validación o guardado se presentan y permiten seguir usando el menú.
+Vamos a leer cada respuesta completa con `getline` en [Consola.cpp](src/interfaz/Consola.cpp). Después usamos `istringstream`, de `<sstream>`, como un lector de ese texto: intentamos obtener un entero y comprobamos que no sobren letras. Así rechazamos `12abc`. Si termina la entrada, cerramos la sesión; a ese fin de entrada también lo llamamos EOF. No guardamos una operación que quedó a medias.
 
-[Autocomprobacion.cpp](tests/Autocomprobacion.cpp) verifica búsqueda en catálogo vacío y ordenado, rutas y destino aislado, cola FIFO, pila LIFO, historial inverso, independencia de las solicitudes, recuperación tras un fallo simulado de guardado, entrada inválida y EOF. Usa condiciones que siguen activas con `NDEBUG`.
+En [Autocomprobacion.cpp](tests/Autocomprobacion.cpp) probamos búsquedas, rutas, orden de entregas, deshacer, historial y entradas incorrectas. También simulamos un error al guardar para comprobar que conservamos los libros anteriores. Usamos condiciones normales que siguen activas al compilar la versión final.
 
 ```bash
 ./build/biblioteca.exe --self-test
 ```
 
-El resultado correcto termina con código 0; un fallo indica el caso y devuelve 1. Para comprobar persistencia manualmente, ejecuta sin `--demo`, agrega un título con comillas, cierra y abre otra vez: el catálogo debe conservarlo.
+Si todo coincide terminamos con 0; si algo falla mostramos el caso y devolvemos 1. Para probar archivos ejecutamos sin `--demo`, agregamos un título con comillas, cerramos y volvemos a abrir: debemos recuperar el mismo título.
 
 ## 13. Costos y cómo seguir estudiando
 
-Aquí contamos trabajo y memoria por separado. Las letras solo abrevian cantidades: n es el número de libros, h el de mensajes del historial, p el de solicitudes pendientes, V el de edificios y E el de conexiones. La notación entre paréntesis resume cómo crece el trabajo; no indica segundos ni bytes exactos.
+Vamos a contar cuánto trabajo añadimos cuando crecen los datos. Usamos n para la cantidad de libros, h para mensajes del historial, p para solicitudes pendientes, V para edificios y E para conexiones. Las expresiones entre paréntesis resumen ese crecimiento; no indican segundos exactos.
 
 | Operación | Qué trabajo realiza al crecer los datos |
 | --- | --- |
@@ -279,6 +283,42 @@ Aquí contamos trabajo y memoria por separado. Las letras solo abrevian cantidad
 | Dijkstra | Revisa conexiones y mantiene una cola que permite elegir el candidato de menor costo. Más candidatos requieren más ajustes y pueden existir registros repetidos de un edificio. |
 | Reconstruir el camino | Sigue los edificios de la ruta desde el destino; como máximo pasa por todos los V edificios (O(V)). |
 
-Al cargar, el DAO compara cada libro nuevo con los que ya ha leído para detectar IDs repetidos. Con n libros, esas revisiones se acumulan: primero revisa pocos, después más, y el trabajo puede crecer como n multiplicado por n (O(n²)). El proyecto prioriza leer y conectar sus piezas; cada costo corresponde a una decisión que puedes cambiar con una necesidad concreta.
+Al cargar, comparamos cada libro con los que ya leímos para detectar IDs repetidos. Con n libros acumulamos cada vez más comparaciones; el trabajo puede crecer como n por n (O(n²)). Podemos empezar con pocos libros, observar cada paso y después pensar qué cambiaríamos si el catálogo creciera mucho.
 
-Para practicar, cambia un peso y predice la ruta, añade una conexión al anexo, prueba IDs al principio y al final, o amplía la comprobación con otro error de entrada. Antes de agregar una estructura nueva, explica qué operación mejoraría. Un árbol o una tabla hash pueden servir para otro tipo de consulta, pero el programa ya utiliza cada estructura actual en una operación real.
+## 14. Práctica integradora
+
+**Práctica.** Realiza una aplicación integradora de biblioteca y entregas.
+
+- Organizar modelos, datos, servicios e interfaz en carpetas con .h y .cpp.
+- Agregar, consultar, actualizar y eliminar libros con un DAO.
+- Buscar ids mediante una vista ordenada y búsqueda binaria.
+- Registrar el historial en una lista doble y los pendientes en una cola.
+- Usar una pila para deshacer cambios del catálogo.
+- Representar edificios como un grafo y calcular rutas con Dijkstra.
+- Guardar los datos y recuperarlos al reiniciar.
+- Validar entradas y conservar el catálogo cuando falle una escritura.
+
+## 15. Para qué usamos cada biblioteca
+
+Aquí reunimos las herramientas que aparecen en el proyecto. Podemos volver al ejemplo donde se presenta cada una antes de seguir una operación que la use.
+
+| Biblioteca | Para qué la usamos |
+| --- | --- |
+| `<algorithm>` | Ordenamos datos con sort o invertimos su orden con reverse. |
+| `<cstddef>` | Usamos size_t para contar elementos y representar posiciones no negativas. |
+| `<exception>` | Recogemos errores mediante exception y leemos su mensaje con what(). |
+| `<filesystem>` | Manejamos rutas, carpetas y cambios de nombre de archivos. |
+| `<fstream>` | Leemos y guardamos archivos con ifstream y ofstream. |
+| `<istream>` | Recibimos una fuente de lectura: puede ser teclado, archivo o texto en memoria. |
+| `<limits>` | Consultamos con numeric_limits el mayor entero permitido antes de sumar. |
+| `<memory>` | Usamos unique_ptr para liberar automáticamente el objeto que administra. |
+| `<optional>` | Guardamos un resultado que puede faltar: optional tiene un valor o está vacío. |
+| `<ostream>` | Recibimos un destino de escritura: pantalla, archivo o texto en memoria. |
+| `<queue>` | Atendemos por llegada con queue o por importancia con priority_queue. |
+| `<sstream>` | Leemos o escribimos texto en memoria como si fuera un archivo. |
+| `<stack>` | Guardamos una pila: con stack sale primero lo último que entró. |
+| `<stdexcept>` | Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido. |
+| `<string>` | Guardamos y trabajamos con texto mediante string. |
+| `<system_error>` | Consultamos si una operación de archivos falló mediante error_code. |
+| `<utility>` | Usamos move para trasladar datos, swap para intercambiarlos o pair para reunir dos. |
+| `<vector>` | Guardamos una colección que puede crecer con vector. |

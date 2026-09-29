@@ -1,17 +1,31 @@
 # Búsqueda
 
-Busca primero sin orden y después con orden. El integrador compara resultados de ambas búsquedas sobre datos ordenados y muestra cómo cambia el índice original: el 8 pasa de 0 a 4.
+Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
 
-## Orden de estudio
+## Búsqueda lineal
 
-1. [Lineal](01_Lineal/main.cpp)
-2. [Binaria](02_Binaria/main.cpp)
+Vamos a buscar como si revisáramos un cajón casilla por casilla. No necesitamos ordenar antes: avanzamos hasta encontrar el dato o llegar al final. Podemos visitar los n elementos (O(n)). Para devolver el resultado usamos optional: una cajita de <optional> que puede guardar una posición o estar vacía. Comprobamos si contiene algo antes de leer *posicion. Una posición cero es un resultado válido; no debemos confundirla con «no encontrado».
 
-Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
+[Programa comentado](01_Lineal/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-./programa.exe
-```
+## Búsqueda binaria
 
-Cada subcarpeta tiene su propio programa. Compila un ejemplo a la vez: todos tienen su propia función `main`.
+Vamos a buscar en una lista ya ordenada. Miramos el centro y decidimos en qué mitad podría estar el número. Podemos imaginar una guía de páginas numeradas: si buscamos una página menor, descartamos la mitad derecha. Reducir 16 candidatos a 8, 4, 2 y 1 requiere cuatro divisiones; empezar con 32 agrega solo otra (O(log n), donde n cuenta candidatos y log n describe las divisiones). Esta versión encuentra la primera coincidencia. Recibimos una posición o un resultado vacío y comprobamos cuál antes de leerlo.
+
+[Programa comentado](02_Binaria/main.cpp).
+
+## Búsqueda
+
+Vamos a comparar la búsqueda uno por uno con la búsqueda por mitades. Primero buscamos en datos sin ordenar, después ordenamos y probamos ambas sobre el mismo vector. El número sigue siendo el mismo, pero su posición puede cambiar al ordenar. También contamos el trabajo previo: preparar una lista ordenada es una tarea adicional, aunque buscar dentro de ella después sea más rápido.
+
+[Programa comentado](main.cpp).
+
+**Práctica.** Realiza un programa integrador de búsquedas.
+
+- Buscar varios valores con búsqueda lineal.
+- Crear una copia ordenada para la búsqueda binaria.
+- Comparar si ambas encuentran o no cada valor.
+- Mostrar cómo cambia la posición al ordenar.
+- Probar también un vector vacío.
+
+[Volvemos a la guía general](../../README.md).

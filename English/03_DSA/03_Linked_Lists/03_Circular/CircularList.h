@@ -1,5 +1,8 @@
+// With = delete we prevent copying the class so two objects cannot try to release the same nodes.
+
 #ifndef COURSE_CIRCULAR_LIST_H
 #define COURSE_CIRCULAR_LIST_H
+// We store a collection that can grow using vector.
 #include <vector>
 
 namespace course {

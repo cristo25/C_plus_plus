@@ -1,20 +1,20 @@
 // Variables, tipos y operadores
 //
-// Declara int, double, char, bool y string. Usa const para datos que no cambian. La división
-// entre enteros descarta la parte decimal; convierte un operando a double cuando necesites
-// conservarla.
+// Vamos a guardar datos en variables. Podemos pensar en cada variable como una caja con nombre: int
+// guarda enteros, double y float guardan números con decimales, char guarda un carácter, bool
+// guarda verdadero o falso y string guarda texto. En cantidad guardamos cuántos cuadernos hay;
+// multiplicamos ese número por precio para obtener total. Con const protegemos un dato que no debe
+// cambiar. Al dividir dos enteros descartamos la parte decimal: 5 / 2 da 2, mientras que 5.0 / 2 da
+// 2.5.
 //
-// Analogía: Una variable es una caja etiquetada; su tipo determina qué puede guardar. const pone
-// un sello que impide cambiar el contenido.
+// Practica: Realiza un programa que calcule el importe de una compra.
 //
-// Compilar desde esta carpeta: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-//
-// Ejecutar: ./programa.exe
-//
-// Practica: Calcula el precio de cinco productos. Compara 7 / 2 con 7.0 / 2.
-// También muestra división entera 2 y decimal 2.5.
+// - Guardar nombre, cantidad y precio de un producto.
+// - Calcular y mostrar el total con decimales.
+// - Usar const para un precio que no cambiará durante el programa.
 
 #include <iostream>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
 
 using namespace std;
@@ -30,7 +30,7 @@ int main() {
 
     cout << producto << ": " << total << "\n";
     cout << categoria << " disponible: " << boolalpha << disponible << "\n";
-    // Dos enteros producen división entera: 5 / 2 da 2. Un operando double conserva la fracción.
+    // Al dividir enteros obtenemos 2 en 5 / 2; con 5.0 / 2 conservamos el decimal.
     cout << "Division entera: " << 5 / 2 << "\n";
     cout << "Division decimal: " << 5.0 / 2 << "\n";
 }

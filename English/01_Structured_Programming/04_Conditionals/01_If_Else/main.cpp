@@ -1,15 +1,10 @@
 // Decisions with if and else
 //
-// A condition evaluates to true or false. if, else if and else select a branch. Combine
-// conditions with &&, || and !.
+// We will choose which instructions to run. With if we ask a question, such as whether someone is
+// at least 18. If the answer is true, we enter its braces; with else we handle the other case. We
+// can join questions: && requires both to be true, || requires at least one, and ! reverses an
+// answer. We can picture two doors: the condition decides which one we take.
 //
-// Analogy: A fork in the road sends you along a different path depending on the sign.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Allow accompanied minors and test the boundary at age 18.
 
 #include <iostream>
 

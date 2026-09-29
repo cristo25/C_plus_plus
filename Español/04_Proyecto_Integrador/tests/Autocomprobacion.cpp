@@ -1,17 +1,24 @@
 #include "pruebas/Autocomprobacion.h"
 #include "interfaz/Consola.h"
+// Usamos reverse para ordenar o cambiar el orden de los datos.
 #include <algorithm>
+// Recogemos errores mediante exception y leemos su mensaje con what().
 #include <exception>
+// Leemos o escribimos texto en memoria como si fuera un archivo.
 #include <sstream>
+// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
+// Guardamos y trabajamos con texto mediante string.
 #include <string>
+// Guardamos una colección que puede crecer con vector.
 #include <vector>
 
 namespace proyecto {
     using namespace std;
 
     namespace {
-        // Doble de prueba para provocar un fallo de guardado sin escribir archivos.
+        // Creamos un almacén de prueba que falla al guardar para comprobar la respuesta sin tocar
+        // archivos reales.
         class AlmacenConFallo : public AlmacenCatalogo {
             AlmacenMemoria guardado;
         public:
@@ -83,7 +90,8 @@ namespace proyecto {
             almacen.rechazar = false;
             exigir(biblioteca.deshacer() && biblioteca.buscar(10)->titulo == "Libro con \"comillas\"", "Pila intacta tras fallo");
 
-            // La interfaz usa referencias a streams: podemos probar entrada inválida y EOF sin teclado real.
+            // Prestamos lectores de texto a la consola para probar datos incorrectos y el fin de la
+            // entrada sin escribirlos a mano.
             istringstream entrada("abc\n2x\n99\n2\n20\n0\n");
             ostringstream transcripcion;
             Consola consola(biblioteca, entrada, transcripcion);

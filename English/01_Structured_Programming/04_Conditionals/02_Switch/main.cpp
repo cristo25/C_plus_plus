@@ -1,18 +1,14 @@
 // Choosing with switch
 //
-// switch selects among concrete integer, character or enumeration values. break ends a case and
-// default handles unknown values. This example uses return, which ends both the case and the
-// function.
+// We will choose a drink using a number. With switch we compare that number against each case, like
+// choosing from a menu. With break we leave the switch after handling an option; with default we
+// respond when none matches. This is useful for a fixed set of options, such as 1, 2 and 3. In this
+// example we return the drink directly with return: we leave the function, so those cases do not
+// need break.
 //
-// Analogy: A numbered restaurant menu sends each choice to a different preparation.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Add a third drink and test option 0.
 
 #include <iostream>
+// We store and work with text using string.
 #include <string>
 
 using namespace std;

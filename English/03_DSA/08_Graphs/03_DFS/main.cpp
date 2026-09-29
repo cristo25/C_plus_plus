@@ -1,23 +1,15 @@
 // DFS: depth-first search
 //
-// DFS follows a branch as far as possible, then backtracks. Use recursion or an explicit stack.
-// Visited markers prevent cycles. Traversing neighbor lists visits reachable points and inspects
-// their connections. In the worst case, work grows with all graph points and connections (O(V + E),
-// where V counts vertices and E counts edges). Visited markers and points waiting to be processed
-// need space that grows with the point count (O(V) additional memory). Order depends on neighbor
-// order; use an explicit stack for great depths.
+// We will follow a path as far as possible and then return to try another. We can picture exploring
+// a maze. We call this DFS, or depth-first search. Here we use recursion to remember where to
+// return. We mark visited places so we do not go around forever. The order can differ from BFS even
+// though both reach the same places. A full traversal grows with the map’s V places and E roads
+// (O(V + E)).
 //
-// Analogy: Explore a maze by following a hallway to its end, then returning to try the remaining
-// hallways.
-//
-// Compile in this folder: g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
-//
-// Run: ./program.exe
-//
-// Practice: Compare this traversal with BFS on the same drawing.
 
 #include "../Graph.h"
 #include <iostream>
+// We store a collection that can grow using vector.
 #include <vector>
 
 using namespace std;

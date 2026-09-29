@@ -1,18 +1,37 @@
 # Listas ligadas
 
-Las tres implementaciones guardan enteros para concentrarnos en los enlaces y la propiedad de los nodos. Usa `new/delete` aquí para estudiar el mecanismo; los contenedores estándar ya resuelven su gestión en aplicaciones comunes. El integrador usa los tres headers y elimina el dato 20 de cada lista. Cambia los datos y compara los recorridos. Después prueba eliminar el inicio, el final y el único nodo.
+Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
 
-## Orden de estudio
+## Lista simplemente ligada
 
-1. [Simplemente ligada](01_Simplemente_Ligada/main.cpp)
-2. [Doblemente ligada](02_Doblemente_Ligada/main.cpp)
-3. [Circular](03_Circular/main.cpp)
+Vamos a construir una cadena de cajas llamadas nodos. Cada nodo guarda un dato y un puntero al siguiente, como una nota que indica dónde está la próxima caja. La lista guarda la dirección del primero; el último señala nullptr. Para buscar seguimos las notas una a una: quizá debamos visitar los n nodos (O(n)). Al quitar un nodo unimos su vecino anterior con el siguiente antes de liberar la caja. Podemos ver esos pasos dentro de ListaSimple.h.
 
-Después, lee y ejecuta el `main.cpp` de **esta carpeta**: reúne lo aprendido en las subcarpetas.
+[Programa comentado](01_Simplemente_Ligada/main.cpp).
 
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o programa.exe
-./programa.exe
-```
+## Lista doblemente ligada
 
-Cada subcarpeta tiene su propio programa. Compila un ejemplo a la vez: todos tienen su propia función `main`.
+Vamos a añadir una segunda flecha a cada nodo: una hacia el siguiente y otra hacia el anterior. Así podemos recorrer la cadena en ambos sentidos. Conservamos también el principio y el final para agregar al final ajustando unas pocas flechas, sin recorrer toda la lista (O(1)). Al borrar cuidamos ambas conexiones, como al retirar un vagón de un tren unido por delante y por detrás. Podemos seguir el ajuste de los punteros en ListaDoble.h.
+
+[Programa comentado](02_Doblemente_Ligada/main.cpp).
+
+## Lista circular
+
+Vamos a cerrar la cadena formando un círculo: el último nodo vuelve al primero. Podemos imaginar turnos de jugadores que se repiten. Como no encontramos nullptr al dar la vuelta, detenemos el recorrido al regresar al inicio. Guardamos el último nodo para añadir otro con pocos cambios (O(1)). Al quitar el único nodo dejamos la lista vacía; al quitar otro conservamos cerrado el círculo.
+
+[Programa comentado](03_Circular/main.cpp).
+
+## Listas ligadas
+
+Vamos a comparar las tres listas usando los mismos números. En la simple seguimos una flecha, en la doble podemos regresar y en la circular volvemos al inicio. Insertamos 10, 20 y 30, quitamos 20 y revisamos qué queda. La diferencia principal está en cómo unimos los nodos y cuándo detenemos el recorrido. Podemos dibujar las mismas tres cajas y cambiar solo sus flechas para entenderlo.
+
+[Programa comentado](main.cpp).
+
+**Práctica.** Realiza un programa integrador que compare tres listas.
+
+- Insertar los mismos cinco datos en una lista simple, una doble y una circular.
+- Eliminar el mismo dato de las tres.
+- Mostrar los recorridos normales y el recorrido inverso de la doble.
+- Limitar la circular a una vuelta.
+- Probar cada lista después de vaciarla.
+
+[Volvemos a la guía general](../../README.md).
