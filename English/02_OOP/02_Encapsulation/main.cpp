@@ -41,15 +41,20 @@ int main() {
     if (savings.deposit(-5)) {
         return 1;
     }
-    if (!(savings.deposit(500))) {
+    if (!savings.deposit(500)) {
         return 1;
     }
     if (savings.withdraw(600)) {
         return 1;
     }
-    if (!(savings.withdraw(200))) {
+    if (!savings.withdraw(200)) {
         return 1;
     }
 
     cout << savings.balance() << " cents\n";
 }
+
+// Practice: let's create an Account class whose balance changes only through its functions.
+// - Reject negative deposits and withdrawals larger than the balance.
+// - Add a const function that reads the balance.
+// - Show the balance after one valid deposit and one valid withdrawal.

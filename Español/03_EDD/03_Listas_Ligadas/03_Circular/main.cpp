@@ -1,11 +1,14 @@
 // Lista circular
 //
-// Vamos a cerrar la cadena formando un círculo: el último nodo vuelve al primero. Podemos imaginar
-// turnos de jugadores que se repiten. Como no encontramos nullptr al dar la vuelta, detenemos el
-// recorrido al regresar al inicio. Guardamos el último nodo para añadir otro con pocos cambios
-// (O(1)). Al quitar el único nodo dejamos la lista vacía; al quitar otro conservamos cerrado el
-// círculo.
+// Vamos a cerrar la cadena formando un círculo: el último nodo vuelve al primero. Podemos
+// imaginar turnos de jugadores que se repiten. Como no encontramos nullptr al dar la vuelta,
+// detenemos el recorrido al regresar al inicio. Guardamos el último nodo para añadir otro con
+// pocos cambios. Al quitar el único nodo dejamos la lista vacía; al quitar otro conservamos
+// cerrado el círculo.
 //
+// Práctica: Vamos a crear una ronda de turnos con una lista circular.
+// - Agreguemos tres participantes y mostremos una vuelta completa.
+// - Quitemos un participante y detengamos el recorrido al volver al inicio.
 
 #include "ListaCircular.h"
 #include <iostream>

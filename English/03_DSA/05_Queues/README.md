@@ -20,11 +20,11 @@ We will put the same values into a normal queue and a priority queue. After stor
 
 [Commented program](main.cpp).
 
-**Practice.** Write an integrated request-service program.
+**Practice.** We will write an integrated request-service program.
 
-- Store the same priority numbers in queue and priority_queue.
-- Display each full service order.
-- Add a new request after serving one.
-- Explain which fits a ticket desk and which fits urgent cases.
+- We will store the same priority numbers in queue and priority_queue.
+- We will display each full service order.
+- We will add a new request after serving one.
+- We will explain which fits a ticket desk and which fits urgent cases.
 
 [Back to the general guide](../../README.md).

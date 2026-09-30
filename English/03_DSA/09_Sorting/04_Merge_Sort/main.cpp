@@ -2,11 +2,13 @@
 //
 // We will divide a pile into halves until the groups are small, then join them in order. We can
 // picture two helpers sorting their sheets: when joining them, we always take the smallest
-// available sheet. This is merge sort. We need extra mixing space that grows with the n values
-// (O(n) additional memory). Each level visits all values, and there are as many levels as repeated
-// halvings (O(n log n), with n values and log n levels). For a tie we take the left value first to
-// preserve order.
+// available sheet. This is merge sort. We need extra space for merging, and it grows with the
+// number of values. Each level visits all values, and there are as many levels as repeated
+// halvings. For a tie we take the left value first to preserve order.
 //
+// Practice: We will sort by dividing and merging groups.
+// - We will divide the data into small groups.
+// - We will merge the halves in order without losing repeated values.
 
 #include "../Sorts.h"
 #include <iostream>

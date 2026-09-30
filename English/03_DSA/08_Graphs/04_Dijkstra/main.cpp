@@ -7,6 +7,9 @@
 // yet found, not a real number of minutes. dijkstra returns costs; shortestPaths also remembers
 // where we came from so a route can be rebuilt.
 //
+// Practice: We will find a lowest-cost route.
+// - We will assign nonnegative costs to roads between places.
+// - We will show the cost of reaching each place from a chosen start.
 
 #include "../Graph.h"
 #include <iostream>

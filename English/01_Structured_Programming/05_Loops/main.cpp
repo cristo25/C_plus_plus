@@ -6,6 +6,13 @@
 // loop according to when its condition needs checking.
 //
 
+// Practice: Let's write an integrated program that organizes deliveries.
+//
+// - Add orders from three days with for.
+// - Handle orders one at a time with while.
+// - Show at least one final notice with do while.
+// - Count and display completed orders.
+
 #include <iostream>
 
 using namespace std;

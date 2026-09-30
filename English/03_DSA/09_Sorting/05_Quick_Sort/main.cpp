@@ -2,10 +2,13 @@
 //
 // We will choose one value as a reference for separating the rest; we call it the pivot. We put
 // smaller values on one side and repeat within each group. This is quick sort. With evenly split
-// groups, each level checks the n values and the levels grow through halving (O(n log n)). Here we
-// choose the last value: with sorted or equal input, almost everything can stay on one side and
-// cause repeated work (O(n²), like n times n). This choice helps us see why the pivot matters.
+// groups, each level checks all values and the levels grow through halving. Here we choose the
+// last value: with sorted or equal input, almost everything can stay on one side and cause
+// repeated work. This choice helps us see why the pivot matters.
 //
+// Practice: We will sort by dividing around a pivot.
+// - We will place smaller values on one side of the pivot.
+// - We will repeat with each section and try an already sorted input.
 
 #include "../Sorts.h"
 #include <iostream>

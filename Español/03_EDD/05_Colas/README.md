@@ -20,11 +20,11 @@ Vamos a poner los mismos datos en una fila normal y en una fila con prioridad. A
 
 [Programa comentado](main.cpp).
 
-**Práctica.** Realiza un programa integrador de atención de solicitudes.
+**Práctica.** Vamos a realizar un programa integrador de atención de solicitudes.
 
-- Guardar las mismas prioridades en queue y priority_queue.
-- Mostrar el orden completo de atención de cada una.
-- Agregar una solicitud nueva después de atender una.
-- Explicar cuál usar para una taquilla y cuál para urgencias.
+- Guardemos las mismas prioridades en queue y priority_queue.
+- Mostremos el orden completo de atención de cada una.
+- Agreguemos una solicitud nueva después de atender una.
+- Expliquemos cuál usar para una taquilla y cuál para urgencias.
 
 [Volvemos a la guía general](../../README.md).

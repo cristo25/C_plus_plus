@@ -8,6 +8,15 @@
 //
 
 // We read and save files using ifstream and ofstream.
+// Practice: Let's write an integrated school-report program.
+//
+// - Store names and three grades per student using string and arrays.
+// - Calculate averages and highest grades with functions.
+// - Use a reference to update a value and a pointer to read another.
+// - Classify each average with if and display the report.
+// - Save reports without erasing earlier ones.
+// - Separate declarations and functions into a .h and a .cpp.
+
 #include <fstream>
 #include <iostream>
 // We store and work with text using string.

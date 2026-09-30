@@ -7,6 +7,9 @@
 // consulta a un nodo mientras siga existiendo. Si vaciamos su estante, el nodo desaparece y debemos
 // dejar de usar esa consulta.
 //
+// Práctica: Vamos a guardar varios estantes con nodos en un vector.
+// - Agreguemos productos a dos estantes.
+// - Hagamos crecer el vector y consultemos un nodo mientras siga existiendo.
 
 #include <iostream>
 // Guardamos una colección que puede crecer con vector.

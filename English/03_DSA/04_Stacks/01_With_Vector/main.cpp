@@ -5,6 +5,9 @@
 // first out. Before reading or removing we check that the stack is not empty. If we need the
 // removed value, we save it before pop_back because that operation does not return it.
 //
+// Practice: We will create a simple history with vector.
+// - We will add three actions at the end.
+// - We will show and remove the last one only when there are actions.
 
 #include <iostream>
 // We store a collection that can grow using vector.

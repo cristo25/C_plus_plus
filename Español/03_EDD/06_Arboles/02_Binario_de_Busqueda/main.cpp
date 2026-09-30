@@ -6,6 +6,9 @@
 // buscamos un reemplazo que conserve el orden. Si el árbol queda como una cadena, tendremos que
 // recorrer muchos nodos; no basta con llamarlo árbol para que siempre busque rápido.
 //
+// Práctica: Vamos a guardar números ordenados por ramas.
+// - Agreguemos valores menores y mayores que la raíz sin repetirlos.
+// - Busquemos uno presente y otro ausente; después eliminemos uno.
 
 #include "../Arbol.h"
 #include <iostream>

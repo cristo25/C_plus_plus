@@ -7,6 +7,9 @@
 // sus fichas aparezcan ordenadas. Habitualmente revisamos pocas entradas, pero si muchas claves
 // caen juntas podemos tener que revisar muchas.
 //
+// Práctica: Vamos a consultar alumnos por matrícula.
+// - Guardemos tres matrículas y nombres en unordered_map.
+// - Busquemos una matrícula existente y otra ausente sin crear fichas nuevas.
 
 #include <iostream>
 // Guardamos y trabajamos con texto mediante string.

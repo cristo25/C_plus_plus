@@ -6,6 +6,9 @@
 // change when inserting or erasing; we therefore distinguish a task's name from its current
 // position.
 //
+// Practice: We will create a task list that we can edit.
+// - We will store the names and states of at least three tasks in a vector.
+// - We will add, finish and remove a task; then show the result.
 
 #include <iostream>
 // We store and work with text using string.

@@ -19,3 +19,8 @@ int main() {
 
     cout << notebook.getName() << ": " << notebook.getPrice() << " cents\n";
 }
+
+// Practice: let's extend the example with a second product.
+// - Declare both objects const with different names and prices.
+// - Print their data using the functions declared in Product.h.
+// - Explain why we cannot change a private field directly.

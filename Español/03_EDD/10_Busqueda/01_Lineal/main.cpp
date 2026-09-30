@@ -1,11 +1,14 @@
 // Búsqueda lineal
 //
 // Vamos a buscar como si revisáramos un cajón casilla por casilla. No necesitamos ordenar antes:
-// avanzamos hasta encontrar el dato o llegar al final. Podemos visitar los n elementos (O(n)). Para
-// devolver el resultado usamos optional: una cajita de <optional> que puede guardar una posición o
-// estar vacía. Comprobamos si contiene algo antes de leer *posicion. Una posición cero es un
+// avanzamos hasta encontrar el dato o llegar al final. Podemos visitar todos los elementos. Para
+// devolver el resultado usamos optional: una cajita de <optional> que puede guardar una posición
+// o estar vacía. Comprobamos si contiene algo antes de leer *posicion. Una posición cero es un
 // resultado válido; no debemos confundirla con «no encontrado».
 //
+// Práctica: Vamos a buscar un número casilla por casilla.
+// - Probemos un número presente y otro ausente.
+// - Mostremos la posición solo cuando lo encontremos.
 
 #include "../Busquedas.h"
 #include <iostream>

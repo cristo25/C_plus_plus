@@ -21,8 +21,6 @@
 #include <stdexcept>
 // We store and work with text using string.
 #include <string>
-// We use move to transfer data or responsibility for releasing it.
-#include <utility>
 // We store a collection that can grow using vector.
 #include <vector>
 
@@ -78,7 +76,7 @@ int main(int argc, char* argv[]) {
                 !initial.create({20, "Object-oriented programming"})) {
                 throw logic_error("Could not prepare the demonstration catalog");
             }
-            store = make_unique<MemoryStore>(move(initial));
+            store = make_unique<MemoryStore>(initial);
             cout << "Demo mode: the catalog lives in memory.\n";
         } else {
             store = make_unique<FileStore>(dataFile);

@@ -84,7 +84,7 @@ namespace course {
     inline vector<size_t> dfs(const Graph& graph, size_t startIndex) {
         vector<bool> visited(graph.count(), false);
         vector<size_t> order;
-        // ponytail: recursive DFS for small examples; use an explicit stack for deep graphs.
+        // We follow one branch and return to explore the others.
         visitDFS(graph, startIndex, visited, order);
         return order;
     }
@@ -107,7 +107,9 @@ namespace course {
         result.distances.at(source) = 0;
         queuePending.push({0, source});
         while (!queuePending.empty()) {
-            auto [distance, current] = queuePending.top();
+            // Each pending card holds two values: accumulated cost and place.
+            const long long distance = queuePending.top().first;
+            const size_t current = queuePending.top().second;
             queuePending.pop();
             if (distance != result.distances.at(current)) {
                 continue;

@@ -6,6 +6,9 @@
 // Podemos tener dos tarjetas para la misma caja, o nullptr cuando no elegimos ninguna. El arreglo
 // guarda los punteros, pero no se encarga de borrar los enteros locales a los que apuntan.
 //
+// Práctica: Vamos a usar tarjetas que señalen números.
+// - Guardemos tres punteros en un arreglo y compartamos un número entre dos.
+// - Comprobemos nullptr antes de leer el número señalado.
 
 #include <iostream>
 

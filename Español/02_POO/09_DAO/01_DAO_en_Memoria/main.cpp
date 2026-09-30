@@ -16,7 +16,7 @@ using namespace curso;
 
 int main() {
     LibroDAO dao;
-    if (!(dao.crear({1, "C++ inicial"}))) {
+    if (!dao.crear({1, "C++ inicial"})) {
         return 1;
     }
     if (dao.crear({1, "Duplicado"})) {
@@ -25,18 +25,27 @@ int main() {
     if (dao.crear({0, "Invalido"})) {
         return 1;
     }
-    if (!(dao.actualizar(1, "C++ paso a paso"))) {
+    if (!dao.actualizar(1, "C++ paso a paso")) {
         return 1;
     }
     // Recibimos una dirección prestada del catálogo. Después de cambiar sus libros volvemos a
     // buscar antes de usar una dirección.
     const Libro* libro = dao.buscar(1);
 
-    cout << libro->titulo << "\n";
-    if (!(dao.eliminar(1))) {
+    if (libro == nullptr) {
+        cerr << "No se encontro el libro.\n";
         return 1;
     }
-    if (!(!dao.buscar(1) && !dao.eliminar(1))) {
+    cout << libro->titulo << "\n";
+    if (!dao.eliminar(1)) {
+        return 1;
+    }
+    if (dao.buscar(1) != nullptr || dao.eliminar(1)) {
         return 1;
     }
 }
+
+// Práctica: vamos a administrar dos libros con LibroDAO.
+// - Creamos ambos libros y consultamos uno por su id.
+// - Cambiamos un título y eliminamos el otro libro.
+// - Comprobamos que buscar devuelve nullptr para el libro eliminado.

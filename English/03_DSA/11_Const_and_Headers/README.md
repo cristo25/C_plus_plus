@@ -4,16 +4,16 @@ We will connect this topic’s pieces before solving its integration task. Each 
 
 ## Const and headers in DSA
 
-We will query a collection without changing it. With const vector<int>& we receive another label for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp we traverse the values and count those above a limit. We need neither copying nor sorting. Doubling the data doubles the visits (O(n), with n elements). We add only a counter and a few variables (O(1) additional memory).
+We will query a collection without changing it. With const vector<int>& we receive another label for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp we traverse the values and count those above a limit. We need neither copying nor sorting. Doubling the data doubles the visits. We add only a counter and a few variables.
 
 [Commented program](main.cpp).
 
-**Practice.** Write a query program split across files.
+**Practice.** We will write a query program split across files.
 
-- Declare a function in a .h and write it in a .cpp.
-- Receive a vector through const vector<int>&.
-- Count values below a limit using a loop.
-- Return zero for an empty vector.
-- Check that the original data stayed unchanged.
+- We will declare a function in a.h and write it in a.cpp.
+- We will receive a vector through const vector<int>&.
+- We will count values below a limit using a loop.
+- We will return zero for an empty vector.
+- We will check that the original data stayed unchanged.
 
 [Back to the general guide](../../README.md).

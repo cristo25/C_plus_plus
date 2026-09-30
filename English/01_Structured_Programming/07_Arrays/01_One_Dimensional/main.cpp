@@ -7,6 +7,13 @@
 // additional library.
 //
 
+// Practice: Let's write a program that works with five grades.
+//
+// - Store them in an int grades[5] array.
+// - Visit only positions 0 through 4.
+// - Calculate the sum and a decimal average.
+// - Display the highest grade.
+
 #include <iostream>
 
 using namespace std;

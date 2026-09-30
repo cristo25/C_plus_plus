@@ -32,7 +32,7 @@ namespace proyecto {
         ListaDoble orden;
 
         void registrar(const string& mensaje);
-        void confirmar(LibroDAO candidato, const string& mensaje);
+        void confirmar(LibroDAO& candidato, const string& mensaje);
         static void validarTitulo(const string& titulo);
     public:
         explicit Biblioteca(AlmacenCatalogo& almacen);

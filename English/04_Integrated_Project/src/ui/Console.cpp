@@ -25,7 +25,9 @@ namespace project {
                 }
                 istringstream row(line);
                 int value = 0;
-                if (row >> value && (row >> ws).eof() && value >= minimum && value <= maximum) {
+                // Another character after the number means the answer is not a complete integer.
+                char extra;
+                if (row >> value && !(row >> extra) && value >= minimum && value <= maximum) {
                     return value;
                 }
                 output << "Enter a complete integer within the specified range.\n";

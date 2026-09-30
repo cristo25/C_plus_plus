@@ -6,6 +6,9 @@
 // another label for the same object, and const prevents changes through that label. We use a dot to
 // choose a field on the card.
 //
+// Practice: We will store student records in a vector.
+// - We will give each record a name and a grade.
+// - We will display only the records above a chosen grade.
 
 #include <iostream>
 // We store and work with text using string.

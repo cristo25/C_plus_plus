@@ -35,8 +35,7 @@ namespace course {
                 head = newNode;
                 return;
             }
-            // ponytail: appending traverses all nodes to reach the last; a tail pointer avoids that
-            // traversal.
+            // We follow the chain until we reach the last node.
             Node* current = head;
             while (current->next) {
                 current = current->next;

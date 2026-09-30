@@ -5,6 +5,9 @@
 // desk. Before serving we check empty. We also call “first in, first out” FIFO; those letters
 // simply abbreviate the same rule.
 //
+// Practice: We will simulate a line of people.
+// - We will add three names in arrival order.
+// - We will serve them one by one without reading an empty queue.
 
 #include <iostream>
 // We serve by arrival with queue or by importance with priority_queue.

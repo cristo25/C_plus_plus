@@ -7,6 +7,12 @@
 // Dividing whole numbers drops the decimal part: 5 / 2 gives 2, whereas 5.0 / 2 gives 2.5.
 //
 
+// Practice: Let's write a program that calculates a purchase total.
+//
+// - Store a product name, quantity and price.
+// - Calculate and display a total with decimal places.
+// - Use const for a price that stays unchanged during the program.
+
 #include <iostream>
 // We store and work with text using string.
 #include <string>

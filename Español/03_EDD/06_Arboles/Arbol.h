@@ -2,8 +2,6 @@
 #define CURSO_ARBOL_H
 // Usamos unique_ptr para liberar automáticamente el objeto que administra.
 #include <memory>
-// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
-#include <utility>
 // Guardamos una colección que puede crecer con vector.
 #include <vector>
 
@@ -47,13 +45,15 @@ namespace curso {
             if (dato > nodo->dato) {
                 return eliminarEn(nodo->derecho, dato);
             }
-            // Cero o un hijo: movemos la rama restante al lugar del nodo eliminado.
+            // Cero o un hijo: intercambiamos tarjetas con swap, sin copiar los nodos.
             if (!nodo->izquierdo) {
-                auto reemplazo = move(nodo->derecho);
-                nodo = move(reemplazo);
+                unique_ptr<Nodo> reemplazo;
+                reemplazo.swap(nodo->derecho);
+                nodo.swap(reemplazo);
             } else if (!nodo->derecho) {
-                auto reemplazo = move(nodo->izquierdo);
-                nodo = move(reemplazo);
+                unique_ptr<Nodo> reemplazo;
+                reemplazo.swap(nodo->izquierdo);
+                nodo.swap(reemplazo);
             } else {
                 // Con dos hijos, el menor de la rama derecha sustituye el dato sin romper el
                 // orden del ABB.
@@ -86,8 +86,7 @@ namespace curso {
         }
 
     public:
-        // ponytail: sin balanceo, el árbol puede volverse una cadena y obligarnos a revisar todos
-        // los nodos; un árbol AVL limita su altura para evitarlo.
+        // Nuestro árbol no se acomoda solo: al agregar números ordenados puede parecer una cadena.
         bool insertar(int dato) {
             return insertarEn(raiz, dato);
         }

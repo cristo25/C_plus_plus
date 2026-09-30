@@ -5,6 +5,9 @@
 // position. We also count the preparation: building a sorted list is extra work, even if searching
 // within it afterward is faster.
 //
+// Practice: We will compare two ways to find a number.
+// - We will search an unsorted list one value at a time.
+// - We will sort another list and search by halves, comparing the positions.
 
 #include "Searches.h"
 // We use sort to sort or change data order.

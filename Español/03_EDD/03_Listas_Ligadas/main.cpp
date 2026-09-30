@@ -6,6 +6,9 @@
 // detenemos el recorrido. Podemos dibujar las mismas tres cajas y cambiar solo sus flechas para
 // entenderlo.
 //
+// Práctica: Vamos a comparar tres cadenas de nodos.
+// - Agreguemos los mismos valores en una lista simple, doble y circular.
+// - Quitemos un valor y mostremos cómo se recorre cada lista.
 
 #include "01_Simplemente_Ligada/ListaSimple.h"
 #include "02_Doblemente_Ligada/ListaDoble.h"

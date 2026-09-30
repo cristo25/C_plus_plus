@@ -6,6 +6,9 @@
 // when their manager changes location. We can therefore keep a node query while the node still
 // exists. Emptying its shelf destroys the node, so we must stop using that query.
 //
+// Practice: We will store several shelves with nodes in a vector.
+// - We will add products to two shelves.
+// - We will grow the vector and inspect a node while it still exists.
 
 #include <iostream>
 // We store a collection that can grow using vector.

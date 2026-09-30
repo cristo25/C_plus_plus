@@ -85,7 +85,7 @@ namespace curso {
     inline vector<size_t> dfs(const Grafo& grafo, size_t inicio) {
         vector<bool> visitado(grafo.cantidad(), false);
         vector<size_t> orden;
-        // ponytail: DFS recursivo para ejemplos pequenos; pila explicita para gran profundidad.
+        // Seguimos una rama y regresamos para explorar las demás.
         visitarDFS(grafo, inicio, visitado, orden);
         return orden;
     }
@@ -108,7 +108,9 @@ namespace curso {
         resultado.distancias.at(origen) = 0;
         cola.push({0, origen});
         while (!cola.empty()) {
-            auto [distancia, actual] = cola.top();
+            // Cada ficha pendiente tiene dos datos: costo acumulado y lugar.
+            const long long distancia = cola.top().first;
+            const size_t actual = cola.top().second;
             cola.pop();
             if (distancia != resultado.distancias.at(actual)) {
                 continue;

@@ -1,11 +1,9 @@
-// Con = delete impedimos copiar la clase para no dejar dos objetos intentando liberar los mismos
-// nodos.
+// Un solo estante se encarga de cada cadena de nodos para no borrarla dos veces.
 //
-// Con friend damos permiso a la clase indicada para cambiar los enlaces privados del nodo.
+// Desde fuera del estante podemos consultar los nodos, pero solo el estante cambia sus enlaces.
 //
-// Con noexcept indicamos que estas operaciones no van a comunicar errores mediante throw. En los
-// parámetros con && recibimos un objeto del que podemos trasladar los datos; con move transferimos
-// esa responsabilidad.
+// Cuando un vector crece, puede cambiar de lugar un estante. Permitimos ese cambio sin copiar sus
+// nodos: el nuevo estante se encarga de la misma cadena.
 
 // Compartimos esta clase entre los pasos 8, 9 y el integrador. Podemos definir sus funciones dentro
 // de la clase y usar el header desde varios archivos.
@@ -20,8 +18,6 @@
 #include <stdexcept>
 // Guardamos y trabajamos con texto mediante string.
 #include <string>
-// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
-#include <utility>
 #include "../../02_POO/08_Headers/Producto.h"
 
 namespace curso {
@@ -55,25 +51,17 @@ namespace curso {
         unique_ptr<Nodo> inicio;
 
     public:
-        explicit Estante(string etiqueta) : nombre(move(etiqueta)) {
+        explicit Estante(const string& etiqueta) : nombre(etiqueta) {
             if (nombre.empty()) {
                 throw invalid_argument("El estante necesita un nombre");
             }
         }
 
-        // No duplicamos propietarios. Mover transfiere la cadena y deja el inicio de origen nulo.
+        // No duplicamos propietarios: cada cadena tiene un solo estante responsable.
         Estante(const Estante&) = delete;
         Estante& operator=(const Estante&) = delete;
+        // Con && recibimos el estante que el vector cambia de casilla sin copiar sus nodos.
         Estante(Estante&&) noexcept = default;
-
-        Estante& operator=(Estante&& otro) noexcept {
-            if (this != &otro) {
-                vaciar();
-                nombre = move(otro.nombre);
-                inicio = move(otro.inicio);
-            }
-            return *this;
-        }
 
         ~Estante() {
             vaciar();
@@ -81,9 +69,9 @@ namespace curso {
 
         void agregar(const Producto& producto) {
             auto nuevoNodo = make_unique<Nodo>(producto);
-            // Insertamos al principio: nuevo -> antigua cadena. Se invierte el orden de inserción.
-            nuevoNodo->siguiente = move(inicio);
-            inicio = move(nuevoNodo);
+            // swap intercambia las tarjetas: el nuevo nodo señala al inicio anterior.
+            nuevoNodo->siguiente.swap(inicio);
+            inicio.swap(nuevoNodo);
         }
 
         const string& consultarNombre() const {
@@ -111,9 +99,10 @@ namespace curso {
         void vaciar() noexcept {
             // Soltamos un nodo por vez, sin una cadena de destructores recursivos.
             while (inicio != nullptr) {
-                // Separamos el resto antes de destruir el nodo actual al reemplazar inicio.
-                auto siguiente = move(inicio->siguiente);
-                inicio = move(siguiente);
+                // Guardamos el nodo actual aparte y dejamos al siguiente como nuevo inicio.
+                unique_ptr<Nodo> actual;
+                actual.swap(inicio);
+                inicio.swap(actual->siguiente);
             }
         }
     };

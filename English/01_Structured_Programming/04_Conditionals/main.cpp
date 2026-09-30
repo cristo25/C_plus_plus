@@ -6,6 +6,13 @@
 // being bought and which discount applies.
 //
 
+// Practice: Let's write an integrated program that prices a cinema ticket.
+//
+// - Choose among three ticket types with switch.
+// - Apply a discount with if when eligible.
+// - Reject unknown options.
+// - Display the original price, discount and total.
+
 #include <iostream>
 
 using namespace std;

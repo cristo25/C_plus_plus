@@ -41,15 +41,20 @@ int main() {
     if (ahorro.depositar(-5)) {
         return 1;
     }
-    if (!(ahorro.depositar(500))) {
+    if (!ahorro.depositar(500)) {
         return 1;
     }
     if (ahorro.retirar(600)) {
         return 1;
     }
-    if (!(ahorro.retirar(200))) {
+    if (!ahorro.retirar(200)) {
         return 1;
     }
 
     cout << ahorro.consultar() << " centavos\n";
 }
+
+// Práctica: vamos a crear una clase Cuenta con un saldo que solo cambie mediante sus funciones.
+// - Rechazamos depósitos negativos y retiros mayores que el saldo.
+// - Añadimos una función const para consultar el saldo.
+// - Mostramos el saldo después de un depósito y un retiro válidos.

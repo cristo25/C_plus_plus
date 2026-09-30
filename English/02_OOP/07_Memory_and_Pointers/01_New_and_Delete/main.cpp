@@ -20,3 +20,8 @@ int main() {
     delete number;
     number = nullptr; // Avoid accidentally reusing this address.
 }
+
+// Practice: let's store a price in a box created with new.
+// - Change the price through its pointer and print the new value.
+// - Release the box exactly once with delete.
+// - Set the pointer to nullptr afterward.

@@ -6,6 +6,13 @@
 // desde la primera revisión, ya hicimos una vuelta.
 //
 
+// Práctica: Vamos a realizar un programa que simule hasta tres intentos.
+//
+// - Mostrar el mensaje del intento dentro de do.
+// - Aumentar el contador en cada vuelta.
+// - Detenerse al completar tres intentos.
+// - Probar qué ocurre si el contador empieza en 3.
+
 #include <iostream>
 
 using namespace std;

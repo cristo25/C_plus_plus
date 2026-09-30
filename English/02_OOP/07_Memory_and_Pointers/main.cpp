@@ -1,10 +1,9 @@
 // Memory and pointers in OOP
 //
-// We will apply pointers to a Student object. We create the student with make_unique and lend its
-// address with get. With observer->getName() we follow that address and call a student function; ->
-// means following the pointer and using the dot. Calling reset releases the student. The borrowed
-// address then becomes unusable: we must stop using it and set it to nullptr. The borrowed pointer
-// is never responsible for deleting the student.
+// We can picture Student as a box holding a name and observer as the address of that box. We create the
+// student with make_unique and borrow its address with get. With observer->getName() we follow that
+// address to read the name. Before calling reset we stop using the borrowed address and set observer
+// to nullptr. Then reset releases the student. The borrowed pointer never deletes it.
 //
 
 #include <iostream>
@@ -32,8 +31,12 @@ int main() {
     const Student* observer = owner.get();
 
     cout << observer->getName() << "\n";
-    // reset destroys the object. The observer can no longer be followed to read its value
-    // afterward.
-    owner.reset();
+    // We stop using the borrowed address before destroying the object with reset.
     observer = nullptr;
+    owner.reset();
 }
+
+// Practice: let's create a Pet class and manage it with unique_ptr.
+// - Store a name and read it with a const function.
+// - Read the name through an address borrowed with get.
+// - Stop using that address before releasing the pet with reset.

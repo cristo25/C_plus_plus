@@ -6,6 +6,9 @@
 // pero sus posiciones pueden cambiar al insertar o borrar; por eso no confundimos el nombre de una
 // tarea con su posición actual.
 //
+// Práctica: Vamos a crear una lista de tareas que podamos cambiar.
+// - Guardemos nombre y estado de al menos tres tareas en un vector.
+// - Agreguemos, terminemos y quitemos una tarea; mostremos el resultado.
 
 #include <iostream>
 // Guardamos y trabajamos con texto mediante string.

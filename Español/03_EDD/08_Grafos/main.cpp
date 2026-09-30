@@ -6,6 +6,9 @@
 // recorridos, pero no interpretamos el orden de BFS o DFS como una lista de costos: cada
 // herramienta responde una pregunta diferente.
 //
+// Práctica: Vamos a estudiar un mapa con varias preguntas.
+// - Conectemos lugares con costos no negativos.
+// - Comparemos BFS, DFS y el camino de menor costo desde un origen.
 
 #include "Grafo.h"
 #include <iostream>

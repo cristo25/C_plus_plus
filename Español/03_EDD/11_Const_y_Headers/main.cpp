@@ -2,10 +2,13 @@
 //
 // Vamos a consultar una colección sin modificarla. Con const vector<int>& recibimos otra etiqueta
 // del mismo vector, pero solo para leerlo. En Consultas.h anunciamos la función; en Consultas.cpp
-// recorremos los datos y contamos los que superan un límite. No necesitamos copiar ni ordenar nada.
-// Si duplicamos la cantidad de datos hacemos el doble de visitas (O(n), con n elementos). Solo
-// añadimos un contador y unas pocas variables (O(1) de memoria adicional).
+// recorremos los datos y contamos los que superan un límite. No necesitamos copiar ni ordenar
+// nada. Si duplicamos la cantidad de datos hacemos el doble de visitas. Solo añadimos un contador
+// y unas pocas variables.
 //
+// Práctica: Vamos a consultar un vector desde un archivo separado.
+// - Anunciemos en el header una función que reciba un vector sin cambiarlo.
+// - Contemos en el archivo .cpp los valores menores que un límite.
 
 #include "Consultas.h"
 #include <iostream>

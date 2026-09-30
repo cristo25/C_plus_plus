@@ -1,10 +1,13 @@
 // Tree traversals
 //
-// We will visit the same tree in three orders. In preorder we read the node before its branches; in
-// inorder we read left branch, node, then right branch; in postorder we leave the node until last.
-// In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms but
-// recording each name on entry, midway or on exit. In all three cases we visit all n nodes (O(n)).
+// We will visit the same tree in three orders. In preorder we read the node before its branches;
+// in inorder we read left branch, node, then right branch; in postorder we leave the node until
+// last. In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms
+// but recording each name on entry, midway or on exit. In all three cases we visit all nodes.
 //
+// Practice: We will traverse the same tree in three ways.
+// - We will show preorder, inorder and postorder.
+// - We will explain when the root is recorded in each traversal.
 
 #include "../Tree.h"
 #include <iostream>

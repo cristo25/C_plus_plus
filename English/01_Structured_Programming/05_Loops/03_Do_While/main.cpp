@@ -6,6 +6,13 @@
 // made one turn.
 //
 
+// Practice: Let's write a program that simulates up to three attempts.
+//
+// - Display the attempt message inside do.
+// - Increase the counter each turn.
+// - Stop after three attempts.
+// - Try starting the counter at 3.
+
 #include <iostream>
 
 using namespace std;

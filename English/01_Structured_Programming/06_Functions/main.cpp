@@ -6,6 +6,13 @@
 // This lets us follow each step without putting everything inside main.
 //
 
+// Practice: Let's write an integrated purchase program with a coupon.
+//
+// - Calculate the subtotal in a function that returns a number.
+// - Apply the discount through a reference to the total.
+// - Keep the discount from making the total negative.
+// - Display the subtotal and final total.
+
 #include <iostream>
 
 using namespace std;

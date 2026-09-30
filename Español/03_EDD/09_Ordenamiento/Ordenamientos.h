@@ -106,8 +106,7 @@ namespace curso {
         partirRango(datos, corte + 1, fin);
     }
     inline void quickSort(vector<int>& datos) {
-        // ponytail: usar el último dato como pivote puede provocar recorridos largos repetidos en
-        // datos ya ordenados; usar sort para una garantía de rendimiento más consistente.
+        // Elegimos el último dato como pivote para observar cómo trabaja el algoritmo.
         partirRango(datos, 0, datos.size());
     }
 } // namespace curso

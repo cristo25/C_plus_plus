@@ -5,6 +5,9 @@
 // estamos practicando es el orden de salida; una pila se reconoce por esa regla, aunque usemos
 // herramientas distintas para guardarla.
 //
+// Práctica: Vamos a comparar dos pilas de acciones.
+// - Guardemos las mismas acciones con vector y con stack.
+// - Retirémoslas y comprobemos que salga primero la última.
 
 #include <iostream>
 // Guardamos una pila: con stack sale primero lo último que entró.

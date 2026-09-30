@@ -17,3 +17,8 @@ int main() {
 
     cout << cuaderno.consultarNombre() << ": " << cuaderno.consultarPrecio() << " centavos\n";
 }
+
+// Práctica: vamos a ampliar el ejemplo con un segundo producto.
+// - Declaramos ambos objetos como const y les damos nombres y precios diferentes.
+// - Mostramos sus datos usando las funciones declaradas en Producto.h.
+// - Explicamos por qué no podemos cambiar directamente un dato privado.

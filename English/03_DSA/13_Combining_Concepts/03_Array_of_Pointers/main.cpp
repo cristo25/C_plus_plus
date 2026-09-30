@@ -6,6 +6,9 @@
 // nullptr when no box is selected. The array holds the pointers but does not delete the local
 // integers they point to.
 //
+// Practice: We will use cards that point to numbers.
+// - We will store three pointers in an array and point two of them at one number.
+// - We will check for nullptr before reading the pointed-to number.
 
 #include <iostream>
 

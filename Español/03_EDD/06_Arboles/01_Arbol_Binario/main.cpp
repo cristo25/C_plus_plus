@@ -6,6 +6,9 @@
 // sumamos el nodo actual y los de sus dos ramas mediante recursión. Usamos unique_ptr para que cada
 // rama libere sus nodos al terminar.
 //
+// Práctica: Vamos a dibujar un árbol binario con nodos.
+// - Creemos una raíz, dos hijos y al menos una hoja más.
+// - Contemos los nodos recorriendo ambas ramas.
 
 #include <iostream>
 // Usamos unique_ptr para liberar automáticamente el objeto que administra.

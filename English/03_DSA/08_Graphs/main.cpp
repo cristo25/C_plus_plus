@@ -5,6 +5,9 @@
 // so every test uses the same map. We can compare traversal orders, but we do not treat BFS or DFS
 // order as a list of costs: each tool answers a different question.
 //
+// Practice: We will study a map with several questions.
+// - We will connect places with nonnegative costs.
+// - We will compare BFS, DFS and the lowest-cost path from one starting place.
 
 #include "Graph.h"
 #include <iostream>

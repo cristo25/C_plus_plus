@@ -6,6 +6,9 @@
 // hospital: llegar antes no siempre significa pasar antes. Con top consultamos el siguiente y con
 // pop lo retiramos; siempre necesitamos que haya datos.
 //
+// Práctica: Vamos a atender tareas por prioridad.
+// - Guardemos al menos tres niveles de prioridad distintos.
+// - Mostremos el orden de salida y comparémoslo con el de llegada.
 
 // Elegimos primero el menor valor de una cola de prioridad mediante greater.
 #include <functional>

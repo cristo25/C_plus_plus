@@ -9,6 +9,9 @@
 // exactos. También podemos contar cuántos datos adicionales guardamos para hacer la tarea; a eso lo
 // llamamos memoria auxiliar.
 //
+// Práctica: Vamos a comparar dos formas de revisar números.
+// - Contemos las visitas al leer una posición y al recorrer todo un arreglo.
+// - Repitamos con más datos y expliquemos qué trabajo creció.
 
 #include <iostream>
 

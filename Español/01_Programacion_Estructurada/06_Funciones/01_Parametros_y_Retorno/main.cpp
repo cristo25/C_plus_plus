@@ -6,6 +6,13 @@
 // cambiarla dentro de la función no cambia la variable que enviamos.
 //
 
+// Práctica: Vamos a realizar un programa que convierta minutos a segundos.
+//
+// - Crear una función que reciba los minutos.
+// - Devolver el resultado con return.
+// - Llamar a la función con tres valores diferentes.
+// - Mostrar los resultados desde main.
+
 #include <iostream>
 
 using namespace std;

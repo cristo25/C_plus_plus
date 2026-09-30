@@ -32,7 +32,7 @@ namespace course {
         }
         void append(int value) {
             // Keeping a tail pointer lets us append by adjusting a few links without traversing
-            // other nodes (O(1): work that does not grow with list length).
+ // other nodes.
             Node* newNode = new Node{value, tail, nullptr};
             if (tail) {
                 tail->next = newNode;

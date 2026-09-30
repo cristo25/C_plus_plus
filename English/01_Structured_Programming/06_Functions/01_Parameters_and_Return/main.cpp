@@ -6,6 +6,13 @@
 // does not change the original variable.
 //
 
+// Practice: Let's write a program that converts minutes to seconds.
+//
+// - Create a function that receives the minutes.
+// - Return the result with return.
+// - Call it with three different values.
+// - Display the results from main.
+
 #include <iostream>
 
 using namespace std;

@@ -7,6 +7,9 @@
 // cambiaría una copia de la tarjeta. Aunque crezca el vector de direcciones, estos productos del
 // arreglo permanecen en su lugar; deben seguir existiendo mientras los consultamos.
 //
+// Práctica: Vamos a seleccionar productos mediante sus direcciones.
+// - Guardemos productos en un arreglo y direcciones en un vector.
+// - Cambiemos una selección sin copiar los productos.
 
 #include <iostream>
 // Guardamos una colección que puede crecer con vector.

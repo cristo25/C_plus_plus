@@ -20,7 +20,7 @@ namespace proyecto {
     class AlmacenMemoria : public AlmacenCatalogo {
         LibroDAO guardado;
     public:
-        explicit AlmacenMemoria(LibroDAO inicial = {});
+        explicit AlmacenMemoria(const LibroDAO& inicial = {});
         LibroDAO cargar() const override;
         void guardar(const LibroDAO& dao) override;
     };
@@ -28,7 +28,7 @@ namespace proyecto {
     class AlmacenArchivo : public AlmacenCatalogo {
         filesystem::path archivo;
     public:
-        explicit AlmacenArchivo(filesystem::path archivo);
+        explicit AlmacenArchivo(const filesystem::path& archivo);
         LibroDAO cargar() const override;
         void guardar(const LibroDAO& dao) override;
     };

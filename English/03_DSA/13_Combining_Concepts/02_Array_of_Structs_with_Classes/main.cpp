@@ -6,6 +6,9 @@
 // records[0].quantity the number. receiveOne takes Record& to change the original card: removing &
 // would change only a copy.
 //
+// Practice: We will store records with products and quantities.
+// - We will create a struct with Product and quantity, then store several records.
+// - We will change one quantity through a function with a reference.
 
 #include <iostream>
 // We use numeric_limits to check the largest allowed integer before adding.

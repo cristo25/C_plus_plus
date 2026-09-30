@@ -8,6 +8,14 @@
 // leer dos veces el mismo header dentro de un archivo que compilamos.
 //
 
+// Práctica: Vamos a realizar un programa de calificaciones dividido en tres archivos.
+//
+// - Declarar las funciones en un .h y escribirlas en otro .cpp.
+// - Recibir las notas como un arreglo const junto con su cantidad.
+// - Calcular promedio y nota máxima sin modificar las notas.
+// - Mostrar desde main si el promedio alcanza la nota aprobatoria.
+// - Compilar los dos .cpp juntos.
+
 #include "Calificaciones.h"
 #include <iostream>
 

@@ -7,6 +7,9 @@
 // earlier order of ties. After understanding manual movements, we can use this tool for a complete
 // task.
 //
+// Practice: We will sort student records by grade.
+// - We will create named records with grades, including ties.
+// - We will sort them with sort and observe what happens to ties.
 
 // We use sort, stable_sort to sort or change data order.
 #include <algorithm>

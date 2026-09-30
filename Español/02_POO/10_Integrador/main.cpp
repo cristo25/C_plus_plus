@@ -54,7 +54,7 @@ public:
 
 int main() {
     Biblioteca biblioteca;
-    if (!(biblioteca.registrar({1, "Aprender C++"}))) {
+    if (!biblioteca.registrar({1, "Aprender C++"})) {
         return 1;
     }
     if (biblioteca.registrar({1, "Duplicado"})) {
@@ -69,3 +69,8 @@ int main() {
 
     cout << vista->mostrar(biblioteca.catalogo());
 }
+
+// Práctica integradora: vamos a añadir otra forma de mostrar la biblioteca.
+// - Creamos una VistaTitulos que muestre solo los nombres de los libros.
+// - Registramos dos libros y mostramos sus títulos mediante un puntero a Vista.
+// - Mostramos después el resumen con la misma variable vista.

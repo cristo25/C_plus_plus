@@ -6,6 +6,13 @@
 // repeat forever.
 //
 
+// Practice: Let's write a program that simulates weekly savings.
+//
+// - Start with zero savings.
+// - Add 25 each week until reaching at least 110.
+// - Count weeks and display savings after each one.
+// - Show why the final amount can exceed the target.
+
 #include <iostream>
 
 using namespace std;

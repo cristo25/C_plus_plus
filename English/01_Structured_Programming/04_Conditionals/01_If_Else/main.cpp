@@ -6,6 +6,13 @@
 // answer. We can picture two doors: the condition decides which one we take.
 //
 
+// Practice: Let's write a program that decides entry to an event.
+//
+// - Store an age and whether an adult accompanies the visitor.
+// - Allow adults or accompanied minors to enter.
+// - Display the reason for the decision.
+// - Try ages 17 and 18.
+
 #include <iostream>
 
 using namespace std;

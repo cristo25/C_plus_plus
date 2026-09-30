@@ -6,6 +6,13 @@
 // otra actualiza el importe. Así podemos seguir cada paso sin mezclar todo dentro de main.
 //
 
+// Práctica: Vamos a realizar un programa integrador de una compra con cupón.
+//
+// - Calcular el subtotal en una función que devuelva un número.
+// - Aplicar el descuento mediante una referencia al total.
+// - Impedir que el descuento deje un total negativo.
+// - Mostrar subtotal y total final.
+
 #include <iostream>
 
 using namespace std;

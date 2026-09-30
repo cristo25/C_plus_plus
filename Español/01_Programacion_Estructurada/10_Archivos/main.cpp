@@ -3,18 +3,21 @@
 // Vamos a conservar texto cuando termine el programa. Podemos pensar en la memoria como un pizarrón
 // y en un archivo como un cuaderno que guardamos. Con ofstream abrimos el cuaderno para escribir;
 // con ifstream lo abrimos para leer. Ambas herramientas vienen de <fstream>. Usamos ios::app para
-// agregar líneas al final sin borrar las anteriores. Comprobamos que se pudo abrir y guardar; al
-// leer hasta el final, eof nos indica que ya no quedan datos.
+// agregar líneas al final sin borrar las anteriores. Comprobamos que cada archivo se pudo abrir y
+// leemos una línea por vuelta: cuando ya no hay otra, el ciclo termina.
 //
+// Práctica: Vamos a llevar un diario de estudio.
+//
+// - Agregar una actividad al final de un archivo.
+// - Leer el archivo y mostrar todas las actividades.
+// - Avisar si no se puede abrir para escribir o leer.
 
-// Leemos y guardamos archivos con ifstream y ofstream.
 #include <iostream>
 
-// <fstream> (file stream): Proporciona las herramientas para trabajar con archivos en disco.
-// Define 'ofstream' para escribir/guardar datos y 'ifstream' para leerlos.
+// Con fstream podemos escribir y leer archivos.
 #include <fstream>
 
-// <string>: Permite usar el tipo de dato 'string' para almacenar y manipular cadenas de texto.
+// Con string guardamos la ruta y cada línea leída.
 #include <string>
 
 using namespace std;
@@ -22,7 +25,7 @@ using namespace std;
 int main() {
     const string ruta = "notas_demo.txt";
 
-    // 1. Escritura: se abre en modo append (ios::app) para añadir al final sin borrar lo previo.
+    // Con ios::app agregamos una línea sin borrar las anteriores.
     {
         ofstream salida(ruta, ios::app);
         if (!salida) {
@@ -31,10 +34,10 @@ int main() {
         }
 
         salida << "Estudiar C++\n";
-        // Al salir de este bloque {}, el archivo se cierra automáticamente gracias al destructor de 'salida'.
+        // Al salir de este bloque, el archivo se cierra solo.
     }
 
-    // 2. Lectura: se abre el archivo para leer su contenido.
+    // Abrimos el mismo archivo para leerlo.
     ifstream entrada(ruta);
     if (!entrada) {
         cerr << "No se pudo abrir el archivo para leer.\n";
@@ -47,6 +50,6 @@ int main() {
         cout << linea << "\n";
     }
 
-    // Al finalizar main(), 'entrada' se cierra automáticamente.
+    // Al terminar el programa, el archivo también se cierra solo.
     return 0;
 }

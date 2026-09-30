@@ -25,7 +25,9 @@ namespace proyecto {
                 }
                 istringstream fila(linea);
                 int valor = 0;
-                if (fila >> valor && (fila >> ws).eof() && valor >= minimo && valor <= maximo) {
+                // Si hay otro carácter después del número, la respuesta no es un entero completo.
+                char sobrante;
+                if (fila >> valor && !(fila >> sobrante) && valor >= minimo && valor <= maximo) {
                     return valor;
                 }
                 salida << "Introduce un entero completo dentro del rango indicado.\n";

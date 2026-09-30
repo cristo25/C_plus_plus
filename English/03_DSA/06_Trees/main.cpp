@@ -5,6 +5,9 @@
 // traversals and finally remove all nodes. We can picture maintaining a tree of folders: each
 // change must preserve access to branches that still exist.
 //
+// Practice: We will manage numbers in a tree.
+// - We will add numbers without duplicates and show all three traversals.
+// - We will remove the root and check that the other numbers remain available.
 
 #include "Tree.h"
 #include <iostream>

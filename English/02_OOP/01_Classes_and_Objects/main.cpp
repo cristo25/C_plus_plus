@@ -35,3 +35,8 @@ int main() {
     cout << "Bicycle " << red.color << ": " << red.speed << "\n";
     cout << "Bicycle " << blue.color << ": " << blue.speed << "\n";
 }
+
+// Practice: let's create a Block class for two Minecraft blocks.
+// - Store each block's name and hardness.
+// - Add a function that reduces hardness when we hit the block.
+// - Show that hitting one block does not change the other.

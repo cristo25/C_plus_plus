@@ -22,3 +22,8 @@ int main() {
     delete numero;
     numero = nullptr; // Evita reutilizar esta direccion por accidente.
 }
+
+// Práctica: vamos a guardar un precio en una caja creada con new.
+// - Cambiamos el precio usando el puntero y mostramos el nuevo valor.
+// - Liberamos la caja una sola vez con delete.
+// - Dejamos el puntero en nullptr al terminar.

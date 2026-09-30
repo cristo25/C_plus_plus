@@ -1,11 +1,14 @@
 // Bubble sort
 //
-// We will sort by comparing neighbors. If the left value is larger, we swap their positions; after
-// a pass the largest remaining value ends up at the end. We can picture large bubbles rising. If a
-// pass makes no swaps, we are done. With n values we may repeat many comparisons, roughly like n
-// times n (O(n²)); already sorted data needs only one pass (O(n)). The complete function is in
-// Sorts.h.
+// We will sort by comparing neighbors. If the left value is larger, we swap their positions;
+// after a pass the largest remaining value ends up at the end. We can picture large bubbles
+// rising. If a pass makes no swaps, we are done. When values are reversed, we make many
+// comparisons; doubling the number of values can make them grow to almost four times as many.
+// Already sorted values need just one pass. The complete function is in Sorts.h.
 //
+// Practice: We will sort numbers like bubbles rising.
+// - We will compare neighbors and swap them when out of order.
+// - We will stop when a full pass makes no changes.
 
 #include "../Sorts.h"
 #include <iostream>

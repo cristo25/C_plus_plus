@@ -1,8 +1,6 @@
 #ifndef CURSO_LIBRO_DAO_H
 #define CURSO_LIBRO_DAO_H
 
-// Con quoted conservamos espacios y comillas al guardar y recuperar títulos.
-#include <iomanip>
 // Recibimos una fuente de lectura: puede ser teclado, archivo o texto en memoria.
 #include <istream>
 // Recibimos un destino de escritura: pantalla, archivo o texto en memoria.
@@ -11,8 +9,6 @@
 #include <sstream>
 // Guardamos y trabajamos con texto mediante string.
 #include <string>
-// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
-#include <utility>
 // Guardamos una colección que puede crecer con vector.
 #include <vector>
 
@@ -34,9 +30,8 @@ namespace curso {
         }
 
     public:
-        // Busca libro por libro y puede revisar todo el catálogo. Más libros pueden significar más
-        // comparaciones (O(n), con n libros). Devuelve un observador que puede invalidarse al
-        // modificar el vector.
+        // Buscamos libro por libro. Si el catálogo crece, podemos necesitar más comparaciones.
+        // La dirección encontrada deja de servir si después cambiamos el vector.
         const Libro* buscar(int id) const {
             for (const auto& libro : libros) {
                 if (libro.id == id) {
@@ -85,14 +80,13 @@ namespace curso {
         bool guardar(ostream& salida) const {
             salida << libros.size() << '\n';
             for (const auto& libro : libros) {
-                // quoted conserva espacios y comillas del título para poder recuperar el texto
-                // completo.
-                salida << libro.id << ' ' << quoted(libro.titulo) << '\n';
+                // Dedicamos una línea al número y otra al título para conservar sus espacios.
+                salida << libro.id << '\n' << libro.titulo << '\n';
             }
             return static_cast<bool>(salida);
         }
         bool cargar(istream& entrada) {
-            // Lee una copia completa completa; si falla, conserva el estado anterior.
+            // Leemos todos los libros en otro catálogo y solo al final reemplazamos el anterior.
             string linea;
             if (!getline(entrada, linea)) {
                 return false;
@@ -102,7 +96,8 @@ namespace curso {
             if (!(cabecera >> cantidad) || cantidad < 0 || cantidad > MAX_LIBROS) {
                 return false;
             }
-            if (!(cabecera >> ws).eof()) {
+            char sobrante;
+            if (cabecera >> sobrante) {
                 return false;
             }
             LibroDAO nuevo;
@@ -110,20 +105,21 @@ namespace curso {
                 if (!getline(entrada, linea)) {
                     return false;
                 }
-                istringstream fila(linea);
-                Libro libro{};
-                if (!(fila >> libro.id >> ws) || fila.peek() != '"') {
+                istringstream numero(linea);
+                int id;
+                if (!(numero >> id) || numero >> sobrante) {
                     return false;
                 }
-                if (!(fila >> quoted(libro.titulo)) || !(fila >> ws).eof()) {
+                string titulo;
+                if (!getline(entrada, titulo)) {
                     return false;
                 }
-                if (!nuevo.crear(libro)) {
+                if (!nuevo.crear({id, titulo})) {
                     return false;
                 }
             }
             // Solo sustituimos el catálogo después de validar toda la copia.
-            libros = move(nuevo.libros);
+            libros = nuevo.libros;
             return true;
         }
     };

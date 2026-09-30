@@ -7,6 +7,9 @@
 // copy of the card. Growing the address vector does not move these array products; they must keep
 // existing while we read them.
 //
+// Practice: We will select products by their addresses.
+// - We will store products in an array and addresses in a vector.
+// - We will change one selection without copying the products.
 
 #include <iostream>
 // We store a collection that can grow using vector.

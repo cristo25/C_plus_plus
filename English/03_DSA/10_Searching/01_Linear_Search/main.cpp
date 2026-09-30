@@ -1,11 +1,14 @@
 // Linear search
 //
 // We will search by checking a drawer one slot at a time. We do not need to sort first: we move
-// until we find the value or reach the end. We may visit all n elements (O(n)). To return the
-// result we use optional: a small box from <optional> that either holds a position or is empty. We
-// check that it holds something before reading *position. Position zero is valid and must not be
+// until we find the value or reach the end. We may visit every element. To return the result we
+// use optional: a small box from <optional> that either holds a position or is empty. We check
+// that it holds something before reading *position. Position zero is valid and must not be
 // confused with “not found”.
 //
+// Practice: We will search for a number one slot at a time.
+// - We will try a present number and a missing number.
+// - We will show the position only when the number is found.
 
 #include "../Searches.h"
 #include <iostream>

@@ -1,11 +1,15 @@
 // Inserting and erasing in vectors
 //
 // We will open and remove spaces in the middle of a vector. With begin() we obtain a position
-// pointing to the start; begin() + 1 points to the second element. We call this way of pointing to
-// a position an iterator. insert places a value and shifts later ones; erase removes a value and
-// closes the gap. This may move nearly all n elements (O(n)). After changing the vector we obtain
-// needed positions again. Before pop_back we check empty so we do not remove from an empty vector.
+// pointing to the start; begin() + 1 points to the second element. We call this way of pointing
+// to a position an iterator. insert places a value and shifts later ones; erase removes a value
+// and closes the gap. This may move nearly all the elements. After changing the vector we obtain
+// needed positions again. Before pop_back we check empty so we do not remove from an empty
+// vector.
 //
+// Practice: We will organize a list of numbers.
+// - We will insert a number in the middle and remove another.
+// - We will check that the list is not empty before removing the last one.
 
 #include <iostream>
 // We store a collection that can grow using vector.

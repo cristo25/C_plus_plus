@@ -7,6 +7,9 @@
 // Product**: it contains its rows, whereas a double pointer stores an address leading to another
 // pointer.
 //
+// Practice: We will create a display of cards arranged in rows.
+// - We will use a matrix of pointers with one empty slot.
+// - We will show the same product in two slots and count occupied slots.
 
 #include <iostream>
 #include "../../../02_OOP/08_Headers/Product.h"

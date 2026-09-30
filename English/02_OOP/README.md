@@ -1,7 +1,5 @@
 # Object-oriented programming
 
-We will connect this topic’s pieces before solving its integration task. Each link contains the program, comments and a practice task with requirements.
-
 ## Classes and objects
 
 We will bring together data and actions that belong to the same thing. We can picture a class as the blueprint for a Minecraft block: it describes the data and actions of each block created from it. Each actual block would be an object. In this program we use Bicycle: we store color and speed, and pedal increases the speed. We create red and blue separately; pedaling red does not change blue. We call the stored data attributes and the functions inside the class methods. With public we allow main to use them.
@@ -40,21 +38,27 @@ We will request the same action from different objects. With play we ask an Inst
 
 ## Memory and pointers in OOP
 
-We will apply pointers to a Student object. We create the student with make_unique and lend its address with get. With observer->getName() we follow that address and call a student function; -> means following the pointer and using the dot. Calling reset releases the student. The borrowed address then becomes unusable: we must stop using it and set it to nullptr. The borrowed pointer is never responsible for deleting the student.
+We can picture Student as a box holding a name and observer as the address of that box. We create the student with make_unique and borrow its address with get. With observer->getName() we follow that address to read the name. Before calling reset we stop using the borrowed address and set observer to nullptr. Then reset releases the student. The borrowed pointer never deletes it.
 
 [Commented program](07_Memory_and_Pointers/main.cpp).
 
+[Memory and pointers guide](07_Memory_and_Pointers/README.md).
+
 ## Const, headers and compiling multiple files
 
-We will separate a class so several programs can use it. In Product.h we show its stored data and available operations; in Product.cpp we write how those operations work. From main we create a Product with a name and price. We store prices as whole cents to avoid small decimal-rounding differences. With const we protect the object and its queries. To run it we compile main.cpp together with Product.cpp; including the .h only announces the functions, not their bodies.
+We will separate a class so several programs can use it. We can picture Product.h as a menu showing what a shop offers, and Product.cpp as the place where those tasks are done. From main we create a Product with a name and price. We store prices as whole cents to avoid small decimal-rounding differences. With const we protect the object and its queries. If we try a negative price, the constructor rejects the product with an error from <stdexcept>; <string> lets us store its name. To run it we compile main.cpp together with Product.cpp: including the .h only announces the functions.
 
 [Commented program](08_Headers/main.cpp).
+
+[Headers guide](08_Headers/README.md).
 
 ## DAO: separating data access
 
 We will follow the catalog's whole workflow: create books, change a title, remove a book and restore saved data. Here we use stringstream from <sstream> as a temporary notebook in memory: we can write into it and read back without creating a disk file. We then try input with repeated ids. Our rule is simple: if we cannot restore every record correctly, we keep the catalog we already had.
 
 [Commented program](09_DAO/main.cpp).
+
+[DAO guide](09_DAO/README.md).
 
 ## Integration: a library using objects
 

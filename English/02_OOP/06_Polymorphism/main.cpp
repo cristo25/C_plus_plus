@@ -47,3 +47,8 @@ int main() {
     play(instrument);
     play(drum);
 }
+
+// Practice: let's create a Block class and two kinds of block with different descriptions.
+// - Declare a virtual function that describes a block.
+// - Make Stone and Wood return different descriptions.
+// - Pass both objects by reference to one function that prints their descriptions.

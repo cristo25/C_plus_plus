@@ -10,13 +10,13 @@ We will link nodes into branches. In a binary tree each node can have at most on
 
 ## Binary search trees (BST)
 
-We will add a rule to the tree: smaller numbers go left and larger ones go right. When searching, we choose one branch and discard the other. We call this a binary search tree, or BST. Here we do not store duplicates. When removing a node with two children, we find a replacement that preserves the ordering. If the tree becomes a chain, we must traverse many nodes; calling it a tree does not guarantee fast searches.
+We will add a rule to the tree: smaller numbers go left and larger ones go right. When searching, we choose one branch and discard the other. We call this a binary search tree, or BST. Here we do not store duplicates. When removing a node with one child, we exchange the address cards with `swap`: the child takes the removed node's place without copying every box. With two children, we find a replacement that preserves the order. If the tree becomes a chain, we must traverse many nodes; calling it a tree does not guarantee fast searches.
 
 [Commented program](02_Binary_Search_Tree/main.cpp).
 
 ## Tree traversals
 
-We will visit the same tree in three orders. In preorder we read the node before its branches; in inorder we read left branch, node, then right branch; in postorder we leave the node until last. In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms but recording each name on entry, midway or on exit. In all three cases we visit all n nodes (O(n)).
+We will visit the same tree in three orders. In preorder we read the node before its branches; in inorder we read left branch, node, then right branch; in postorder we leave the node until last. In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms but recording each name on entry, midway or on exit. In all three cases we visit all nodes.
 
 [Commented program](03_Traversals/main.cpp).
 
@@ -26,12 +26,12 @@ We will integrate tree operations: insertion, search, traversal and removal. We 
 
 [Commented program](main.cpp).
 
-**Practice.** Write an integrated program managing numbers in a tree.
+**Practice.** We will write an integrated program managing numbers in a tree.
 
-- Add and search for numbers without duplicates.
-- Offer all three traversals.
-- Remove the root without losing other values.
-- Empty the tree and insert again.
-- Display a message when a number is missing.
+- We will add and search for numbers without duplicates.
+- We will offer all three traversals.
+- We will remove the root without losing other values.
+- We will empty the tree and insert again.
+- We will display a message when a number is missing.
 
 [Back to the general guide](../../README.md).

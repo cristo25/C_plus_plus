@@ -40,5 +40,12 @@ int main() {
 
     redCar.start();
 
-    cout << "Engine on\n";
+    if (redCar.isRunning()) {
+        cout << "Engine on\n";
+    }
 }
+
+// Practice: let's create a Chest that contains an Inventory.
+// - Store the item count inside Inventory.
+// - Add an item to the inventory through Chest.
+// - Show the count before and after adding it.

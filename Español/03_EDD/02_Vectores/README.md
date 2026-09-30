@@ -4,13 +4,13 @@ Vamos a relacionar las piezas de este tema antes de resolver su práctica integr
 
 ## Crear y recorrer un vector
 
-Vamos a usar un cajón cuya cantidad de casillas puede crecer: vector<int>, de <vector>. Con push_back agregamos al final y con size consultamos cuántos datos hay. Recorremos los números para sumarlos. Cuando se llena el espacio reservado, el vector puede mudarse a otro bloque y llevarse sus datos; las direcciones anteriores ya no sirven. Normalmente agregar al final requiere poco trabajo; al repartir las mudanzas entre muchas inserciones, el trabajo medio por inserción permanece acotado (O(1) amortizado: repartimos el costo de crecer entre muchas operaciones).
+Vamos a usar un cajón cuya cantidad de casillas puede crecer: vector<int>, de <vector>. Con push_back agregamos al final y con size consultamos cuántos datos hay. Recorremos los números para sumarlos. Cuando se llena el espacio reservado, el vector puede mudarse a otro bloque y llevarse sus datos; las direcciones anteriores ya no sirven. No tenemos que mudar el cajón cada vez que añadimos un dato; normalmente basta con ocupar la siguiente casilla.
 
 [Programa comentado](01_Crear_y_Recorrer/main.cpp).
 
 ## Insertar y eliminar en vectores
 
-Vamos a abrir y quitar espacios en medio de un vector. Con begin() obtenemos una posición que señala el inicio; begin() + 1 señala el segundo elemento. A esa forma de señalar una posición la llamamos iterador. insert coloca un dato y desplaza los siguientes; erase quita uno y cierra el hueco. Por eso puede tocar mover casi todos los n elementos (O(n)). Después del cambio volvemos a obtener las posiciones que necesitamos. Antes de pop_back comprobamos empty para no quitar algo de un vector vacío.
+Vamos a abrir y quitar espacios en medio de un vector. Con begin() obtenemos una posición que señala el inicio; begin() + 1 señala el segundo elemento. A esa forma de señalar una posición la llamamos iterador. insert coloca un dato y desplaza los siguientes; erase quita uno y cierra el hueco. Por eso puede tocar mover casi todos los elementos. Después del cambio volvemos a obtener las posiciones que necesitamos. Antes de pop_back comprobamos empty para no quitar algo de un vector vacío.
 
 [Programa comentado](02_Insertar_y_Eliminar/main.cpp).
 
@@ -26,12 +26,12 @@ Vamos a reunir creación, cambios y fichas de objetos en una lista de tareas. Ca
 
 [Programa comentado](main.cpp).
 
-**Práctica.** Realiza un programa integrador de tareas con vector.
+**Práctica.** Vamos a realizar un programa integrador de tareas con vector.
 
-- Guardar nombre y estado de cada tarea en un struct.
-- Agregar una tarea al final y otra en medio.
-- Marcar una tarea como terminada.
-- Eliminar una tarea y mostrar las restantes.
-- Comprobar las posiciones antes de usarlas.
+- Guardemos nombre y estado de cada tarea en un struct.
+- Agreguemos una tarea al final y otra en medio.
+- Marquemos una tarea como terminada.
+- Eliminemos una tarea y mostrar las restantes.
+- Comprobemos las posiciones antes de usarlas.
 
 [Volvemos a la guía general](../../README.md).

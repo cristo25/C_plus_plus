@@ -9,27 +9,27 @@ We will start with variables, decisions and loops. Then we will build objects an
 3. [Data structures and algorithms](#data-structures-and-algorithms).
 4. [Integrated project](04_Integrated_Project/README.md).
 
-We have 84 programs. Within a topic we follow the numbered subfolders and then the integration example beside them. We first read the comments, predict what will happen and run the example. We then solve its practice task: the statement and requirements also appear inside main.cpp.
+We have 84 programs, including the final project. Within a topic we follow the numbered subfolders and then the integration example beside them. We first read the comments, predict what will happen and run the example. We then solve its practice task, which also appears in each lesson's `main.cpp`. The final project's practice is in its own guide.
 
 ## Compile and run
 
 To turn code into a program we use a C++17 compiler such as g++. We open Git Bash or PowerShell in the example folder and run:
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp -o program.exe
+g++ -std=c++17 main.cpp -o program.exe
 ./program.exe
 ```
 
-With `-std=c++17` we choose the C++ version; with `-Wall -Wextra -pedantic` we request warnings that help find mistakes; with `-o` we choose the output program name. We compile one main.cpp at a time because each example has its own starting point.
+With `-std=c++17` we choose the C++ version, and with `-o` we name the program we create. We compile one `main.cpp` at a time because each example starts at its own `main`.
 
 When we split work across files, we compile their `.cpp` files together. For example, in the OOP headers lesson:
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -pedantic main.cpp Product.cpp -o program.exe
+g++ -std=c++17 main.cpp Product.cpp -o program.exe
 ./program.exe
 ```
 
-We include the `.h` to learn which functions are available, and add the `.cpp` files to the command to include their bodies. Each program's comments contain its complete command. On Linux or macOS we can use `program` without `.exe`.
+We include the `.h` to learn which functions are available, and add the `.cpp` files to the command to include their bodies. We keep compilation commands here so we do not repeat them in every program. On Linux or macOS we can use `program` without `.exe`.
 
 ## Libraries and symbols as we encounter them
 
@@ -37,9 +37,7 @@ A library groups tools already available in C++. With `#include` we state which 
 
 With `using namespace std;` we can write `cout`, `string` and `vector` using those short names. In some headers we group our functions inside `namespace course`, like a folder of names to avoid confusing them with others. With `using namespace course;` we can use those names in the example.
 
-In later topics we encounter `auto`: we let C++ infer the type from the value. It does not change what we store. With `size_t` we represent nonnegative counts and positions. With `.at(position)` we read a vector slot and get an error if it does not exist; with `[]` we must check the boundary ourselves. Traditional arrays use only brackets.
-
-We can also read the [good practices guide](GOOD_PRACTICES.md), where we connect these habits with teamwork.
+In the [good practices guide](GOOD_PRACTICES.md) we gather advice from the whole course. We can read each part when we reach its topic.
 
 ## Structured programming
 
@@ -52,10 +50,10 @@ Complete example: [main.cpp](01_Structured_Programming/01_Hello_World/main.cpp).
 ```cpp
 #include <iostream>
 
-// Lets us write cout without the standard namespace prefix.
+// With this line we can write cout directly.
 using namespace std;
 
-// Execution starts in main; returning 0 reports success.
+// Here we start the program's instructions.
 int main() {
     cout << "Hello, C++!\n";
     return 0;
@@ -106,7 +104,7 @@ int main() {
 
 ### 01.03. Reading and displaying input
 
-We will ask for a name and an age. With cout we display the question; with getline(cin, name) we store everything up to Enter, including spaces in a full name. With cin >> age we try to read a whole number. Before using it, we check that reading succeeded and the age is between 0 and 130. We also check the remaining text to reject input such as 20abc. In find_first_not_of(" \t\r") we look for something other than spaces, tabs or a carriage return; string::npos means that nothing was found. This keeps us from accepting a name made only of spaces. We will study if in the next lesson; here we use it to stop when input is incorrect.
+We will ask for a name, a city and an age. With `cout` we show each question, and with `getline` we keep everything typed before Enter, including spaces. With `cin >> age` we try to read a whole number. If the name or city is empty, or if the age is outside 0 to 130, we show a message. `cin.fail()` tells us if we could not read a number. `empty()` only checks that there are no characters; text made of spaces still counts as text.
 
 Complete example: [main.cpp](01_Structured_Programming/03_Input_and_Output/main.cpp).
 
@@ -118,28 +116,30 @@ Complete example: [main.cpp](01_Structured_Programming/03_Input_and_Output/main.
 using namespace std;
 
 int main() {
-    string name;
+    string fullName;
+    string city;
     int age = 0;
-    cout << "Name: ";
-    // We read up to Enter so a full name can contain spaces.
-    if (!getline(cin, name) || name.find_first_not_of(" \t\r") == string::npos) {
-        cerr << "Invalid name.\n";
+
+    cout << "Enter your full name: ";
+    getline(cin, fullName);
+    cout << "Enter your city: ";
+    getline(cin, city);
+    cout << "Enter your age: ";
+    cin >> age;
+
+    if (fullName.empty() || city.empty()) {
+        cerr << "Error: Name and city cannot be empty.\n";
         return 1;
     }
-    cout << "Age: ";
-    // With >> we try to store an integer. If reading fails, we show the error.
-    if (!(cin >> age) || age < 0 || age > 130) {
-        cerr << "Invalid age.\n";
+    if (cin.fail() || age < 0 || age > 130) {
+        cerr << "Error: Invalid age.\n";
         return 1;
     }
-    // We check the rest of the same line: 20abc is not a valid age.
-    string remainder;
-    getline(cin, remainder);
-    if (cin.bad() || remainder.find_first_not_of(" \t\r") != string::npos) {
-        cerr << "Invalid age.\n";
-        return 1;
-    }
-    cout << "Hello, " << name << ". You are " << age << " years old.\n";
+    cout << "\n--- REGISTRATION CARD ---\n";
+    cout << "Name : " << fullName << "\n";
+    cout << "City : " << city << "\n";
+    cout << "Age  : " << age << " years\n";
+    return 0;
 }
 ```
 
@@ -442,7 +442,7 @@ Complete example: [main.cpp](01_Structured_Programming/07_Arrays/02_Matrices/mai
 
 ### 01.07. Arrays
 
-We will combine a one-dimensional array with a matrix. In grades we store two students with three grades each; in averages we store one result per student. We visit a row, add its grades and divide by three. With static_cast<double> we treat the sum as a decimal number before dividing, keeping the fractional part of the average.
+We will combine a one-dimensional array with a matrix. In grades we store two students with three grades each; in averages we store one result per student. We visit a row, add its grades and divide by 3.0. Writing 3.0 keeps the decimal part of the average.
 
 Complete example: [main.cpp](01_Structured_Programming/07_Arrays/main.cpp).
 
@@ -455,13 +455,13 @@ int main() {
     // Each row holds one student's three grades; positions start at zero.
     int grades[2][3]{{8, 9, 10}, {7, 8, 9}};
     double averages[2]{};
-    for (size_t row = 0; row < 2; ++row) {
+    for (int row = 0; row < 2; ++row) {
         int sum = 0;
         for (int grade : grades[row]) {
             sum += grade;
         }
-        // Convert the sum to double so the average keeps its fractional part.
-        averages[row] = static_cast<double>(sum) / 3;
+        // With 3.0 the result keeps its decimal part.
+        averages[row] = sum / 3.0;
     }
 
     for (double average : averages) {
@@ -600,15 +600,15 @@ int main() {
 
 ### 01.10. Reading and writing files
 
-We will keep text after the program ends. We can think of memory as a whiteboard and a file as a notebook we put away. With ofstream we open the notebook for writing; with ifstream we open it for reading. Both tools come from <fstream>. We use ios::app to add lines at the end without erasing earlier ones. We check that opening and saving succeeded; when reading reaches the end, eof tells us there is no more data.
+We will keep text after the program ends. We can picture memory as a whiteboard and a file as a notebook we put away. With `ofstream` we open the notebook for writing, and with `ifstream` we open it for reading. Both come from `<fstream>`. We use `ios::app` to add lines at the end without erasing earlier ones. We check that each file opened, then read one line per loop. The loop ends when there is no next line.
 
 Complete example: [main.cpp](01_Structured_Programming/10_Files/main.cpp).
 
 ```cpp
-// We read and save files using ifstream and ofstream.
+// With fstream we can read and write files.
 #include <fstream>
 #include <iostream>
-// We store and work with text using string.
+// With string we keep the file path and each line we read.
 #include <string>
 
 using namespace std;
@@ -616,20 +616,16 @@ using namespace std;
 int main() {
     const string path = "notes_demo.txt";
     {
-        // ios::app appends to preserve lines that already exist.
+        // With ios::app we add a line without erasing the others.
         ofstream output(path, ios::app);
         if (!output) {
             cerr << "Could not open the file.\n";
             return 1;
         }
         output << "Study C++\n";
-        output.close();
-        if (!output) {
-            cerr << "Save error.\n";
-            return 1;
-        }
+        // The file closes on its own when we leave this block.
     }
-    // Writing has finished: open a reading stream for the same file.
+    // We open the same file to read it.
     ifstream input(path);
     if (!input) {
         cerr << "Could not read.\n";
@@ -639,38 +635,29 @@ int main() {
     while (getline(input, line)) {
         cout << line << "\n";
     }
-    // Reaching the end is normal; a different reading failure must be reported.
-    if (!input.eof()) {
-        cerr << "Read error.\n";
-        return 1;
-    }
+    return 0;
 }
 ```
 
 **Practice.** Write a program that saves and reads reminders.
 
 - Append a reminder to a text file.
-- Check that the file opened and saved successfully.
+- Check that the file opened for writing and reading.
 - Read and display all its lines.
 - Run twice and check that both reminders remain.
 
 ### 01.11. Recursion
 
-We will solve a task by calling the same function with a smaller case; we call this recursion. Here we calculate a factorial: 4! means 4 times 3 times 2 times 1. In factorial(n) we multiply n by factorial(n - 1). We stop calls when n is 0 or 1, whose result is 1. We can picture boxes inside boxes: we open them down to the smallest and then return, combining results. We limit n to 12 so the result fits in int. With throw we report invalid data; with try and catch we catch that report and display it.
+We will solve a task by calling the same function with a smaller case; we call this recursion. Here we calculate a factorial: 4! means 4 times 3 times 2 times 1. In `factorial(n)` we multiply n by `factorial(n - 1)`. We stop calls when n is 0 or 1. We can picture boxes inside boxes: we open them down to the smallest and then return, combining results. Before calling the function we check that the number is between 0 and 12 so its result fits in `int`.
 
 Complete example: [main.cpp](01_Structured_Programming/11_Recursion/main.cpp).
 
 ```cpp
 #include <iostream>
-// We report errors with messages, such as invalid_argument for an invalid value.
-#include <stdexcept>
 
 using namespace std;
 
 int factorial(int n) {
-    if (n < 0 || n > 12) {
-        throw invalid_argument("Use a number between 0 and 12");
-    }
     // Base case: 0! and 1! equal 1. Without a stopping case, recursion would not end.
     if (n <= 1) {
         return 1;
@@ -680,13 +667,12 @@ int factorial(int n) {
 }
 
 int main() {
-
-    try {
-        cout << factorial(5) << "\n";
-    } catch (const invalid_argument& error) {
-        cerr << error.what() << "\n";
+    const int number = 5;
+    if (number < 0 || number > 12) {
+        cerr << "Use a number between 0 and 12.\n";
         return 1;
     }
+    cout << factorial(number) << "\n";
 }
 ```
 
@@ -894,13 +880,13 @@ int main() {
     if (savings.deposit(-5)) {
         return 1;
     }
-    if (!(savings.deposit(500))) {
+    if (!savings.deposit(500)) {
         return 1;
     }
     if (savings.withdraw(600)) {
         return 1;
     }
-    if (!(savings.withdraw(200))) {
+    if (!savings.withdraw(200)) {
         return 1;
     }
 
@@ -933,23 +919,19 @@ class Session {
     string user;
 
 public:
-    // The constructor initializes the object; explicit prevents unexpected implicit conversions.
-    explicit Session(const string& name) : user(name) {
+    // We prepare the session with the name we receive.
+    Session(const string& name) : user(name) {
         cout << "Enter " << user << "\n";
     }
     // The destructor runs automatically when the object's lifetime ends.
     ~Session() {
         cout << "Leave " << user << "\n";
     }
-    const string& name() const {
-        return user;
-    }
 };
 
 int main() {
     {
         Session session("Ana");
-
     } // The lifetime of session ends here.
     cout << "Session ended\n";
 }
@@ -1003,7 +985,9 @@ int main() {
 
     redCar.start();
 
-    cout << "Engine on\n";
+    if (redCar.isRunning()) {
+        cout << "Engine on\n";
+    }
 }
 ```
 
@@ -1057,7 +1041,7 @@ public:
 
 int main() {
     ElectricBicycle bicycle;
-    if (!(bicycle.assist())) {
+    if (!bicycle.assist()) {
         return 1;
     }
 
@@ -1142,21 +1126,20 @@ Complete example: [main.cpp](02_OOP/07_Memory_and_Pointers/01_New_and_Delete/mai
 
 ### 02.07.02. Ownership with unique_ptr
 
-We will give one tool responsibility for releasing the box. With unique_ptr from <memory>, we keep that responsibility alongside the address. make_unique creates the data; get lends us its address for reading. That borrowed pointer must not release it. With move from <utility>, we transfer responsibility to newOwner and leave the old owner empty. When the new owner ends, the integer is released automatically. This helps us avoid forgetting delete.
+We will give one tool responsibility for releasing the box. With `unique_ptr` from `<memory>`, we keep that responsibility alongside the address. `make_unique` creates the data, and `get` lends us its address for reading. That borrowed pointer must not release the data. When the program ends, `owner` releases the integer for us. This helps us avoid forgetting `delete`.
 
 Complete example: [main.cpp](02_OOP/07_Memory_and_Pointers/02_Unique_Ptr/main.cpp).
 
-**Practice.** Write a program that transfers responsibility for a value.
+**Practice.** Let's keep a value with `unique_ptr`.
 
 - Create an integer with make_unique.
 - Read it through a pointer obtained with get.
-- Transfer it to another unique_ptr with move.
-- Check that the old owner is empty.
-- Stop using the borrowed pointer before the data is released.
+- Display the value through the borrowed address.
+- Let `unique_ptr` release the data at the end, without using `delete`.
 
 ### 02.07. Memory and pointers in OOP
 
-We will apply pointers to a Student object. We create the student with make_unique and lend its address with get. With observer->getName() we follow that address and call a student function; -> means following the pointer and using the dot. Calling reset releases the student. The borrowed address then becomes unusable: we must stop using it and set it to nullptr. The borrowed pointer is never responsible for deleting the student.
+We will apply pointers to a `Student` object. We create the student with `make_unique` and lend its address with `get`. With `observer->getName()` we follow that address and call a student function; `->` means following the pointer and using the dot. First we stop using the borrowed address and set `observer` to `nullptr`. Then we call `reset` to release the student. The borrowed pointer never releases it.
 
 Complete example: [main.cpp](02_OOP/07_Memory_and_Pointers/main.cpp).
 
@@ -1186,9 +1169,9 @@ int main() {
     const Student* observer = owner.get();
 
     cout << observer->getName() << "\n";
-    // reset destroys the object. The observer can no longer be dereferenced afterward.
-    owner.reset();
+    // We stop using the borrowed address before destroying the object with reset.
     observer = nullptr;
+    owner.reset();
 }
 ```
 
@@ -1245,7 +1228,7 @@ Complete example: [main.cpp](02_OOP/09_DAO/01_In_Memory_DAO/main.cpp).
 
 ### 02.09.02. Persisting a DAO in a file
 
-We will save the catalog in a file so we can retrieve it later. First we ask the DAO to write its books and then read them into another catalog. We append a complete copy each run; while reading, we keep the last complete copy. If data is invalid, we report it without replacing the catalog with an incomplete reading. To try that case we use istringstream: a tool from <sstream> that reads text already in memory as if it came from a file. This lets us test damaged input without damaging the real file.
+We will save the catalog in a file so we can retrieve it later. On the first line we write how many books there are. Then we use two lines for each book: one for its number and one for its title. This keeps spaces and quotation marks in a title. When we run the example again, we write the current catalog to the file. If reading finds bad data, we keep the catalog we already had. To try incomplete input, we use `istringstream` from `<sstream>`: it lets us read text in memory as if it were a file without changing the real file.
 
 Complete example: [main.cpp](02_OOP/09_DAO/02_File_DAO/main.cpp).
 
@@ -1274,45 +1257,51 @@ using namespace course;
 
 int main() {
     BookDAO original;
-    if (!(original.create({1, "Structures"}))) {
+    if (!original.create({1, "Structures"})) {
         return 1;
     }
-    if (!(original.create({2, "Objects"}))) {
+    if (!original.create({2, "Objects"})) {
         return 1;
     }
-    if (!(original.update(2, "Objects and \"classes\""))) {
+    if (!original.update(2, "Objects and \"classes\"")) {
         return 1;
     }
-    if (!(original.remove(1))) {
+    if (!original.remove(1)) {
         return 1;
     }
     // Simulate a file in memory to save and restore without creating disk data.
     stringstream file;
-    if (!(original.save(file))) {
+    if (!original.save(file)) {
         return 1;
     }
     BookDAO copy;
-    if (!(copy.load(file))) {
+    if (!copy.load(file)) {
         return 1;
     }
-    if (!(copy.all().size() == 1)) {
+    if (copy.all().size() != 1) {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    if (!(copy.findById(2)->title == "Objects and \"classes\"")) {
+    const Book* book = copy.findById(2);
+    if (book == nullptr || book->title != "Objects and \"classes\"") {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    istringstream duplicates("2\n2 \"One\"\n2 \"Two\"\n");
+    istringstream duplicates("2\n2\nOne\n2\nTwo\n");
     if (copy.load(duplicates)) {
         return 1;
     }
-    if (!(copy.all().size() == 1)) {
+    if (copy.all().size() != 1) {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    cout << copy.findById(2)->title << "\n";
+    cout << book->title << "\n";
 }
+
+// Integration practice: let's manage and restore a catalog of three books.
+// - Change one title, remove one book and save the remaining books.
+// - Load the data into another catalog and check its titles.
+// - Try repeated data and keep the old catalog if loading fails.
 ```
 
 **Practice.** Write an integrated program that manages and restores books.
@@ -1377,7 +1366,7 @@ public:
 
 int main() {
     Library library;
-    if (!(library.registerBook({1, "Learn C++"}))) {
+    if (!library.registerBook({1, "Learn C++"})) {
         return 1;
     }
     if (library.registerBook({1, "Duplicate"})) {
@@ -1392,6 +1381,11 @@ int main() {
 
     cout << view->render(library.catalog());
 }
+
+// Integration practice: let's add another way to show the library.
+// - Create a TitleView that shows only the book titles.
+// - Register two books and show their titles through a View pointer.
+// - Show the summary afterward using the same view variable.
 ```
 
 **Practice.** Write an integrated OOP library application.
@@ -1442,7 +1436,7 @@ int main() {
 
 ### 03.02.01. Creating and traversing a vector
 
-We will use a drawer whose number of slots can grow: vector<int>, from <vector>. With push_back we add at the end; with size we check how many values it holds. We visit the numbers to add them. When reserved space fills up, the vector can move to another block with its data; old addresses no longer work. Usually adding at the end takes little work; spreading those moves across many insertions keeps average work per insertion bounded (amortized O(1): we spread growth costs across many operations).
+We will use a drawer whose number of slots can grow: vector<int>, from <vector>. With push_back we add at the end; with size we check how many values it holds. We visit the numbers to add them. When reserved space fills up, the vector can move to another block with its data; old addresses no longer work. Adding at the end is usually quick. Now and then we copy the values into a larger drawer when we need more room.
 
 Complete example: [main.cpp](03_DSA/02_Vectors/01_Create_and_Traverse/main.cpp).
 
@@ -1455,7 +1449,7 @@ Complete example: [main.cpp](03_DSA/02_Vectors/01_Create_and_Traverse/main.cpp).
 
 ### 03.02.02. Inserting and erasing in vectors
 
-We will open and remove spaces in the middle of a vector. With begin() we obtain a position pointing to the start; begin() + 1 points to the second element. We call this way of pointing to a position an iterator. insert places a value and shifts later ones; erase removes a value and closes the gap. This may move nearly all n elements (O(n)). After changing the vector we obtain needed positions again. Before pop_back we check empty so we do not remove from an empty vector.
+We will open and remove spaces in the middle of a vector. With begin() we obtain a position pointing to the start; begin() + 1 points to the second element. We call this way of pointing to a position an iterator. insert places a value and shifts later ones; erase removes a value and closes the gap. This may move nearly all the elements. After changing the vector we obtain needed positions again. Before pop_back we check empty so we do not remove from an empty vector.
 
 Complete example: [main.cpp](03_DSA/02_Vectors/02_Insert_and_Erase/main.cpp).
 
@@ -1521,7 +1515,7 @@ int main() {
 
 ### 03.03.01. Singly linked list
 
-We will build a chain of boxes called nodes. Each node stores a value and a pointer to the next node, like a note showing where the next box is. The list stores the first address; the last points to nullptr. To search we follow the notes one at a time and may visit all n nodes (O(n)). When removing a node we join its previous neighbor to the next before releasing the box. We can see those steps inside SinglyLinkedList.h.
+We will build a chain of boxes called nodes. Each node stores a value and a pointer to the next node, like a note showing where the next box is. The list stores the first address; the last points to nullptr. To search we follow the notes one at a time and may visit every node. When removing a node we join its previous neighbor to the next before releasing the box. We can see those steps inside SinglyLinkedList.h.
 
 Complete example: [main.cpp](03_DSA/03_Linked_Lists/01_Singly_Linked/main.cpp).
 
@@ -1567,7 +1561,7 @@ int main() {
 
 ### 03.03.02. Doubly linked list
 
-We will add a second arrow to each node: one to the next and another to the previous node. This lets us traverse in both directions. We also keep the first and last addresses so appending adjusts a few arrows without traversing the list (O(1)). When removing a node we repair both connections, like removing a train carriage linked at both ends. We can follow those pointer changes in DoublyLinkedList.h.
+We will add a second arrow to each node: one to the next and another to the previous node. This lets us traverse in both directions. We also keep the first and last addresses so appending adjusts a few arrows without traversing the list. When removing a node we repair both connections, like removing a train carriage linked at both ends. We can follow those pointer changes in DoublyLinkedList.h.
 
 Complete example: [main.cpp](03_DSA/03_Linked_Lists/02_Doubly_Linked/main.cpp).
 
@@ -1580,7 +1574,7 @@ Complete example: [main.cpp](03_DSA/03_Linked_Lists/02_Doubly_Linked/main.cpp).
 
 ### 03.03.03. Circular linked list
 
-We will close the chain into a circle: the last node points back to the first. We can picture players taking repeated turns. Since we do not reach nullptr after one lap, we stop when we return to the start. We keep the last node to append with a few changes (O(1)). Removing the only node leaves an empty list; removing any other node keeps the circle closed.
+We will close the chain into a circle: the last node points back to the first. We can picture players taking repeated turns. Since we do not reach nullptr after one lap, we stop when we return to the start. We keep the last node to append with a few changes. Removing the only node leaves an empty list; removing any other node keeps the circle closed.
 
 Complete example: [main.cpp](03_DSA/03_Linked_Lists/03_Circular/main.cpp).
 
@@ -1787,7 +1781,7 @@ Complete example: [main.cpp](03_DSA/06_Trees/02_Binary_Search_Tree/main.cpp).
 
 ### 03.06.03. Tree traversals
 
-We will visit the same tree in three orders. In preorder we read the node before its branches; in inorder we read left branch, node, then right branch; in postorder we leave the node until last. In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms but recording each name on entry, midway or on exit. In all three cases we visit all n nodes (O(n)).
+We will visit the same tree in three orders. In preorder we read the node before its branches; in inorder we read left branch, node, then right branch; in postorder we leave the node until last. In a search tree, inorder displays sorted numbers. We can picture visiting the same rooms but recording each name on entry, midway or on exit. In all three cases we visit every node.
 
 Complete example: [main.cpp](03_DSA/06_Trees/03_Traversals/main.cpp).
 
@@ -1849,7 +1843,7 @@ int main() {
 
 ### 03.08.01. Representing graphs
 
-We will draw places joined by roads. We call each place a vertex, each connection an edge, and the whole arrangement a graph. In connect we give the source, destination and cost. For travel both ways we add both directions. We keep a neighbor list per place: memory grows with places and roads (O(V + E), where V counts vertices and E counts edges). Another option is a table with one slot per pair of places: five places need 25 slots and ten need 100 (O(V²), meaning V multiplied by V).
+We will draw places joined by roads. We call each place a vertex, each connection an edge, and the whole arrangement a graph. In connect we give the source, destination and cost. For travel both ways we add both directions. We keep a neighbor list per place: memory grows with places and roads. Another option is a table with one slot per pair of places: five places need 25 slots and ten need 100.
 
 Complete example: [main.cpp](03_DSA/08_Graphs/01_Representation/main.cpp).
 
@@ -1883,7 +1877,7 @@ int main() {
 
 ### 03.08.02. BFS: breadth-first search
 
-We will explore a map in layers. We visit the start, then its neighbors, then their neighbors. We keep pending places in a queue to preserve that order. We call this BFS, or breadth-first search. We mark each place when adding it so we do not repeat it, even with roads back. We reach only places connected to the start. A full traversal checks the places and roads (O(V + E), with V places and E connections).
+We will explore a map in layers. We visit the start, then its neighbors, then their neighbors. We keep pending places in a queue to preserve that order. We call this BFS, or breadth-first search. We mark each place when adding it so we do not repeat it, even with roads back. We reach only places connected to the start. A full traversal checks the places and roads.
 
 Complete example: [main.cpp](03_DSA/08_Graphs/02_BFS/main.cpp).
 
@@ -1896,7 +1890,7 @@ Complete example: [main.cpp](03_DSA/08_Graphs/02_BFS/main.cpp).
 
 ### 03.08.03. DFS: depth-first search
 
-We will follow a path as far as possible and then return to try another. We can picture exploring a maze. We call this DFS, or depth-first search. Here we use recursion to remember where to return. We mark visited places so we do not go around forever. The order can differ from BFS even though both reach the same places. A full traversal grows with the map’s V places and E roads (O(V + E)).
+We will follow a path as far as possible and then return to try another. We can picture exploring a maze. We call this DFS, or depth-first search. Here we use recursion to remember where to return. We mark visited places so we do not go around forever. The order can differ from BFS even though both reach the same places. A full traversal grows with the places and roads on the map.
 
 Complete example: [main.cpp](03_DSA/08_Graphs/03_DFS/main.cpp).
 
@@ -1937,7 +1931,7 @@ Complete example: [main.cpp](03_DSA/08_Graphs/main.cpp).
 
 ### 03.09.01. Bubble sort
 
-We will sort by comparing neighbors. If the left value is larger, we swap their positions; after a pass the largest remaining value ends up at the end. We can picture large bubbles rising. If a pass makes no swaps, we are done. With n values we may repeat many comparisons, roughly like n times n (O(n²)); already sorted data needs only one pass (O(n)). The complete function is in Sorts.h.
+We will sort by comparing neighbors. If the left value is larger, we swap their positions; after a pass the largest remaining value ends up at the end. We can picture large bubbles rising. If a pass makes no swaps, we are done. With many values we may repeat the comparisons again and again; already sorted data needs only one pass. The complete function is in Sorts.h.
 
 Complete example: [main.cpp](03_DSA/09_Sorting/01_Bubble_Sort/main.cpp).
 
@@ -1950,7 +1944,7 @@ Complete example: [main.cpp](03_DSA/09_Sorting/01_Bubble_Sort/main.cpp).
 
 ### 03.09.02. Selection sort
 
-We will find the smallest remaining value and place it at the beginning of the unsorted section. Then we repeat with the rest. We can picture choosing the smallest book from a pile and placing it in a row. Even if numbers are already sorted, we keep finding each group’s minimum; with n values, work grows roughly like n times n (O(n²)). Swapping distant positions can change the order of tied elements.
+We will find the smallest remaining value and place it at the beginning of the unsorted section. Then we repeat with the rest. We can picture choosing the smallest book from a pile and placing it in a row. Even if numbers are already sorted, we keep finding each group’s minimum; with many values we repeatedly search for the smallest one. Swapping distant positions can change the order of tied elements.
 
 Complete example: [main.cpp](03_DSA/09_Sorting/02_Selection_Sort/main.cpp).
 
@@ -1963,7 +1957,7 @@ Complete example: [main.cpp](03_DSA/09_Sorting/02_Selection_Sort/main.cpp).
 
 ### 03.09.03. Insertion sort
 
-We will sort like arranging a hand of cards. We take a new value and shift larger earlier values until there is room for it. This keeps the left section sorted. For already sorted data we move through once (O(n), with n values); shifting many values each time can make work grow like n times n (O(n²)). By not moving a value ahead of an equal one, we preserve the order of ties.
+We will sort like arranging a hand of cards. We take a new value and shift larger earlier values until there is room for it. This keeps the left section sorted. For already sorted data we move through once; shifting many values each time can require many comparisons. By not moving a value ahead of an equal one, we preserve the order of ties.
 
 Complete example: [main.cpp](03_DSA/09_Sorting/03_Insertion_Sort/main.cpp).
 
@@ -1976,7 +1970,7 @@ Complete example: [main.cpp](03_DSA/09_Sorting/03_Insertion_Sort/main.cpp).
 
 ### 03.09.04. Merge sort
 
-We will divide a pile into halves until the groups are small, then join them in order. We can picture two helpers sorting their sheets: when joining them, we always take the smallest available sheet. This is merge sort. We need extra mixing space that grows with the n values (O(n) additional memory). Each level visits all values, and there are as many levels as repeated halvings (O(n log n), with n values and log n levels). For a tie we take the left value first to preserve order.
+We will divide a pile into halves until the groups are small, then join them in order. We can picture two helpers sorting their sheets: when joining them, we always take the smallest available sheet. This is merge sort. We need extra mixing space that grows with all the values. Each level visits all values, and there are as many levels as repeated halvings. For a tie we take the left value first to preserve order.
 
 Complete example: [main.cpp](03_DSA/09_Sorting/04_Merge_Sort/main.cpp).
 
@@ -1989,7 +1983,7 @@ Complete example: [main.cpp](03_DSA/09_Sorting/04_Merge_Sort/main.cpp).
 
 ### 03.09.05. Quick sort
 
-We will choose one value as a reference for separating the rest; we call it the pivot. We put smaller values on one side and repeat within each group. This is quick sort. With evenly split groups, each level checks the n values and the levels grow through halving (O(n log n)). Here we choose the last value: with sorted or equal input, almost everything can stay on one side and cause repeated work (O(n²), like n times n). This choice helps us see why the pivot matters.
+We will choose one value as a reference for separating the rest; we call it the pivot. We put smaller values on one side and repeat within each group. This is quick sort. With evenly split groups, each level checks all the values and the levels grow through halving. Here we choose the last value: with sorted or equal input, almost everything can stay on one side and cause repeated work. This choice helps us see why the pivot matters.
 
 Complete example: [main.cpp](03_DSA/09_Sorting/05_Quick_Sort/main.cpp).
 
@@ -2061,7 +2055,7 @@ Complete example: [main.cpp](03_DSA/09_Sorting/main.cpp).
 
 ### 03.10.01. Linear search
 
-We will search by checking a drawer one slot at a time. We do not need to sort first: we move until we find the value or reach the end. We may visit all n elements (O(n)). To return the result we use optional: a small box from <optional> that either holds a position or is empty. We check that it holds something before reading *position. Position zero is valid and must not be confused with “not found”.
+We will search by checking a drawer one slot at a time. We do not need to sort first: we move until we find the value or reach the end. We may visit every element. To return the result we use optional: a small box from <optional> that either holds a position or is empty. We check that it holds something before reading *position. Position zero is valid and must not be confused with “not found”.
 
 Complete example: [main.cpp](03_DSA/10_Searching/01_Linear_Search/main.cpp).
 
@@ -2074,7 +2068,7 @@ Complete example: [main.cpp](03_DSA/10_Searching/01_Linear_Search/main.cpp).
 
 ### 03.10.02. Binary search
 
-We will search an already sorted list. We look at the middle and decide which half could contain the number. We can picture numbered pages: for a smaller page, we discard the right half. Reducing 16 candidates to 8, 4, 2 and 1 takes four divisions; starting with 32 adds just one (O(log n), where n counts candidates and log n describes the divisions). This version finds the first match. We receive a position or an empty result and check which before reading it.
+We will search an already sorted list. We look at the middle and decide which half could contain the number. We can picture numbered pages: for a smaller page, we discard the right half. Reducing 16 candidates to 8, 4, 2 and 1 takes four divisions; starting with 32 adds just one. This version finds the first match. We receive a position or an empty result and check which before reading it.
 
 Complete example: [main.cpp](03_DSA/10_Searching/02_Binary_Search/main.cpp).
 
@@ -2122,7 +2116,7 @@ Complete example: [main.cpp](03_DSA/10_Searching/main.cpp).
 
 ### 03.11. Const and headers in DSA
 
-We will query a collection without changing it. With const vector<int>& we receive another label for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp we traverse the values and count those above a limit. We need neither copying nor sorting. Doubling the data doubles the visits (O(n), with n elements). We add only a counter and a few variables (O(1) additional memory).
+We will query a collection without changing it. With const vector<int>& we receive another label for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp we traverse the values and count those above a limit. We need neither copying nor sorting. Doubling the data doubles the visits. We add only a counter and a few variables.
 
 Complete example: [main.cpp](03_DSA/11_Const_and_Headers/main.cpp).
 

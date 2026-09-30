@@ -54,7 +54,7 @@ public:
 
 int main() {
     Library library;
-    if (!(library.registerBook({1, "Learn C++"}))) {
+    if (!library.registerBook({1, "Learn C++"})) {
         return 1;
     }
     if (library.registerBook({1, "Duplicate"})) {
@@ -69,3 +69,8 @@ int main() {
 
     cout << view->render(library.catalog());
 }
+
+// Integration practice: let's add another way to show the library.
+// - Create a TitleView that shows only the book titles.
+// - Register two books and show their titles through a View pointer.
+// - Show the summary afterward using the same view variable.

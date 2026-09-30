@@ -7,6 +7,9 @@
 // Cada estructura responde una necesidad distinta; este ejemplo las reúne para observar cómo se
 // pasan los datos.
 //
+// Práctica: Vamos a organizar tareas y rutas en un taller.
+// - Guardemos tareas y atendámoslas en orden de llegada.
+// - Consultemos una tarea por id y calculemos una ruta entre lugares.
 
 #include "../03_Listas_Ligadas/01_Simplemente_Ligada/ListaSimple.h"
 #include "../06_Arboles/Arbol.h"

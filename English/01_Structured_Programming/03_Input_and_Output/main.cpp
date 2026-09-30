@@ -1,13 +1,17 @@
 // Reading and displaying input
 //
-// We will ask for a name and an age. With cout we display the question; with getline(cin, name) we
-// store everything up to Enter, including spaces in a full name. With cin >> age we try to read a
-// whole number. Before using it, we check that reading succeeded and the age is between 0 and 130.
-// We also check the remaining text to reject input such as 20abc. In find_first_not_of(" \t\r") we
-// look for something other than spaces, tabs or a carriage return; string::npos means that nothing
-// was found. This keeps us from accepting a name made only of spaces. We will study if in the next
-// lesson; here we use it to stop when input is incorrect.
+// We will ask for a name, a city and an age. With cout we show each question, and with getline we
+// keep everything typed before Enter, including spaces in a full name. With cin >> age we try to
+// read a whole number. Before displaying the card, we check that neither name nor city is empty and
+// that age is between 0 and 130. If cin.fail() is true, we could not read a number. empty() only
+// finds empty text: text made of spaces is not empty.
 //
+// Practice: Let's make a registration program.
+//
+// - Ask for a full name, city and age.
+// - Allow spaces in the name and city.
+// - Display an error for a missing answer or an invalid age.
+// - Display a card when the answers are valid.
 
 #include <iostream>
 // We store and work with text using string.
@@ -16,26 +20,32 @@
 using namespace std;
 
 int main() {
-    string name;
+    string fullName;
+    string city;
     int age = 0;
-    cout << "Name: ";
-    // We read up to Enter so a full name can contain spaces.
-    if (!getline(cin, name) || name.find_first_not_of(" \t\r") == string::npos) {
-        cerr << "Invalid name.\n";
+    cout << "Enter your full name: ";
+    getline(cin, fullName);
+
+    cout << "Enter your city: ";
+    getline(cin, city);
+
+    cout << "Enter your age: ";
+    cin >> age;
+
+    if (fullName.empty() || city.empty()) {
+        cerr << "Error: Name and city cannot be empty.\n";
         return 1;
     }
-    cout << "Age: ";
-    // With >> we try to store an integer. If reading fails, we show the error.
-    if (!(cin >> age) || age < 0 || age > 130) {
-        cerr << "Invalid age.\n";
+
+    if (cin.fail() || age < 0 || age > 130) {
+        cerr << "Error: Invalid age.\n";
         return 1;
     }
-    // We check the rest of the same line: 20abc is not a valid age.
-    string remainder;
-    getline(cin, remainder);
-    if (cin.bad() || remainder.find_first_not_of(" \t\r") != string::npos) {
-        cerr << "Invalid age.\n";
-        return 1;
-    }
-    cout << "Hello, " << name << ". You are " << age << " years old.\n";
+
+    cout << "\n--- REGISTRATION CARD ---\n";
+    cout << "Name : " << fullName << "\n";
+    cout << "City : " << city << "\n";
+    cout << "Age  : " << age << " years\n";
+
+    return 0;
 }

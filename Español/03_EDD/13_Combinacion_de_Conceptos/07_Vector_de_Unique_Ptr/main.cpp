@@ -8,6 +8,9 @@
 // todos los punteros prestados. Esto es distinto de vector<Producto>, donde al crecer pueden
 // mudarse los productos mismos.
 //
+// Práctica: Vamos a guardar productos administrados por unique_ptr.
+// - Creemos dos productos en un vector y consultemos uno mediante get.
+// - Dejemos de usar la consulta antes de borrar su producto.
 
 #include <iostream>
 // Usamos unique_ptr para liberar automáticamente el objeto que administra.

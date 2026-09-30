@@ -5,14 +5,12 @@
 #include <stdexcept>
 // We check file-operation failures using error_code.
 #include <system_error>
-// We use move to transfer data or responsibility for releasing it.
-#include <utility>
 
 namespace project {
     using namespace std;
     namespace fs = filesystem;
 
-    MemoryStore::MemoryStore(BookDAO initial) : saved(move(initial)) {
+    MemoryStore::MemoryStore(const BookDAO& initial) : saved(initial) {
     }
 
     BookDAO MemoryStore::load() const {
@@ -23,7 +21,7 @@ namespace project {
         saved = dao;
     }
 
-    FileStore::FileStore(fs::path file) : file(move(file)) {
+    FileStore::FileStore(const fs::path& file) : file(file) {
         if (this->file.empty() || this->file.filename().empty()) {
             throw invalid_argument("Invalid catalog path");
         }
@@ -48,16 +46,15 @@ namespace project {
         if (!input || !result.load(input)) {
             throw runtime_error("Invalid catalog: the file is preserved for inspection");
         }
-        input >> ws;
-        if (!input.eof() || input.bad()) {
+        // If we can read another character after the books, the file has extra data.
+        char extra;
+        if (input >> extra || input.bad()) {
             throw runtime_error("The catalog contains extra data or a read error");
         }
         return result;
     }
 
     void FileStore::save(const BookDAO& dao) {
-        // ponytail: we write from one running program; for several simultaneous writers we use a
-        // database that coordinates changes.
         if (!file.parent_path().empty()) {
             fs::create_directories(file.parent_path());
         }

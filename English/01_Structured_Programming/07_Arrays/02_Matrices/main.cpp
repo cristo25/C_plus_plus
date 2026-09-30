@@ -6,6 +6,13 @@
 // stop before leaving the cabinet.
 //
 
+// Practice: Let's write a program that displays a two-row, three-column matrix.
+//
+// - Store six numbers in an array with two bracket pairs.
+// - Display each row on its own line.
+// - Calculate the sum of each row separately.
+// - Keep every row and column access inside the array.
+
 #include <iostream>
 
 using namespace std;

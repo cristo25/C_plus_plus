@@ -2,6 +2,9 @@
 //
 // We will store complete nodes in an array and link them with pointers. Each Node contains a
 // Product and next, the next node's address. The boxes occupy positions 0, 1 and 2, but arrows can
+// Practice: We will link nodes in an array with arrows.
+// - We will store three complete nodes and link them in a different order.
+// - We will follow links until nullptr without using delete.
 
 #include <iostream>
 #include "../../../02_OOP/08_Headers/Product.h"

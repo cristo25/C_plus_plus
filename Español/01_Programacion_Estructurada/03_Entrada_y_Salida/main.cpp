@@ -1,13 +1,10 @@
 // Leer y mostrar datos
 //
-// Vamos a pedir un nombre y una edad. Con cout mostramos la pregunta; con getline(cin, nombre)
+// Vamos a pedir un nombre, una ciudad y una edad. Con cout mostramos cada pregunta y con getline
 // guardamos todo lo escrito hasta Enter, incluidos los espacios de un nombre completo. Con cin >>
-// edad intentamos leer un entero. Antes de usarlo comprobamos que la lectura funcionó y que está
-// entre 0 y 130. También revisamos el texto restante para rechazar una entrada como 20abc. En
-// find_first_not_of(" \t\r") buscamos algo distinto de espacios, tabulaciones o retorno de carro;
-// string::npos significa que no encontramos nada. Así evitamos aceptar un nombre formado solo por
-// espacios. Vamos a estudiar if con más detalle en el siguiente tema; aquí lo usamos para
-// detenernos ante un dato incorrecto.
+// edad intentamos leer un número entero. Antes de mostrar la ficha, comprobamos que no falten el
+// nombre ni la ciudad y que la edad esté entre 0 y 130. Si cin.fail() es verdadero, no pudimos leer
+// un número. empty() solo detecta texto vacío: un texto formado por espacios no está vacío.
 // Practica: Realiza un programa que registre a una persona.
 //
 // - Pedir nombre completo, ciudad y edad.
@@ -26,19 +23,19 @@ int main() {
     string ciudad;
     int edad = 0;
 
-    // 1. Pedir nombre completo (acepta espacios)
+    // Pedimos el nombre completo; getline conserva sus espacios.
     cout << "Ingresa tu nombre completo: ";
     getline(cin, nombreCompleto);
 
-    // 2. Pedir ciudad (acepta espacios)
+    // Pedimos la ciudad del mismo modo.
     cout << "Ingresa tu ciudad: ";
     getline(cin, ciudad);
 
-    // 3. Pedir edad
+    // Pedimos la edad como número entero.
     cout << "Ingresa tu edad: ";
     cin >> edad;
 
-    // Validación básica y clara para principiantes
+    // Si dejamos una respuesta vacía, mostramos el problema y terminamos.
     if (nombreCompleto.empty() || ciudad.empty()) {
         cerr << "Error: El nombre y la ciudad no pueden estar vacios.\n";
         return 1;
@@ -49,7 +46,7 @@ int main() {
         return 1;
     }
 
-    // 4. Mostrar ficha de datos
+    // Mostramos la ficha solo después de revisar los datos.
     cout << "\n--- FICHA DE REGISTRO ---\n";
     cout << "Nombre : " << nombreCompleto << "\n";
     cout << "Ciudad : " << ciudad << "\n";

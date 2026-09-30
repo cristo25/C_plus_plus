@@ -1,10 +1,6 @@
 # Const, headers y compilación de varios archivos
 
-Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
-
-## Const, headers y compilación de varios archivos
-
-Vamos a separar una clase para poder usarla desde varios programas. En Producto.h mostramos qué datos guarda y qué operaciones ofrece; en Producto.cpp escribimos cómo trabajan esas operaciones. Desde main creamos un Producto con nombre y precio. Guardamos el precio en centavos enteros para evitar pequeñas diferencias de los decimales. Con const protegemos el objeto y sus consultas. Para ejecutar necesitamos compilar main.cpp junto con Producto.cpp; incluir el .h solo anuncia las funciones, no añade sus pasos.
+Vamos a separar una clase para poder usarla desde varios programas. Podemos imaginar Producto.h como una carta que dice qué ofrece una tienda, y Producto.cpp como el lugar donde se hacen esas tareas. Desde main creamos un Producto con nombre y precio. Guardamos el precio en centavos enteros para evitar pequeñas diferencias de los decimales. Con const protegemos el objeto y sus consultas. Si intentamos poner un precio negativo, el constructor rechaza el producto con un error de <stdexcept>; <string> nos permite guardar su nombre. Para ejecutar necesitamos compilar main.cpp junto con Producto.cpp: incluir el .h solo anuncia las funciones.
 
 [Programa comentado](main.cpp).
 

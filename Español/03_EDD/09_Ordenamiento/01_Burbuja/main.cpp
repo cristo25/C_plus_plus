@@ -2,10 +2,13 @@
 //
 // Vamos a ordenar comparando vecinos. Si el de la izquierda es mayor, cambiamos sus posiciones;
 // repetimos una pasada y el mayor pendiente acaba al final. Podemos imaginar burbujas grandes que
-// van subiendo. Si una pasada no hace cambios, ya terminamos. Con n datos podemos repetir muchas
-// comparaciones, aproximadamente como n por n (O(n²)); si ya estaban ordenados basta una pasada
-// (O(n)). La función completa está en Ordenamientos.h.
+// van subiendo. Si una pasada no hace cambios, ya terminamos. Si los datos están al revés,
+// hacemos muchas comparaciones; al duplicar la cantidad, estas pueden crecer hasta casi cuatro
+// veces. Si ya están ordenados, basta una pasada. La función completa está en Ordenamientos.h.
 //
+// Práctica: Vamos a ordenar números como burbujas que suben.
+// - Comparemos vecinos e intercambiémoslos cuando estén al revés.
+// - Detengámonos si una pasada no cambia nada.
 
 #include "../Ordenamientos.h"
 #include <iostream>

@@ -2,10 +2,13 @@
 //
 // We will add a second arrow to each node: one to the next and another to the previous node. This
 // lets us traverse in both directions. We also keep the first and last addresses so appending
-// adjusts a few arrows without traversing the list (O(1)). When removing a node we repair both
+// adjusts a few arrows without traversing the list. When removing a node we repair both
 // connections, like removing a train carriage linked at both ends. We can follow those pointer
 // changes in DoublyLinkedList.h.
 //
+// Practice: We will create a list that can be traversed both ways.
+// - We will add three values and show forward and reverse order.
+// - We will remove the first or last node without breaking the remaining links.
 
 #include "DoublyLinkedList.h"
 #include <iostream>

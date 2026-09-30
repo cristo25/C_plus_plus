@@ -2,10 +2,13 @@
 //
 // Vamos a añadir una segunda flecha a cada nodo: una hacia el siguiente y otra hacia el anterior.
 // Así podemos recorrer la cadena en ambos sentidos. Conservamos también el principio y el final
-// para agregar al final ajustando unas pocas flechas, sin recorrer toda la lista (O(1)). Al borrar
+// para agregar al final ajustando unas pocas flechas, sin recorrer toda la lista. Al borrar
 // cuidamos ambas conexiones, como al retirar un vagón de un tren unido por delante y por detrás.
 // Podemos seguir el ajuste de los punteros en ListaDoble.h.
 //
+// Práctica: Vamos a crear una lista que se recorra en ambos sentidos.
+// - Agreguemos tres valores y mostremos el orden normal e inverso.
+// - Quitemos el primero o el último sin romper los enlaces restantes.
 
 #include "ListaDoble.h"
 #include <iostream>

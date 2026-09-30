@@ -20,11 +20,11 @@ We will compare a stack built with vector against one using stack. We put 1, 2 a
 
 [Commented program](main.cpp).
 
-**Practice.** Write an integrated program comparing two stacks.
+**Practice.** We will write an integrated program comparing two stacks.
 
-- Add the same values to a vector and a stack.
-- Inspect both tops before removing.
-- Check that each step removes the same value.
-- Finish with both stacks empty.
+- We will add the same values to a vector and a stack.
+- We will inspect both tops before removing.
+- We will check that each step removes the same value.
+- We will finish with both stacks empty.
 
 [Back to the general guide](../../README.md).

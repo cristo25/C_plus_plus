@@ -5,6 +5,9 @@
 // comparamos sus recorridos y al final retiramos todos los nodos. Podemos pensar en cuidar un árbol
 // de carpetas: cada cambio debe conservar el acceso a las ramas que todavía existen.
 //
+// Práctica: Vamos a administrar números en un árbol.
+// - Agreguemos números sin repetirlos y mostremos sus tres recorridos.
+// - Eliminemos la raíz y comprobemos que los otros números sigan disponibles.
 
 #include "Arbol.h"
 #include <iostream>

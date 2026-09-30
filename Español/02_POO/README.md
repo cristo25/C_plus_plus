@@ -1,7 +1,5 @@
 # Programación orientada a objetos
 
-Vamos a relacionar las piezas de este tema antes de resolver su práctica integradora. En cada enlace encontramos el programa, sus comentarios y una práctica con requisitos.
-
 ## Clases y objetos
 
 Vamos a reunir datos y acciones que pertenecen a una misma cosa. Podemos imaginar una clase como el molde de un bloque de Minecraft: indica qué datos tiene y qué puede hacer cada bloque creado con ese molde. Cada bloque concreto sería un objeto. En este programa usamos Bicicleta: guardamos color y velocidad, y con pedalear aumentamos la velocidad. Creamos roja y azul por separado; pedalear con roja no cambia azul. Llamamos atributos a esos datos y métodos a las funciones que escribimos dentro de la clase. Con public permitimos usarlos desde main.
@@ -40,21 +38,27 @@ Vamos a pedir la misma acción a objetos diferentes. Con tocar pedimos que suene
 
 ## Memoria y punteros en POO
 
-Vamos a aplicar los punteros a un objeto Alumno. Creamos el alumno con make_unique y prestamos su dirección con get. Con consulta->consultarNombre() seguimos esa dirección y llamamos a una función del alumno; -> equivale a seguir el puntero y usar el punto. Cuando llamamos reset liberamos el alumno. A partir de ese momento la dirección prestada deja de servir: debemos dejar de usarla y ponerla en nullptr. El puntero prestado nunca es responsable de borrar el alumno.
+Imaginemos que Alumno es una caja con un nombre y consulta guarda la dirección de esa caja. Creamos al alumno con make_unique y pedimos su dirección prestada con get. Con consulta->consultarNombre() seguimos la dirección y leemos el nombre. Antes de llamar reset dejamos de usar la dirección prestada y ponemos consulta en nullptr. Después, reset libera al alumno. El puntero prestado nunca tiene que borrarlo.
 
 [Programa comentado](07_Memoria_y_Punteros/main.cpp).
 
+[Guía de memoria y punteros](07_Memoria_y_Punteros/README.md).
+
 ## Const, headers y compilación de varios archivos
 
-Vamos a separar una clase para poder usarla desde varios programas. En Producto.h mostramos qué datos guarda y qué operaciones ofrece; en Producto.cpp escribimos cómo trabajan esas operaciones. Desde main creamos un Producto con nombre y precio. Guardamos el precio en centavos enteros para evitar pequeñas diferencias de los decimales. Con const protegemos el objeto y sus consultas. Para ejecutar necesitamos compilar main.cpp junto con Producto.cpp; incluir el .h solo anuncia las funciones, no añade sus pasos.
+Vamos a separar una clase para poder usarla desde varios programas. Podemos imaginar Producto.h como una carta que dice qué ofrece una tienda, y Producto.cpp como el lugar donde se hacen esas tareas. Desde main creamos un Producto con nombre y precio. Guardamos el precio en centavos enteros para evitar pequeñas diferencias de los decimales. Con const protegemos el objeto y sus consultas. Si intentamos poner un precio negativo, el constructor rechaza el producto con un error de <stdexcept>; <string> nos permite guardar su nombre. Para ejecutar necesitamos compilar main.cpp junto con Producto.cpp: incluir el .h solo anuncia las funciones.
 
 [Programa comentado](08_Headers/main.cpp).
+
+[Guía de headers](08_Headers/README.md).
 
 ## DAO: separar el acceso a datos
 
 Vamos a recorrer todo el trabajo del catálogo: crear libros, cambiar un título, eliminar un libro y recuperar lo guardado. Aquí usamos stringstream, de <sstream>, como un cuaderno temporal en memoria: podemos escribir en él y volver a leer sin crear un archivo en disco. Después probamos una lectura con ids repetidos. La regla es sencilla: si no podemos recuperar todos los datos correctamente, conservamos el catálogo que ya teníamos.
 
 [Programa comentado](09_DAO/main.cpp).
+
+[Guía de DAO](09_DAO/README.md).
 
 ## Integrador: una biblioteca con objetos
 

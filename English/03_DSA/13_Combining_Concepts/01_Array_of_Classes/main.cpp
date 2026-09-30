@@ -6,6 +6,9 @@
 // Product& to read the original without copying or changing it. When the array ends, its contained
 // objects end too.
 //
+// Practice: We will store complete products in an array.
+// - We will create three products with names and prices.
+// - We will traverse them to show and add their prices.
 
 #include <iostream>
 #include "../../../02_OOP/08_Headers/Product.h"

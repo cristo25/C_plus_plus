@@ -8,6 +8,13 @@
 // while we use it.
 //
 
+// Practice: Let's write a program that compares three ways of receiving a balance.
+//
+// - Create a function that receives int and changes only its copy.
+// - Create another that receives int& and changes the original balance.
+// - Create a read-only query with const int&.
+// - Display the balance before and after each call.
+
 #include <iostream>
 // We store and work with text using string.
 #include <string>

@@ -7,6 +7,9 @@
 // podemos modificar los productos señalados. No confundimos una matriz con Producto**: la matriz
 // contiene sus filas, mientras que el doble puntero guarda una dirección hacia otro puntero.
 //
+// Práctica: Vamos a crear una vitrina de tarjetas en filas.
+// - Usemos una matriz de punteros con una casilla vacía.
+// - Mostremos un mismo producto en dos casillas y contemos las ocupadas.
 
 #include <iostream>
 #include "../../../02_POO/08_Headers/Producto.h"

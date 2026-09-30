@@ -6,6 +6,9 @@
 // we link nodes and when traversal stops. We can draw the same three boxes and change only their
 // arrows to understand it.
 //
+// Practice: We will compare three chains of nodes.
+// - We will add the same values to singly, doubly and circular linked lists.
+// - We will remove one value and show how each list is traversed.
 
 #include "01_Singly_Linked/SinglyLinkedList.h"
 #include "02_Doubly_Linked/DoublyLinkedList.h"

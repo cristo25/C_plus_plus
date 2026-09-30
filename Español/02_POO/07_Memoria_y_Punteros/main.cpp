@@ -1,10 +1,10 @@
 // Memoria y punteros en POO
 //
-// Vamos a aplicar los punteros a un objeto Alumno. Creamos el alumno con make_unique y prestamos su
-// dirección con get. Con consulta->consultarNombre() seguimos esa dirección y llamamos a una
-// función del alumno; -> equivale a seguir el puntero y usar el punto. Cuando llamamos reset
-// liberamos el alumno. A partir de ese momento la dirección prestada deja de servir: debemos dejar
-// de usarla y ponerla en nullptr. El puntero prestado nunca es responsable de borrar el alumno.
+// Imaginemos que Alumno es una caja con un nombre y consulta guarda la dirección de esa caja.
+// Creamos al alumno con make_unique y pedimos su dirección prestada con get. Con
+// consulta->consultarNombre() seguimos la dirección y leemos el nombre. Antes de llamar reset
+// dejamos de usar la dirección prestada y ponemos consulta en nullptr. Después, reset libera al
+// alumno. El puntero prestado nunca tiene que borrarlo.
 //
 
 #include <iostream>
@@ -32,8 +32,12 @@ int main() {
     const Alumno* consulta = propietario.get();
 
     cout << consulta->consultarNombre() << "\n";
-    // reset destruye el objeto. A partir de aquí el observador ya no se puede seguir esa dirección
-    // para leer el dato.
-    propietario.reset();
+    // Dejamos de usar la dirección prestada antes de destruir el objeto con reset.
     consulta = nullptr;
+    propietario.reset();
 }
+
+// Práctica: vamos a crear una clase Mascota y administrarla con unique_ptr.
+// - Guardamos un nombre y lo consultamos con una función const.
+// - Leemos el nombre mediante una dirección prestada por get.
+// - Dejamos de usar esa dirección antes de liberar la mascota con reset.

@@ -1,9 +1,9 @@
-// With = delete we prevent copying the class so two objects cannot try to release the same nodes.
+// One shelf takes care of each chain of nodes so we do not delete it twice.
 //
-// With friend we let the named class change the node’s private links.
+// Outside the shelf we can inspect nodes, but only the shelf changes their links.
 //
-// With noexcept we state that these operations will not report errors through throw. Parameters
-// with && receive an object whose data we can transfer; with move we transfer that responsibility.
+// When a vector grows, it can change a shelf's location. We allow that change without copying its
+// nodes: the new shelf takes care of the same chain.
 
 // We share this class across steps 8, 9 and the integration example. We can define its functions
 // inside the class and use this header from several files.
@@ -18,8 +18,6 @@
 #include <stdexcept>
 // We store and work with text using string.
 #include <string>
-// We use move to transfer data or responsibility for releasing it.
-#include <utility>
 #include "../../02_OOP/08_Headers/Product.h"
 
 namespace course {
@@ -53,25 +51,17 @@ namespace course {
         unique_ptr<Node> head;
 
     public:
-        explicit Shelf(string label) : name(move(label)) {
+        explicit Shelf(const string& label) : name(label) {
             if (name.empty()) {
                 throw invalid_argument("The shelf needs a name");
             }
         }
 
-        // We do not duplicate owners. Moving transfers the chain and leaves the source head null.
+        // We do not duplicate owners: each chain has one shelf responsible for it.
         Shelf(const Shelf&) = delete;
         Shelf& operator=(const Shelf&) = delete;
+        // With && we receive the shelf that the vector relocates without copying its nodes.
         Shelf(Shelf&&) noexcept = default;
-
-        Shelf& operator=(Shelf&& other) noexcept {
-            if (this != &other) {
-                clear();
-                name = move(other.name);
-                head = move(other.head);
-            }
-            return *this;
-        }
 
         ~Shelf() {
             clear();
@@ -79,9 +69,9 @@ namespace course {
 
         void add(const Product& product) {
             auto newNode = make_unique<Node>(product);
-            // Insert at the front: new -> previous chain. Insertion order is reversed.
-            newNode->next = move(head);
-            head = move(newNode);
+            // swap exchanges address cards: the new node points to the previous head.
+            newNode->next.swap(head);
+            head.swap(newNode);
         }
 
         const string& getName() const {
@@ -109,9 +99,10 @@ namespace course {
         void clear() noexcept {
             // Release one node at a time, without a chain of recursive destructors.
             while (head != nullptr) {
-                // Detach the rest before destroying the current node by replacing head.
-                auto next = move(head->next);
-                head = move(next);
+                // Put the current node aside and let the next one become the new head.
+                unique_ptr<Node> current;
+                current.swap(head);
+                head.swap(current->next);
             }
         }
     };

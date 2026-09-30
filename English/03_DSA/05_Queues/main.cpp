@@ -5,6 +5,9 @@
 // application needs: respecting arrival or choosing by importance. Changing the structure changes
 // the service rule even with identical data.
 //
+// Practice: We will compare two ways to serve a line.
+// - We will store the same numbers in queue and priority_queue.
+// - We will show which leaves first in each and explain the difference.
 
 #include <iostream>
 // We serve by arrival with queue or by importance with priority_queue.

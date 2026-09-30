@@ -6,12 +6,18 @@
 // Compiling turns this text file into a program the computer can run.
 //
 
+// Practice: Let's write a program that displays an introduction card.
+//
+// - Show a name and a course of study on separate lines.
+// - Add a welcome message.
+// - Finish without requesting input yet.
+
 #include <iostream>
 
-// Lets us write cout without the standard namespace prefix.
+// With this line we can write cout directly.
 using namespace std;
 
-// Execution starts in main; returning 0 reports success.
+// Here we start the program's instructions.
 int main() {
     cout << "Hello, C++!\n";
     return 0;

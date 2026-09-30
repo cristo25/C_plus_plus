@@ -5,6 +5,9 @@
 // primero en salir. Antes de consultar o quitar revisamos que la pila no esté vacía. Si necesitamos
 // el dato retirado, lo guardamos antes de llamar pop_back, porque esa operación no lo devuelve.
 //
+// Práctica: Vamos a crear un historial sencillo con vector.
+// - Agreguemos tres acciones al final.
+// - Mostremos y quitemos la última solo si hay acciones.
 
 #include <iostream>
 // Guardamos una colección que puede crecer con vector.

@@ -41,5 +41,12 @@ int main() {
 
     autoRojo.arrancar();
 
-    cout << "Motor encendido\n";
+    if (autoRojo.enMarcha()) {
+        cout << "Motor encendido\n";
+    }
 }
+
+// Práctica: vamos a crear un Cofre que tenga un Inventario como parte.
+// - Guardamos la cantidad de objetos dentro de Inventario.
+// - Desde Cofre añadimos un objeto al inventario.
+// - Mostramos la cantidad antes y después de añadirlo.

@@ -6,6 +6,13 @@
 // recorridos empiezan en cero y se detienen antes de salir del mueble.
 //
 
+// Práctica: Vamos a realizar un programa que muestre una matriz de dos filas y tres columnas.
+//
+// - Guardar seis números en un arreglo con dos pares de corchetes.
+// - Mostrar cada fila en una línea.
+// - Calcular por separado la suma de cada fila.
+// - No acceder a filas o columnas fuera del arreglo.
+
 #include <iostream>
 
 using namespace std;

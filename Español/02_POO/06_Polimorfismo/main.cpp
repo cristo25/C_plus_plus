@@ -48,3 +48,8 @@ int main() {
     tocar(instrumento);
     tocar(tambor);
 }
+
+// Práctica: vamos a crear una clase Bloque y dos clases que la representen de forma distinta.
+// - Declaramos una función virtual para describir un bloque.
+// - Hacemos que Piedra y Madera devuelvan descripciones diferentes.
+// - Pasamos cada objeto por referencia a una misma función que muestre su descripción.

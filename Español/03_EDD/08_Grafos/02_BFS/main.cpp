@@ -4,9 +4,11 @@
 // los vecinos de estos. Guardamos lo pendiente en una cola para respetar ese orden. A este
 // recorrido lo llamamos BFS, o búsqueda en anchura. Marcamos cada lugar al agregarlo para no
 // repetirlo, aunque haya caminos de regreso. Solo llegamos a lugares conectados con el inicio. Si
-// recorremos todo el mapa, revisamos sus lugares y caminos (O(V + E), con V lugares y E
-// conexiones).
+// recorremos todo el mapa, revisamos sus lugares y caminos.
 //
+// Práctica: Vamos a explorar un mapa por capas.
+// - Partamos de un lugar y recorramos sus vecinos con BFS.
+// - Evitemos visitar dos veces el mismo lugar.
 
 #include "../Grafo.h"
 #include <iostream>

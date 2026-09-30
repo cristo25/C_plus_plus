@@ -6,6 +6,9 @@
 // a box, a function pointer can point to a task we can run. If a comparison fails, we display the
 // problem and stop.
 //
+// Practice: We will compare ways to sort numbers.
+// - We will try each algorithm with repeated and negative numbers.
+// - We will check that all of them produce the same order.
 
 #include "Sorts.h"
 // We use sort to sort or change data order.

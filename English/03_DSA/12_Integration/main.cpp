@@ -6,6 +6,9 @@
 // numbers before searching by halves. Finally we use a graph to calculate routes. Each structure
 // serves a different need; this example brings them together to show how data moves between them.
 //
+// Practice: We will organize tasks and routes in a workshop.
+// - We will store tasks and serve them in arrival order.
+// - We will find a task by ID and calculate a route between places.
 
 #include "../03_Linked_Lists/01_Singly_Linked/SinglyLinkedList.h"
 #include "../06_Trees/Tree.h"

@@ -7,6 +7,13 @@
 // puede ocupar más de una posición según cómo se guarde.
 //
 
+// Práctica: Vamos a realizar un programa que busque una palabra dentro de una frase.
+//
+// - Guardar la frase y la palabra en variables string.
+// - Mostrar la posición cuando la palabra exista.
+// - Mostrar un aviso cuando find devuelva string::npos.
+// - Extraer el fragmento únicamente si fue encontrado.
+
 #include <iostream>
 // Guardamos y trabajamos con texto mediante string.
 #include <string>

@@ -5,6 +5,9 @@
 // performed is the first one we examine. Here we show which action would be undone; removing it
 // from history does not itself change a real document.
 //
+// Practice: We will use stack to store actions.
+// - We will add three actions with push.
+// - We will read top before pop and show which action was removed.
 
 #include <iostream>
 // We store a stack: with stack, the last item in comes out first.

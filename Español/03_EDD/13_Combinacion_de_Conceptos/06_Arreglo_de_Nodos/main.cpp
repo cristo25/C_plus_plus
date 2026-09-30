@@ -8,6 +8,9 @@
 // manualmente estas fichas habría que reconstruir sus flechas para no seguir apuntando a las
 // originales.
 //
+// Práctica: Vamos a unir nodos de un arreglo con flechas.
+// - Guardemos tres nodos completos y enlacémoslos en otro orden.
+// - Recorramos los enlaces hasta nullptr sin usar delete.
 
 #include <iostream>
 #include "../../../02_POO/08_Headers/Producto.h"

@@ -6,6 +6,9 @@
 // One card may appear several times: counting occupied slots does not count distinct products. We
 // calculate total value from the shelves so a repeated display does not count the product twice.
 //
+// Practice: We will create an inventory with shelves and views.
+// - We will store products in nodes on several shelves.
+// - We will sort addresses to show a view without changing the original lists.
 
 // We use sort to sort or change data order.
 #include <algorithm>

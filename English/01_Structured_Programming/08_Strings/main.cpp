@@ -7,6 +7,13 @@
 // depending on how it is stored.
 //
 
+// Practice: Let's write a program that finds a word inside a sentence.
+//
+// - Store the sentence and word in string variables.
+// - Display the position when found.
+// - Show a message when find returns string::npos.
+// - Extract the piece only if it was found.
+
 #include <iostream>
 // We store and work with text using string.
 #include <string>

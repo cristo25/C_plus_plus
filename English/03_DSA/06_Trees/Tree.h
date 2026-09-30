@@ -2,8 +2,6 @@
 #define COURSE_TREE_H
 // We use unique_ptr to release its managed object automatically.
 #include <memory>
-// We use move to transfer data or responsibility for releasing it.
-#include <utility>
 // We store a collection that can grow using vector.
 #include <vector>
 
@@ -47,13 +45,15 @@ namespace course {
             if (value > node->value) {
                 return removeAt(node->right, value);
             }
-            // Zero or one child: move the remaining branch into the removed node's place.
+            // Zero or one child: we swap address cards without copying nodes.
             if (!node->left) {
-                auto replacement = move(node->right);
-                node = move(replacement);
+                unique_ptr<Node> replacement;
+                replacement.swap(node->right);
+                node.swap(replacement);
             } else if (!node->right) {
-                auto replacement = move(node->left);
-                node = move(replacement);
+                unique_ptr<Node> replacement;
+                replacement.swap(node->left);
+                node.swap(replacement);
             } else {
                 // With two children, the smallest value on the right replaces the value while
                 // preserving BST order.
@@ -86,8 +86,7 @@ namespace course {
         }
 
     public:
-        // ponytail: without balancing, the tree can become a chain that requires inspecting every
-        // node; an AVL tree limits its height to prevent this.
+        // Our tree does not arrange itself: adding ordered numbers can make it look like a chain.
         bool insert(int value) {
             return insertAt(root, value);
         }

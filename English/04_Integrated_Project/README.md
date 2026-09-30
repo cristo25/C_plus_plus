@@ -151,7 +151,7 @@ return view.at(*position);
 
 The search returns `optional<size_t>`: a small box containing a position or nothing. Position zero also counts as found. For an empty result we return `nullptr`; otherwise we lend the corresponding book address. We use it before changing the catalog, because adding, removing, renaming or undoing replaces its books and makes old addresses unusable.
 
-Once sorted, we discard about half the candidates each step (O(log n), where n is the book count and log n describes growth through halving). But first we collect and sort the cards, which also takes work. Its comparison bound combines n books with the levels of repeated halving (O(n log n)).
+Once sorted, we discard about half the possible books at each step. If we start with 16, we keep 8, then 4, 2 and 1. Before searching, we must also collect and sort the cards; that takes work too.
 
 ## 8. Structs and the delivery queue
 
@@ -238,10 +238,10 @@ try {
     undo.pop();
     throw;
 }
-dao = move(candidate);
+swap(dao, candidate);
 ```
 
-With `try` we attempt saving; with `catch` we handle an error. `throw` passes it on so the console can display it. Only after saving do we replace the catalog. To undo, we work in reverse change order: last in, first out, also called LIFO. Each copy needs space; for many books and changes, we could save only the data needed to reverse each operation.
+With `try` we attempt saving; with `catch` we handle an error. `throw` passes it on so the console can display it. After saving we use `swap`: `dao` gets the new catalog, and `candidate` gets the old one. If saving fails, we do not make that exchange, so we keep the books we already had. To undo, we work in reverse change order: last in, first out, also called LIFO. Each copy needs space; for many books and changes, we could save only the data needed to reverse each operation.
 
 In [CatalogStore.cpp](src/data/CatalogStore.cpp) we first write a temporary `.tmp` file. We then keep the previous file as a `.bak` backup and put the new one in place. If replacement fails, we try to restore the earlier file. If only the backup remains on reopening, we read it. For damaged data we report the issue and preserve the file for inspection.
 
@@ -249,15 +249,17 @@ We store text in this form:
 
 ```text
 2
-10 "C++ fundamentals"
-20 "Book with \"quotes\""
+10
+C++ fundamentals
+20
+Book with "quotes"
 ```
 
-The first line gives the book count. We allow up to 10,000 books, distinct positive IDs and nonempty titles up to 200 bytes. A byte is a unit of memory; some letters occupy several. We reject line breaks and other control characters in titles. We use this storage from one running program at a time; several applications writing together would need coordinated changes, for example through a database. The backup helps recovery but does not guarantee preserving the latest write during a power failure.
+The first line gives the book count. We then use two lines per book: its ID and its title. This keeps spaces and quotation marks in the title. We allow up to 10,000 books, distinct positive IDs and nonempty titles up to 200 bytes. A byte is a unit of memory; some letters occupy several. We reject line breaks and other control characters in titles. We use this storage from one running program at a time; several applications writing together would need coordinated changes, for example through a database. The backup helps recovery but does not guarantee preserving the latest write during a power failure.
 
 ## 12. Input, errors and the runnable check
 
-We will read each complete answer with `getline` in [Console.cpp](src/ui/Console.cpp). We then use `istringstream` from `<sstream>` as a reader for that text: we try to obtain an integer and check for leftover letters. This rejects `12abc`. When input ends, we close the session; we also call that end of input EOF. We do not save an unfinished operation.
+We will read each complete answer with `getline` in [Console.cpp](src/ui/Console.cpp). We then use `istringstream` from `<sstream>` as a reader for that text: we try to obtain an integer and check that no other character remains. This rejects `12abc`. When input ends, we close the session; we also call that end of input EOF. We do not save an unfinished operation.
 
 In [SelfCheck.cpp](tests/SelfCheck.cpp) we try searches, routes, delivery order, undo, history and incorrect input. We also simulate a saving failure to check that the previous books remain. We use ordinary conditions that stay active when compiling the final version.
 
@@ -269,21 +271,21 @@ If everything matches, we finish with 0; for a failure we display the case and r
 
 ## 13. Costs and further practice
 
-We will count how much work is added when data grows. We use n for books, h for history messages, p for pending requests, V for buildings and E for connections. Expressions in parentheses summarize growth; they do not give exact seconds.
+We will think about which tasks need more steps as the data grows. Searching ten books usually takes less work than searching a thousand. Each row describes what the program must visit or copy.
 
 | Operation | What work it performs as data grows |
 | --- | --- |
-| Prepare the sorted view | Collects and sorts addresses. The comparison bound combines the book count with the levels in repeated halving (O(n log n)). |
-| Search already sorted IDs | Discards half the candidates each step; doubling the books adds about one comparison (O(log n)). |
-| Copy for undo | Copies one record per book, plus all title characters (O(n) for records; longer titles also require more work and memory). |
-| Append a history index | Adjusts a few links without traversing earlier messages (O(1)). |
-| Inspect history | Visits its h messages and copies their text (O(h) visits, plus character copying). |
-| Inspect pending requests | Visits its p requests and copies their data (O(p) visits, plus title copying). |
-| BFS | Visits reachable buildings and inspects their connections; if all are reachable, it processes the entire map (O(V + E)). |
+| Prepare the sorted view | Collects and sorts book addresses. More books mean more cards to arrange. |
+| Search already sorted IDs | Discards half the candidates at each step. |
+| Copy for undo | Copies each record and title; long titles need more space. |
+| Add an item to history | Adjusts a few arrows without visiting earlier messages. |
+| Inspect history | Visits each message and copies its text. |
+| Inspect pending requests | Visits each request and copies its data. |
+| BFS | Visits reachable buildings and checks the roads between them. |
 | Dijkstra | Inspects connections and maintains a queue for selecting the cheapest candidate. More candidates need more adjustments, and a building may have repeated records. |
-| Reconstruct the path | Follows route buildings backward from the target; it visits at most all V buildings (O(V)). |
+| Reconstruct the path | Follows route buildings backward from the target; it visits at most every building. |
 
-While loading, we compare each book with those already read to detect repeated IDs. With n books, comparisons keep accumulating and work can grow like n times n (O(n²)). We can begin with few books, observe every step and then consider what to change for a much larger catalog.
+While loading, we compare each book with those already read to detect repeated numbers. With many books, we repeat these comparisons many times. We can begin with a few books and observe every step; the [complexity lesson](../03_DSA/01_Complexity/main.cpp) names these patterns of growth.
 
 ## 14. Integration practice
 
@@ -320,5 +322,5 @@ Here we collect the tools appearing in the project. We can revisit the example i
 | `<stdexcept>` | We report errors with messages, such as invalid_argument for an invalid value. |
 | `<string>` | We store and work with text using string. |
 | `<system_error>` | We check file-operation failures using error_code. |
-| `<utility>` | We use move to transfer data, swap to exchange it or pair to group two values. |
+| `<utility>` | We use swap to exchange two catalogs. |
 | `<vector>` | We store a collection that can grow using vector. |

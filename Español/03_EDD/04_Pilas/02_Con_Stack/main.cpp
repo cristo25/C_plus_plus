@@ -5,6 +5,9 @@
 // para deshacer: la última acción que hicimos es la primera que revisamos. Aquí mostramos qué
 // acción se desharía; retirarla del historial no modifica por sí sola un documento real.
 //
+// Práctica: Vamos a usar stack para guardar acciones.
+// - Agreguemos tres acciones con push.
+// - Consultemos top antes de usar pop y mostremos qué acción salió.
 
 #include <iostream>
 // Guardamos una pila: con stack sale primero lo último que entró.

@@ -1,11 +1,13 @@
 // BFS: breadth-first search
 //
-// We will explore a map in layers. We visit the start, then its neighbors, then their neighbors. We
-// keep pending places in a queue to preserve that order. We call this BFS, or breadth-first search.
-// We mark each place when adding it so we do not repeat it, even with roads back. We reach only
-// places connected to the start. A full traversal checks the places and roads (O(V + E), with V
-// places and E connections).
+// We will explore a map in layers. We visit the start, then its neighbors, then their neighbors.
+// We keep pending places in a queue to preserve that order. We call this BFS, or breadth-first
+// search. We mark each place when adding it so we do not repeat it, even with roads back. We
+// reach only places connected to the start. A full traversal checks the places and roads.
 //
+// Practice: We will explore a map layer by layer.
+// - We will start at one place and traverse its neighbors with BFS.
+// - We will avoid visiting the same place twice.
 
 #include "../Graph.h"
 #include <iostream>

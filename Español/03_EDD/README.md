@@ -64,7 +64,7 @@ Vamos a comparar la búsqueda uno por uno con la búsqueda por mitades. Primero 
 
 ## Const y headers en EDD
 
-Vamos a consultar una colección sin modificarla. Con const vector<int>& recibimos otra etiqueta del mismo vector, pero solo para leerlo. En Consultas.h anunciamos la función; en Consultas.cpp recorremos los datos y contamos los que superan un límite. No necesitamos copiar ni ordenar nada. Si duplicamos la cantidad de datos hacemos el doble de visitas (O(n), con n elementos). Solo añadimos un contador y unas pocas variables (O(1) de memoria adicional).
+Vamos a consultar una colección sin modificarla. Con const vector<int>& recibimos otra etiqueta del mismo vector, pero solo para leerlo. En Consultas.h anunciamos la función; en Consultas.cpp recorremos los datos y contamos los que superan un límite. No necesitamos copiar ni ordenar nada. Si duplicamos la cantidad de datos hacemos el doble de visitas. Solo añadimos un contador y unas pocas variables.
 
 [Programa comentado](11_Const_y_Headers/main.cpp).
 

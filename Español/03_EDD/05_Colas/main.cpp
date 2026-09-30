@@ -5,6 +5,9 @@
 // necesita una aplicación: respetar la llegada o elegir por importancia. Cambiar la estructura
 // cambia esa regla de atención, aunque los datos sean iguales.
 //
+// Práctica: Vamos a comparar dos maneras de atender una fila.
+// - Guardemos los mismos números en queue y priority_queue.
+// - Mostremos cuál sale primero en cada una y expliquemos la diferencia.
 
 #include <iostream>
 // Atendemos por llegada con queue o por importancia con priority_queue.

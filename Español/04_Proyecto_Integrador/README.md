@@ -151,7 +151,7 @@ return vista.at(*posicion);
 
 La búsqueda devuelve `optional<size_t>`: una cajita que contiene una posición o está vacía. Una posición cero también cuenta como encontrada. Si está vacía devolvemos `nullptr`; si tiene un resultado, prestamos la dirección del libro correspondiente. La usamos antes de modificar el catálogo, porque agregar, borrar, cambiar un título o deshacer sustituye sus libros y deja sin validez las direcciones anteriores.
 
-Una vez ordenados, descartamos aproximadamente la mitad de los candidatos en cada paso (O(log n), donde n es la cantidad de libros y log n describe ese crecimiento por mitades). Pero primero reunimos y ordenamos las tarjetas: ese trabajo también cuenta. Su límite de comparaciones combina los n libros con los niveles de división por mitades (O(n log n)).
+Una vez ordenados, descartamos aproximadamente la mitad de los libros posibles en cada paso. Si empezamos con 16, después quedan 8, luego 4, 2 y 1. Antes de buscar debemos reunir y ordenar las tarjetas; ese trabajo también cuenta.
 
 ## 8. Structs y cola de entregas
 
@@ -238,10 +238,10 @@ try {
     deshacerCambios.pop();
     throw;
 }
-dao = move(candidato);
+swap(dao, candidato);
 ```
 
-Con `try` intentamos guardar; con `catch` atendemos el error. `throw` vuelve a comunicarlo para que la consola lo muestre. Solo después de guardar sustituimos el catálogo. Para deshacer seguimos el orden inverso de los cambios: último en entrar, primero en salir, también llamado LIFO. Cada copia ocupa espacio; con muchos libros y cambios podríamos guardar solo los datos necesarios para revertir cada operación.
+Con `try` intentamos guardar; con `catch` atendemos el error. `throw` vuelve a comunicarlo para que la consola lo muestre. Después de guardar usamos `swap`: `dao` recibe el catálogo nuevo y `candidato` se queda con el anterior. Si guardar falla, no hacemos ese intercambio y conservamos los libros que ya teníamos. Para deshacer seguimos el orden inverso de los cambios: último en entrar, primero en salir, también llamado LIFO. Cada copia ocupa espacio; con muchos libros y cambios podríamos guardar solo los datos necesarios para revertir cada operación.
 
 En [AlmacenCatalogo.cpp](src/datos/AlmacenCatalogo.cpp) escribimos primero un archivo temporal `.tmp`. Después conservamos el anterior como respaldo `.bak` y colocamos el nuevo. Si falla ese cambio de archivos intentamos recuperar el anterior. Si al volver a abrir solo queda el respaldo, lo leemos. Si hay datos dañados, avisamos y conservamos el archivo para revisarlo.
 
@@ -249,15 +249,17 @@ El texto guardado tiene esta forma:
 
 ```text
 2
-10 "Fundamentos de C++"
-20 "Libro con \"comillas\""
+10
+Fundamentos de C++
+20
+Libro con "comillas"
 ```
 
-En la primera línea indicamos cuántos libros siguen. Permitimos hasta 10 000 libros, IDs positivos distintos y títulos con texto de hasta 200 bytes. Un byte es una unidad de memoria; algunas letras ocupan varios. Rechazamos saltos de línea y otros caracteres de control dentro del título. Usamos este guardado desde una sola ejecución del programa a la vez; para varias aplicaciones escribiendo juntas necesitaríamos coordinar sus cambios, por ejemplo mediante una base de datos. El respaldo ayuda a recuperar fallos, pero no garantiza conservar la última escritura ante un corte eléctrico.
+En la primera línea indicamos cuántos libros siguen. Después usamos dos líneas por libro: su ID y su título. Así conservamos los espacios y las comillas del título. Permitimos hasta 10 000 libros, IDs positivos distintos y títulos con texto de hasta 200 bytes. Un byte es una unidad de memoria; algunas letras ocupan varios. Rechazamos saltos de línea y otros caracteres de control dentro del título. Usamos este guardado desde una sola ejecución del programa a la vez; para varias aplicaciones escribiendo juntas necesitaríamos coordinar sus cambios, por ejemplo mediante una base de datos. El respaldo ayuda a recuperar fallos, pero no garantiza conservar la última escritura ante un corte eléctrico.
 
 ## 12. Entrada, errores y comprobación
 
-Vamos a leer cada respuesta completa con `getline` en [Consola.cpp](src/interfaz/Consola.cpp). Después usamos `istringstream`, de `<sstream>`, como un lector de ese texto: intentamos obtener un entero y comprobamos que no sobren letras. Así rechazamos `12abc`. Si termina la entrada, cerramos la sesión; a ese fin de entrada también lo llamamos EOF. No guardamos una operación que quedó a medias.
+Vamos a leer cada respuesta completa con `getline` en [Consola.cpp](src/interfaz/Consola.cpp). Después usamos `istringstream`, de `<sstream>`, como un lector de ese texto: intentamos obtener un entero y comprobamos que no sobre ningún otro carácter. Así rechazamos `12abc`. Si termina la entrada, cerramos la sesión; a ese fin de entrada también lo llamamos EOF. No guardamos una operación que quedó a medias.
 
 En [Autocomprobacion.cpp](tests/Autocomprobacion.cpp) probamos búsquedas, rutas, orden de entregas, deshacer, historial y entradas incorrectas. También simulamos un error al guardar para comprobar que conservamos los libros anteriores. Usamos condiciones normales que siguen activas al compilar la versión final.
 
@@ -269,21 +271,21 @@ Si todo coincide terminamos con 0; si algo falla mostramos el caso y devolvemos 
 
 ## 13. Costos y cómo seguir estudiando
 
-Vamos a contar cuánto trabajo añadimos cuando crecen los datos. Usamos n para la cantidad de libros, h para mensajes del historial, p para solicitudes pendientes, V para edificios y E para conexiones. Las expresiones entre paréntesis resumen ese crecimiento; no indican segundos exactos.
+Vamos a pensar qué tareas requieren más pasos cuando crecen los datos. Por ejemplo, buscar entre diez libros suele llevar menos trabajo que hacerlo entre mil. En cada fila describimos lo que el programa necesita revisar o copiar.
 
 | Operación | Qué trabajo realiza al crecer los datos |
 | --- | --- |
-| Preparar la vista ordenada | Reúne las direcciones y las ordena. El límite de comparaciones combina la cantidad de libros con los niveles de una división por mitades (O(n log n)). |
-| Buscar con los IDs ya ordenados | Descarta la mitad de los candidatos en cada paso; duplicar los libros añade aproximadamente una comparación (O(log n)). |
-| Copiar para deshacer | Copia una ficha por libro, además de todos los caracteres de sus títulos (O(n) para las fichas; textos más largos también requieren más trabajo y memoria). |
-| Anexar un índice al historial | Ajusta unos pocos enlaces, sin recorrer los mensajes anteriores (O(1)). |
-| Consultar el historial | Visita sus h mensajes y copia sus textos (O(h) visitas, más el trabajo de copiar caracteres). |
-| Consultar pendientes | Visita sus p solicitudes y copia sus datos (O(p) visitas, más las copias de títulos). |
-| BFS | Visita los edificios alcanzables y revisa sus conexiones; si todos son alcanzables, procesa todo el mapa (O(V + E)). |
+| Preparar la vista ordenada | Reúne y ordena las direcciones de los libros. Con más libros hay más tarjetas que acomodar. |
+| Buscar con los IDs ya ordenados | Descarta la mitad de los candidatos en cada paso. |
+| Copiar para deshacer | Copia cada ficha y cada título; los títulos largos requieren más espacio. |
+| Agregar un dato al historial | Ajusta unas pocas flechas, sin recorrer los mensajes anteriores. |
+| Consultar el historial | Visita cada mensaje y copia su texto. |
+| Consultar pendientes | Visita cada solicitud y copia sus datos. |
+| BFS | Visita los edificios alcanzables y revisa los caminos que los unen. |
 | Dijkstra | Revisa conexiones y mantiene una cola que permite elegir el candidato de menor costo. Más candidatos requieren más ajustes y pueden existir registros repetidos de un edificio. |
-| Reconstruir el camino | Sigue los edificios de la ruta desde el destino; como máximo pasa por todos los V edificios (O(V)). |
+| Reconstruir el camino | Sigue los edificios de la ruta desde el destino; como máximo visita todos los edificios. |
 
-Al cargar, comparamos cada libro con los que ya leímos para detectar IDs repetidos. Con n libros acumulamos cada vez más comparaciones; el trabajo puede crecer como n por n (O(n²)). Podemos empezar con pocos libros, observar cada paso y después pensar qué cambiaríamos si el catálogo creciera mucho.
+Al cargar, comparamos cada libro con los que ya leímos para detectar números repetidos. Con muchos libros repetimos estas comparaciones muchas veces. Podemos empezar con pocos libros y observar cada paso; la [lección de complejidad](../03_EDD/01_Complejidad/main.cpp) da nombre a estas formas de crecer.
 
 ## 14. Práctica integradora
 
@@ -320,5 +322,5 @@ Aquí reunimos las herramientas que aparecen en el proyecto. Podemos volver al e
 | `<stdexcept>` | Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido. |
 | `<string>` | Guardamos y trabajamos con texto mediante string. |
 | `<system_error>` | Consultamos si una operación de archivos falló mediante error_code. |
-| `<utility>` | Usamos move para trasladar datos, swap para intercambiarlos o pair para reunir dos. |
+| `<utility>` | Usamos swap para intercambiar dos catálogos. |
 | `<vector>` | Guardamos una colección que puede crecer con vector. |

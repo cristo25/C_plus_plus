@@ -7,6 +7,13 @@
 // need break.
 //
 
+// Practice: Let's write a program with a three-drink menu.
+//
+// - Assign a number to each drink.
+// - Display the selected name and price.
+// - Report an unknown option.
+// - Use break to finish each case.
+
 #include <iostream>
 // We store and work with text using string.
 #include <string>

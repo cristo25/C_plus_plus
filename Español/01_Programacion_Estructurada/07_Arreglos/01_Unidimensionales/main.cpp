@@ -7,6 +7,13 @@
 // segunda. Este arreglo tiene un tamaño fijo y no necesita una biblioteca adicional.
 //
 
+// Práctica: Vamos a realizar un programa que trabaje con cinco calificaciones.
+//
+// - Guardarlas en un arreglo int notas[5].
+// - Recorrer solo las posiciones de 0 a 4.
+// - Calcular la suma y el promedio con decimales.
+// - Mostrar la nota más alta.
+
 #include <iostream>
 
 using namespace std;

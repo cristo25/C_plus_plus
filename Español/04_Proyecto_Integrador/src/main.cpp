@@ -22,8 +22,6 @@
 #include <stdexcept>
 // Guardamos y trabajamos con texto mediante string.
 #include <string>
-// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
-#include <utility>
 // Guardamos una colección que puede crecer con vector.
 #include <vector>
 
@@ -80,7 +78,7 @@ int main(int argc, char* argv[]) {
                 !inicial.crear({20, "Programacion orientada a objetos"})) {
                 throw logic_error("No se pudo preparar el catalogo de demostracion");
             }
-            almacen = make_unique<AlmacenMemoria>(move(inicial));
+            almacen = make_unique<AlmacenMemoria>(inicial);
             cout << "Modo demostracion: el catalogo vive en memoria.\n";
         } else {
             almacen = make_unique<AlmacenArchivo>(archivoDatos);

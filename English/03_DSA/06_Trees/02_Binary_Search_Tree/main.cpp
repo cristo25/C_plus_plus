@@ -6,6 +6,9 @@
 // preserves the ordering. If the tree becomes a chain, we must traverse many nodes; calling it a
 // tree does not guarantee fast searches.
 //
+// Practice: We will store numbers ordered by branches.
+// - We will add values smaller and larger than the root without duplicates.
+// - We will search for a present and an absent value; then remove one.
 
 #include "../Tree.h"
 #include <iostream>

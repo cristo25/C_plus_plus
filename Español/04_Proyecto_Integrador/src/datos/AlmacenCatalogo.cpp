@@ -5,14 +5,12 @@
 #include <stdexcept>
 // Consultamos si una operación de archivos falló mediante error_code.
 #include <system_error>
-// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
-#include <utility>
 
 namespace proyecto {
     using namespace std;
     namespace fs = filesystem;
 
-    AlmacenMemoria::AlmacenMemoria(LibroDAO inicial) : guardado(move(inicial)) {
+    AlmacenMemoria::AlmacenMemoria(const LibroDAO& inicial) : guardado(inicial) {
     }
 
     LibroDAO AlmacenMemoria::cargar() const {
@@ -23,7 +21,7 @@ namespace proyecto {
         guardado = dao;
     }
 
-    AlmacenArchivo::AlmacenArchivo(fs::path archivo) : archivo(move(archivo)) {
+    AlmacenArchivo::AlmacenArchivo(const fs::path& archivo) : archivo(archivo) {
         if (this->archivo.empty() || this->archivo.filename().empty()) {
             throw invalid_argument("Ruta de catalogo invalida");
         }
@@ -48,16 +46,15 @@ namespace proyecto {
         if (!entrada || !resultado.cargar(entrada)) {
             throw runtime_error("Catalogo invalido: se conserva el archivo para revisarlo");
         }
-        entrada >> ws;
-        if (!entrada.eof() || entrada.bad()) {
+        // Si podemos leer otro carácter después de los libros, el archivo tiene datos de más.
+        char sobrante;
+        if (entrada >> sobrante || entrada.bad()) {
             throw runtime_error("El catalogo contiene datos adicionales o un error de lectura");
         }
         return resultado;
     }
 
     void AlmacenArchivo::guardar(const LibroDAO& dao) {
-        // ponytail: escribimos desde una sola ejecución; si varias aplicaciones necesitan guardar a
-        // la vez, usamos una base de datos que coordine sus cambios.
         if (!archivo.parent_path().empty()) {
             fs::create_directories(archivo.parent_path());
         }

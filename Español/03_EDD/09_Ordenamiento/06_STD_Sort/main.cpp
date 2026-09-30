@@ -7,6 +7,9 @@
 // quienes empatan. Primero entendemos los movimientos manuales y ahora podemos usar esta
 // herramienta para resolver una tarea completa.
 //
+// Práctica: Vamos a ordenar fichas de alumnos por nota.
+// - Creemos fichas con nombres y notas, incluidas notas iguales.
+// - Ordenémoslas con sort y observemos qué ocurre con los empates.
 
 // Usamos sort, stable_sort para ordenar o cambiar el orden de los datos.
 #include <algorithm>

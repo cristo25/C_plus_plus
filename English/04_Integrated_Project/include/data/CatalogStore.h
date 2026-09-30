@@ -20,7 +20,7 @@ namespace project {
     class MemoryStore : public CatalogStore {
         BookDAO saved;
     public:
-        explicit MemoryStore(BookDAO initial = {});
+        explicit MemoryStore(const BookDAO& initial = {});
         BookDAO load() const override;
         void save(const BookDAO& dao) override;
     };
@@ -28,7 +28,7 @@ namespace project {
     class FileStore : public CatalogStore {
         filesystem::path file;
     public:
-        explicit FileStore(filesystem::path file);
+        explicit FileStore(const filesystem::path& file);
         BookDAO load() const override;
         void save(const BookDAO& dao) override;
     };

@@ -1,11 +1,14 @@
 // DFS: depth-first search
 //
-// We will follow a path as far as possible and then return to try another. We can picture exploring
-// a maze. We call this DFS, or depth-first search. Here we use recursion to remember where to
-// return. We mark visited places so we do not go around forever. The order can differ from BFS even
-// though both reach the same places. A full traversal grows with the map’s V places and E roads
-// (O(V + E)).
+// We will follow a path as far as possible and then return to try another. We can picture
+// exploring a maze. We call this DFS, or depth-first search. Here we use recursion to remember
+// where to return. We mark visited places so we do not go around forever. The order can differ
+// from BFS even though both reach the same places. To visit the whole map, we check its places
+// and roads.
 //
+// Practice: We will explore a map by following each path deeply.
+// - We will start at one place and traverse its connections with DFS.
+// - We will mark visited places to avoid endless loops.
 
 #include "../Graph.h"
 #include <iostream>

@@ -1,8 +1,6 @@
 #ifndef COURSE_BOOK_DAO_H
 #define COURSE_BOOK_DAO_H
 
-// With quoted we preserve spaces and quotation marks when saving and reading titles.
-#include <iomanip>
 // We receive an input source: keyboard, file or text in memory.
 #include <istream>
 // We receive an output destination: screen, file or text in memory.
@@ -11,8 +9,6 @@
 #include <sstream>
 // We store and work with text using string.
 #include <string>
-// We use move to transfer data or responsibility for releasing it.
-#include <utility>
 // We store a collection that can grow using vector.
 #include <vector>
 
@@ -34,9 +30,8 @@ namespace course {
         }
 
     public:
-        // Search book by book, potentially inspecting the whole catalog. More books may mean more
-        // comparisons (O(n), with n books). Return an observer that vector modifications may
-        // invalidate.
+        // We search one book at a time. A larger catalog can take more comparisons.
+        // The address we find becomes unusable if we later change the vector.
         const Book* findById(int id) const {
             for (const auto& book : books) {
                 if (book.id == id) {
@@ -84,9 +79,8 @@ namespace course {
         bool save(ostream& output) const {
             output << books.size() << '\n';
             for (const auto& book : books) {
-                // quoted preserves spaces and quotation marks so the complete title can be
-                // restored.
-                output << book.id << ' ' << quoted(book.title) << '\n';
+                // Use one line for the number and another for the title to keep its spaces.
+                output << book.id << '\n' << book.title << '\n';
             }
             return static_cast<bool>(output);
         }
@@ -101,7 +95,8 @@ namespace course {
             if (!(header >> count) || count < 0 || count > MAX_BOOKS) {
                 return false;
             }
-            if (!(header >> ws).eof()) {
+            char extra;
+            if (header >> extra) {
                 return false;
             }
             BookDAO replacement;
@@ -109,20 +104,21 @@ namespace course {
                 if (!getline(input, line)) {
                     return false;
                 }
-                istringstream row(line);
-                Book book{};
-                if (!(row >> book.id >> ws) || row.peek() != '"') {
+                istringstream number(line);
+                int id;
+                if (!(number >> id) || number >> extra) {
                     return false;
                 }
-                if (!(row >> quoted(book.title)) || !(row >> ws).eof()) {
+                string title;
+                if (!getline(input, title)) {
                     return false;
                 }
-                if (!replacement.create(book)) {
+                if (!replacement.create({id, title})) {
                     return false;
                 }
             }
             // Replace the catalog only after validating the complete copy.
-            books = move(replacement.books);
+            books = replacement.books;
             return true;
         }
     };

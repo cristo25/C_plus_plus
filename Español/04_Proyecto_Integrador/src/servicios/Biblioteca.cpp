@@ -6,7 +6,7 @@
 #include <limits>
 // Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
 #include <stdexcept>
-// Usamos move para trasladar los datos o la responsabilidad de liberarlos.
+// Usamos swap para intercambiar dos catálogos después de guardar.
 #include <utility>
 
 namespace proyecto {
@@ -70,11 +70,9 @@ namespace proyecto {
         }
     }
 
-    void Biblioteca::confirmar(LibroDAO candidato, const string& mensaje) {
-        // Guardamos antes de sustituir el catálogo en memoria. Si falla la lectura o escritura
-        // conservamos los datos anteriores. ponytail: cada cambio copia todos los libros y sus
-        // títulos para poder deshacerlo; usar comandos inversos si esas copias ocupan demasiado
-        // espacio.
+    void Biblioteca::confirmar(LibroDAO& candidato, const string& mensaje) {
+        // Guardamos una copia para poder deshacer el cambio. Si guardar falla, seguimos con los
+        // libros anteriores.
         deshacerCambios.push(dao);
         try {
             almacen.guardar(candidato);
@@ -82,7 +80,7 @@ namespace proyecto {
             deshacerCambios.pop();
             throw;
         }
-        dao = move(candidato);
+        swap(dao, candidato);
         registrar(mensaje);
     }
 
@@ -92,7 +90,7 @@ namespace proyecto {
         if (!candidato.crear(libro)) {
             throw invalid_argument("ID no positivo, duplicado o limite de 10000 libros alcanzado");
         }
-        confirmar(move(candidato), "Libro agregado: " + to_string(libro.id));
+        confirmar(candidato, "Libro agregado: " + to_string(libro.id));
     }
 
     void Biblioteca::renombrarLibro(int id, const string& titulo) {
@@ -101,7 +99,7 @@ namespace proyecto {
         if (!candidato.actualizar(id, titulo)) {
             throw invalid_argument("No existe ese ID de libro");
         }
-        confirmar(move(candidato), "Titulo actualizado: " + to_string(id));
+        confirmar(candidato, "Titulo actualizado: " + to_string(id));
     }
 
     void Biblioteca::eliminarLibro(int id) {
@@ -109,7 +107,7 @@ namespace proyecto {
         if (!candidato.eliminar(id)) {
             throw invalid_argument("No existe ese ID de libro");
         }
-        confirmar(move(candidato), "Libro eliminado: " + to_string(id));
+        confirmar(candidato, "Libro eliminado: " + to_string(id));
     }
 
     bool Biblioteca::deshacer() {
@@ -118,7 +116,7 @@ namespace proyecto {
         }
         LibroDAO anterior = deshacerCambios.top();
         almacen.guardar(anterior);
-        dao = move(anterior);
+        swap(dao, anterior);
         deshacerCambios.pop();
         registrar("Ultimo cambio del catalogo deshecho");
         return true;

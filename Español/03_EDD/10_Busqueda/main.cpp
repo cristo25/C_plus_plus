@@ -5,6 +5,9 @@
 // mismo, pero su posición puede cambiar al ordenar. También contamos el trabajo previo: preparar
 // una lista ordenada es una tarea adicional, aunque buscar dentro de ella después sea más rápido.
 //
+// Práctica: Vamos a comparar dos maneras de encontrar un número.
+// - Busquemos en una lista sin ordenar revisando uno por uno.
+// - Ordenemos otra lista y busquemos por mitades, comparando las posiciones.
 
 #include "Busquedas.h"
 // Usamos sort para ordenar o cambiar el orden de los datos.

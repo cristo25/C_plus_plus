@@ -7,6 +7,9 @@
 // through halving). We call these abbreviations Big O notation: they describe growth, not exact
 // seconds. We can also count extra data kept while doing the task; we call that auxiliary memory.
 //
+// Practice: We will compare two ways to inspect numbers.
+// - We will count visits when reading one position and when scanning an entire array.
+// - We will repeat with more data and explain which work increased.
 
 #include <iostream>
 

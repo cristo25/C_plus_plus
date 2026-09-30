@@ -6,6 +6,9 @@
 // manera: igual que un puntero puede señalar una caja, un puntero a función puede señalar una tarea
 // que podemos ejecutar. Si alguna comparación falla, mostramos el problema y terminamos.
 //
+// Práctica: Vamos a comparar maneras de ordenar números.
+// - Probemos cada algoritmo con números repetidos y negativos.
+// - Comprobemos que todos produzcan el mismo orden.
 
 #include "Ordenamientos.h"
 // Usamos sort para ordenar o cambiar el orden de los datos.

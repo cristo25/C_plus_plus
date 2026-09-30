@@ -7,6 +7,9 @@
 // direcciones; consultarProducto() presta una referencia de lectura. Cuando vaciamos el estante,
 // esas consultas dejan de servir porque sus cajas ya no existen.
 //
+// Práctica: Vamos a administrar una lista de productos dentro de una clase.
+// - Agreguemos tres productos mediante la clase Estante.
+// - Recorramos sus nodos, sumemos precios y vaciemos la lista.
 
 #include <iostream>
 #include "../Estante.h"

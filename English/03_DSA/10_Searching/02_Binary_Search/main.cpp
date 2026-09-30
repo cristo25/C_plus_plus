@@ -1,11 +1,14 @@
 // Binary search
 //
-// We will search an already sorted list. We look at the middle and decide which half could contain
-// the number. We can picture numbered pages: for a smaller page, we discard the right half.
-// Reducing 16 candidates to 8, 4, 2 and 1 takes four divisions; starting with 32 adds just one
-// (O(log n), where n counts candidates and log n describes the divisions). This version finds the
-// first match. We receive a position or an empty result and check which before reading it.
+// We will search an already sorted list. We look at the middle and decide which half could
+// contain the number. We can picture numbered pages: for a smaller page, we discard the right
+// half. Reducing 16 candidates to 8, 4, 2 and 1 takes four divisions; starting with 32 adds just
+// one. This version finds the first match. We receive a position or an empty result and check
+// which before reading it.
 //
+// Practice: We will search numbers in an ordered list.
+// - We will check the center and discard the half that cannot contain the number.
+// - We will try one repeated number and one missing number.
 
 #include "../Searches.h"
 #include <iostream>

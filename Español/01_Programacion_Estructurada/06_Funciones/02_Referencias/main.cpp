@@ -8,6 +8,13 @@
 // necesitamos que la caja siga existiendo mientras la usamos.
 //
 
+// Práctica: Vamos a realizar un programa que compare tres formas de recibir un saldo.
+//
+// - Crear una función que reciba int y modifique solo su copia.
+// - Crear otra que reciba int& y cambie el saldo original.
+// - Crear una consulta con const int&.
+// - Mostrar el saldo antes y después de cada llamada.
+
 #include <iostream>
 // Guardamos y trabajamos con texto mediante string.
 #include <string>

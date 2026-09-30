@@ -4,31 +4,31 @@ Vamos a relacionar las piezas de este tema antes de resolver su práctica integr
 
 ## Burbuja
 
-Vamos a ordenar comparando vecinos. Si el de la izquierda es mayor, cambiamos sus posiciones; repetimos una pasada y el mayor pendiente acaba al final. Podemos imaginar burbujas grandes que van subiendo. Si una pasada no hace cambios, ya terminamos. Con n datos podemos repetir muchas comparaciones, aproximadamente como n por n (O(n²)); si ya estaban ordenados basta una pasada (O(n)). La función completa está en Ordenamientos.h.
+Vamos a ordenar comparando vecinos. Si el de la izquierda es mayor, cambiamos sus posiciones; repetimos una pasada y el mayor pendiente acaba al final. Podemos imaginar burbujas grandes que van subiendo. Si una pasada no hace cambios, ya terminamos. Si los datos están al revés, hacemos muchas comparaciones; al duplicar la cantidad, estas pueden crecer hasta casi cuatro veces. Si ya están ordenados, basta una pasada. La función completa está en Ordenamientos.h.
 
 [Programa comentado](01_Burbuja/main.cpp).
 
 ## Selección
 
-Vamos a buscar el menor dato pendiente y colocarlo al principio de la zona sin ordenar. Después repetimos con el resto. Podemos imaginar que elegimos el libro más pequeño de un montón y lo ponemos en una fila. Aunque los números ya estén ordenados, seguimos buscando el menor de cada grupo; con n datos el trabajo crece aproximadamente como n por n (O(n²)). Al intercambiar posiciones lejanas podemos cambiar el orden de elementos que empatan.
+Vamos a buscar el menor dato pendiente y colocarlo al principio de la zona sin ordenar. Después repetimos con el resto. Podemos imaginar que elegimos el libro más pequeño de un montón y lo ponemos en una fila. Aunque los números ya estén ordenados, seguimos buscando el menor de cada grupo. Con diez números hacemos muchas comparaciones; con veinte, cerca de cuatro veces más. Al intercambiar posiciones lejanas podemos cambiar el orden de elementos que empatan.
 
 [Programa comentado](02_Seleccion/main.cpp).
 
 ## Inserción
 
-Vamos a ordenar como una mano de cartas. Tomamos un dato nuevo y desplazamos los anteriores que sean mayores hasta abrirle un lugar. Así mantenemos ordenada la parte izquierda. Si los datos ya están ordenados avanzamos una sola vez (O(n), con n datos); si debemos desplazar muchos en cada paso, el trabajo puede crecer como n por n (O(n²)). Al no adelantar un dato sobre otro igual conservamos el orden de los empates.
+Vamos a ordenar como una mano de cartas. Tomamos un dato nuevo y desplazamos los anteriores que sean mayores hasta abrirle un lugar. Así mantenemos ordenada la parte izquierda. Si los datos ya están ordenados basta con recorrerlos una vez. Si vienen al revés, desplazamos muchos datos y repetimos más trabajo. Al no adelantar un dato sobre otro igual conservamos el orden de los empates.
 
 [Programa comentado](03_Insercion/main.cpp).
 
 ## Merge sort
 
-Vamos a dividir un montón en mitades hasta tener grupos pequeños y después reunirlos en orden. Podemos imaginar dos ayudantes que ordenan sus hojas: al juntarlas elegimos siempre la menor hoja disponible. Eso hace merge sort. Necesitamos otro espacio para la mezcla, que crece con los n datos (O(n) de memoria adicional). En cada nivel recorremos todos los datos y tenemos tantos niveles como divisiones por mitades (O(n log n), con n datos y log n niveles). Ante un empate tomamos primero el dato de la izquierda para conservar su orden.
+Vamos a dividir un montón en mitades hasta tener grupos pequeños y después reunirlos en orden. Podemos imaginar dos ayudantes que ordenan sus hojas: al juntarlas elegimos siempre la menor hoja disponible. Eso hace merge sort. Necesitamos otro espacio para la mezcla, que crece con la cantidad de datos. En cada nivel recorremos todos los datos y tenemos tantos niveles como divisiones por mitades. Ante un empate tomamos primero el dato de la izquierda para conservar su orden.
 
 [Programa comentado](04_Merge_Sort/main.cpp).
 
 ## Quick sort
 
-Vamos a elegir un dato como referencia para separar los demás; a ese dato lo llamamos pivote. Ponemos los menores de un lado y repetimos en cada grupo. Eso hace quick sort. Si los grupos quedan parejos, cada nivel revisa los n datos y los niveles crecen por mitades (O(n log n)). Aquí elegimos el último dato: con entradas ordenadas o iguales puede quedar casi todo de un lado y repetirse mucho trabajo (O(n²), como n por n). Esta elección nos ayuda a observar por qué importa el pivote.
+Vamos a elegir un dato como referencia para separar los demás; a ese dato lo llamamos pivote. Ponemos los menores de un lado y repetimos en cada grupo. Eso hace quick sort. Si los grupos quedan parejos, cada nivel revisa todos los datos y los niveles crecen por mitades. Aquí elegimos el último dato: con entradas ordenadas o iguales puede quedar casi todo de un lado y repetirse mucho trabajo. Esta elección nos ayuda a observar por qué importa el pivote.
 
 [Programa comentado](05_Quick_Sort/main.cpp).
 
@@ -44,12 +44,12 @@ Vamos a comprobar cinco maneras de ordenar usando las mismas entradas. Creamos u
 
 [Programa comentado](main.cpp).
 
-**Práctica.** Realiza un programa integrador de ordenamientos.
+**Práctica.** Vamos a realizar un programa integrador de ordenamientos.
 
-- Aplicar burbuja, selección, inserción, merge sort y quick sort a copias de los mismos datos.
-- Comparar sus resultados.
-- Probar vacío, un elemento, negativos, repetidos y orden inverso.
-- Contar comparaciones en al menos dos algoritmos.
-- Explicar por qué una misma salida puede requerir distinto trabajo.
+- Apliquemos burbuja, selección, inserción, merge sort y quick sort a copias de los mismos datos.
+- Comparemos sus resultados.
+- Probemos vacío, un elemento, negativos, repetidos y orden inverso.
+- Contemos comparaciones en al menos dos algoritmos.
+- Expliquemos por qué una misma salida puede requerir distinto trabajo.
 
 [Volvemos a la guía general](../../README.md).

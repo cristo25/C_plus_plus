@@ -7,6 +7,9 @@
 // original sin copiarlo ni cambiarlo. Cuando termina el arreglo también terminan los objetos que
 // contiene.
 //
+// Práctica: Vamos a guardar productos completos en un arreglo.
+// - Creemos tres productos con nombre y precio.
+// - Recorrámoslos para mostrar y sumar sus precios.
 
 #include <iostream>
 #include "../../../02_POO/08_Headers/Producto.h"

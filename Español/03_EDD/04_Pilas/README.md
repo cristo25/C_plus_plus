@@ -20,11 +20,11 @@ Vamos a comparar una pila construida con vector con otra de tipo stack. Introduc
 
 [Programa comentado](main.cpp).
 
-**Práctica.** Realiza un programa integrador que compare dos pilas.
+**Práctica.** Vamos a realizar un programa integrador que compare dos pilas.
 
-- Agregar los mismos datos a un vector y a un stack.
-- Consultar las dos cimas antes de retirar.
-- Comprobar que sale el mismo dato en cada paso.
-- Terminar con ambas pilas vacías.
+- Agreguemos los mismos datos a un vector y a un stack.
+- Consultemos las dos cimas antes de retirar.
+- Comprobemos que sale el mismo dato en cada paso.
+- Terminemos con ambas pilas vacías.
 
 [Volvemos a la guía general](../../README.md).

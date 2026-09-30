@@ -17,24 +17,24 @@ class Session {
     string user;
 
 public:
-    // We prepare the object with its name. With explicit we require an explicit construction, such
-    // as Session("Ana").
-    explicit Session(const string& name) : user(name) {
+    // We prepare the session with the name we receive.
+    Session(const string& name) : user(name) {
         cout << "Enter " << user << "\n";
     }
     // The destructor runs automatically when the object's lifetime ends.
     ~Session() {
         cout << "Leave " << user << "\n";
     }
-    const string& name() const {
-        return user;
-    }
 };
 
 int main() {
     {
         Session session("Ana");
-
     } // The lifetime of session ends here.
     cout << "Session ended\n";
 }
+
+// Practice: let's create a Game class that announces its beginning and end.
+// - Receive the game's name in the constructor.
+// - Print a message in the destructor.
+// - Create the game inside braces and observe the order of the messages.

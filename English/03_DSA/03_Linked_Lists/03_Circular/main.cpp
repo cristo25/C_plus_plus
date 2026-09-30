@@ -2,9 +2,12 @@
 //
 // We will close the chain into a circle: the last node points back to the first. We can picture
 // players taking repeated turns. Since we do not reach nullptr after one lap, we stop when we
-// return to the start. We keep the last node to append with a few changes (O(1)). Removing the only
-// node leaves an empty list; removing any other node keeps the circle closed.
+// return to the start. We keep the last node to append with a few changes. Removing the only node
+// leaves an empty list; removing any other node keeps the circle closed.
 //
+// Practice: We will create a turn rotation with a circular list.
+// - We will add three participants and show one full round.
+// - We will remove one participant and stop when traversal reaches the start again.
 
 #include "CircularList.h"
 #include <iostream>

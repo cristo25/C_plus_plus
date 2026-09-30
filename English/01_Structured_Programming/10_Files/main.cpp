@@ -3,14 +3,19 @@
 // We will keep text after the program ends. We can think of memory as a whiteboard and a file as a
 // notebook we put away. With ofstream we open the notebook for writing; with ifstream we open it
 // for reading. Both tools come from <fstream>. We use ios::app to add lines at the end without
-// erasing earlier ones. We check that opening and saving succeeded; when reading reaches the end,
-// eof tells us there is no more data.
+// erasing earlier ones. We check that each file opened, then read one line at a time. The loop ends
+// when there is no next line.
 //
+// Practice: Let's keep a study diary.
+//
+// - Add an activity to the end of a file.
+// - Read the file and display every activity.
+// - Show a message if the file cannot be opened for writing or reading.
 
-// We read and save files using ifstream and ofstream.
+// With fstream we can read and write files.
 #include <fstream>
 #include <iostream>
-// We store and work with text using string.
+// With string we keep the file path and each line we read.
 #include <string>
 
 using namespace std;
@@ -18,20 +23,16 @@ using namespace std;
 int main() {
     const string path = "notes_demo.txt";
     {
-        // ios::app appends to preserve lines that already exist.
+        // With ios::app we add a line without erasing the others.
         ofstream output(path, ios::app);
         if (!output) {
             cerr << "Could not open the file.\n";
             return 1;
         }
         output << "Study C++\n";
-        output.close();
-        if (!output) {
-            cerr << "Save error.\n";
-            return 1;
-        }
+        // The file closes on its own when we leave this block.
     }
-    // Writing has finished: open a reading stream for the same file.
+    // We open the same file to read it.
     ifstream input(path);
     if (!input) {
         cerr << "Could not read.\n";
@@ -41,9 +42,6 @@ int main() {
     while (getline(input, line)) {
         cout << line << "\n";
     }
-    // Reaching the end is normal; a different reading failure must be reported.
-    if (!input.eof()) {
-        cerr << "Read error.\n";
-        return 1;
-    }
+    // The file also closes on its own when the program ends.
+    return 0;
 }

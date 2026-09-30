@@ -6,7 +6,7 @@
 #include <limits>
 // We report errors with messages, such as invalid_argument for an invalid value.
 #include <stdexcept>
-// We use move to transfer data or responsibility for releasing it.
+// We use swap to exchange catalogs after saving.
 #include <utility>
 
 namespace project {
@@ -70,10 +70,8 @@ namespace project {
         }
     }
 
-    void Library::commit(BookDAO candidate, const string& message) {
-        // Save before replacing the in-memory catalog. If reading or writing fails, we keep the
-        // previous data. ponytail: each change copies every book and title for undo; use inverse
-        // commands if those copies take too much space.
+    void Library::commit(BookDAO& candidate, const string& message) {
+        // We keep a copy so we can undo the change. If saving fails, we keep the previous books.
         undo.push(dao);
         try {
             store.save(candidate);
@@ -81,7 +79,7 @@ namespace project {
             undo.pop();
             throw;
         }
-        dao = move(candidate);
+        swap(dao, candidate);
         record(message);
     }
 
@@ -91,7 +89,7 @@ namespace project {
         if (!candidate.create(book)) {
             throw invalid_argument("Nonpositive or duplicate ID, or the 10000-book limit was reached");
         }
-        commit(move(candidate), "Book added: " + to_string(book.id));
+        commit(candidate, "Book added: " + to_string(book.id));
     }
 
     void Library::renameBook(int id, const string& title) {
@@ -100,7 +98,7 @@ namespace project {
         if (!candidate.update(id, title)) {
             throw invalid_argument("That book ID does not exist");
         }
-        commit(move(candidate), "Title updated: " + to_string(id));
+        commit(candidate, "Title updated: " + to_string(id));
     }
 
     void Library::removeBook(int id) {
@@ -108,7 +106,7 @@ namespace project {
         if (!candidate.remove(id)) {
             throw invalid_argument("That book ID does not exist");
         }
-        commit(move(candidate), "Book removed: " + to_string(id));
+        commit(candidate, "Book removed: " + to_string(id));
     }
 
     bool Library::undoLast() {
@@ -117,7 +115,7 @@ namespace project {
         }
         BookDAO previous = undo.top();
         store.save(previous);
-        dao = move(previous);
+        swap(dao, previous);
         undo.pop();
         record("Last catalog change undone");
         return true;

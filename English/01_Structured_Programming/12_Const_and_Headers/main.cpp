@@ -7,6 +7,14 @@
 // #ifndef, #define and #endif we avoid reading the same header twice inside a file being compiled.
 //
 
+// Practice: Let's write a grade program split across three files.
+//
+// - Declare functions in a .h and write their bodies in another .cpp.
+// - Receive a const grade array together with its count.
+// - Calculate the average and highest grade without modifying the grades.
+// - Display from main whether the average reaches the passing grade.
+// - Compile both .cpp files together.
+
 #include "Grades.h"
 #include <iostream>
 

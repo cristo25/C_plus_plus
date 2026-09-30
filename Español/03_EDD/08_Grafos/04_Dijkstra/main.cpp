@@ -8,6 +8,9 @@
 // dijkstra devuelve costos; en caminosMinimos también guardamos de dónde llegamos para reconstruir
 // una ruta.
 //
+// Práctica: Vamos a encontrar una ruta de menor costo.
+// - Asignemos costos no negativos a los caminos entre lugares.
+// - Mostremos el costo de llegar a cada lugar desde uno elegido.
 
 #include "../Grafo.h"
 #include <iostream>

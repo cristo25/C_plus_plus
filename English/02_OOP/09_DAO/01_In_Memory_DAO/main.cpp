@@ -16,7 +16,7 @@ using namespace course;
 
 int main() {
     BookDAO dao;
-    if (!(dao.create({1, "Introductory C++"}))) {
+    if (!dao.create({1, "Introductory C++"})) {
         return 1;
     }
     if (dao.create({1, "Duplicate"})) {
@@ -25,18 +25,27 @@ int main() {
     if (dao.create({0, "Invalid"})) {
         return 1;
     }
-    if (!(dao.update(1, "C++ step by step"))) {
+    if (!dao.update(1, "C++ step by step")) {
         return 1;
     }
     // We receive a borrowed catalog address. After changing its books, we search again before using
     // an address.
     const Book* book = dao.findById(1);
 
-    cout << book->title << "\n";
-    if (!(dao.remove(1))) {
+    if (book == nullptr) {
+        cerr << "Book not found.\n";
         return 1;
     }
-    if (!(!dao.findById(1) && !dao.remove(1))) {
+    cout << book->title << "\n";
+    if (!dao.remove(1)) {
+        return 1;
+    }
+    if (dao.findById(1) != nullptr || dao.remove(1)) {
         return 1;
     }
 }
+
+// Practice: let's manage two books with BookDAO.
+// - Create both books and find one by its id.
+// - Change one title and remove the other book.
+// - Check that findById returns nullptr for the removed book.

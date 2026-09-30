@@ -7,6 +7,9 @@
 // contar casillas ocupadas no significa contar productos distintos. Calculamos el valor total desde
 // los estantes para no sumar dos veces un producto repetido en la vitrina.
 //
+// Práctica: Vamos a crear un inventario con estantes y vistas.
+// - Guardemos productos en nodos de varios estantes.
+// - Ordenemos direcciones para mostrar una vista sin cambiar las listas originales.
 
 // Usamos sort para ordenar o cambiar el orden de los datos.
 #include <algorithm>

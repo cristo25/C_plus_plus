@@ -6,6 +6,9 @@
 // da otra etiqueta del mismo objeto y const impide cambiarlo mediante esa etiqueta. Usamos el punto
 // para elegir un dato de la ficha.
 //
+// Práctica: Vamos a guardar fichas de alumnos en un vector.
+// - Cada ficha tendrá un nombre y una nota.
+// - Mostremos solo las fichas que superen una nota elegida.
 
 #include <iostream>
 // Guardamos y trabajamos con texto mediante string.

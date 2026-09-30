@@ -2,11 +2,13 @@
 //
 // Vamos a elegir un dato como referencia para separar los demás; a ese dato lo llamamos pivote.
 // Ponemos los menores de un lado y repetimos en cada grupo. Eso hace quick sort. Si los grupos
-// quedan parejos, cada nivel revisa los n datos y los niveles crecen por mitades (O(n log n)). Aquí
+// quedan parejos, cada nivel revisa todos los datos y los niveles crecen por mitades. Aquí
 // elegimos el último dato: con entradas ordenadas o iguales puede quedar casi todo de un lado y
-// repetirse mucho trabajo (O(n²), como n por n). Esta elección nos ayuda a observar por qué importa
-// el pivote.
+// repetirse mucho trabajo. Esta elección nos ayuda a observar por qué importa el pivote.
 //
+// Práctica: Vamos a ordenar separando alrededor de un pivote.
+// - Pongamos los menores a un lado del pivote.
+// - Repitamos con cada parte y probemos una entrada ya ordenada.
 
 #include "../Ordenamientos.h"
 #include <iostream>

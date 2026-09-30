@@ -13,6 +13,14 @@
 // una dirección no mantiene viva la caja ni se vuelve nullptr automáticamente cuando desaparece.
 //
 
+// Práctica: Vamos a realizar un programa que permita seleccionar entre dos enteros mediante un puntero.
+//
+// - Crear dos variables y un puntero que señale una de ellas.
+// - Cambiar el dato mediante * y mostrar la variable original.
+// - Cambiar el destino del puntero y mostrar ambos enteros.
+// - Asignar nullptr al terminar y comprobarlo antes de intentar leer.
+// - Dibujar las cajas y las flechas después de cada cambio.
+
 #include <iostream>
 
 using namespace std;

@@ -1,11 +1,14 @@
 // Lista simplemente ligada
 //
 // Vamos a construir una cadena de cajas llamadas nodos. Cada nodo guarda un dato y un puntero al
-// siguiente, como una nota que indica dónde está la próxima caja. La lista guarda la dirección del
-// primero; el último señala nullptr. Para buscar seguimos las notas una a una: quizá debamos
-// visitar los n nodos (O(n)). Al quitar un nodo unimos su vecino anterior con el siguiente antes de
+// siguiente, como una nota que indica dónde está la próxima caja. La lista guarda la dirección
+// del primero; el último señala nullptr. Para buscar seguimos las notas una a una: quizá debamos
+// visitar todos los nodos. Al quitar un nodo unimos su vecino anterior con el siguiente antes de
 // liberar la caja. Podemos ver esos pasos dentro de ListaSimple.h.
 //
+// Práctica: Vamos a crear una lista que avance de nodo en nodo.
+// - Agreguemos tres valores y recorrámoslos desde el primero.
+// - Eliminemos un valor y comprobemos que el enlace siga funcionando.
 
 #include "ListaSimple.h"
 #include <iostream>

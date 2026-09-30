@@ -64,7 +64,7 @@ We will compare one-by-one search with halving search. First we search unsorted 
 
 ## Const and headers in DSA
 
-We will query a collection without changing it. With const vector<int>& we receive another label for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp we traverse the values and count those above a limit. We need neither copying nor sorting. Doubling the data doubles the visits (O(n), with n elements). We add only a counter and a few variables (O(1) additional memory).
+We will query a collection without changing it. With const vector<int>& we receive another label for the same vector, but only for reading. In Queries.h we announce the function; in Queries.cpp we traverse the values and count those above a limit. We need neither copying nor sorting. Doubling the data doubles the visits. We add only a counter and a few variables.
 
 [Commented program](11_Const_and_Headers/main.cpp).
 

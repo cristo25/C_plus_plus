@@ -7,6 +7,9 @@
 // expect cards to appear in order. Usually we inspect few entries, but many keys landing together
 // may require many checks.
 //
+// Practice: We will find students by their ID numbers.
+// - We will store three student IDs and names in unordered_map.
+// - We will look up one existing and one missing ID without creating new records.
 
 #include <iostream>
 // We store and work with text using string.

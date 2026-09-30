@@ -43,9 +43,14 @@ public:
 
 int main() {
     ElectricBicycle bicycle;
-    if (!(bicycle.assist())) {
+    if (!bicycle.assist()) {
         return 1;
     }
 
     cout << "Speed: " << bicycle.getSpeed() << "\n";
 }
+
+// Practice: let's create a Vehicle class and an ElectricCar class that inherits from it.
+// - Give the vehicle a function that moves it forward.
+// - Give the electric car a battery that loses charge when used.
+// - Show the distance and remaining charge after using the car.

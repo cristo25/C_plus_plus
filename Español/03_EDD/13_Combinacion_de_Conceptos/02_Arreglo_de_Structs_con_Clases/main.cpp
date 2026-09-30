@@ -6,6 +6,9 @@
 // registros[0].producto llegamos al objeto y con registros[0].cantidad al número. recibirUnidad
 // recibe Registro& para cambiar la ficha original: si quitamos &, cambiaríamos solo una copia.
 //
+// Práctica: Vamos a guardar fichas con producto y cantidad.
+// - Creemos un struct con Producto y cantidad, y guardemos varias fichas.
+// - Cambiemos una cantidad mediante una función con referencia.
 
 #include <iostream>
 // Consultamos con numeric_limits el mayor entero permitido antes de sumar.

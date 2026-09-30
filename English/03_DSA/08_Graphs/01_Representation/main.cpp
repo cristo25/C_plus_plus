@@ -2,11 +2,13 @@
 //
 // We will draw places joined by roads. We call each place a vertex, each connection an edge, and
 // the whole arrangement a graph. In connect we give the source, destination and cost. For travel
-// both ways we add both directions. We keep a neighbor list per place: memory grows with places and
-// roads (O(V + E), where V counts vertices and E counts edges). Another option is a table with one
-// slot per pair of places: five places need 25 slots and ten need 100 (O(V²), meaning V multiplied
-// by V).
+// both ways we add both directions. We keep a neighbor list per place: memory grows with places
+// and roads. Another option is a table with one slot per pair of places: five places need 25
+// slots and ten need 100.
 //
+// Practice: We will represent places and roads.
+// - We will create at least four places and connect some of them.
+// - We will show each place's neighbors and identify an isolated place.
 
 #include "../Graph.h"
 #include <iostream>

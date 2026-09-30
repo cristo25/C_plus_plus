@@ -6,6 +6,12 @@
 // instructions inside the braces run each time.
 //
 
+// Practice: Let's write a program that displays the seven times table.
+//
+// - Use a counter from 1 to 10.
+// - Calculate each multiplication inside the for loop.
+// - Show each operation and result on its own line.
+
 #include <iostream>
 
 using namespace std;

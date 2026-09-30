@@ -13,6 +13,14 @@
 // alive or automatically become nullptr when the box disappears.
 //
 
+// Practice: Let's write a program that selects between two integers with a pointer.
+//
+// - Create two variables and a pointer to one of them.
+// - Change a value through * and display the original variable.
+// - Change the pointer destination and display both integers.
+// - Assign nullptr at the end and check it before reading.
+// - Draw the boxes and arrows after each change.
+
 #include <iostream>
 
 using namespace std;

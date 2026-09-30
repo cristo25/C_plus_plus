@@ -7,6 +7,9 @@
 // we stop using every borrowed pointer. This differs from vector<Product>, where growth can move
 // the products themselves.
 //
+// Practice: We will store products managed by unique_ptr.
+// - We will create two products in a vector and inspect one through get.
+// - We will stop using the borrowed pointer before deleting its product.
 
 #include <iostream>
 // We use unique_ptr to release its managed object automatically.

@@ -1,7 +1,5 @@
 # DAO: separating data access
 
-We will connect this topic’s pieces before solving its integration task. Each link contains the program, comments and a practice task with requirements.
-
 ## In-memory DAO and CRUD
 
 We will bring storing, finding, updating and removing books together in BookDAO. We can picture a catalog keeper: we request a book by its id, a number identifying it. DAO is the usual name for a class dedicated to data access. Here we keep books in a vector, so they disappear when the program ends. find lends a pointer to a book, or returns nullptr if it is missing. We check before reading it; after changing the catalog we find it again because the vector may move its books.
@@ -10,7 +8,17 @@ We will bring storing, finding, updating and removing books together in BookDAO.
 
 ## Persisting a DAO in a file
 
-We will save the catalog in a file so we can retrieve it later. First we ask the DAO to write its books and then read them into another catalog. We append a complete copy each run; while reading, we keep the last complete copy. If data is invalid, we report it without replacing the catalog with an incomplete reading. To try that case we use istringstream: a tool from <sstream> that reads text already in memory as if it came from a file. This lets us test damaged input without damaging the real file.
+We will save the catalog in a file so we can retrieve it later. First we ask the DAO to write its books and then read them into another catalog. Each run writes the current catalog to the file again. If data is invalid, we report it without replacing the catalog with incomplete data. To try that case we use istringstream from <sstream>: it reads text held in memory as if it came from a file. This lets us test damaged input without damaging the real file.
+
+We can picture the file as a notebook. First we write how many books we have; then we use one line for each book's number and another for its title. If we save one book with id 7, the notebook looks like this:
+
+```text
+1
+7
+C++ step by step
+```
+
+When we read those lines, we fill another catalog. Because the title uses its whole line, it can contain spaces and quotation marks.
 
 [Commented program](02_File_DAO/main.cpp).
 

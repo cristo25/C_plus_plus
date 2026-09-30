@@ -35,3 +35,8 @@ int main() {
     cout << "Bicicleta " << roja.color << ": " << roja.velocidad << "\n";
     cout << "Bicicleta " << azul.color << ": " << azul.velocidad << "\n";
 }
+
+// Práctica: vamos a crear una clase Bloque para representar dos bloques de Minecraft.
+// - Guardamos el nombre y la dureza de cada bloque.
+// - Añadimos una función que reduzca la dureza al golpearlo.
+// - Mostramos que golpear un bloque no cambia el otro.

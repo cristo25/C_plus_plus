@@ -43,9 +43,14 @@ public:
 
 int main() {
     BicicletaElectrica bici;
-    if (!(bici.asistir())) {
+    if (!bici.asistir()) {
         return 1;
     }
 
     cout << "Velocidad: " << bici.consultarVelocidad() << "\n";
 }
+
+// Práctica: vamos a crear una clase Vehiculo y una clase AutoElectrico que herede de ella.
+// - Damos al vehículo una función para avanzar.
+// - Añadimos una batería al auto eléctrico y gastamos carga al usarla.
+// - Mostramos el avance y la carga después de usar el auto.

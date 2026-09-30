@@ -5,6 +5,9 @@
 // personas esperando una ventanilla. Antes de atender revisamos empty. A la regla «primero en
 // entrar, primero en salir» también la llamamos FIFO; las siglas solo abrevian esa misma idea.
 //
+// Práctica: Vamos a simular una fila de personas.
+// - Agreguemos tres nombres en orden de llegada.
+// - Atendamos uno por uno sin consultar una fila vacía.
 
 #include <iostream>
 // Atendemos por llegada con queue o por importancia con priority_queue.

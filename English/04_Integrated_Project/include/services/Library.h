@@ -31,7 +31,7 @@ namespace project {
         DoublyLinkedList order;
 
         void record(const string& message);
-        void commit(BookDAO candidate, const string& message);
+        void commit(BookDAO& candidate, const string& message);
         static void validateTitle(const string& title);
     public:
         explicit Library(CatalogStore& store);

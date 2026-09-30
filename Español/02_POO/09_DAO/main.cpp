@@ -17,42 +17,48 @@ using namespace curso;
 
 int main() {
     LibroDAO original;
-    if (!(original.crear({1, "Estructuras"}))) {
+    if (!original.crear({1, "Estructuras"})) {
         return 1;
     }
-    if (!(original.crear({2, "Objetos"}))) {
+    if (!original.crear({2, "Objetos"})) {
         return 1;
     }
-    if (!(original.actualizar(2, "Objetos y \"clases\""))) {
+    if (!original.actualizar(2, "Objetos y \"clases\"")) {
         return 1;
     }
-    if (!(original.eliminar(1))) {
+    if (!original.eliminar(1)) {
         return 1;
     }
     // Simulamos un archivo en memoria para guardar y recuperar sin crear datos en disco.
     stringstream archivo;
-    if (!(original.guardar(archivo))) {
+    if (!original.guardar(archivo)) {
         return 1;
     }
     LibroDAO copia;
-    if (!(copia.cargar(archivo))) {
+    if (!copia.cargar(archivo)) {
         return 1;
     }
-    if (!(copia.todos().size() == 1)) {
+    if (copia.todos().size() != 1) {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
-    if (!(copia.buscar(2)->titulo == "Objetos y \"clases\"")) {
+    const Libro* libro = copia.buscar(2);
+    if (libro == nullptr || libro->titulo != "Objetos y \"clases\"") {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
-    istringstream duplicados("2\n2 \"Uno\"\n2 \"Dos\"\n");
+    istringstream duplicados("2\n2\nUno\n2\nDos\n");
     if (copia.cargar(duplicados)) {
         return 1;
     }
-    if (!(copia.todos().size() == 1)) {
+    if (copia.todos().size() != 1) {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
-    cout << copia.buscar(2)->titulo << "\n";
+    cout << libro->titulo << "\n";
 }
+
+// Práctica integradora: vamos a administrar y recuperar un catálogo de tres libros.
+// - Cambiamos un título, eliminamos un libro y guardamos los restantes.
+// - Cargamos los datos en otro catálogo y comprobamos sus títulos.
+// - Probamos datos repetidos y conservamos el catálogo anterior si falla la carga.

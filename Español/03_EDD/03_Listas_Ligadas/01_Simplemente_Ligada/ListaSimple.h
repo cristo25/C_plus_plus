@@ -37,8 +37,7 @@ namespace curso {
                 inicio = nuevo;
                 return;
             }
-            // ponytail: para agregar recorremos todos los nodos hasta el último; guardar un puntero
-            // al último evita ese recorrido.
+            // Recorremos la cadena hasta encontrar el último nodo.
             Nodo* actual = inicio;
             while (actual->siguiente) {
                 actual = actual->siguiente;

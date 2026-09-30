@@ -4,19 +4,19 @@ Vamos a relacionar las piezas de este tema antes de resolver su práctica integr
 
 ## Representar grafos
 
-Vamos a dibujar lugares unidos por caminos. A cada lugar lo llamamos vértice y a cada conexión arista; al conjunto lo llamamos grafo. En conectar indicamos origen, destino y costo. Si queremos ida y vuelta agregamos ambas direcciones. Guardamos una lista de vecinos por lugar: la memoria crece con los lugares y caminos (O(V + E), donde V cuenta vértices y E aristas). Otra posibilidad es una tabla con una casilla por pareja de lugares: cinco lugares necesitan 25 casillas y diez necesitan 100 (O(V²), es decir, V multiplicado por V).
+Vamos a dibujar lugares unidos por caminos. A cada lugar lo llamamos vértice y a cada conexión arista; al conjunto lo llamamos grafo. En conectar indicamos origen, destino y costo. Si queremos ida y vuelta agregamos ambas direcciones. Guardamos una lista de vecinos por lugar: la memoria crece con los lugares y caminos. Otra posibilidad es una tabla con una casilla por pareja de lugares: cinco lugares necesitan 25 casillas y diez necesitan 100.
 
 [Programa comentado](01_Representacion/main.cpp).
 
 ## BFS: búsqueda en anchura
 
-Vamos a explorar un mapa por capas. Primero visitamos el inicio, después sus vecinos y después los vecinos de estos. Guardamos lo pendiente en una cola para respetar ese orden. A este recorrido lo llamamos BFS, o búsqueda en anchura. Marcamos cada lugar al agregarlo para no repetirlo, aunque haya caminos de regreso. Solo llegamos a lugares conectados con el inicio. Si recorremos todo el mapa, revisamos sus lugares y caminos (O(V + E), con V lugares y E conexiones).
+Vamos a explorar un mapa por capas. Primero visitamos el inicio, después sus vecinos y después los vecinos de estos. Guardamos lo pendiente en una cola para respetar ese orden. A este recorrido lo llamamos BFS, o búsqueda en anchura. Marcamos cada lugar al agregarlo para no repetirlo, aunque haya caminos de regreso. Solo llegamos a lugares conectados con el inicio. Si recorremos todo el mapa, revisamos sus lugares y caminos.
 
 [Programa comentado](02_BFS/main.cpp).
 
 ## DFS: búsqueda en profundidad
 
-Vamos a seguir un camino hasta donde podamos y después regresar para probar otro. Podemos imaginar la exploración de un laberinto. A este recorrido lo llamamos DFS, o búsqueda en profundidad. Aquí usamos recursión para recordar por dónde volver. Marcamos los lugares visitados para no dar vueltas sin fin. El orden puede diferir del de BFS aunque ambos alcancen los mismos lugares. Si revisamos todo el mapa, el trabajo crece con sus V lugares y E caminos (O(V + E)).
+Vamos a seguir un camino hasta donde podamos y después regresar para probar otro. Podemos imaginar la exploración de un laberinto. A este recorrido lo llamamos DFS, o búsqueda en profundidad. Aquí usamos recursión para recordar por dónde volver. Marcamos los lugares visitados para no dar vueltas sin fin. El orden puede diferir del de BFS aunque ambos alcancen los mismos lugares. Si revisamos todo el mapa, visitamos sus lugares y caminos.
 
 [Programa comentado](03_DFS/main.cpp).
 
@@ -32,12 +32,12 @@ Vamos a usar un mismo mapa para contestar preguntas distintas. Con BFS exploramo
 
 [Programa comentado](main.cpp).
 
-**Práctica.** Realiza un programa integrador de rutas de una escuela.
+**Práctica.** Vamos a realizar un programa integrador de rutas de una escuela.
 
-- Guardar al menos cinco edificios y los minutos entre ellos.
-- Mostrar BFS y DFS desde el mismo edificio.
-- Calcular el menor costo con Dijkstra.
-- Incluir un edificio sin conexión y avisar si no es alcanzable.
-- Separar el grafo y sus operaciones en un header.
+- Guardemos al menos cinco edificios y los minutos entre ellos.
+- Mostremos BFS y DFS desde el mismo edificio.
+- Calculemos el menor costo con Dijkstra.
+- Incluyamos un edificio sin conexión y avisar si no es alcanzable.
+- Separemos el grafo y sus operaciones en un header.
 
 [Volvemos a la guía general](../../README.md).

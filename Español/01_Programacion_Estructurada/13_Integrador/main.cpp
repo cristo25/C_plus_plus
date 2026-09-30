@@ -8,6 +8,15 @@
 //
 
 // Leemos y guardamos archivos con ifstream y ofstream.
+// Práctica: Vamos a realizar un programa integrador de reportes escolares.
+//
+// - Guardar nombres y tres notas por alumno con string y arreglos.
+// - Calcular promedio y nota máxima mediante funciones.
+// - Usar una referencia para actualizar un dato y un puntero para consultar otro.
+// - Clasificar cada promedio con if y mostrar el reporte.
+// - Guardar los reportes en un archivo sin borrar los anteriores.
+// - Separar declaraciones y funciones en un .h y un .cpp.
+
 #include <fstream>
 #include <iostream>
 // Guardamos y trabajamos con texto mediante string.

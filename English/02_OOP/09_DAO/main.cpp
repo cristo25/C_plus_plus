@@ -17,42 +17,48 @@ using namespace course;
 
 int main() {
     BookDAO original;
-    if (!(original.create({1, "Structures"}))) {
+    if (!original.create({1, "Structures"})) {
         return 1;
     }
-    if (!(original.create({2, "Objects"}))) {
+    if (!original.create({2, "Objects"})) {
         return 1;
     }
-    if (!(original.update(2, "Objects and \"classes\""))) {
+    if (!original.update(2, "Objects and \"classes\"")) {
         return 1;
     }
-    if (!(original.remove(1))) {
+    if (!original.remove(1)) {
         return 1;
     }
     // Simulate a file in memory to save and restore without creating disk data.
     stringstream file;
-    if (!(original.save(file))) {
+    if (!original.save(file)) {
         return 1;
     }
     BookDAO copy;
-    if (!(copy.load(file))) {
+    if (!copy.load(file)) {
         return 1;
     }
-    if (!(copy.all().size() == 1)) {
+    if (copy.all().size() != 1) {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    if (!(copy.findById(2)->title == "Objects and \"classes\"")) {
+    const Book* book = copy.findById(2);
+    if (book == nullptr || book->title != "Objects and \"classes\"") {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    istringstream duplicates("2\n2 \"One\"\n2 \"Two\"\n");
+    istringstream duplicates("2\n2\nOne\n2\nTwo\n");
     if (copy.load(duplicates)) {
         return 1;
     }
-    if (!(copy.all().size() == 1)) {
+    if (copy.all().size() != 1) {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    cout << copy.findById(2)->title << "\n";
+    cout << book->title << "\n";
 }
+
+// Integration practice: let's manage and restore a catalog of three books.
+// - Change one title, remove one book and save the remaining books.
+// - Load the data into another catalog and check its titles.
+// - Try repeated data and keep the old catalog if loading fails.

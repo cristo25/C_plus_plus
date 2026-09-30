@@ -3,11 +3,12 @@
 // Vamos a usar un cajón cuya cantidad de casillas puede crecer: vector<int>, de <vector>. Con
 // push_back agregamos al final y con size consultamos cuántos datos hay. Recorremos los números
 // para sumarlos. Cuando se llena el espacio reservado, el vector puede mudarse a otro bloque y
-// llevarse sus datos; las direcciones anteriores ya no sirven. Normalmente agregar al final
-// requiere poco trabajo; al repartir las mudanzas entre muchas inserciones, el trabajo medio por
-// inserción permanece acotado (O(1) amortizado: repartimos el costo de crecer entre muchas
-// operaciones).
+// llevarse sus datos; las direcciones anteriores ya no sirven. No tenemos que mudar el cajón cada
+// vez que añadimos un dato; normalmente basta con ocupar la siguiente casilla.
 //
+// Práctica: Vamos a reunir calificaciones en un vector.
+// - Agreguemos al menos cuatro números con push_back.
+// - Recorramos el vector para calcular y mostrar su suma.
 
 #include <iostream>
 // Guardamos una colección que puede crecer con vector.

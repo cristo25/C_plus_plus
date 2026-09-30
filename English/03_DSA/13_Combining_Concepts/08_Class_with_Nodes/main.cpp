@@ -7,6 +7,9 @@
 // read-only reference. Emptying the shelf invalidates those queries because their boxes no longer
 // exist.
 //
+// Practice: We will manage a product list inside a class.
+// - We will add three products through the Shelf class.
+// - We will traverse its nodes, add prices and clear the list.
 
 #include <iostream>
 #include "../Shelf.h"

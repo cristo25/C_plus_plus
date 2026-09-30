@@ -8,13 +8,13 @@ We will store complete objects in an array. In Product products[3], each compart
 
 [Commented program](01_Array_of_Classes/main.cpp).
 
-**Practice.** Write a program with an array of products.
+**Practice.** We will write a program with an array of products.
 
-- Create three complete objects with names and prices.
-- Traverse them through const references.
-- Add their prices in cents.
-- Display each product and the total.
-- Explain what one array slot contains.
+- We will create three complete objects with names and prices.
+- We will traverse them through const references.
+- We will add their prices in cents.
+- We will display each product and the total.
+- We will explain what one array slot contains.
 
 ## 2. A struct contains a class; an array contains those structs
 
@@ -22,13 +22,13 @@ We will add available quantity to each product. With struct Record we group a Pr
 
 [Commented program](02_Array_of_Structs_with_Classes/main.cpp).
 
-**Practice.** Write a program that tracks stock per product.
+**Practice.** We will write a program that tracks stock per product.
 
-- Create a struct containing a Product and a quantity.
-- Store at least two records in an array.
-- Receive units through a function taking a reference.
-- Reject negative quantities and prevent exceeding the integer limit.
-- Display the records after the change.
+- We will create a struct containing a Product and a quantity.
+- We will store at least two records in an array.
+- We will receive units through a function taking a reference.
+- We will reject negative quantities and prevent exceeding the integer limit.
+- We will display the records after the change.
 
 ## 3. An array of cards pointing to integers
 
@@ -36,13 +36,13 @@ We will store addresses instead of integers. In int* addresses[3] we have three 
 
 [Commented program](03_Array_of_Pointers/main.cpp).
 
-**Practice.** Write a program with three address cards for two integers.
+**Practice.** We will write a program with three address cards for two integers.
 
-- Store addresses in an int* cards[3] array.
-- Point two cards at the same integer.
-- Change that integer through one card and read through the other.
-- Leave one card as nullptr and check before following it.
-- Show that changing an address does not change the previous contents.
+- We will store addresses in an int* cards[3] array.
+- We will point two cards at the same integer.
+- We will change that integer through one card and read through the other.
+- We will leave one card as nullptr and check before following it.
+- We will show that changing an address does not change the previous contents.
 
 ## 4. A vector of pointers: an inventory view
 
@@ -50,13 +50,13 @@ We will select products without copying them. We store products in an array and 
 
 [Commented program](04_Vector_of_Pointers/main.cpp).
 
-**Practice.** Write a program that displays a selection of products.
+**Practice.** We will write a program that displays a selection of products.
 
-- Store three complete products in an array.
-- Keep their addresses in a vector of pointers.
-- Change a selection through a reference to a pointer.
-- Display a product twice without copying it.
-- Check that original products stay in place.
+- We will store three complete products in an array.
+- We will keep their addresses in a vector of pointers.
+- We will change a selection through a reference to a pointer.
+- We will display a product twice without copying it.
+- We will check that original products stay in place.
 
 ## 5. An array of arrays of pointers
 
@@ -64,13 +64,13 @@ We will arrange address cards in rows and columns. Product* slots[2][2] represen
 
 [Commented program](05_Matrix_of_Pointers/main.cpp).
 
-**Practice.** Write a product display using a matrix of pointers.
+**Practice.** We will write a product display using a matrix of pointers.
 
-- Create two rows with two slots each.
-- Include a nullptr slot and two slots pointing to one product.
-- Display a notice for empty slots.
-- Change a product and check both cards show the change.
-- Count occupied slots without confusing them with distinct products.
+- We will create two rows with two slots each.
+- We will include a nullptr slot and two slots pointing to one product.
+- We will display a notice for empty slots.
+- We will change a product and check both cards show the change.
+- We will count occupied slots without confusing them with distinct products.
 
 ## 6. Nodes inside an array, connected by pointers
 
@@ -78,13 +78,13 @@ We will store complete nodes in an array and link them with pointers. Each Node 
 
 [Commented program](06_Array_of_Linked_Nodes/main.cpp).
 
-**Practice.** Write a program that links nodes inside an array.
+**Practice.** We will write a program that links nodes inside an array.
 
-- Store three nodes containing products.
-- Connect positions in the order 2, 0 and 1.
-- Traverse from the starting node through next.
-- Stop at nullptr or report exceeding the node count.
-- Draw array positions separately from visit order.
+- We will store three nodes containing products.
+- We will connect positions in the order 2, 0 and 1.
+- We will traverse from the starting node through next.
+- We will stop at nullptr or report exceeding the node count.
+- We will draw array positions separately from visit order.
 
 ## 7. A vector of owners and an observer pointer
 
@@ -92,27 +92,27 @@ We will separate the location of cards from that of products. In vector<unique_p
 
 [Commented program](07_Vector_of_Unique_Ptr/main.cpp).
 
-**Practice.** Write a program with products managed by unique_ptr inside a vector.
+**Practice.** We will write a program with products managed by unique_ptr inside a vector.
 
-- Create two products with make_unique.
-- Obtain a reading pointer with get.
-- Grow the vector’s capacity and check the product address.
-- Clear every observer before removing its owner.
-- Display how many products remain.
+- We will create two products with make_unique.
+- We will obtain a reading pointer with get.
+- We will grow the vector’s capacity and check the product address.
+- We will clear every observer before removing its owner.
+- We will display how many products remain.
 
 ## 8. A class manages struct nodes
 
-We will keep the chain and its rules inside Shelf. Each node contains a Product and a unique_ptr to the next node; the shelf is responsible for the first. From outside we request additions or queries without directly changing links. We can picture a shelf keeper arranging boxes and lending their labels for reading. first() and nextNode() lend addresses; getProduct() lends a read-only reference. Emptying the shelf invalidates those queries because their boxes no longer exist.
+We will keep the chain and its rules inside Shelf. We can picture a shelf keeper arranging boxes and lending their labels for reading. Each node contains a Product and a unique_ptr to the next node; the shelf is responsible for the first. When adding, we use `swap` to exchange address cards: the new node points to the old chain and the shelf points to the new node. From outside we request additions or queries without directly changing links. first() and nextNode() lend addresses; getProduct() lends a read-only reference. Emptying the shelf makes those queries unusable because their boxes no longer exist.
 
 [Commented program](08_Class_with_Nodes/main.cpp).
 
-**Practice.** Write a program with a class managing a product list.
+**Practice.** We will write a program with a class managing a product list.
 
-- Keep the first node inside the class.
-- Add three products through a public operation.
-- Traverse them using const queries.
-- Calculate the total value.
-- Empty the list without reusing deleted-node addresses.
+- We will keep the first node inside the class.
+- We will add three products through a public operation.
+- We will traverse them using const queries.
+- We will calculate the total value.
+- We will empty the list without reusing deleted-node addresses.
 
 ## 9. A vector contains classes managing nodes
 
@@ -120,13 +120,13 @@ We will store several shelves in a vector. Each shelf contains nodes and each no
 
 [Commented program](09_Vector_of_Classes_with_Nodes/main.cpp).
 
-**Practice.** Write a program with a vector of shelves containing nodes.
+**Practice.** We will write a program with a vector of shelves containing nodes.
 
-- Create two shelves and add products to their lists.
-- Distinguish a shelf pointer from a pointer to one of its nodes.
-- Clear the shelf pointer before growing vector capacity.
-- Read the node through its relocated owner.
-- Clear the query before emptying its list.
+- We will create two shelves and add products to their lists.
+- We will distinguish a shelf pointer from a pointer to one of its nodes.
+- We will clear the shelf pointer before growing vector capacity.
+- We will read the node through its relocated owner.
+- We will clear the query before emptying its list.
 
 ## Integration: owners, views, matrices and sorting
 
@@ -134,14 +134,14 @@ We will combine the layers to display sorted products without moving their origi
 
 [Commented program](main.cpp).
 
-**Practice.** Write an integrated inventory with shelves, nodes and views.
+**Practice.** We will write an integrated inventory with shelves, nodes and views.
 
-- Store shelves in a vector and their products in struct nodes.
-- Create a read-only pointer view without copying products.
-- Sort the view by name or price.
-- Display part of it in a pointer matrix with empty slots.
-- Change a selection through a reference to a pointer.
-- Check that sorting the view leaves original order and totals unchanged.
-- Explain which structure releases each object.
+- We will store shelves in a vector and their products in struct nodes.
+- We will create a read-only pointer view without copying products.
+- We will sort the view by name or price.
+- We will display part of it in a pointer matrix with empty slots.
+- We will change a selection through a reference to a pointer.
+- We will check that sorting the view leaves original order and totals unchanged.
+- We will explain which structure releases each object.
 
 [Back to the general guide](../../README.md).

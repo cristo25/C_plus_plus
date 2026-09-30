@@ -6,6 +6,9 @@
 // the current node and both branches recursively. We use unique_ptr so each branch releases its
 // nodes when finished.
 //
+// Practice: We will build a binary tree with nodes.
+// - We will create a root, two children and at least one more leaf.
+// - We will count nodes by traversing both branches.
 
 #include <iostream>
 // We use unique_ptr to release its managed object automatically.

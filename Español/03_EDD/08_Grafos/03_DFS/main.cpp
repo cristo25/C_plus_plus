@@ -2,10 +2,13 @@
 //
 // Vamos a seguir un camino hasta donde podamos y después regresar para probar otro. Podemos
 // imaginar la exploración de un laberinto. A este recorrido lo llamamos DFS, o búsqueda en
-// profundidad. Aquí usamos recursión para recordar por dónde volver. Marcamos los lugares visitados
-// para no dar vueltas sin fin. El orden puede diferir del de BFS aunque ambos alcancen los mismos
-// lugares. Si revisamos todo el mapa, el trabajo crece con sus V lugares y E caminos (O(V + E)).
+// profundidad. Aquí usamos recursión para recordar por dónde volver. Marcamos los lugares
+// visitados para no dar vueltas sin fin. El orden puede diferir del de BFS aunque ambos alcancen
+// los mismos lugares. Si revisamos todo el mapa, visitamos sus lugares y caminos.
 //
+// Práctica: Vamos a explorar un mapa por caminos completos.
+// - Partamos de un lugar y recorramos sus conexiones con DFS.
+// - Marquemos los lugares visitados para evitar vueltas sin fin.
 
 #include "../Grafo.h"
 #include <iostream>

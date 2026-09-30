@@ -6,6 +6,9 @@
 // arriving first does not always mean being served first. With top we inspect the next value and
 // with pop we remove it; data must be present.
 //
+// Practice: We will serve tasks by priority.
+// - We will store at least three different priority levels.
+// - We will show the removal order and compare it with arrival order.
 
 // We select the smallest value first in a priority queue using greater.
 #include <functional>
