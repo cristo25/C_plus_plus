@@ -43,17 +43,20 @@ namespace proyecto {
     }
 
     optional<Ruta> MapaCampus::rutaMinima(size_t origen, size_t destino) const {
-        (void)etiquetas.at(destino);
+        // No podemos buscar una ruta a un edificio que no está en el mapa.
+        if (destino >= etiquetas.size()) {
+            throw out_of_range("El edificio de destino no existe");
+        }
         const auto resultado = caminosMinimos(red, origen);
-        if (resultado.distancias.at(destino) == INFINITO) {
+        if (resultado.distancias[destino] == INFINITO) {
             return nullopt;
         }
-        Ruta ruta{resultado.distancias.at(destino), {}};
+        Ruta ruta{resultado.distancias[destino], {}};
         size_t actual = destino;
         // Seguimos las tarjetas de anterior desde el destino y luego invertimos el recorrido.
         while (actual != origen) {
             ruta.paradas.push_back(actual);
-            const auto anterior = resultado.anteriores.at(actual);
+            const auto anterior = resultado.anteriores[actual];
             if (!anterior) {
                 throw logic_error("La ruta tiene un enlace anterior invalido");
             }

@@ -52,7 +52,7 @@ int main() {
         historial.agregar(id);
         deshacer.push(id);
         indice.insertar(id);
-        cout << "Procesar: " << nombres.at(id) << "\n";
+        cout << "Procesar: " << nombres[id] << "\n";
     }
     if (!(historial.valores() == ids && deshacer.top() == 2)) {
         cerr << "La comprobacion no dio el resultado esperado.\n";
@@ -81,10 +81,10 @@ int main() {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
-    if (!(dijkstra(rutas, 0).at(1) == 2)) {
+    if (!(dijkstra(rutas, 0)[1] == 2)) {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
-    cout << "Ultima tarea (deshacer): " << nombres.at(deshacer.top()) << "\n";
-    cout << "Costo minimo de entrega 0 -> 1: " << dijkstra(rutas, 0).at(1) << "\n";
+    cout << "Ultima tarea (deshacer): " << nombres[deshacer.top()] << "\n";
+    cout << "Costo minimo de entrega 0 -> 1: " << dijkstra(rutas, 0)[1] << "\n";
 }

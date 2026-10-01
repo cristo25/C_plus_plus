@@ -21,8 +21,9 @@ using namespace std;
 
 int main() {
     unordered_map<int, string> alumnos;
-    alumnos.emplace(101, "Ana");
-    alumnos.emplace(102, "Luis");
+    // Con [101] elegimos la ficha 101; si falta, la creamos y guardamos el nombre.
+    alumnos[101] = "Ana";
+    alumnos[102] = "Luis";
     // find consulta sin insertar una clave nueva; aquí sabemos que 101 existe porque se agregó
     // antes.
     auto encontrado = alumnos.find(101);

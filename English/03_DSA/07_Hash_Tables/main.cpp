@@ -21,8 +21,9 @@ using namespace std;
 
 int main() {
     unordered_map<int, string> students;
-    students.emplace(101, "Ana");
-    students.emplace(102, "Luis");
+    // With [101] we choose card 101; if it is missing, we create it and store the name.
+    students[101] = "Ana";
+    students[102] = "Luis";
     // find reads without inserting a new key; here 101 exists because it was inserted above.
     auto found = students.find(101);
     cout << found->second << "\n";

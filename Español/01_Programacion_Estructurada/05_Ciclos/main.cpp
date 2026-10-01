@@ -5,7 +5,7 @@
 // pensar en un negocio: primero recibimos pedidos, después los entregamos y al final avisamos.
 // Elegimos cada ciclo según cuándo necesitamos revisar su condición.
 //
-// Practica: Realiza un programa integrador que organice entregas.
+// Práctica: Vamos a realizar un programa integrador que organice entregas.
 //
 // - Sumar pedidos de tres días con for.
 // - Atender pedidos de uno en uno con while.

@@ -25,13 +25,12 @@ using namespace curso;
 int main() {
     vector<unique_ptr<Producto>> propietarios;
     propietarios.push_back(make_unique<Producto>("Cuaderno", 300));
-    const Producto* observador = propietarios.at(0).get();
+    const Producto* observador = propietarios[0].get();
 
-    // Pedimos más espacio al vector: se mudan sus tarjetas, mientras los productos siguen donde
-    // estaban.
-    propietarios.reserve(propietarios.capacity() + 1);
+    // Agregamos otro producto. El vector puede cambiar de lugar sus tarjetas; los productos
+    // creados aparte conservan su dirección.
     propietarios.push_back(make_unique<Producto>("Lapiz", 100));
-    cout << boolalpha << "El producto sigue en el mismo sitio: " << (observador == propietarios.at(0).get()) << "\n";
+    cout << boolalpha << "El producto sigue en el mismo sitio: " << (observador == propietarios[0].get()) << "\n";
     cout << observador->consultarNombre() << "\n";
 
     // Dejamos de seguir esta dirección antes de liberar el producto que señalaba.

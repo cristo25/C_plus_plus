@@ -51,7 +51,7 @@ namespace proyecto {
             biblioteca.agregarLibro({20, "POO"});
             {
                 const auto vista = biblioteca.catalogoOrdenado();
-                exigir(vista.at(0)->id == 10 && vista.at(2)->id == 30, "Vista ordenada");
+                exigir(vista.size() == 3 && vista[0]->id == 10 && vista[2]->id == 30, "Vista ordenada");
             }
             exigir(biblioteca.buscar(20)->titulo == "POO" && biblioteca.buscar(21) == nullptr, "Busqueda binaria");
             // La ruta mínima mejora un camino directo; también comprobamos destino aislado y origen igual a destino.
@@ -65,7 +65,8 @@ namespace proyecto {
             biblioteca.solicitarEntrega(10, 0, 4);
             biblioteca.solicitarEntrega(20, 2, 1);
             biblioteca.renombrarLibro(10, "Titulo nuevo");
-            exigir(biblioteca.entregasPendientes().at(0).libro.titulo == "Libro con \"comillas\"", "Solicitud independiente del catalogo");
+            const auto pendientes = biblioteca.entregasPendientes();
+            exigir(pendientes.size() == 2 && pendientes[0].libro.titulo == "Libro con \"comillas\"", "Solicitud independiente del catalogo");
             const auto primera = biblioteca.procesarEntrega();
             const auto segunda = biblioteca.procesarEntrega();
             exigir(primera && segunda && primera->entrega.libro.id == 10 && segunda->entrega.libro.id == 20, "FIFO");

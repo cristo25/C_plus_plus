@@ -31,6 +31,18 @@ g++ -std=c++17 main.cpp Product.cpp -o program.exe
 
 We include the `.h` to learn which functions are available, and add the `.cpp` files to the command to include their bodies. We keep compilation commands here so we do not repeat them in every program. On Linux or macOS we can use `program` without `.exe`.
 
+For these examples we add the listed file after `main.cpp`, just as we did with `Product.cpp`:
+
+| Folder where we compile | Additional file |
+| --- | --- |
+| `01_Structured_Programming/12_Const_and_Headers` | `Grades.cpp` |
+| `02_OOP/08_Headers` | `Product.cpp` |
+| `03_DSA/11_Const_and_Headers` | `Queries.cpp` |
+| `03_DSA/13_Combining_Concepts` | `../../02_OOP/08_Headers/Product.cpp` |
+| A numbered subfolder inside `13_Combining_Concepts` | `../../../02_OOP/08_Headers/Product.cpp` |
+
+With `../` we go up one folder to find the shared file. For the final project we follow its [compilation instructions](04_Integrated_Project/README.md).
+
 ## Libraries and symbols as we encounter them
 
 A library groups tools already available in C++. With `#include` we state which ones we need. We start with `<iostream>` for screen and keyboard; we add `<string>` for text, `<fstream>` for files and `<vector>` for growing collections. Fixed-size arrays use brackets and need no extra library. Beside each additional include we explain why we use it.
@@ -1297,11 +1309,6 @@ int main() {
     }
     cout << book->title << "\n";
 }
-
-// Integration practice: let's manage and restore a catalog of three books.
-// - Change one title, remove one book and save the remaining books.
-// - Load the data into another catalog and check its titles.
-// - Try repeated data and keep the old catalog if loading fails.
 ```
 
 **Practice.** Write an integrated program that manages and restores books.
@@ -1381,11 +1388,6 @@ int main() {
 
     cout << view->render(library.catalog());
 }
-
-// Integration practice: let's add another way to show the library.
-// - Create a TitleView that shows only the book titles.
-// - Register two books and show their titles through a View pointer.
-// - Show the summary afterward using the same view variable.
 ```
 
 **Practice.** Write an integrated OOP library application.
@@ -1497,7 +1499,7 @@ int main() {
     vector<Task> tasks{{"Read", false}, {"Practice", false}};
     // Inserting in the middle shifts following elements; the vector preserves their order.
     tasks.insert(tasks.begin() + 1, {"Compile", false});
-    tasks.at(0).done = true;
+    tasks[0].done = true;
     tasks.erase(tasks.begin());
     for (const auto& task : tasks) {
         cout << task.name << "\n";
@@ -1823,8 +1825,9 @@ using namespace std;
 
 int main() {
     unordered_map<int, string> students;
-    students.emplace(101, "Ana");
-    students.emplace(102, "Luis");
+    // With [101] we choose card 101; if it is missing, we create it and store the name.
+    students[101] = "Ana";
+    students[102] = "Luis";
     // find reads without inserting a new key; here 101 exists because it was inserted above.
     auto found = students.find(101);
     cout << found->second << "\n";
@@ -2194,7 +2197,7 @@ int main() {
         history.append(id);
         undo.push(id);
         index.insert(id);
-        cout << "Process: " << names.at(id) << "\n";
+        cout << "Process: " << names[id] << "\n";
     }
     if (!(history.values() == ids && undo.top() == 2)) {
         cerr << "The check did not produce the expected result.\n";
@@ -2223,12 +2226,12 @@ int main() {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    if (!(dijkstra(routes, 0).at(1) == 2)) {
+    if (!(dijkstra(routes, 0)[1] == 2)) {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    cout << "Last task (undo): " << names.at(undo.top()) << "\n";
-    cout << "Minimum delivery cost 0 -> 1: " << dijkstra(routes, 0).at(1) << "\n";
+    cout << "Last task (undo): " << names[undo.top()] << "\n";
+    cout << "Minimum delivery cost 0 -> 1: " << dijkstra(routes, 0)[1] << "\n";
 }
 ```
 
@@ -2355,7 +2358,7 @@ Complete example: [main.cpp](03_DSA/13_Combining_Concepts/08_Class_with_Nodes/ma
 
 ### 03.13.09. 9. A vector contains classes managing nodes
 
-We will store several shelves in a vector. Each shelf contains nodes and each node a product: we follow those layers one at a time. Growing the vector can move a shelf, so we clear pointers to the shelf itself before forcing that change. Its nodes were created separately and do not move when their manager changes location. We can therefore keep a node query while the node still exists. Emptying its shelf destroys the node, so we must stop using that query.
+We will store several shelves in a vector. Each shelf contains nodes and each node a product: we follow those layers one at a time. Growing the vector can move a shelf, so we clear pointers to the shelf itself before adding another shelf. Its nodes were created separately and do not move when their manager changes location. We can therefore keep a node query while the node still exists. Emptying its shelf destroys the node, so we must stop using that query.
 
 Complete example: [main.cpp](03_DSA/13_Combining_Concepts/09_Vector_of_Classes_with_Nodes/main.cpp).
 
@@ -2408,11 +2411,11 @@ long long total(const vector<Shelf>& shelves) {
 int main() {
     // First construct the owners: vector -> shelves -> nodes -> products.
     vector<Shelf> shelves;
-    shelves.emplace_back("Stationery");
-    shelves.at(0).add(Product("Notebook", 300));
-    shelves.at(0).add(Product("Pencil", 100));
-    shelves.emplace_back("Books");
-    shelves.at(1).add(Product("Book", 500));
+    shelves.push_back(Shelf("Stationery"));
+    shelves[0].add(Product("Notebook", 300));
+    shelves[0].add(Product("Pencil", 100));
+    shelves.push_back(Shelf("Books"));
+    shelves[1].add(Product("Book", 500));
 
     // Then borrow addresses. Lists contain objects; the view contains only cards.
     vector<const Shelf::Node*> view;
@@ -2434,11 +2437,11 @@ int main() {
     }
 
     const Shelf::Node* selection = nullptr;
-    selectProduct(selection, view.at(0));
+    selectProduct(selection, view[0]);
     // The matrix displays two unique products in three slots: selection appears twice.
     const Shelf::Node* const slots[2][2]{
         {selection, nullptr},
-        {view.at(1), selection}
+        {view[1], selection}
     };
     size_t occupied = 0;
     for (const auto& row : slots) {
@@ -2453,8 +2456,8 @@ int main() {
     const long long before = total(shelves);
     if (view.size() != 3 || before != 900 || occupied != 3 ||
         selection->getProduct().getPrice() != 100 ||
-        shelves.at(0).first()->getProduct().getPrice() != 100 ||
-        shelves.at(0).first()->nextNode()->getProduct().getPrice() != 300) {
+        shelves[0].first()->getProduct().getPrice() != 100 ||
+        shelves[0].first()->nextNode()->getProduct().getPrice() != 300) {
         cerr << "The integration example produced an unexpected result\n";
         return 1;
     }

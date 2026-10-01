@@ -50,7 +50,7 @@ namespace project {
             library.addBook({20, "POO"});
             {
                 const auto view = library.booksSorted();
-                expect(view.at(0)->id == 10 && view.at(2)->id == 30, "Sorted view");
+                expect(view.size() == 3 && view[0]->id == 10 && view[2]->id == 30, "Sorted view");
             }
             expect(library.findById(20)->title == "POO" && library.findById(21) == nullptr, "Binary search");
             // The shortest route improves a direct path; also check isolated target and source equal to target.
@@ -64,7 +64,8 @@ namespace project {
             library.requestDelivery(10, 0, 4);
             library.requestDelivery(20, 2, 1);
             library.renameBook(10, "New title");
-            expect(library.pendingDeliveries().at(0).book.title == "Book with \"quotes\"", "Request independent of catalog");
+            const auto pending = library.pendingDeliveries();
+            expect(pending.size() == 2 && pending[0].book.title == "Book with \"quotes\"", "Request independent of catalog");
             const auto first = library.processDelivery();
             const auto second = library.processDelivery();
             expect(first && second && first->delivery.book.id == 10 && second->delivery.book.id == 20, "FIFO");

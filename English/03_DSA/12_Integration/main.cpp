@@ -50,7 +50,7 @@ int main() {
         history.append(id);
         undo.push(id);
         index.insert(id);
-        cout << "Process: " << names.at(id) << "\n";
+        cout << "Process: " << names[id] << "\n";
     }
     if (!(history.values() == ids && undo.top() == 2)) {
         cerr << "The check did not produce the expected result.\n";
@@ -79,10 +79,10 @@ int main() {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    if (!(dijkstra(routes, 0).at(1) == 2)) {
+    if (!(dijkstra(routes, 0)[1] == 2)) {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    cout << "Last task (undo): " << names.at(undo.top()) << "\n";
-    cout << "Minimum delivery cost 0 -> 1: " << dijkstra(routes, 0).at(1) << "\n";
+    cout << "Last task (undo): " << names[undo.top()] << "\n";
+    cout << "Minimum delivery cost 0 -> 1: " << dijkstra(routes, 0)[1] << "\n";
 }

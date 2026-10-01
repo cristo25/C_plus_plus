@@ -19,7 +19,14 @@ namespace proyecto {
     }
 
     void Biblioteca::validarTitulo(const string& titulo) {
-        if (titulo.empty() || titulo.size() > 200 || titulo.find_first_not_of(" ") == string::npos) {
+        bool tieneTexto = false;
+        // Buscamos al menos un carácter que no sea un espacio.
+        for (char caracter : titulo) {
+            if (caracter != ' ') {
+                tieneTexto = true;
+            }
+        }
+        if (!tieneTexto || titulo.size() > 200) {
             throw invalid_argument("El titulo debe contener texto y ocupar como maximo 200 bytes");
         }
         for (unsigned char caracter : titulo) {
@@ -44,7 +51,6 @@ namespace proyecto {
     const Libro* Biblioteca::buscar(int id) const {
         const auto vista = catalogoOrdenado();
         vector<int> ids;
-        ids.reserve(vista.size());
         for (const Libro* libro : vista) {
             ids.push_back(libro->id);
         }
@@ -53,7 +59,7 @@ namespace proyecto {
         if (!posicion) {
             return nullptr;
         }
-        return vista.at(*posicion);
+        return vista[*posicion];
     }
 
     void Biblioteca::registrar(const string& mensaje) {
@@ -166,7 +172,7 @@ namespace proyecto {
         const auto ids = ordenInverso ? orden.inversos() : orden.valores();
         vector<string> resultado;
         for (int indice : ids) {
-            resultado.push_back(eventos.at(static_cast<size_t>(indice)));
+            resultado.push_back(eventos[static_cast<size_t>(indice)]);
         }
         return resultado;
     }

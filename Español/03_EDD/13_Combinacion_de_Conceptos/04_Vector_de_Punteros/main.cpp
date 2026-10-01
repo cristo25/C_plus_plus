@@ -30,8 +30,8 @@ int main() {
         Producto("Libro", 500)
     };
     vector<Producto*> vista{&productos[0], &productos[1]};
-    // at(0) devuelve una referencia al puntero guardado: int*& funciona igual.
-    seleccionar(vista.at(0), productos[2]);
+    // Con vista[0] usamos la primera tarjeta guardada; podemos cambiar a qué producto señala.
+    seleccionar(vista[0], productos[2]);
     vista.push_back(&productos[0]);
 
     for (const Producto* producto : vista) {

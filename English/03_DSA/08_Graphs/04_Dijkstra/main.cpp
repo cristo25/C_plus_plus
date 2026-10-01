@@ -32,10 +32,10 @@ int main() {
 
     for (size_t i = 0; i < distances.size(); ++i) {
         cout << i << ": ";
-        if (distances.at(i) == INFINITY_DISTANCE) {
+        if (distances[i] == INFINITY_DISTANCE) {
             cout << "unreachable\n";
         } else {
-            cout << distances.at(i) << "\n";
+            cout << distances[i] << "\n";
         }
     }
 }

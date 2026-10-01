@@ -30,8 +30,8 @@ int main() {
         Product("Book", 500)
     };
     vector<Product*> view{&products[0], &products[1]};
-    // at(0) returns a reference to the stored pointer: int*& works the same way.
-    selectProduct(view.at(0), products[2]);
+    // With view[0] we use the first stored card; we can change which product it points to.
+    selectProduct(view[0], products[2]);
     view.push_back(&products[0]);
 
     for (const Product* product : view) {

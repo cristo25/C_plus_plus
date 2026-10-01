@@ -44,11 +44,11 @@ long long total(const vector<Shelf>& shelves) {
 int main() {
     // First construct the owners: vector -> shelves -> nodes -> products.
     vector<Shelf> shelves;
-    shelves.emplace_back("Stationery");
-    shelves.at(0).add(Product("Notebook", 300));
-    shelves.at(0).add(Product("Pencil", 100));
-    shelves.emplace_back("Books");
-    shelves.at(1).add(Product("Book", 500));
+    shelves.push_back(Shelf("Stationery"));
+    shelves[0].add(Product("Notebook", 300));
+    shelves[0].add(Product("Pencil", 100));
+    shelves.push_back(Shelf("Books"));
+    shelves[1].add(Product("Book", 500));
 
     // Then borrow addresses. Lists contain objects; the view contains only cards.
     vector<const Shelf::Node*> view;
@@ -70,11 +70,11 @@ int main() {
     }
 
     const Shelf::Node* selection = nullptr;
-    selectProduct(selection, view.at(0));
+    selectProduct(selection, view[0]);
     // The matrix displays two unique products in three slots: selection appears twice.
     const Shelf::Node* const slots[2][2]{
         {selection, nullptr},
-        {view.at(1), selection}
+        {view[1], selection}
     };
     size_t occupied = 0;
     for (const auto& row : slots) {
@@ -89,8 +89,8 @@ int main() {
     const long long before = total(shelves);
     if (view.size() != 3 || before != 900 || occupied != 3 ||
         selection->getProduct().getPrice() != 100 ||
-        shelves.at(0).first()->getProduct().getPrice() != 100 ||
-        shelves.at(0).first()->nextNode()->getProduct().getPrice() != 300) {
+        shelves[0].first()->getProduct().getPrice() != 100 ||
+        shelves[0].first()->nextNode()->getProduct().getPrice() != 300) {
         cerr << "The integration example produced an unexpected result\n";
         return 1;
     }

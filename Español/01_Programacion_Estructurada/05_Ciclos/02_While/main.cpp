@@ -5,7 +5,7 @@
 // agregamos dinero mientras no alcanzamos la meta. Dentro del ciclo cambiamos el ahorro; si nunca
 // cambiamos lo que revisamos, podríamos repetir para siempre.
 //
-// Practica: Realiza un programa que simule un ahorro semanal.
+// Práctica: Vamos a realizar un programa que simule un ahorro semanal.
 //
 // - Comenzar con un ahorro de 0.
 // - Agregar 25 por semana hasta alcanzar al menos 110.

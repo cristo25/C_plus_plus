@@ -29,5 +29,7 @@ int main() {
         numbers.pop_back();
     }
 
-    cout << numbers.at(0) << "\n";
+    if (!numbers.empty()) {
+        cout << numbers[0] << "\n";
+    }
 }

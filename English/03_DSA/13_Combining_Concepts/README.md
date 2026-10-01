@@ -116,7 +116,7 @@ We will keep the chain and its rules inside Shelf. We can picture a shelf keeper
 
 ## 9. A vector contains classes managing nodes
 
-We will store several shelves in a vector. Each shelf contains nodes and each node a product: we follow those layers one at a time. Growing the vector can move a shelf, so we clear pointers to the shelf itself before forcing that change. Its nodes were created separately and do not move when their manager changes location. We can therefore keep a node query while the node still exists. Emptying its shelf destroys the node, so we must stop using that query.
+We will store several shelves in a vector. Each shelf contains nodes and each node a product: we follow those layers one at a time. Growing the vector can move a shelf, so we clear pointers to the shelf itself before adding another shelf. Its nodes were created separately and do not move when their manager changes location. We can therefore keep a node query while the node still exists. Emptying its shelf destroys the node, so we must stop using that query.
 
 [Commented program](09_Vector_of_Classes_with_Nodes/main.cpp).
 

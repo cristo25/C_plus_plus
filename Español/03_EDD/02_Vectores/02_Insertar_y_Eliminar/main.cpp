@@ -30,5 +30,7 @@ int main() {
         numeros.pop_back();
     }
 
-    cout << numeros.at(0) << "\n";
+    if (!numeros.empty()) {
+        cout << numeros[0] << "\n";
+    }
 }

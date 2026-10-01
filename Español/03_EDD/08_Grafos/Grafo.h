@@ -12,7 +12,7 @@
 #include <optional>
 // Atendemos por llegada con queue o por importancia con priority_queue.
 #include <queue>
-// Avisamos de errores con mensajes, por ejemplo invalid_argument para un dato inválido.
+// Avisamos cuando un dato no es válido o una posición no existe.
 #include <stdexcept>
 // Usamos pair para guardar dos datos juntos.
 #include <utility>
@@ -39,31 +39,40 @@ namespace curso {
             return adyacencia.size();
         }
         const vector<Arista>& vecinos(size_t vertice) const {
-            return adyacencia.at(vertice);
+            if (vertice >= cantidad()) {
+                throw out_of_range("Ese lugar no existe en el grafo");
+            }
+            return adyacencia[vertice];
         }
         void conectar(size_t origen, size_t destino, int peso = 1) {
             if (peso < 0) {
                 throw invalid_argument("El peso debe ser no negativo");
             }
-            (void)adyacencia.at(destino); // Valida el destino antes de modificar el grafo.
-            adyacencia.at(origen).push_back({destino, peso});
+            // Revisamos ambos lugares antes de guardar el camino.
+            if (origen >= cantidad() || destino >= cantidad()) {
+                throw out_of_range("El origen o el destino no existe");
+            }
+            adyacencia[origen].push_back({destino, peso});
         }
     };
 
     // BFS procesa una cola por niveles; marcar al encolar evita trabajo repetido en ciclos.
     inline vector<size_t> bfs(const Grafo& grafo, size_t inicio) {
+        if (inicio >= grafo.cantidad()) {
+            throw out_of_range("El lugar inicial no existe");
+        }
         vector<bool> visitado(grafo.cantidad(), false);
         queue<size_t> pendientes;
         vector<size_t> orden;
-        visitado.at(inicio) = true;
+        visitado[inicio] = true;
         pendientes.push(inicio);
         while (!pendientes.empty()) {
             auto actual = pendientes.front();
             pendientes.pop();
             orden.push_back(actual);
             for (const auto& arista : grafo.vecinos(actual)) {
-                if (!visitado.at(arista.destino)) {
-                    visitado.at(arista.destino) = true; // Marca al encolar, no al retirar.
+                if (!visitado[arista.destino]) {
+                    visitado[arista.destino] = true; // Marca al encolar, no al retirar.
                     pendientes.push(arista.destino);
                 }
             }
@@ -74,10 +83,13 @@ namespace curso {
     // DFS baja por una rama y vuelve al agotarla; visitado impide regresar en círculos.
     inline void visitarDFS(const Grafo& grafo, size_t actual, vector<bool>& visitado,
                            vector<size_t>& orden) {
-        visitado.at(actual) = true;
+        if (visitado.size() != grafo.cantidad() || actual >= visitado.size()) {
+            throw out_of_range("No hay una casilla para ese lugar");
+        }
+        visitado[actual] = true;
         orden.push_back(actual);
         for (const auto& arista : grafo.vecinos(actual)) {
-            if (!visitado.at(arista.destino)) {
+            if (!visitado[arista.destino]) {
                 visitarDFS(grafo, arista.destino, visitado, orden);
             }
         }
@@ -99,20 +111,23 @@ namespace curso {
     };
 
     inline CaminosMinimos caminosMinimos(const Grafo& grafo, size_t origen) {
+        if (origen >= grafo.cantidad()) {
+            throw out_of_range("El lugar inicial no existe");
+        }
         using Pendiente = pair<long long, size_t>;
         priority_queue<Pendiente, vector<Pendiente>, greater<Pendiente>> cola;
         CaminosMinimos resultado{
             vector<long long>(grafo.cantidad(), INFINITO),
             vector<optional<size_t>>(grafo.cantidad())
         };
-        resultado.distancias.at(origen) = 0;
+        resultado.distancias[origen] = 0;
         cola.push({0, origen});
         while (!cola.empty()) {
             // Cada ficha pendiente tiene dos datos: costo acumulado y lugar.
             const long long distancia = cola.top().first;
             const size_t actual = cola.top().second;
             cola.pop();
-            if (distancia != resultado.distancias.at(actual)) {
+            if (distancia != resultado.distancias[actual]) {
                 continue;
             }
             for (const auto& arista : grafo.vecinos(actual)) {
@@ -122,9 +137,9 @@ namespace curso {
                 const long long candidato = distancia + arista.peso;
                 // Encontramos un viaje más barato: cambiamos el costo y recordamos desde dónde
                 // llegamos.
-                if (candidato < resultado.distancias.at(arista.destino)) {
-                    resultado.distancias.at(arista.destino) = candidato;
-                    resultado.anteriores.at(arista.destino) = actual;
+                if (candidato < resultado.distancias[arista.destino]) {
+                    resultado.distancias[arista.destino] = candidato;
+                    resultado.anteriores[arista.destino] = actual;
                     cola.push({candidato, arista.destino});
                 }
             }

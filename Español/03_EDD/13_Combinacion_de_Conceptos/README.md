@@ -116,7 +116,7 @@ Vamos a reunir la cadena y sus reglas dentro de Estante. Podemos imaginar un enc
 
 ## 9. Un vector contiene clases que administran nodos
 
-Vamos a guardar varios estantes en un vector. Dentro de cada estante hay nodos y dentro de cada nodo un producto: seguimos esas capas una a una. Al crecer el vector puede mudarse un estante, por lo que retiramos los punteros al propio estante antes de forzar ese cambio. Sus nodos se crearon aparte y no se mudan al transferir quién los administra. Por eso podemos conservar una consulta a un nodo mientras siga existiendo. Si vaciamos su estante, el nodo desaparece y debemos dejar de usar esa consulta.
+Vamos a guardar varios estantes en un vector. Dentro de cada estante hay nodos y dentro de cada nodo un producto: seguimos esas capas una a una. Al crecer el vector puede mudarse un estante, por lo que retiramos los punteros al propio estante antes de agregar otro estante. Sus nodos se crearon aparte y no se mudan al transferir quién los administra. Por eso podemos conservar una consulta a un nodo mientras siga existiendo. Si vaciamos su estante, el nodo desaparece y debemos dejar de usar esa consulta.
 
 [Programa comentado](09_Vector_de_Clases_con_Nodos/main.cpp).
 

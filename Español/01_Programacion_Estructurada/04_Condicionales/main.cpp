@@ -5,7 +5,7 @@
 // la opción no existe, devolvemos -1 como señal acordada de error. La idea es separar dos
 // preguntas: qué se compra y qué descuento corresponde.
 //
-// Practica: Realiza un programa integrador para cobrar una entrada al cine.
+// Práctica: Vamos a realizar un programa integrador para cobrar una entrada al cine.
 //
 // - Elegir entre tres tipos de entrada con switch.
 // - Aplicar un descuento con if cuando corresponda.

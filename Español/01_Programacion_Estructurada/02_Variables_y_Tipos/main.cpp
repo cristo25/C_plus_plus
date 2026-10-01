@@ -7,7 +7,7 @@
 // cambiar. Al dividir dos enteros descartamos la parte decimal: 5 / 2 da 2, mientras que 5.0 / 2 da
 // 2.5.
 //
-// Practica: Realiza un programa que calcule el importe de una compra.
+// Práctica: Vamos a realizar un programa que calcule el importe de una compra.
 //
 // - Guardar nombre, cantidad y precio de un producto.
 // - Calcular y mostrar el total con decimales.

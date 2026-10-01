@@ -146,7 +146,7 @@ const auto position = binarySearch(ids, id);
 if (!position) {
     return nullptr;
 }
-return view.at(*position);
+return view[*position];
 ```
 
 The search returns `optional<size_t>`: a small box containing a position or nothing. Position zero also counts as found. For an empty result we return `nullptr`; otherwise we lend the corresponding book address. We use it before changing the catalog, because adding, removing, renaming or undoing replaces its books and makes old addresses unusable.
@@ -185,9 +185,9 @@ We will represent buildings with points and roads with connections. In [CampusMa
 We leave building 5 isolated. With BFS we explore in layers to see which buildings we can reach. For the shortest travel time we use Dijkstra: we process the cheapest known candidate first and update when a better path appears.
 
 ```cpp
-if (candidate < result.distances.at(edge.destination)) {
-    result.distances.at(edge.destination) = candidate;
-    result.predecessors.at(edge.destination) = current;
+if (candidate < result.distances[edge.destination]) {
+    result.distances[edge.destination] = candidate;
+    result.predecessors[edge.destination] = current;
     queuePending.push({candidate, edge.destination});
 }
 ```
@@ -197,7 +197,7 @@ In `predecessors` we remember which building led to each destination; that previ
 ```cpp
 while (cursor != source) {
     route.stops.push_back(cursor);
-    const auto previous = result.predecessors.at(cursor);
+    const auto previous = result.predecessors[cursor];
     if (!previous) {
         throw logic_error("The route has an invalid predecessor link");
     }

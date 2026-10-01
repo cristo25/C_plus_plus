@@ -32,10 +32,10 @@ int main() {
 
     for (size_t i = 0; i < distancias.size(); ++i) {
         cout << i << ": ";
-        if (distancias.at(i) == INFINITO) {
+        if (distancias[i] == INFINITO) {
             cout << "sin ruta\n";
         } else {
-            cout << distancias.at(i) << "\n";
+            cout << distancias[i] << "\n";
         }
     }
 }

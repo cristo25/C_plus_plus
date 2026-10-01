@@ -33,7 +33,7 @@ int main() {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
-    if (!(dijkstra(map, 0).at(3) == 4)) {
+    if (!(dijkstra(map, 0)[3] == 4)) {
         cerr << "The check did not produce the expected result.\n";
         return 1;
     }
@@ -45,5 +45,5 @@ int main() {
     for (auto vertex : dfs(map, 0)) {
         cout << vertex << ' ';
     }
-    cout << "\nMinimum cost 0 -> 3: " << dijkstra(map, 0).at(3) << "\n";
+    cout << "\nMinimum cost 0 -> 3: " << dijkstra(map, 0)[3] << "\n";
 }

@@ -6,7 +6,7 @@
 // opciones concretas, por ejemplo 1, 2 y 3. En este ejemplo devolvemos directamente la bebida con
 // return: salimos de la función y no necesitamos break en esos casos.
 //
-// Practica: Realiza un programa con un menú de tres bebidas.
+// Práctica: Vamos a realizar un programa con un menú de tres bebidas.
 //
 // - Asignar un número a cada bebida.
 // - Mostrar el nombre y precio de la opción elegida.

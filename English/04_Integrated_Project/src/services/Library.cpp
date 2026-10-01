@@ -19,7 +19,14 @@ namespace project {
     }
 
     void Library::validateTitle(const string& title) {
-        if (title.empty() || title.size() > 200 || title.find_first_not_of(" ") == string::npos) {
+        bool hasText = false;
+        // We look for at least one character that is not a space.
+        for (char character : title) {
+            if (character != ' ') {
+                hasText = true;
+            }
+        }
+        if (!hasText || title.size() > 200) {
             throw invalid_argument("The title must contain text and use at most 200 bytes");
         }
         for (unsigned char character : title) {
@@ -44,7 +51,6 @@ namespace project {
     const Book* Library::findById(int id) const {
         const auto view = booksSorted();
         vector<int> ids;
-        ids.reserve(view.size());
         for (const Book* book : view) {
             ids.push_back(book->id);
         }
@@ -53,7 +59,7 @@ namespace project {
         if (!position) {
             return nullptr;
         }
-        return view.at(*position);
+        return view[*position];
     }
 
     void Library::record(const string& message) {
@@ -164,7 +170,7 @@ namespace project {
         const auto ids = reverseOrder ? order.reversed() : order.values();
         vector<string> result;
         for (int index : ids) {
-            result.push_back(events.at(static_cast<size_t>(index)));
+            result.push_back(events[static_cast<size_t>(index)]);
         }
         return result;
     }

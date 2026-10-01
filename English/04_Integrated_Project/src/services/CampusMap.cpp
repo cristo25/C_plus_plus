@@ -43,17 +43,20 @@ namespace project {
     }
 
     optional<Route> CampusMap::shortestRoute(size_t source, size_t target) const {
-        (void)labels.at(target);
+        // We cannot find a route to a building that is not on the map.
+        if (target >= labels.size()) {
+            throw out_of_range("The destination building does not exist");
+        }
         const auto result = shortestPaths(network, source);
-        if (result.distances.at(target) == INFINITY_DISTANCE) {
+        if (result.distances[target] == INFINITY_DISTANCE) {
             return nullopt;
         }
-        Route route{result.distances.at(target), {}};
+        Route route{result.distances[target], {}};
         size_t cursor = target;
         // Follow predecessor cards backward from the destination, then reverse the traversal.
         while (cursor != source) {
             route.stops.push_back(cursor);
-            const auto previous = result.predecessors.at(cursor);
+            const auto previous = result.predecessors[cursor];
             if (!previous) {
                 throw logic_error("The route has an invalid predecessor link");
             }

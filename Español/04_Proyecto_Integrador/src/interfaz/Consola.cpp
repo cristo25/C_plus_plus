@@ -58,7 +58,7 @@ namespace proyecto {
                 if (indice != 0) {
                     salida << " -> ";
                 }
-                salida << mapa.nombres().at(ruta.paradas.at(indice));
+                salida << mapa.nombres()[ruta.paradas[indice]];
             }
             salida << " | " << ruta.minutos << " minutos\n";
         }
@@ -138,7 +138,7 @@ namespace proyecto {
                         return;
                     }
                     for (size_t indice = 0; indice < biblioteca.mapa().nombres().size(); ++indice) {
-                        salida << indice << " | " << biblioteca.mapa().nombres().at(indice) << "\n";
+                        salida << indice << " | " << biblioteca.mapa().nombres()[indice] << "\n";
                     }
                     const int maximo = static_cast<int>(biblioteca.mapa().nombres().size()) - 1;
                     const auto origen = leerEntero(entrada, salida, "Edificio de origen: ", 0, maximo);
@@ -170,8 +170,8 @@ namespace proyecto {
                     }
                     for (const Entrega& entrega : pendientes) {
                         salida << entrega.libro.id << " | " << entrega.libro.titulo << " | "
-                               << biblioteca.mapa().nombres().at(entrega.origen) << " -> "
-                               << biblioteca.mapa().nombres().at(entrega.destino) << "\n";
+                               << biblioteca.mapa().nombres()[entrega.origen] << " -> "
+                               << biblioteca.mapa().nombres()[entrega.destino] << "\n";
                     }
                     break;
                 }
@@ -192,7 +192,7 @@ namespace proyecto {
                 case 11: {
                     const auto& mapa = biblioteca.mapa();
                     for (size_t origen = 0; origen < mapa.nombres().size(); ++origen) {
-                        salida << origen << " | " << mapa.nombres().at(origen) << ": ";
+                        salida << origen << " | " << mapa.nombres()[origen] << ": ";
                         for (const auto& edge : mapa.mapa().vecinos(origen)) {
                             salida << edge.destino << " (" << edge.peso << " minutos) ";
                         }

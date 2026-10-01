@@ -34,7 +34,7 @@ int main() {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
-    if (!(dijkstra(mapa, 0).at(3) == 4)) {
+    if (!(dijkstra(mapa, 0)[3] == 4)) {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
@@ -46,5 +46,5 @@ int main() {
     for (auto vertice : dfs(mapa, 0)) {
         cout << vertice << ' ';
     }
-    cout << "\nCosto minimo 0 -> 3: " << dijkstra(mapa, 0).at(3) << "\n";
+    cout << "\nCosto minimo 0 -> 3: " << dijkstra(mapa, 0)[3] << "\n";
 }

@@ -5,7 +5,7 @@
 // numerados: revisamos uno, avanzamos y repetimos hasta el último. ++ aumenta el contador en uno;
 // las instrucciones entre llaves se ejecutan en cada vuelta.
 //
-// Practica: Realiza un programa que muestre la tabla del 7.
+// Práctica: Vamos a realizar un programa que muestre la tabla del 7.
 //
 // - Usar un contador desde 1 hasta 10.
 // - Calcular cada multiplicación dentro del for.

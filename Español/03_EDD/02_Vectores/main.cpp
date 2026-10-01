@@ -27,7 +27,7 @@ int main() {
     vector<Tarea> tareas{{"Leer", false}, {"Practicar", false}};
     // Insertar en medio desplaza los elementos siguientes; el vector conserva su orden.
     tareas.insert(tareas.begin() + 1, {"Compilar", false});
-    tareas.at(0).terminada = true;
+    tareas[0].terminada = true;
     tareas.erase(tareas.begin());
     for (const auto& tarea : tareas) {
         cout << tarea.nombre << "\n";

@@ -31,7 +31,7 @@ namespace {
     vector<filesystem::path> readArguments(int argc, char* argv[]) {
         vector<filesystem::path> result;
         for (int index = 0; index < argc; ++index) {
-            result.emplace_back(filesystem::u8path(argv[index]));
+            result.push_back(filesystem::u8path(argv[index]));
         }
         return result;
     }
@@ -45,14 +45,14 @@ int main(int argc, char* argv[]) {
         filesystem::path dataFile = "data/catalog.txt";
         bool customFile = false;
         for (size_t index = 1; index < arguments.size(); ++index) {
-            const string option = arguments.at(index).u8string();
+            const string option = arguments[index].u8string();
             if (option == "--self-test") {
                 checking = true;
             } else if (option == "--demo") {
                 demo = true;
             } else if (option == "--data" && index + 1 < arguments.size()) {
                 ++index;
-                dataFile = arguments.at(index);
+                dataFile = arguments[index];
                 customFile = true;
             } else if (option == "--help") {
                 cout << "Usage: library.exe [--demo | --data PATH | --self-test]\n";

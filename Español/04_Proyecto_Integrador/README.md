@@ -146,7 +146,7 @@ const auto posicion = binaria(ids, id);
 if (!posicion) {
     return nullptr;
 }
-return vista.at(*posicion);
+return vista[*posicion];
 ```
 
 La búsqueda devuelve `optional<size_t>`: una cajita que contiene una posición o está vacía. Una posición cero también cuenta como encontrada. Si está vacía devolvemos `nullptr`; si tiene un resultado, prestamos la dirección del libro correspondiente. La usamos antes de modificar el catálogo, porque agregar, borrar, cambiar un título o deshacer sustituye sus libros y deja sin validez las direcciones anteriores.
@@ -185,9 +185,9 @@ Vamos a representar los edificios con puntos y los caminos con conexiones. En [M
 Dejamos el edificio 5 aislado. Con BFS exploramos por capas y vemos a cuáles podemos llegar. Para encontrar el viaje de menos minutos usamos Dijkstra: atendemos primero el candidato de menor costo conocido y actualizamos cuando aparece un camino mejor.
 
 ```cpp
-if (candidato < resultado.distancias.at(arista.destino)) {
-    resultado.distancias.at(arista.destino) = candidato;
-    resultado.anteriores.at(arista.destino) = actual;
+if (candidato < resultado.distancias[arista.destino]) {
+    resultado.distancias[arista.destino] = candidato;
+    resultado.anteriores[arista.destino] = actual;
     cola.push({candidato, arista.destino});
 }
 ```
@@ -197,7 +197,7 @@ En `anteriores` recordamos desde qué edificio llegamos a cada destino; a ese ed
 ```cpp
 while (actual != origen) {
     ruta.paradas.push_back(actual);
-    const auto anterior = resultado.anteriores.at(actual);
+    const auto anterior = resultado.anteriores[actual];
     if (!anterior) {
         throw logic_error("La ruta tiene un enlace anterior invalido");
     }

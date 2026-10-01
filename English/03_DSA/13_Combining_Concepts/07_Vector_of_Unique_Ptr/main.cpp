@@ -24,12 +24,12 @@ using namespace course;
 int main() {
     vector<unique_ptr<Product>> owners;
     owners.push_back(make_unique<Product>("Notebook", 300));
-    const Product* observer = owners.at(0).get();
+    const Product* observer = owners[0].get();
 
-    // We request more vector space: its cards move while their products remain in place.
-    owners.reserve(owners.capacity() + 1);
+    // We add another product. The vector may move its cards; the separate products keep their
+    // addresses.
     owners.push_back(make_unique<Product>("Pencil", 100));
-    cout << boolalpha << "The product stays at the same address: " << (observer == owners.at(0).get()) << "\n";
+    cout << boolalpha << "The product stays at the same address: " << (observer == owners[0].get()) << "\n";
     cout << observer->getName() << "\n";
 
     // Do not dereference the observer after erasing its owner.

@@ -5,7 +5,7 @@
 // edad intentamos leer un número entero. Antes de mostrar la ficha, comprobamos que no falten el
 // nombre ni la ciudad y que la edad esté entre 0 y 130. Si cin.fail() es verdadero, no pudimos leer
 // un número. empty() solo detecta texto vacío: un texto formado por espacios no está vacío.
-// Practica: Realiza un programa que registre a una persona.
+// Práctica: Vamos a realizar un programa que registre a una persona.
 //
 // - Pedir nombre completo, ciudad y edad.
 // - Aceptar espacios en el nombre y la ciudad.

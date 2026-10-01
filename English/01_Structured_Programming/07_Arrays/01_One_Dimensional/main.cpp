@@ -25,7 +25,7 @@ int main() {
     for (int value : drawer) {
         sum += value;
     }
-    // at(1) is the second compartment and checks the index. The sum was computed before this
+    // drawer[1] is the second compartment. We stay within the four slots. We computed the sum before this
     // change.
     drawer[1] = 25;
 

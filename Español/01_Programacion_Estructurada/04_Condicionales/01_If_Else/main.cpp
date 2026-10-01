@@ -6,7 +6,7 @@
 // || que basta una y ! invierte una respuesta. Podemos imaginar dos puertas: la condición decide
 // por cuál seguimos.
 //
-// Practica: Realiza un programa que decida el acceso a un evento.
+// Práctica: Vamos a realizar un programa que decida el acceso a un evento.
 //
 // - Guardar una edad y si hay un acompañante adulto.
 // - Permitir el acceso a mayores de edad o menores acompañados.

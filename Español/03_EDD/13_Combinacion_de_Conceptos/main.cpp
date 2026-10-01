@@ -45,11 +45,11 @@ long long valorTotal(const vector<Estante>& estantes) {
 int main() {
     // Primero construimos los propietarios: vector -> estantes -> nodos -> productos.
     vector<Estante> estantes;
-    estantes.emplace_back("Papeleria");
-    estantes.at(0).agregar(Producto("Cuaderno", 300));
-    estantes.at(0).agregar(Producto("Lapiz", 100));
-    estantes.emplace_back("Libros");
-    estantes.at(1).agregar(Producto("Libro", 500));
+    estantes.push_back(Estante("Papeleria"));
+    estantes[0].agregar(Producto("Cuaderno", 300));
+    estantes[0].agregar(Producto("Lapiz", 100));
+    estantes.push_back(Estante("Libros"));
+    estantes[1].agregar(Producto("Libro", 500));
 
     // Después prestamos direcciones. Las listas contienen objetos; la vista solo contiene tarjetas.
     vector<const Estante::Nodo*> vista;
@@ -71,11 +71,11 @@ int main() {
     }
 
     const Estante::Nodo* seleccion = nullptr;
-    seleccionar(seleccion, vista.at(0));
+    seleccionar(seleccion, vista[0]);
     // La matriz muestra dos productos únicos en tres casillas: seleccion aparece dos veces.
     const Estante::Nodo* const casillas[2][2]{
         {seleccion, nullptr},
-        {vista.at(1), seleccion}
+        {vista[1], seleccion}
     };
     size_t ocupadas = 0;
     for (const auto& fila : casillas) {
@@ -90,8 +90,8 @@ int main() {
     const long long antes = valorTotal(estantes);
     if (vista.size() != 3 || antes != 900 || ocupadas != 3 ||
         seleccion->consultarProducto().consultarPrecio() != 100 ||
-        estantes.at(0).primero()->consultarProducto().consultarPrecio() != 100 ||
-        estantes.at(0).primero()->siguienteNodo()->consultarProducto().consultarPrecio() != 300) {
+        estantes[0].primero()->consultarProducto().consultarPrecio() != 100 ||
+        estantes[0].primero()->siguienteNodo()->consultarProducto().consultarPrecio() != 300) {
         cerr << "El integrador produjo un resultado inesperado\n";
         return 1;
     }

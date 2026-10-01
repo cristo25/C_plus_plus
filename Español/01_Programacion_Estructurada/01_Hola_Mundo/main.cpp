@@ -6,7 +6,9 @@
 // Podemos imaginar el programa como una receta: en main empezamos a cocinar y cada instrucción es
 // un paso.
 //
-// Practica: Cambia el saludo por tu nombre. Agrega una segunda línea.
+// Práctica: Vamos a personalizar el saludo.
+// - Cambiemos el saludo por nuestro nombre.
+// - Agreguemos una segunda línea.
 
 #include <iostream>
 

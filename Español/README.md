@@ -31,6 +31,18 @@ g++ -std=c++17 main.cpp Producto.cpp -o programa.exe
 
 Incluimos el `.h` para conocer las funciones disponibles; agregamos los `.cpp` al comando para incluir sus pasos. Aquí dejamos los comandos de compilación para no repetirlos en cada programa. En Linux o macOS podemos usar `programa` sin `.exe`.
 
+En estos ejemplos agregamos el archivo indicado después de `main.cpp`, como hicimos con `Producto.cpp`:
+
+| Carpeta desde la que compilamos | Archivo adicional |
+| --- | --- |
+| `01_Programacion_Estructurada/12_Const_y_Headers` | `Calificaciones.cpp` |
+| `02_POO/08_Headers` | `Producto.cpp` |
+| `03_EDD/11_Const_y_Headers` | `Consultas.cpp` |
+| `03_EDD/13_Combinacion_de_Conceptos` | `../../02_POO/08_Headers/Producto.cpp` |
+| Una subcarpeta numerada dentro de `13_Combinacion_de_Conceptos` | `../../../02_POO/08_Headers/Producto.cpp` |
+
+Con `../` subimos una carpeta para encontrar el archivo compartido. Para el proyecto final seguimos sus [instrucciones de compilación](04_Proyecto_Integrador/README.md).
+
 ## Bibliotecas y símbolos, al aparecer
 
 Una biblioteca reúne herramientas ya disponibles en C++. Con `#include` indicamos cuáles necesitamos. Empezamos con `<iostream>` para la pantalla y el teclado; agregamos `<string>` al trabajar con texto, `<fstream>` para archivos y `<vector>` para colecciones que crecen. Los arreglos de tamaño fijo se escriben con corchetes y no necesitan otra biblioteca. Junto a cada include adicional explicamos para qué lo usamos.
@@ -1305,11 +1317,6 @@ int main() {
     }
     cout << libro->titulo << "\n";
 }
-
-// Práctica integradora: vamos a administrar y recuperar un catálogo de tres libros.
-// - Cambiamos un título, eliminamos un libro y guardamos los restantes.
-// - Cargamos los datos en otro catálogo y comprobamos sus títulos.
-// - Probamos datos repetidos y conservamos el catálogo anterior si falla la carga.
 ```
 
 **Práctica.** Realiza un programa integrador para administrar y recuperar libros.
@@ -1389,11 +1396,6 @@ int main() {
 
     cout << vista->mostrar(biblioteca.catalogo());
 }
-
-// Práctica integradora: vamos a añadir otra forma de mostrar la biblioteca.
-// - Creamos una VistaTitulos que muestre solo los nombres de los libros.
-// - Registramos dos libros y mostramos sus títulos mediante un puntero a Vista.
-// - Mostramos después el resumen con la misma variable vista.
 ```
 
 **Práctica.** Realiza una biblioteca integradora de POO.
@@ -1506,7 +1508,7 @@ int main() {
     vector<Tarea> tareas{{"Leer", false}, {"Practicar", false}};
     // Insertar en medio desplaza los elementos siguientes; el vector conserva su orden.
     tareas.insert(tareas.begin() + 1, {"Compilar", false});
-    tareas.at(0).terminada = true;
+    tareas[0].terminada = true;
     tareas.erase(tareas.begin());
     for (const auto& tarea : tareas) {
         cout << tarea.nombre << "\n";
@@ -1832,8 +1834,9 @@ using namespace std;
 
 int main() {
     unordered_map<int, string> alumnos;
-    alumnos.emplace(101, "Ana");
-    alumnos.emplace(102, "Luis");
+    // Con [101] elegimos la ficha 101; si falta, la creamos y guardamos el nombre.
+    alumnos[101] = "Ana";
+    alumnos[102] = "Luis";
     // find consulta sin insertar una clave nueva; aquí sabemos que 101 existe porque se agregó
     // antes.
     auto encontrado = alumnos.find(101);
@@ -2205,7 +2208,7 @@ int main() {
         historial.agregar(id);
         deshacer.push(id);
         indice.insertar(id);
-        cout << "Procesar: " << nombres.at(id) << "\n";
+        cout << "Procesar: " << nombres[id] << "\n";
     }
     if (!(historial.valores() == ids && deshacer.top() == 2)) {
         cerr << "La comprobacion no dio el resultado esperado.\n";
@@ -2234,12 +2237,12 @@ int main() {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
-    if (!(dijkstra(rutas, 0).at(1) == 2)) {
+    if (!(dijkstra(rutas, 0)[1] == 2)) {
         cerr << "La comprobacion no dio el resultado esperado.\n";
         return 1;
     }
-    cout << "Ultima tarea (deshacer): " << nombres.at(deshacer.top()) << "\n";
-    cout << "Costo minimo de entrega 0 -> 1: " << dijkstra(rutas, 0).at(1) << "\n";
+    cout << "Ultima tarea (deshacer): " << nombres[deshacer.top()] << "\n";
+    cout << "Costo minimo de entrega 0 -> 1: " << dijkstra(rutas, 0)[1] << "\n";
 }
 ```
 
@@ -2366,7 +2369,7 @@ Ejemplo completo: [main.cpp](03_EDD/13_Combinacion_de_Conceptos/08_Clase_con_Nod
 
 ### 03.13.09. 9. Un vector contiene clases que administran nodos
 
-Vamos a guardar varios estantes en un vector. Dentro de cada estante hay nodos y dentro de cada nodo un producto: seguimos esas capas una a una. Al crecer el vector puede mudarse un estante, por lo que retiramos los punteros al propio estante antes de forzar ese cambio. Sus nodos se crearon aparte y no se mudan al transferir quién los administra. Por eso podemos conservar una consulta a un nodo mientras siga existiendo. Si vaciamos su estante, el nodo desaparece y debemos dejar de usar esa consulta.
+Vamos a guardar varios estantes en un vector. Dentro de cada estante hay nodos y dentro de cada nodo un producto: seguimos esas capas una a una. Al crecer el vector puede mudarse un estante, por lo que retiramos los punteros al propio estante antes de agregar otro estante. Sus nodos se crearon aparte y no se mudan al transferir quién los administra. Por eso podemos conservar una consulta a un nodo mientras siga existiendo. Si vaciamos su estante, el nodo desaparece y debemos dejar de usar esa consulta.
 
 Ejemplo completo: [main.cpp](03_EDD/13_Combinacion_de_Conceptos/09_Vector_de_Clases_con_Nodos/main.cpp).
 
@@ -2419,11 +2422,11 @@ long long valorTotal(const vector<Estante>& estantes) {
 int main() {
     // Primero construimos los propietarios: vector -> estantes -> nodos -> productos.
     vector<Estante> estantes;
-    estantes.emplace_back("Papeleria");
-    estantes.at(0).agregar(Producto("Cuaderno", 300));
-    estantes.at(0).agregar(Producto("Lapiz", 100));
-    estantes.emplace_back("Libros");
-    estantes.at(1).agregar(Producto("Libro", 500));
+    estantes.push_back(Estante("Papeleria"));
+    estantes[0].agregar(Producto("Cuaderno", 300));
+    estantes[0].agregar(Producto("Lapiz", 100));
+    estantes.push_back(Estante("Libros"));
+    estantes[1].agregar(Producto("Libro", 500));
 
     // Después prestamos direcciones. Las listas contienen objetos; la vista solo contiene tarjetas.
     vector<const Estante::Nodo*> vista;
@@ -2445,11 +2448,11 @@ int main() {
     }
 
     const Estante::Nodo* seleccion = nullptr;
-    seleccionar(seleccion, vista.at(0));
+    seleccionar(seleccion, vista[0]);
     // La matriz muestra dos productos únicos en tres casillas: seleccion aparece dos veces.
     const Estante::Nodo* const casillas[2][2]{
         {seleccion, nullptr},
-        {vista.at(1), seleccion}
+        {vista[1], seleccion}
     };
     size_t ocupadas = 0;
     for (const auto& fila : casillas) {
@@ -2464,8 +2467,8 @@ int main() {
     const long long antes = valorTotal(estantes);
     if (vista.size() != 3 || antes != 900 || ocupadas != 3 ||
         seleccion->consultarProducto().consultarPrecio() != 100 ||
-        estantes.at(0).primero()->consultarProducto().consultarPrecio() != 100 ||
-        estantes.at(0).primero()->siguienteNodo()->consultarProducto().consultarPrecio() != 300) {
+        estantes[0].primero()->consultarProducto().consultarPrecio() != 100 ||
+        estantes[0].primero()->siguienteNodo()->consultarProducto().consultarPrecio() != 300) {
         cerr << "El integrador produjo un resultado inesperado\n";
         return 1;
     }

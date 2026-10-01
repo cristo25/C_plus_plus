@@ -32,7 +32,7 @@ namespace {
     vector<filesystem::path> leerArgumentos(int argc, char* argv[]) {
         vector<filesystem::path> resultado;
         for (int indice = 0; indice < argc; ++indice) {
-            resultado.emplace_back(filesystem::u8path(argv[indice]));
+            resultado.push_back(filesystem::u8path(argv[indice]));
         }
         return resultado;
     }
@@ -46,14 +46,14 @@ int main(int argc, char* argv[]) {
         filesystem::path archivoDatos = "datos/catalogo.txt";
         bool rutaPersonalizada = false;
         for (size_t indice = 1; indice < argumentos.size(); ++indice) {
-            const string opcion = argumentos.at(indice).u8string();
+            const string opcion = argumentos[indice].u8string();
             if (opcion == "--self-test") {
                 comprobando = true;
             } else if (opcion == "--demo") {
                 demostracion = true;
             } else if (opcion == "--data" && indice + 1 < argumentos.size()) {
                 ++indice;
-                archivoDatos = argumentos.at(indice);
+                archivoDatos = argumentos[indice];
                 rutaPersonalizada = true;
             } else if (opcion == "--help") {
                 cout << "Uso: biblioteca.exe [--demo | --data RUTA | --self-test]\n";

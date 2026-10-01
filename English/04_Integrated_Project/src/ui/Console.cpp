@@ -58,7 +58,7 @@ namespace project {
                 if (index != 0) {
                     output << " -> ";
                 }
-                output << map.names().at(route.stops.at(index));
+                output << map.names()[route.stops[index]];
             }
             output << " | " << route.minutes << " minutes\n";
         }
@@ -138,7 +138,7 @@ namespace project {
                         return;
                     }
                     for (size_t index = 0; index < library.map().names().size(); ++index) {
-                        output << index << " | " << library.map().names().at(index) << "\n";
+                        output << index << " | " << library.map().names()[index] << "\n";
                     }
                     const int maximum = static_cast<int>(library.map().names().size()) - 1;
                     const auto source = readNumber(input, output, "Source building: ", 0, maximum);
@@ -170,8 +170,8 @@ namespace project {
                     }
                     for (const Delivery& delivery : pending) {
                         output << delivery.book.id << " | " << delivery.book.title << " | "
-                               << library.map().names().at(delivery.source) << " -> "
-                               << library.map().names().at(delivery.target) << "\n";
+                               << library.map().names()[delivery.source] << " -> "
+                               << library.map().names()[delivery.target] << "\n";
                     }
                     break;
                 }
@@ -192,7 +192,7 @@ namespace project {
                 case 11: {
                     const auto& map = library.map();
                     for (size_t source = 0; source < map.names().size(); ++source) {
-                        output << source << " | " << map.names().at(source) << ": ";
+                        output << source << " | " << map.names()[source] << ": ";
                         for (const auto& edge : map.map().neighbors(source)) {
                             output << edge.destination << " (" << edge.weight << " minutes) ";
                         }

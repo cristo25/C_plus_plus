@@ -27,7 +27,7 @@ int main() {
     vector<Task> tasks{{"Read", false}, {"Practice", false}};
     // Inserting in the middle shifts following elements; the vector preserves their order.
     tasks.insert(tasks.begin() + 1, {"Compile", false});
-    tasks.at(0).done = true;
+    tasks[0].done = true;
     tasks.erase(tasks.begin());
     for (const auto& task : tasks) {
         cout << task.name << "\n";
